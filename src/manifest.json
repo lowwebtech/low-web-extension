@@ -13,6 +13,17 @@
     "storage",
     "declarativeContent"
   ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    "main.js",
+    "my-script.js"
+  ],
   "options_page": "options.html",
   "background": {
     "page": "background.html",

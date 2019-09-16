@@ -1,8 +1,6 @@
 export function saveDataHeader(){
 
-  console.log('save data header enabled')
-  
-  chrome.webRequest.onBeforeSendHeaders.addListener(
+  browser.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
       var headers = details.requestHeaders;
       // Check if browser or another extension has already enabled the header
