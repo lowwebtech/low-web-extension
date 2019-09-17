@@ -1,138 +1,122 @@
-// fichier webpack.config.js
-const webpack = require("webpack");
-const webpackCli = require("webpack-cli");
-const path = require("path");
-// const ExtractTextWebpackPlugin = require("extract-text-webpack-plugin");
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-
-// include the css extraction and minification plugins
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
-
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
-const imageminMozjpeg = require('imagemin-mozjpeg');
+const webpack = require('webpack');
+const ejs = require('ejs');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const autoprefixer = require('autoprefixer')
+const ExtensionReloader = require('webpack-extension-reloader');
+const { VueLoaderPlugin } = require('vue-loader');
+const { version } = require('./package.json');
 
-let config = {
+const config = {
+  mode: process.env.NODE_ENV,
+  context: __dirname + '/src',
   entry: {
-    app: path.join(__dirname, '/src/scripts/main.js'),
-    // vendors: path.join(__dirname, '/../scripts/vendors.js')
+    'background': './background.js',
+    'content_script': './content_script.js',
+    'popup/popup': './popup/popup.js',
+    'options/options': './options/options.js',
   },
   output: {
-    path: path.join(__dirname, '/src/'),
-    filename: 'content_script.js'
-    // path: './js/build',
-    // filename: 'app.min.[hash].js'
+    path: __dirname + '/dist',
+    filename: '[name].js',
   },
-  devtool: "source-map",
+  resolve: {
+    extensions: ['.js', '.vue'],
+  },
   module: {
     rules: [
-      // perform js babelization on all .js files
+      {
+        test: /\.vue$/,
+        loaders: 'vue-loader',
+      },
       {
         test: /\.js$/,
+        loader: 'babel-loader',
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ['@babel/preset-env']
-          }
-        }
       },
-      // {
-      //   test: /\.(scss|css)$/,
-      //   use: [
-      //     MiniCssExtractPlugin.loader,
-      //     {
-      //       loader: "css-loader",
-      //       options: {}
-      //     },
-      //     {
-      //       loader: "postcss-loader",
-      //       options: {
-      //         autoprefixer: {
-      //           browsers: ["> 1%", "last 2 versions"]
-      //         },
-      //         plugins: () => [
-      //           autoprefixer
-      //         ]
-      //       },
-      //     },
-      //     {
-      //       loader: "sass-loader",
-      //       options: {}
-      //     }
-      //   ]
-      // },
-      // {
-      //   test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-      //   use: [
-      //     {
-      //       loader: 'file-loader',
-      //       options: {
-      //         name: '[name].[ext]',
-      //         outputPath: '../fonts/'
-      //       }
-      //     }
-      //   ]
-      // }
-      // {
-      //   test: /\.(png|svg|jpg|gif)$/,
-      //   use: [
-      //     'file-loader'
-      //   ]
-      // }
-    ]
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.sass$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader?indentedSyntax'],
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg|ico)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: '/images/',
+          emitFile: false,
+        },
+      },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: '/fonts/',
+          emitFile: false,
+        },
+      },
+    ],
   },
   plugins: [
-    // new CleanWebpackPlugin({
-    //   dry: false,
-    //   cleanOnceBeforeBuildPatterns: [path.join(__dirname, '/../dist/')],
-    //   dangerouslyAllowCleanPatternsOutsideProject: true
-    // }),
-    // extract css into dedicated file
-    // new MiniCssExtractPlugin({
-    //   filename: '../css/main.css'
-    // }),
-    // new CopyWebpackPlugin([{
-    //   from: path.join(__dirname, '/../src/img'),
-    //   to: path.join(__dirname, '/../dist/img')
-    // // path: path.join(__dirname, '/../dist/js/'),
-    // }]),
-    // new ImageminPlugin({
-    //   disable: process.env.NODE_ENV !== 'production',
-    //   pngquant: {
-    //     quality: '50-80'
-    //   },
-    //   plugins: [imageminMozjpeg({quality: 60})]
-    // }),
-    // new BrowserSyncPlugin({
-    //     host: 'localhost',
-    //     port: 3000,
-    //     proxy: 'https://'
-    // })
+    new webpack.DefinePlugin({
+      global: 'window',
+    }),
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    }),
+    new CopyWebpackPlugin([
+      { from: 'icons', to: 'icons', ignore: ['icon.xcf'] },
+      { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
+      { from: 'options/options.html', to: 'options/options.html', transform: transformHtml },
+      {
+        from: 'manifest.json',
+        to: 'manifest.json',
+        transform: (content) => {
+          const jsonContent = JSON.parse(content);
+          jsonContent.version = version;
+
+          if (config.mode === 'development') {
+            jsonContent['content_security_policy'] = "script-src 'self' 'unsafe-eval'; object-src 'self'";
+          }
+
+          return JSON.stringify(jsonContent, null, 2);
+        },
+      },
+    ]),
   ],
-  optimization: {
-    minimizer: [
-      // enable the js minification plugin
-      // new UglifyJSPlugin({
-      //   cache: true,
-      //   parallel: true
-      // }),
-      // // enable the css minification plugin
-      // new OptimizeCSSAssetsPlugin({})
-    ]
-  }
 };
 
-module.exports = config;
+if (config.mode === 'production') {
+  config.plugins = (config.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"',
+      },
+    }),
+  ]);
+}
 
-// if (process.env.NODE_ENV === 'production') {
-//   module.exports.plugins.push({
-//       cleanOnceBeforeBuildPatterns: ['./js/build/*','./css/build/*']
-//     }// new CleanWebpackPlugin(__dirname + '/../dist', { allowExternal: true })
-//   )
-// }
+if (process.env.HMR === 'true') {
+  config.plugins = (config.plugins || []).concat([
+    new ExtensionReloader({
+      manifest: __dirname + '/src/manifest.json',
+    }),
+  ]);
+}
+
+function transformHtml(content) {
+  return ejs.render(content.toString(), {
+    ...process.env,
+  });
+}
+
+module.exports = config;

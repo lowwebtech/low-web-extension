@@ -1,10 +1,30 @@
+import store from '../store';
+
 export function blockFiles(){
-  console.log('block files')
   browser.webRequest.onBeforeRequest.addListener(
     function(details) {
-      console.log(details.type)
+
+      let cancel
+      switch( details.type ){
+        case 'video':
+          cancel = store.getters.block_videos
+          break;
+        case 'font':
+          cancel = store.getters.block_fonts
+          break;
+        case 'image':
+          cancel = store.getters.block_images
+          break;
+        case 'script':
+          cancel = store.getters.block_scripts
+          break;
+        default:
+          cancel = 0
+          break;
+      }
+
       return {
-        cancel: details.type == 'image'
+        cancel: cancel == 1
       };
     },
     {

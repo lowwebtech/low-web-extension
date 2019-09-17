@@ -1,3 +1,4 @@
+console.log('srcset')
 const srcsetUtil = require('srcset');
 
 let imgs = document.querySelectorAll('img')
@@ -36,9 +37,9 @@ imgs.forEach((img)=>{
 })
 
 function noRetinaSrcset( srcset ){
-  srcset.forEach((o)=>{
+  srcset.forEach((o, index, object)=>{
     if( o.density && o.density > 1 ){
-      
+      object.splice(index, 1);
     }
   })
 }

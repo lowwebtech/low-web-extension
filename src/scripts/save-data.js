@@ -1,5 +1,7 @@
 export function saveDataHeader(){
 
+  console.log('add save-data header')
+
   browser.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
       var headers = details.requestHeaders;

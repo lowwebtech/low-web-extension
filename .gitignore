@@ -1,6 +1,4 @@
-node_modules
-vendor
-cache
-*.ipa
-*.map
-.DS_Store
+/node_modules
+/*.log
+/dist
+/dist-zip
