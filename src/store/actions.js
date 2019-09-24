@@ -1,9 +1,5 @@
 import * as types from './mutation-types';
 
-// export const setFoo = ({ commit }, payload) => {
-//   commit(types.UPDATE_FOO, payload);
-// };
-
 export const setSaveData = ({ commit }, payload) => {
   commit(types.SAVE_DATA, payload);
 };
@@ -21,4 +17,13 @@ export const setBlockFonts = ({ commit }, payload) => {
 };
 export const setBlockScripts = ({ commit }, payload) => {
   commit(types.BLOCK_SCRIPTS, payload);
+};
+export const setImageSrcset = ({ commit }, payload) => {
+  commit(types.IMAGE_SRCSET, payload);
+};
+export const setImageLazyload = ({ commit }, payload) => {
+  commit(types.IMAGE_LAZYLOAD, payload);
+};
+export const setIframeLazyload = ({ commit }, payload) => {
+  commit(types.IFRAME_LAZYLOAD, payload);
 };

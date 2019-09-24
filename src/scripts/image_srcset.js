@@ -1,5 +1,9 @@
-console.log('srcset')
-const srcsetUtil = require('srcset');
+import srcsetUtil from 'srcset';
+import store from '../store';
+
+console.log('--------- IMAGE SRCSET' )
+
+let IMAGE_SRCSET = store.getters.image_srcset
 
 let imgs = document.querySelectorAll('img')
 let cleanedSrcset
@@ -7,7 +11,7 @@ imgs.forEach((img)=>{
   
   // check that img is not already loaded
   // TODO
-  if( ! img.complete || ( img.complete && img.src == '' ) ){
+  if( IMAGE_SRCSET > 0 && ! img.complete || ( img.complete && img.src == '' ) ){
 
     let srcset, width = 9999
     // TODO check actual size with getBoundinClientRect
@@ -96,10 +100,13 @@ function cleanSrcset( srcset, width ){
   const parsed = srcsetUtil.parse(srcset);
   
   let cleanedSrcset
-  if( true ){
-    cleanedSrcset = getSmallestSrcset( parsed, width )
-  }else{
-    cleanedSrcset = noRetinaSrcset( parsed )
+  switch( store.getters.image_srcset ){
+    case 1:
+      cleanedSrcset = noRetinaSrcset( parsed )
+      break;
+    case 2:
+      cleanedSrcset = getSmallestSrcset( parsed, width )
+      break;
   }
 
   if( cleanedSrcset ){

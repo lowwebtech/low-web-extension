@@ -1,6 +1,8 @@
 <template>
   <div>
-    <p>Hello world popup!</p>
+    <a href="">Pause on this page</a>
+    <a href="">Pause on this website</a>
+    <a href="">Pause on all website</a>
   </div>
 </template>
 
@@ -15,7 +17,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-p {
-  font-size: 20px;
+body{
+  padding: 0;
+  margin: 0;
+}
+a{
+  white-space: nowrap;
+  padding: 6px 10px;
+  display: block;
 }
 </style>

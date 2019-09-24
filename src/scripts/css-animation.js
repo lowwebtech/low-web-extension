@@ -7,7 +7,7 @@ export function cssAnimation(){
       if( changeInfo.status == 'loading' ){
         var re = new RegExp("^(http|https)://", "i");
         var match = re.test(tab.url);
-        console.log(match)
+        
         if( match ){
           chrome.tabs.insertCSS(tabId, {
             code: `* {

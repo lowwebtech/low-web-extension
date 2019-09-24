@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="status"></div>
+    General
     <ul>
       <li>
         Send save-data header
@@ -24,9 +25,52 @@
           False
         </label>
       </li>
+    </ul>
 
+    Image
+    <ul>
       <li>
-        Block request type : image
+        Srcset
+        <label>
+          <select name="image_srcset">
+            <option value="1">Remove retina</option>
+            <option value="2">Remove all except minus</option>
+            <option value="0">Nothing</option>
+          </select>
+        </label>
+      </li>
+      <li>
+        Add lazyload attribute
+        <label>
+          <input type="radio" name="image_lazyload" value="1">
+          True
+        </label>
+        <label>
+          <input type="radio" name="image_lazyload" value="0">
+          False
+        </label>
+      </li>
+    </ul>
+
+    Iframe
+    <ul>
+      <li>
+        Add lazyload attribute
+        <label>
+          <input type="radio" name="iframe_lazyload" value="1">
+          True
+        </label>
+        <label>
+          <input type="radio" name="iframe_lazyload" value="0">
+          False
+        </label>
+      </li>
+    </ul>
+
+    Block Request
+    <ul>
+      <li>
+        image
         <label>
           <input type="radio" name="block_images" value="1">
           True
@@ -37,7 +81,7 @@
         </label>
       </li>
       <li>
-        Block request type : video
+        video
         <label>
           <input type="radio" name="block_videos" value="1">
           True
@@ -48,7 +92,7 @@
         </label>
       </li>
       <li>
-        Block request type : font
+        font
         <label>
           <input type="radio" name="block_fonts" value="1">
           True
@@ -59,7 +103,7 @@
         </label>
       </li>
       <li>
-        Block request type : script
+        script
         <label>
           <input type="radio" name="block_scripts" value="1">
           True
@@ -76,28 +120,36 @@
 </template>
 
 <script>
-console.log('App')
 import store from '../store'
 export default {
   name: 'App',
   methods:{
     saveOptions(){
 
-      var save_data = this.$el.querySelector('input[name="save_data"]:checked').value;
-      var css_animation = this.$el.querySelector('input[name="css_animation"]:checked').value;
+      var save_data = this.getInputValue("save_data");
+      var css_animation = this.getInputValue("css_animation");
+      var image_srcset = this.getSelectValue("image_srcset")
 
-      var block_images = this.$el.querySelector('input[name="block_images"]:checked').value;
-      var block_videos = this.$el.querySelector('input[name="block_videos"]:checked').value;
-      var block_fonts = this.$el.querySelector('input[name="block_fonts"]:checked').value;
-      var block_scripts = this.$el.querySelector('input[name="block_scripts"]:checked').value;
+      var image_lazyload = this.getInputValue("image_lazyload");
+      var iframe_lazyload = this.getInputValue("iframe_lazyload");
+      
+      var block_images = this.getInputValue("block_images");
+      var block_videos = this.getInputValue("block_videos");
+      var block_fonts = this.getInputValue("block_fonts");
+      var block_scripts = this.getInputValue("block_scripts");
 
       store.commit('SAVE_DATA', save_data)
       store.commit('CSS_ANIMATION', css_animation)
+      store.commit('IMAGE_SRCSET', image_srcset)
+
+      store.commit('IMAGE_LAZYLOAD', image_lazyload)
+      store.commit('IFRAME_LAZYLOAD', iframe_lazyload)
 
       store.commit('BLOCK_IMAGES', block_images)
       store.commit('BLOCK_VIDEOS', block_videos)
       store.commit('BLOCK_FONTS', block_fonts)
       store.commit('BLOCK_SCRIPTS', block_scripts)
+
 
       // Update status to let user know options were saved.
       var status = this.$el.querySelector('.status');
@@ -114,12 +166,35 @@ export default {
           radiobuttons[i].checked = true
         }
       }
+    },
+
+    checkSelect( name, value ){
+      var select = this.$el.querySelector('select[name="'+name+'"]')
+      var options = select.querySelectorAll('option')
+
+      for( let i = 0, lg = options.length; i<lg; i++ ){
+        if( parseInt( options[i].value ) == value ){
+          select.selectedIndex = i
+        }
+      }
+    },
+
+    getInputValue( name ){
+      return this.$el.querySelector('input[name="'+name+'"]:checked').value;
+    },
+    getSelectValue( name ){
+      var select = this.$el.querySelector('select[name="'+name+'"]')
+      return select.options[select.selectedIndex].value
     }
 
   },
   mounted(){
     this.checkRadioButton( 'save_data', store.getters.save_data )
     this.checkRadioButton( 'css_animation', store.getters.css_animation )
+    this.checkSelect( 'image_srcset', store.getters.image_srcset )
+
+    this.checkRadioButton( 'image_lazyload', store.getters.image_lazyload )
+    this.checkRadioButton( 'iframe_lazyload', store.getters.iframe_lazyload )
 
     this.checkRadioButton( 'block_images', store.getters.block_images )
     this.checkRadioButton( 'block_videos', store.getters.block_videos )

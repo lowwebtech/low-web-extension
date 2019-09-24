@@ -5,7 +5,7 @@ Reduce energy consumption and carbon footprint of your internet browsing.
 # 
 
 ### TODO
-- add save-data header
+- ~~add save-data header~~
 - disable css transition & animation
 - image : 
     + lazyload images

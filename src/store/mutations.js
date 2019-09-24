@@ -22,4 +22,13 @@ export default {
   [types.BLOCK_SCRIPTS](state, payload) {
     state.block_scripts = payload;
   },
+  [types.IMAGE_SRCSET](state, payload) {
+    state.image_srcset = payload;
+  },
+  [types.IMAGE_LAZYLOAD](state, payload) {
+    state.image_lazyload = payload;
+  },
+  [types.IFRAME_LAZYLOAD](state, payload) {
+    state.iframe_lazyload = payload;
+  },
 };

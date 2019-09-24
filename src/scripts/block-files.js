@@ -3,7 +3,7 @@ import store from '../store';
 export function blockFiles(){
   browser.webRequest.onBeforeRequest.addListener(
     function(details) {
-
+      console.log(details.url)
       let cancel
       switch( details.type ){
         case 'video':
