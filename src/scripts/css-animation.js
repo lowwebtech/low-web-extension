@@ -10,7 +10,7 @@ export function cssAnimation(){
         
         if( match ){
           chrome.tabs.insertCSS(tabId, {
-            code: `* {
+            code: `*, *:before, *:after {
               -o-transition: none !important;
               -moz-transition: none !important;
               -ms-transition: none !important;
