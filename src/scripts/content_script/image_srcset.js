@@ -1,9 +1,10 @@
 import srcsetUtil from 'srcset';
-import store from '../store';
-
-console.log('--------- IMAGE SRCSET' )
+import store from '../../store';
 
 let IMAGE_SRCSET = store.getters.image_srcset
+
+console.log('--------- IMAGE SRCSET', IMAGE_SRCSET )
+
 
 let imgs = document.querySelectorAll('img')
 let cleanedSrcset

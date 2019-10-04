@@ -35,7 +35,7 @@
           <select name="image_srcset">
             <option value="1">Remove retina</option>
             <option value="2">Remove all except minus</option>
-            <option value="0">Nothing</option>
+            <option value="0">Do nothing</option>
           </select>
         </label>
       </li>

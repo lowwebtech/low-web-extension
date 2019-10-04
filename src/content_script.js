@@ -1,14 +1,14 @@
 import store from './store';
 
-import image_srcset from './scripts/image_srcset'
-import lazyload from './scripts/lazyload'
-import video from './scripts/video'
+import image_srcset from './scripts/content_script/image_srcset'
+import lazyload from './scripts/content_script/lazyload-attribute'
+import video from './scripts/content_script/video-attributes'
 
 // TODO check remove_social is necessary
-// import remove_social from './scripts/remove_social'
+// import remove_social from './scripts/content_script/remove_social'
 
 
-var fullURL = chrome.runtime.getURL("./scripts/sw.js");
+var fullURL = chrome.runtime.getURL("./scripts/content_script/sw.js");
 console.log(fullURL)
 // console.log(fullURL);
 // if ('serviceWorker' in navigator) {

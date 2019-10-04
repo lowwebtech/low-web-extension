@@ -1,9 +1,9 @@
-import store from '../store';
+import store from '../../store';
 
 export function blockFiles(){
   browser.webRequest.onBeforeRequest.addListener(
     function(details) {
-      console.log(details.url)
+      // console.log(details.url)
       let cancel
       switch( details.type ){
         case 'video':
@@ -22,6 +22,8 @@ export function blockFiles(){
           cancel = 0
           break;
       }
+
+      console.log(details.type, cancel)
 
       return {
         cancel: cancel == 1

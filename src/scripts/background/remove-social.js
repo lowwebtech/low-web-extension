@@ -1,5 +1,5 @@
 // import store from '../store';
-import urls_to_block from './social-to-block'
+import urls_to_block from '../social-to-block'
 
 export function blockSocial(){
   browser.webRequest.onBeforeRequest.addListener(

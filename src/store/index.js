@@ -16,7 +16,7 @@ export default new Vuex.Store({
     save_data: 1,
     css_animation: 1,
 
-    image_srcset: 1,
+    image_srcset: 2,
     image_lazyload: 1,
     iframe_lazyload: 1,
 
@@ -29,5 +29,8 @@ export default new Vuex.Store({
   getters,
   mutations,
   actions,
-  plugins: [createPersistedState()]
+  plugins: [createPersistedState({
+    'key': 'low-carbon-web'
+  })]
+
 });

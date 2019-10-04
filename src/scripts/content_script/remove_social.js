@@ -1,4 +1,4 @@
-import urls_to_block from './social-to-block'
+import urls_to_block from '../social-to-block'
 console.log('--------- REMOVE SOCIAL')
 
 function removeSocialIframes(){
