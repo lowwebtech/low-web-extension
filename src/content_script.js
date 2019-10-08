@@ -1,15 +1,23 @@
 import store from './store';
 
-import image_srcset from './scripts/content_script/image_srcset'
+import imageSrcset from './scripts/content_script/image_srcset'
 import lazyload from './scripts/content_script/lazyload-attribute'
-import video from './scripts/content_script/video-attributes'
+import videoAttribute from './scripts/content_script/video-attributes'
+import clickToPlay from './scripts/content_script/click-to-play-video'
 
 // TODO check remove_social is necessary
-// import remove_social from './scripts/content_script/remove_social'
+// import removeSocial from './scripts/content_script/remove-social'
 
+document.addEventListener('DOMContentLoaded', ()=>{
 
-var fullURL = chrome.runtime.getURL("./scripts/content_script/sw.js");
-console.log(fullURL)
+  imageSrcset()
+  lazyload()
+  videoAttribute()
+  clickToPlay()
+
+  // var fullURL = chrome.runtime.getURL("./scripts/content_script/sw.js");
+  // console.log(fullURL)
+})
 // console.log(fullURL);
 // if ('serviceWorker' in navigator) {
 //   // window.addEventListener('load', () => {

@@ -3,7 +3,10 @@ import store from '../../store';
 export function blockFiles(){
   browser.webRequest.onBeforeRequest.addListener(
     function(details) {
-      // console.log(details.url)
+      if( details.url.indexOf('vimeo') != -1 ){
+        console.log(details.url) 
+      }
+      
       let cancel
       switch( details.type ){
         case 'video':
@@ -23,7 +26,7 @@ export function blockFiles(){
           break;
       }
 
-      console.log(details.type, cancel)
+      // console.log(details.type, cancel)
 
       return {
         cancel: cancel == 1

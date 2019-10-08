@@ -6,7 +6,7 @@ function removeSocialIframes(){
   iframes.forEach( (iframe, index)=>{
 
     let src = iframe.getAttribute('src')
-    if( src && blockSrc( src ) ){
+    if( src && socialBlocked( src ) ){
       iframe.parentNode.removeChild(iframe)
     }
 
@@ -18,7 +18,7 @@ function removeSocialScripts(){
 
   scripts.forEach( (script, index)=>{
     let src = script.getAttribute('src')
-    if( src && blockSrc( src ) ){
+    if( src && socialBlocked( src ) ){
       script.parentNode.removeChild(script)
     }else{
       for( let i = 0, lg = urls_to_block.length; i<lg; i++ ){
@@ -31,11 +31,11 @@ function removeSocialScripts(){
   })
 }
 
-function blockSrc( src ){
+function socialBlocked( url ){
 
   for( let i = 0, lg = urls_to_block.length; i<lg; i++ ){
     
-    if( src.indexOf( urls_to_block[i] ) != -1 ){
+    if( url.indexOf( urls_to_block[i] ) != -1 ){
       console.log( urls_to_block[i] )
       return true
     }
