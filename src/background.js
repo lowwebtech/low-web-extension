@@ -1,17 +1,16 @@
-import store from './store';
 global.browser = require('webextension-polyfill');
+
+import store from './store';
+import RequestManager from './scripts/background/RequestManager'
 
 import { saveDataHeader } from './scripts/background/save-data'
 import { blockFiles } from './scripts/background/block-files'
-import { blockSocial } from './scripts/background/remove-social'
+import { blockSocial } from './scripts/background/block-social'
 import { cssAnimation } from './scripts/background/css-animation'
 
-
-console.log(store.getters.image_srcset)
-
 browser.runtime.onInstalled.addListener(function() {
-  
-  console.log(store.getters.image_srcset)
+
+  RequestManager.init()
 
   blockFiles()
   blockSocial()

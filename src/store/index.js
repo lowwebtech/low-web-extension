@@ -5,7 +5,8 @@ import * as getters from './getters';
 import mutations from './mutations';
 import * as actions from './actions';
 
-import createPersistedState from 'vuex-persistedstate'
+// import createPersistedState from 'vuex-persistedstate'
+import VuexWebExtensions from 'vuex-webextensions';
 
 Vue.use(Vuex);
 
@@ -29,8 +30,11 @@ export default new Vuex.Store({
   getters,
   mutations,
   actions,
-  plugins: [createPersistedState({
-    'key': 'low-carbon-web'
+  plugins: [VuexWebExtensions({
+    persistentStates: ['save_data', 'css_animation','image_srcset','image_lazyload','iframe_lazyload','block_images','block_videos','block_fonts','block_scripts']
   })]
+  // plugins: [createPersistedState({
+  //   'key': 'low-carbon-web'
+  // })]
 
 });

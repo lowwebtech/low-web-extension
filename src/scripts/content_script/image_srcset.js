@@ -43,11 +43,14 @@ export default function(){
 }
 
 function noRetinaSrcset( srcset ){
-  srcset.forEach((o, index, object)=>{
-    if( o.density && o.density > 1 ){
-      object.splice(index, 1);
+  
+  for ( let i = srcset.length - 1; i >= 0; i -= 1) {
+    if( srcset[i].density && srcset[i].density > 1 ){
+      srcset.splice(i, 1);
     }
-  })
+  }
+
+  return srcset
 }
 
 function getSmallestSrcset( srcset, width ){
@@ -102,7 +105,7 @@ function cleanSrcset( srcset, width ){
   const parsed = srcsetUtil.parse(srcset);
   
   let cleanedSrcset
-  switch( store.getters.image_srcset ){
+  switch( parseInt(store.getters.image_srcset) ){
     case 1:
       cleanedSrcset = noRetinaSrcset( parsed )
       break;

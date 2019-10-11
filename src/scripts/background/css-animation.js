@@ -1,14 +1,14 @@
+import isWebpage from '../utils/is-webpage'
+
+// TODO find solution for events transitionend / animationend
 export function cssAnimation(){
 
   console.log('disable css transition & animation')
 
   chrome.tabs.onUpdated.addListener(
     function(tabId, changeInfo, tab){
-      if( changeInfo.status == 'loading' ){
-        var re = new RegExp("^(http|https)://", "i");
-        var match = re.test(tab.url);
-        
-        if( match ){
+      if( changeInfo.status == 'loading' ){        
+        if( isWebpage( tab.url ) ){
           chrome.tabs.insertCSS(tabId, {
             code: `*, *:before, *:after {
               -o-transition: none !important;
@@ -25,19 +25,7 @@ export function cssAnimation(){
             }`
           }); 
         }
-        // chrome.tabs.executeScript({
-        //   file: 'scripts/injected-css-transition.js'
-        // }); 
       }
     }
   );
-
-  // chrome.runtime.onMessage.addListener(
-  //   function(message, callback) {
-  //     console.log('message', message)
-  //     if (message == 'changeColor'){
-        
-  //     }
-  //  });
-
 }
