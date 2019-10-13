@@ -4,8 +4,11 @@ Reduce energy consumption and carbon footprint of your internet browsing.
 ### TODO
 - ~~add save-data header~~ (currently based on https://chrome.google.com/webstore/detail/save-data-on/nholpkfnmjbinlhcfihkhiehdaohlibg)
 - ~~disable css transition & animation~~ (!!break transitionend / animationend events!!)
+    + disable animation jquery
 - disable tracking
-- disable ads
+- ~~disable ads~~ (disabled)
+    + detect main adblocker
+    + use web assembly
 - image : 
     + ~~block filetype : image~~
     + ~~add loading="lazy" attribute~~ 

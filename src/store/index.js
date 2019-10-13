@@ -12,7 +12,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    // foo: 'bar',
 
     save_data: 1,
     css_animation: 1,
@@ -25,6 +24,9 @@ export default new Vuex.Store({
     block_videos: 0,
     block_fonts: 0,
     block_scripts: 0,
+
+    block_social: 1,
+    block_ads: 0
     
   },
   getters,

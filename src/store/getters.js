@@ -10,3 +10,6 @@ export const block_images = state => state.block_images;
 export const block_videos = state => state.block_videos;
 export const block_fonts = state => state.block_fonts;
 export const block_scripts = state => state.block_scripts;
+
+export const block_social = state => state.block_social;
+export const block_ads = state => state.block_ads;

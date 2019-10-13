@@ -27,3 +27,9 @@ export const setImageLazyload = ({ commit }, payload) => {
 export const setIframeLazyload = ({ commit }, payload) => {
   commit(types.IFRAME_LAZYLOAD, payload);
 };
+export const setBlockSocial = ({ commit }, payload) => {
+  commit(types.BLOCK_SOCIAL, payload);
+};
+export const setBlockAds = ({ commit }, payload) => {
+  commit(types.BLOCK_ADS, payload);
+};

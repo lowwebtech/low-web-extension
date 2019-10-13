@@ -9,3 +9,6 @@ export const BLOCK_IMAGES = 'BLOCK_IMAGES';
 export const BLOCK_VIDEOS = 'BLOCK_VIDEOS';
 export const BLOCK_FONTS = 'BLOCK_FONTS';
 export const BLOCK_SCRIPTS = 'BLOCK_SCRIPTS';
+
+export const BLOCK_SOCIAL = 'BLOCK_SOCIAL';
+export const BLOCK_ADS = 'BLOCK_ADS';
