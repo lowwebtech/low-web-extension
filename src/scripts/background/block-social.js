@@ -9,7 +9,6 @@ export function blockSocial(){
     let cancel = false
 
     if( store.getters.block_social ){
-
       const { tabId, requestId, url } = details;
       const tab = RequestManager.getTab( tabId )
 
@@ -21,7 +20,6 @@ export function blockSocial(){
           }
         } 
       }
-       
     }
 
     return {

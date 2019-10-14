@@ -108,7 +108,6 @@ class RequestManager{
       if( tabs.length > 0 ){
         let t = tabs[0]
         if( this.tabStorage && this.tabStorage[t.id] ){
-          console.log('queryDomain')
           this.tabStorage[t.id].domain = getHostname( t.url )
         }
       }

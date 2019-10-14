@@ -22,10 +22,9 @@ Reduce energy consumption and carbon footprint of your internet browsing.
 - iframe : 
     + ~~add loading="lazy" attribute~~ 
         * add lazyload library fallback
-- youtube (and video services) :
-    + remove video
-    + remove autoplay
-    + set minimum quality
+- video services embed :
+    + ~~remove autoplay/loop/rel~~
+    + ~~set quality~~
     + click to load iframe
     + lazyload
 - fonts
@@ -43,7 +42,7 @@ Reduce energy consumption and carbon footprint of your internet browsing.
 - take into account carbon footprint of user's electricity (-> co2signal.com)
 - show advices for websites
 - replace main scripts (jquery...) and styles (bootstrap..) with cdn/cache versions
-- prevent page reload (maybe linked to tracking and ads)
+- prevent page reloaded by ads
 - display time alerts
 - set css prefers-color-scheme to dark
     + look at DarkReader

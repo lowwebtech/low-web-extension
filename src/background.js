@@ -8,16 +8,19 @@ import { blockFiles } from './scripts/background/block-files'
 import { blockSocial } from './scripts/background/block-social'
 import { blockAds } from './scripts/background/block-ads'
 import { cssAnimation } from './scripts/background/css-animation'
+import { embedVideoParams } from './scripts/background/embed-video-params'
 
 browser.runtime.onInstalled.addListener(function() {
 
   RequestManager.init()
 
   blockFiles()
-  blockAds()
   blockSocial()
+  blockAds()
+  
+  embedVideoParams()
 
-  if( store.getters.save_data ) saveDataHeader()
-  if( store.getters.css_animation ) cssAnimation()
+  saveDataHeader()
+  cssAnimation()
 
 });
