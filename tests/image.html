@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+
+  <h1>Images</h1>
+
+  <section>
+  
+    <h2>Srcset</h2>
+
+    <figure>
+      <img src="./images/img3.jpg" srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" />
+      <figcaption>Image with srcset (width defined)</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./images/img3.jpg" srcset="./images/img3.jpg 1x, ./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img25.jpg 8x" sizes="50vw" loading="lazy" />
+      <figcaption>Image with srcset (pixel-ratio defined)</figcaption>
+    </figure>
+
+  </section>
+
+</body>
+</html>

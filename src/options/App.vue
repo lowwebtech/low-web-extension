@@ -97,6 +97,17 @@
           False
         </label>
       </li>
+      <li>
+        Video click to load
+        <label>
+          <input type="radio" name="video_clicktoload" value="1">
+          True
+        </label>
+        <label>
+          <input type="radio" name="video_clicktoload" value="0">
+          False
+        </label>
+      </li>
     </ul>    
 
     Iframe
@@ -189,6 +200,7 @@ export default {
       var block_scripts = this.getInputValue("block_scripts");
 
       var video_quality = this.getSelectValue("video_quality")
+      var video_clicktoload = this.getInputValue("video_clicktoload");
       var video_attributes = this.getInputValue("video_attributes");
 
       store.commit('SAVE_DATA', save_data)
@@ -207,6 +219,7 @@ export default {
       store.commit('BLOCK_SCRIPTS', block_scripts)
 
       store.commit('VIDEO_QUALITY', video_quality)
+      store.commit('VIDEO_CLICKTOLOAD', video_clicktoload)
       store.commit('VIDEO_ATTRIBUTES', video_attributes)
 
       // Update status to let user know options were saved.
@@ -222,6 +235,7 @@ export default {
       for( let i = 0, lg = radiobuttons.length; i<lg; i++ ){
         if( parseInt( radiobuttons[i].value ) == value ){
           radiobuttons[i].checked = true
+          i = lg
         }
       }
     },
@@ -238,7 +252,7 @@ export default {
     },
 
     getInputValue( name ){
-      return this.$el.querySelector('input[name="'+name+'"]:checked').value;
+      return parseInt(this.$el.querySelector('input[name="'+name+'"]:checked').value);
     },
     getSelectValue( name ){
       var select = this.$el.querySelector('select[name="'+name+'"]')
@@ -264,6 +278,11 @@ export default {
 
     this.checkSelect( 'video_quality', store.getters.video_quality )
     this.checkRadioButton( 'video_attributes', store.getters.video_attributes )
+    this.checkRadioButton( 'video_clicktoload', store.getters.video_clicktoload )
+
+    console.log(store)
+    console.log(store.getters.block_social)
+
   }
 };
 </script>

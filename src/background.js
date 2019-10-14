@@ -24,3 +24,4 @@ browser.runtime.onInstalled.addListener(function() {
   cssAnimation()
 
 });
+

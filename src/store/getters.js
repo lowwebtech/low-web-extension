@@ -15,4 +15,5 @@ export const block_social = state => state.block_social;
 export const block_ads = state => state.block_ads;
 
 export const video_quality = state => state.video_quality;
+export const video_clicktoload = state => state.video_clicktoload;
 export const video_attributes = state => state.video_attributes;

@@ -40,4 +40,7 @@ export default {
   [types.VIDEO_ATTRIBUTES](state, payload) {
     state.video_attributes = payload;
   },
+  [types.VIDEO_CLICKTOLOAD](state, payload) {
+    state.video_clicktoload = payload;
+  },
 };

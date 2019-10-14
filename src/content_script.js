@@ -5,16 +5,21 @@ import lazyload from './scripts/content_script/lazyload-attribute'
 import videoAttribute from './scripts/content_script/video-attributes'
 import clickToPlay from './scripts/content_script/click-to-play-video'
 
-// TODO check remove_social is necessary
-// import removeSocial from './scripts/content_script/remove-social'
+import removeSocial from './scripts/content_script/remove-social'
 
 document.addEventListener('DOMContentLoaded', ()=>{
+
+  console.log('-------')
+  console.log(store.getters.block_social)
+  // store.commit('BLOCK_SOCIAL', 1)
+  // console.log(store.getters.block_social)
 
   imageSrcset()
   lazyload()
   videoAttribute()
   clickToPlay()
-
+  removeSocial()
+  
   // var fullURL = chrome.runtime.getURL("./scripts/content_script/sw.js");
   // console.log(fullURL)
 })

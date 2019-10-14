@@ -23,7 +23,7 @@ export function cssAnimation(){
                 -ms-animation: none !important;
                 animation: none !important;
               }`
-            }); 
+            });
           }
         } 
       }

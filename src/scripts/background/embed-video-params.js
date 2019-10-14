@@ -8,6 +8,20 @@ import RequestManager from './RequestManager'
 // TODO check if quality params work
 export function embedVideoParams(){
 
+  chrome.tabs.onUpdated.addListener(
+    function(tabId, changeInfo, tab){
+      if( store.getters.video_attributes ) {
+        if( changeInfo.status == 'loading' ){        
+          if( isWebpage( tab.url ) ){
+            chrome.tabs.insertCSS(tabId, {
+              file: 'css/injected-style.css'
+            }); 
+          }
+        } 
+      }
+    }
+  );
+
   browser.webRequest.onBeforeRequest.addListener( (details)=>{
 
     let url = new URL( details.url )
@@ -68,12 +82,17 @@ export function embedVideoParams(){
         break;
     }
 
-    let newSearch = queryString.stringify(params)
 
     let o = {}
-    if( originalSearch != newSearch ){
-      url.search = newSearch
-      o.redirectUrl = url.href
+    if( params.lowweb == 'AxkdIEKx' ){
+      params.autoplay = true
+      let newSearch = queryString.stringify(params)      
+      if( originalSearch != newSearch ){
+        url.search = newSearch
+        o.redirectUrl = url.href
+      } 
+    }else{
+      o.cancel = true
     }
 
     return o;
@@ -82,7 +101,8 @@ export function embedVideoParams(){
       "*://*.youtube.com/embed/*",
       "*://player.vimeo.com/*",
       "*://*.dailymotion.com/embed/*",
-      "*://player.twitch.tv/*",
+      "*://player.twitch.tv/?*",
+      "*://*.facebook.com/plugins/video.php*",
     ]
   },
   ["blocking"]);

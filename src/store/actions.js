@@ -36,6 +36,9 @@ export const setBlockAds = ({ commit }, payload) => {
 export const setVideoQuality = ({ commit }, payload) => {
   commit(types.VIDEO_QUALITY, payload);
 };
+export const setVideoClicktoload = ({ commit }, payload) => {
+  commit(types.VIDEO_CLICKTOLOAD, payload);
+};
 export const setVideoAttributes = ({ commit }, payload) => {
   commit(types.VIDEO_ATTRIBUTES, payload);
 };

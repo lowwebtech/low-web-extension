@@ -1,5 +1,13 @@
+import store from '../../store'
 import urls_to_block from '../social-to-block'
-console.log('--------- REMOVE SOCIAL')
+
+
+export default function(){
+  if( store.getters.block_social == 1 ){
+    removeSocialIframes()
+    removeSocialScripts()  
+  }
+}
 
 function removeSocialIframes(){
   let iframes = document.querySelectorAll('iframe')
@@ -23,7 +31,6 @@ function removeSocialScripts(){
     }else{
       for( let i = 0, lg = urls_to_block.length; i<lg; i++ ){
         if( script.innerText.indexOf(urls_to_block[i]) != -1 ){
-          console.log(script.innerText)
           script.parentNode.removeChild(script)
         }
       }
@@ -34,15 +41,11 @@ function removeSocialScripts(){
 function socialBlocked( url ){
 
   for( let i = 0, lg = urls_to_block.length; i<lg; i++ ){
-    
-    if( url.indexOf( urls_to_block[i] ) != -1 ){
-      console.log( urls_to_block[i] )
+    if( window.location.hostname.indexOf( urls_to_block[i][1] ) == -1 
+      && url.indexOf( urls_to_block[i][0] ) != -1 ){
       return true
     }
   }
 
   return false
 }
-
-removeSocialIframes()
-removeSocialScripts()
