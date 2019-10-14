@@ -13,3 +13,6 @@ export const block_scripts = state => state.block_scripts;
 
 export const block_social = state => state.block_social;
 export const block_ads = state => state.block_ads;
+
+export const video_quality = state => state.video_quality;
+export const video_attributes = state => state.video_attributes;

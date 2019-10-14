@@ -4,9 +4,9 @@ import store from '../../store';
 import urls_to_block from '../social-to-block'
 import RequestManager from './RequestManager'
 
-export function embedVideoParams(){
 
-  console.log('embedVideoParams')
+// TODO check if quality params work
+export function embedVideoParams(){
 
   browser.webRequest.onBeforeRequest.addListener( (details)=>{
 
@@ -19,26 +19,52 @@ export function embedVideoParams(){
     switch( url.hostname ){
       case "www.youtube.com":
       case "youtube.com":
-        params.loop = 0
-        params.autoplay = 0
-        params.vq = 'small'
-        params.rel = 0
+        if( store.getters.video_attributes ){
+          params.loop = 0
+          params.autoplay = 0
+          params.rel = 0
+        }
+
+        if( store.getters.video_quality == 'low' ){
+          params.vq = 'small' 
+        }else{
+          params.vq = 'medium'
+        }
         break;
       case "player.twitch.tv":
-        params.autoplay = false
-        params.loop = false
-        params.quality = '360p'
+        if( store.getters.video_attributes ){
+          params.autoplay = false
+          params.loop = false
+        }
+        if( store.getters.video_quality == 'low' ){
+          params.quality = 'low' 
+        }else{
+          params.quality = 'medium'
+        }
         break;
       case "www.dailymotion.com":
       case "*.dailymotion.com":
-        params.autoplay = 0
-        params['queue-enable'] = false
-        params.quality = '240'
+        if( store.getters.video_attributes ){
+          params.autoplay = false
+          params.loop = false
+          params['queue-enable'] = false
+        }
+        if( store.getters.video_quality == 'low' ){
+          params.quality = 240
+        }else{
+          params.quality = 380
+        }
         break;
       case "player.vimeo.com":
-        params.autoplay = false
-        params.loop = false
-        params.quality = '360p'
+        if( store.getters.video_attributes ){
+          params.autoplay = false
+          params.loop = false
+        }
+        if( store.getters.video_quality == 'low' ){
+          params.quality = '360p'
+        }else{
+          params.quality = '540p'
+        }
         break;
     }
 

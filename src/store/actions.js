@@ -33,3 +33,9 @@ export const setBlockSocial = ({ commit }, payload) => {
 export const setBlockAds = ({ commit }, payload) => {
   commit(types.BLOCK_ADS, payload);
 };
+export const setVideoQuality = ({ commit }, payload) => {
+  commit(types.VIDEO_QUALITY, payload);
+};
+export const setVideoAttributes = ({ commit }, payload) => {
+  commit(types.VIDEO_ATTRIBUTES, payload);
+};

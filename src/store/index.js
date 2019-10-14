@@ -26,7 +26,10 @@ export default new Vuex.Store({
     block_scripts: 0,
 
     block_social: 1,
-    block_ads: 0
+    block_ads: 0,
+
+    video_quality: 'low',
+    video_attributes: 1
     
   },
   getters,

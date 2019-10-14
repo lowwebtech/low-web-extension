@@ -12,3 +12,6 @@ export const BLOCK_SCRIPTS = 'BLOCK_SCRIPTS';
 
 export const BLOCK_SOCIAL = 'BLOCK_SOCIAL';
 export const BLOCK_ADS = 'BLOCK_ADS';
+
+export const VIDEO_QUALITY = 'VIDEO_QUALITY';
+export const VIDEO_ATTRIBUTES = 'VIDEO_ATTRIBUTES';

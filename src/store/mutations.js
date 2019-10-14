@@ -28,4 +28,16 @@ export default {
   [types.IFRAME_LAZYLOAD](state, payload) {
     state.iframe_lazyload = payload;
   },
+  [types.BLOCK_SOCIAL](state, payload) {
+    state.block_social = payload;
+  },
+  [types.BLOCK_ADS](state, payload) {
+    state.block_ads = payload;
+  },
+  [types.VIDEO_QUALITY](state, payload) {
+    state.video_quality = payload;
+  },
+  [types.VIDEO_ATTRIBUTES](state, payload) {
+    state.video_attributes = payload;
+  },
 };

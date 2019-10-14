@@ -25,6 +25,28 @@
           False
         </label>
       </li>
+      <li>
+        Disable ads (not optimised, preferably use AdBlock)
+        <label>
+          <input type="radio" name="block_ads" value="1">
+          True
+        </label>
+        <label>
+          <input type="radio" name="block_ads" value="0">
+          False
+        </label>
+      </li>
+      <li>
+        Disable social (widgets)
+        <label>
+          <input type="radio" name="block_social" value="1">
+          True
+        </label>
+        <label>
+          <input type="radio" name="block_social" value="0">
+          False
+        </label>
+      </li>
     </ul>
 
     Image
@@ -51,6 +73,31 @@
         </label>
       </li>
     </ul>
+
+    Video
+    <ul>
+      <li>
+        Video quality
+        <label>
+          <select name="video_quality">
+            <option value="low">low</option>
+            <option value="medium">medium</option>
+            <option value="high" disabled>high</option>
+          </select>
+        </label>
+      </li>
+      <li>
+        Video attributes (autoplay, loop, rel)
+        <label>
+          <input type="radio" name="video_attributes" value="1">
+          True
+        </label>
+        <label>
+          <input type="radio" name="video_attributes" value="0">
+          False
+        </label>
+      </li>
+    </ul>    
 
     Iframe
     <ul>
@@ -133,15 +180,24 @@ export default {
       var image_lazyload = this.getInputValue("image_lazyload");
       var iframe_lazyload = this.getInputValue("iframe_lazyload");
       
+      var block_social = this.getInputValue("block_social");
+      var block_ads = this.getInputValue("block_ads");
+
       var block_images = this.getInputValue("block_images");
       var block_videos = this.getInputValue("block_videos");
       var block_fonts = this.getInputValue("block_fonts");
       var block_scripts = this.getInputValue("block_scripts");
 
+      var video_quality = this.getSelectValue("video_quality")
+      var video_attributes = this.getInputValue("video_attributes");
+
       store.commit('SAVE_DATA', save_data)
       store.commit('CSS_ANIMATION', css_animation)
-      store.commit('IMAGE_SRCSET', image_srcset)
 
+      store.commit('BLOCK_SOCIAL', block_social)
+      store.commit('BLOCK_ADS', block_ads)
+
+      store.commit('IMAGE_SRCSET', image_srcset)
       store.commit('IMAGE_LAZYLOAD', image_lazyload)
       store.commit('IFRAME_LAZYLOAD', iframe_lazyload)
 
@@ -150,6 +206,8 @@ export default {
       store.commit('BLOCK_FONTS', block_fonts)
       store.commit('BLOCK_SCRIPTS', block_scripts)
 
+      store.commit('VIDEO_QUALITY', video_quality)
+      store.commit('VIDEO_ATTRIBUTES', video_attributes)
 
       // Update status to let user know options were saved.
       var status = this.$el.querySelector('.status');
@@ -196,10 +254,16 @@ export default {
     this.checkRadioButton( 'image_lazyload', store.getters.image_lazyload )
     this.checkRadioButton( 'iframe_lazyload', store.getters.iframe_lazyload )
 
+    this.checkRadioButton( 'block_social', store.getters.block_social )
+    this.checkRadioButton( 'block_ads', store.getters.block_ads )
+
     this.checkRadioButton( 'block_images', store.getters.block_images )
     this.checkRadioButton( 'block_videos', store.getters.block_videos )
     this.checkRadioButton( 'block_fonts', store.getters.block_fonts )
     this.checkRadioButton( 'block_scripts', store.getters.block_scripts )
+
+    this.checkSelect( 'video_quality', store.getters.video_quality )
+    this.checkRadioButton( 'video_attributes', store.getters.video_attributes )
   }
 };
 </script>
