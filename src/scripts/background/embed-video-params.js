@@ -3,14 +3,14 @@ import queryString from 'query-string'
 import store from '../../store';
 import urls_to_block from '../social-to-block'
 import RequestManager from './RequestManager'
-
+import isWebpage from '../utils/is-webpage'
 
 // TODO check if quality params work
 export function embedVideoParams(){
 
   chrome.tabs.onUpdated.addListener(
     function(tabId, changeInfo, tab){
-      if( store.getters.video_attributes ) {
+      if( store.getters.video_clicktoload ) {
         if( changeInfo.status == 'loading' ){        
           if( isWebpage( tab.url ) ){
             chrome.tabs.insertCSS(tabId, {
@@ -35,8 +35,8 @@ export function embedVideoParams(){
       case "youtube.com":
         if( store.getters.video_attributes ){
           params.loop = 0
-          params.autoplay = 0
           params.rel = 0
+          params.lowweb == 'AxkdIEKx' ? params.autoplay = 1 : params.autoplay = 0 
         }
 
         if( store.getters.video_quality == 'low' ){
@@ -47,8 +47,8 @@ export function embedVideoParams(){
         break;
       case "player.twitch.tv":
         if( store.getters.video_attributes ){
-          params.autoplay = false
           params.loop = false
+          params.lowweb == 'AxkdIEKx' ? params.autoplay = true : params.autoplay = false
         }
         if( store.getters.video_quality == 'low' ){
           params.quality = 'low' 
@@ -59,7 +59,7 @@ export function embedVideoParams(){
       case "www.dailymotion.com":
       case "*.dailymotion.com":
         if( store.getters.video_attributes ){
-          params.autoplay = false
+          params.lowweb == 'AxkdIEKx' ? params.autoplay = true : params.autoplay = false
           params.loop = false
           params['queue-enable'] = false
         }
@@ -71,7 +71,7 @@ export function embedVideoParams(){
         break;
       case "player.vimeo.com":
         if( store.getters.video_attributes ){
-          params.autoplay = false
+          params.lowweb == 'AxkdIEKx' ? params.autoplay = true : params.autoplay = false
           params.loop = false
         }
         if( store.getters.video_quality == 'low' ){
@@ -84,15 +84,24 @@ export function embedVideoParams(){
 
 
     let o = {}
-    if( params.lowweb == 'AxkdIEKx' ){
-      params.autoplay = true
-      let newSearch = queryString.stringify(params)      
-      if( originalSearch != newSearch ){
-        url.search = newSearch
-        o.redirectUrl = url.href
+    let newSearch = queryString.stringify(params)
+    originalSearch = originalSearch.slice(1)
+    console.log('o',originalSearch)
+    console.log('n',newSearch)
+    if( originalSearch != newSearch ){
+      console.log('diffrent')  
+      url.search = newSearch
+      o.redirectUrl = url.href
+    }else{      
+      if( store.getters.video_clicktoload ){
+        if( params.lowweb == 'AxkdIEKx' ){
+          params.autoplay = true
+          console.log('--',o)
+        }else{
+          o.cancel = true
+          console.log(o)
+        }
       } 
-    }else{
-      o.cancel = true
     }
 
     return o;

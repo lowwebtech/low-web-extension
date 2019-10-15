@@ -17,10 +17,8 @@ export default function(){
       parent.appendChild(wrapper);
 
       wrapper.addEventListener('click', ()=>{
-
         wrapper.classList.add('lowweb__click-to-load--clicked')
         iframe.src = bypassUrlBlock( iframe.dataset.src )
-
       })
 
       // add image

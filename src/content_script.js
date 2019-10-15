@@ -3,7 +3,7 @@ import store from './store';
 import imageSrcset from './scripts/content_script/image_srcset'
 import lazyload from './scripts/content_script/lazyload-attribute'
 import videoAttribute from './scripts/content_script/video-attributes'
-import clickToPlay from './scripts/content_script/click-to-play-video'
+import clickToLoadVideo from './scripts/content_script/click-to-load-video'
 
 import removeSocial from './scripts/content_script/remove-social'
 
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   imageSrcset()
   lazyload()
   videoAttribute()
-  clickToPlay()
+  clickToLoadVideo()
   removeSocial()
   
   // var fullURL = chrome.runtime.getURL("./scripts/content_script/sw.js");
