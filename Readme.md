@@ -7,19 +7,19 @@ Reduce energy consumption and carbon footprint of your internet browsing.
 
 ## Why ?
 
-Internet consomme environ 8% de l'électricité produite dans le monde et émet 3 à 4% des émissions totales de gaz à effet de serre. Chaque requête, chaque ressources, chaque calcul, ce sont des petites quantités d'électricité consommées... et nous visitons des milliards de pages, faisons des milliards de calculs, chargeons des milliards de To... nécessitant pour fonctionner des millions de serveurs, des millions d'antennes, des millions de km de fibre et surtout des appareils comme des téléphones toujours plus puissants et toujours plus obsolètes.
+The Internet consumes about 8% of the electricity produced worldwide and emits 3 to 4% of total greenhouse gas emissions. Every request, every resource, every calculation, is small amounts of electricity consumed ... and we visit billions of pages, make billions of computer operations, load billions of terabytes... needing to run millions of servers, millions of antennas, millions of miles of fiber and especially devices like telephones always more powerful and ever more obsolete.
 
-Cette extension a donc pour but de réduire nos données et de limiter la consommation énergétique de notre navigation sur Internet.
+This extension aims to reduce our data and limit the energy consumption of our Internet browsing.
 
-:warning: Cette extension agit sur la consommation d'électricité lors de l'utilisation d'Internet mais pas lors de la fabrication. La fabrication est la plupart du temps l'étape la plus consommatrice en énergie et la plus polluante. Alors gardons nos téléphones et nos ordinateurs le plus longtemps possible.
+:warning: This extension affects electricity consumption when using the Internet but not during manufacturing. Manufacturing is the most energy consuming and polluting stage. So let's keep our phones and computers as long as possible !
 
 
 
 ## How ?
 
-Une extension navigateur permet notamment de bloquer des ressources et de modifier le contenu d'une page. Nous pouvons donc optimiser certains contenus, bloquer ce qui n'est pas nécessaire et ainsi limiter le nombre de requêtes, le poids et les calculs.
+A browser extension allows you to block resources and modify the content of a page. So we can optimize some content, block what is not necessary and thus limit the number of requests, weight and computer operations.
 
-Voici une liste de ce que fait low WebExtension :
+Here is a list of what low WebExtension does:
 - image : 
     + add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))
     + remove biggest or hidpi images from srcset
@@ -59,7 +59,6 @@ Voici une liste de ce que fait low WebExtension :
     + need to be optimised (with WebAssembly)
     + detect main adblocker
 - fonts
-    + ~~block filetype : font~~
     + remove call to fonts.googleapis.com, fontawesome.com and other services
 - social
     + facebook regexp for country flag en_US/fr_FR....
