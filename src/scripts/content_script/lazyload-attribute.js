@@ -10,6 +10,7 @@ if ('loading' in HTMLImageElement.prototype) {
   // Fetch and apply a polyfill/JavaScript library
   // for lazy-loading instead.
 }
+lazyloadSupported = false
 
 export default function(){
 

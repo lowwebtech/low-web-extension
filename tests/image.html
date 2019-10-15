@@ -24,5 +24,25 @@
 
   </section>
 
+  <section class="bloc--lazy">
+    
+    <h2>Lazy Image</h2>
+
+    <figure>
+      <img src="./images/img-lazy.jpg" sizes="50vw" loading="lazy" />
+      <figcaption>Image</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./images/img-lazy.jpg" srcset="./images/img-lazy.jpg 1x, ./images/img-lazy@2x.jpg 2x" sizes="50vw" loading="lazy" />
+      <figcaption>Image with srcset</figcaption>
+    </figure>
+
+    <figure>
+      <img data-lowsrc="./images/img-lazy.jpg" data-lowsrcset="./images/img-lazy.jpg 1x, ./images/img-lazy@2x.jpg 2x" sizes="50vw" loading="lazy" />
+      <figcaption>Image with data-low</figcaption>
+    </figure>
+
+  </section>
 </body>
 </html>

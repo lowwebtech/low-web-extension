@@ -38,6 +38,12 @@ export default function(){
           if( cleanedSrcset ) img.dataset.srcset = cleanedSrcset
         }
 
+        if( img.dataset.lowsrcset ){
+          srcset = img.dataset.lowsrcset
+          cleanedSrcset = cleanSrcset( srcset, width )
+          if( cleanedSrcset ) img.dataset.lowsrcset = cleanedSrcset
+        }
+
       }
 
     }) 

@@ -11,3 +11,7 @@ figure{
   border: 1px solid black;
   margin-bottom: 10px;
 }
+
+.bloc--lazy{
+  margin-top: 200vh;
+}
