@@ -86,20 +86,16 @@ export function embedVideoParams(){
     let o = {}
     let newSearch = queryString.stringify(params)
     originalSearch = originalSearch.slice(1)
-    console.log('o',originalSearch)
-    console.log('n',newSearch)
+
     if( originalSearch != newSearch ){
-      console.log('diffrent')  
       url.search = newSearch
       o.redirectUrl = url.href
     }else{      
       if( store.getters.video_clicktoload ){
         if( params.lowweb == 'AxkdIEKx' ){
           params.autoplay = true
-          console.log('--',o)
         }else{
           o.cancel = true
-          console.log(o)
         }
       } 
     }

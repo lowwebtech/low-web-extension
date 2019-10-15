@@ -19,7 +19,8 @@ export function blockImages(){
         for( let i = 0, lg = urls_to_block.length; i<lg; i++ ){      
           if( tab.domain != urls_to_block[i][1]
             && url.indexOf(urls_to_block[i][0]) != -1 ){
-            o.redirectUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM88x8AAp0BzdNtlUkAAAAASUVORK5CYII='
+            // o.redirectUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM88x8AAp0BzdNtlUkAAAAASUVORK5CYII='
+            o.cancel = true
           }
         } 
       }

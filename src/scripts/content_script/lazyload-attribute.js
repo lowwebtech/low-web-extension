@@ -1,8 +1,6 @@
 import store from '../../store';
 import LazyLoad from 'vanilla-lazyload'
 
-console.log('--------- LAZYLOAD' )
-
 let lazyloadSupported = false
 if ('loading' in HTMLImageElement.prototype) { 
   lazyloadSupported = true
@@ -10,7 +8,7 @@ if ('loading' in HTMLImageElement.prototype) {
   // Fetch and apply a polyfill/JavaScript library
   // for lazy-loading instead.
 }
-lazyloadSupported = false
+// lazyloadSupported = false
 
 export default function(){
 
@@ -24,40 +22,48 @@ export default function(){
     if( IMAGE_LAZYLOAD ){ 
       let imgs = document.querySelectorAll('img')
       imgs.forEach((img)=>{
-        img.setAttribute('loading', 'lazy') 
+        if( ! isAlreadyLazied( img ) ){
+          img.setAttribute('loading', 'lazy')  
+        }
       })
     }
 
     if( IFRAME_LAZYLOAD ){ 
       let iframes = document.querySelectorAll('iframe')
       iframes.forEach((iframe)=>{
-        iframe.setAttribute('loading', 'lazy') 
+        if( ! isAlreadyLazied( iframe ) ){
+          iframe.setAttribute('loading', 'lazy') 
+        }
       })
     }
 
   }else{
 
     if( IMAGE_LAZYLOAD ){ 
-      let imgs = document.querySelectorAll('img:not([data-src])')
+      let imgs = document.querySelectorAll('img')
       imgs.forEach((img)=>{
-        if( img.getAttribute('src') ){
-          img.setAttribute('data-lowsrc', img.getAttribute('src'))
+        if( ! isAlreadyLazied( img ) ){
+          if( img.getAttribute('src') ){
+            img.setAttribute('data-lowsrc', img.getAttribute('src'))
+          }
+          if( img.getAttribute('srcset') ){
+            img.setAttribute('data-lowsrcset', img.getAttribute('srcset'))
+          }
+          img.removeAttribute('src')
+          img.removeAttribute('srcset') 
         }
-        if( img.getAttribute('srcset') ){
-          img.setAttribute('data-lowsrcset', img.getAttribute('srcset'))
-        }
-        img.removeAttribute('src')
-        img.removeAttribute('srcset')
       })
     }
 
     if( IFRAME_LAZYLOAD ){ 
       let iframes = document.querySelectorAll('iframe:not([data-src])')
       iframes.forEach((iframe)=>{
-        if( iframe.getAttribute('src') ){
-          iframe.setAttribute('data-lowsrc', iframe.getAttribute('src'))
+        if( ! isAlreadyLazied( iframe ) ){
+          if( iframe.getAttribute('src') ){
+            iframe.setAttribute('data-lowsrc', iframe.getAttribute('src'))
+          }
+          iframe.removeAttribute('src')
         }
-        iframe.removeAttribute('src')
       })
     }    
 
@@ -70,4 +76,13 @@ export default function(){
 
   }
    
+}
+
+function isAlreadyLazied( el ){
+  if( el.dataset.src || el.dataset.lowsrc || el.dataset['lazy-src'] ){
+    console.log('isAlreadyLazied')
+    return true
+  }else{
+    return false
+  }
 }
