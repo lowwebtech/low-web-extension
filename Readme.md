@@ -40,6 +40,7 @@ Reduce energy consumption and carbon footprint of your internet browsing.
         * get image url from instagram api
     + ~~pinterest~~ (//assets.pinterest.com/js/pinit.js)
     + gravatar
+    + disqus
     + mimic embed styles
     + look for side-effect and add more networks
 - add fallback for blocked ressources

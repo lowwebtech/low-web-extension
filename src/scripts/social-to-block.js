@@ -10,10 +10,8 @@ export default [
 
   ['//connect.facebook.net/en_US/sdk.js', 'facebook.com'],
   ['//connect.facebook.net/en_US/fbevents.js', 'facebook.com'],
-
   ['//connect.facebook.net/fr_FR/sdk.js', 'facebook.com'],
   ['//connect.facebook.net/fr_FR/fbevents.js', 'facebook.com'],
-
 
   ['//platform.twitter.com/widgets.js', 'twitter.com'],
 

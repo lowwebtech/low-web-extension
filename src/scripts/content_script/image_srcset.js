@@ -30,14 +30,18 @@ export default function(){
           if( cleanedSrcset ) img.setAttribute('srcset', cleanedSrcset )
         }
 
-        // also check lazy srcset 
-        // TODO look at the main lazyload packages to find other lazyload implementations
         if( img.dataset.srcset ){
           srcset = img.dataset.srcset
           cleanedSrcset = cleanSrcset( srcset, width )
           if( cleanedSrcset ) img.dataset.srcset = cleanedSrcset
         }
 
+        if( img.dataset['lazy-srcset'] ){
+          srcset = img.dataset['lazy-srcset']
+          cleanedSrcset = cleanSrcset( srcset, width )
+          if( cleanedSrcset ) img.dataset['lazy-srcset'] = cleanedSrcset
+        }
+  
         if( img.dataset.lowsrcset ){
           srcset = img.dataset.lowsrcset
           cleanedSrcset = cleanSrcset( srcset, width )

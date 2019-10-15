@@ -58,7 +58,6 @@ export default function(){
           iframe.setAttribute('data-lowsrc', iframe.getAttribute('src'))
         }
         iframe.removeAttribute('src')
-        iframe.removeAttribute('srcset')
       })
     }    
 
