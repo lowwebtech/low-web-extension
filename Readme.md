@@ -49,7 +49,7 @@ Here is a list of what low WebExtension does:
     + Dailymotion
     + Twitch
     + Facebook
-- add smart srcset 
+- add smart srcset
 - add button to load original srcset
 - rewrite save-data header
 - look at cache-control and expire for header and response requests

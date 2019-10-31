@@ -51,7 +51,7 @@ export default new Vuex.Store({
     block_ads: 0,
 
     video_quality: 'low',
-    video_clicktoload: 1,
+    video_clicktoload: 0,
     video_attributes: 1
     
   },

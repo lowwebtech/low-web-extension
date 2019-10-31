@@ -1,5 +1,5 @@
 {
-  "name": "low-carbon-web",
+  "name": "low-web-extension",
   "description": "Reduce CO2 impact of your navigation",
   "version": null,
   "manifest_version": 2,
@@ -19,7 +19,7 @@
     "declarativeContent"
   ],
   "browser_action": {
-    "default_title": "low-carbon-web",
+    "default_title": "low-web-extension",
     "default_popup": "popup/popup.html"
   },
   "background": {
@@ -36,7 +36,8 @@
     }
   ],
   "web_accessible_resources": [
-    "options.js"
+    "options.js",
+    "players/*"
   ],
   "options_ui": {
     "page": "options/options.html"

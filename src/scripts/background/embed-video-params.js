@@ -8,6 +8,8 @@ import isWebpage from '../utils/is-webpage'
 // TODO check if quality params work
 export function embedVideoParams(){
 
+  console.log('video_clicktoload', store.getters.video_clicktoload)
+
   chrome.tabs.onUpdated.addListener(
     function(tabId, changeInfo, tab){
       if( store.getters.video_clicktoload ) {
@@ -64,9 +66,9 @@ export function embedVideoParams(){
           params['queue-enable'] = false
         }
         if( store.getters.video_quality == 'low' ){
-          params.quality = 240
+          params.quality = '480'
         }else{
-          params.quality = 380
+          params.quality = '480'
         }
         break;
       case "player.vimeo.com":
@@ -94,9 +96,11 @@ export function embedVideoParams(){
       if( store.getters.video_clicktoload ){
         if( params.lowweb == 'AxkdIEKx' ){
           params.autoplay = true
-        }else{
-          o.cancel = true
         }
+
+      //    else{
+      //     o.cancel = true
+      //   }
       } 
     }
 
