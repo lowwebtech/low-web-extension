@@ -32,6 +32,7 @@ export function embedVideoParams(){
     let params = queryString.parse(url.search)
 
     let loop
+    // TODO disable quality parameters that doesn't work
     switch( url.hostname ){
       case "www.youtube.com":
       case "youtube.com":
@@ -41,6 +42,9 @@ export function embedVideoParams(){
           params.lowweb == 'AxkdIEKx' ? params.autoplay = 1 : params.autoplay = 0 
         }
 
+        /* 
+        quality parameter doesn't seems to work
+        */
         if( store.getters.video_quality == 'low' ){
           params.vq = 'small' 
         }else{
@@ -52,6 +56,10 @@ export function embedVideoParams(){
           params.loop = false
           params.lowweb == 'AxkdIEKx' ? params.autoplay = true : params.autoplay = false
         }
+
+        /* 
+        quality parameter doesn't seems to work
+        */
         if( store.getters.video_quality == 'low' ){
           params.quality = 'low' 
         }else{
@@ -65,10 +73,14 @@ export function embedVideoParams(){
           params.loop = false
           params['queue-enable'] = false
         }
+
+        /* 
+        quality parameter doesn't seems to work
+        */
         if( store.getters.video_quality == 'low' ){
-          params.quality = '480'
+          params.quality = '240'
         }else{
-          params.quality = '480'
+          params.quality = '380'
         }
         break;
       case "player.vimeo.com":
@@ -91,6 +103,7 @@ export function embedVideoParams(){
 
     if( originalSearch != newSearch ){
       url.search = newSearch
+      console.log(url.search)
       o.redirectUrl = url.href
     }else{      
       if( store.getters.video_clicktoload ){

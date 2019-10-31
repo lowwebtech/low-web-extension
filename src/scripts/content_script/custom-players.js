@@ -1,7 +1,4 @@
-// import YoutubePlayer from './players/Youtube.js'
-
 export default function(){
-  console.log('customPlayers')
 
   let iframes = document.querySelectorAll('iframe')
   let script
@@ -10,7 +7,6 @@ export default function(){
   iframes.forEach((iframe)=>{
 
     if( iframe.src.indexOf('youtube.com/embed') != -1 ){
-      // new YoutubePlayer( iframe )
 
       script = document.createElement('script');
       script.type = "text/javascript";
@@ -19,10 +15,16 @@ export default function(){
       containerScript.appendChild(script);
     }else if( iframe.src.indexOf( 'dailymotion.com/embed/video' ) != -1 ){
 
-      console.log('dailymotion')
       script = document.createElement('script');
       script.type = "text/javascript";
       script.src = chrome.extension.getURL('players/Dailymotion.js');
+
+      containerScript.appendChild(script);
+    }else if( iframe.src.indexOf( 'player.twitch.tv' ) != -1 ){
+
+      script = document.createElement('script');
+      script.type = "text/javascript";
+      script.src = chrome.extension.getURL('players/Twitch.js');
 
       containerScript.appendChild(script);
     }

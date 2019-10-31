@@ -36,23 +36,23 @@ class DailymotionPlayer{
 
     // hack
     // can't setQuality if .quality is undefined
-    // TODO
-    var qualityNull = true
+    // TODO find better solution
+    var quality = true
     this.player.addEventListener('qualitiesavailable', ()=>{
-      // setTimeout(ff, 300)
+      
       setInterval(()=>{
-        if( qualityNull ){
+        if( quality ){
           if( this.player.quality != undefined ){
-            console.log("quality not null !!!")
-            qualityNull = false
+
+            quality = false
             
-            let q = '144'
-            this.player.setQuality(q)
+            this.player.setQuality('144')
             this.player.seek(this.player.currentTime)
 
           }
         }
       }, 100)
+      // hack loop and test player.quality is not undefined
     })
   }
 }
@@ -69,6 +69,8 @@ class DailymotionPlayer{
   }
   
   var tag = document.createElement('script');
+  // TODO async or not ?
+  tag.async = true
   tag.src = "https://api.dmcdn.net/all.js";
   document.body.appendChild(tag)
 

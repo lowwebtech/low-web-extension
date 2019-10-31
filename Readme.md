@@ -11,15 +11,18 @@ The Internet consumes about 8% of the electricity produced worldwide and emits 3
 
 This extension aims to reduce our data and limit the energy consumption of our Internet browsing.
 
-:warning: This extension affects electricity consumption when using the Internet but not during manufacturing. Manufacturing is the most energy consuming and polluting stage. So let's keep our phones and computers as long as possible !
-
+:warning::warning::warning: 
+This extension affects electricity consumption when browsing the Internet but not during manufacturing. Manufacturing is the most energy consuming and polluting stage. So let's keep our phones and computers as long as possible !
+:warning::warning::warning:
 
 
 ## How ?
 
 A browser extension allows you to block resources and modify the content of a page. So we can optimize some content, block what is not necessary and thus limit the number of requests, weight and computer operations.
 
-Here is a list of what low WebExtension does:
+First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrome](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm), [Firefox](https://addons.mozilla.org/fr/firefox/addon/ublock-origin/)) or a browser like [Brave](https://brave.com/). 
+
+Then, here is a list of what low WebExtension does for reducing bandwidth consumption which means less energy consumption.
 - image : 
     + add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))
     + remove biggest or hidpi images from srcset
@@ -27,28 +30,28 @@ Here is a list of what low WebExtension does:
 - video :
     + add or remove attributes html5 video (preload="none", autoplay, loop)
     + click to load/play embed videos (Youtube, Vimeo, Dailymotion, Twitch, Facebok)
-    + update embed url : no loop, no autoplay, low quality (if available)
+    + update video embed url : no loop, no autoplay, low quality (if available)
+    + custom player for low quality : 
+        * Vimeo - quality set via url parameter (`quality`)
+        * Dailymotion - quality set via Dailymotion API
+        * ~~Youtube~~ - doesn't seem to work via API or url parameter
+        * ~~Twitch~~ - doesn't seem to work via API or url parameter
+        * ~~Facebook~~ - not possible
     + block all videos (disabled)
 - iframe :
     + add lazyloading to all iframes (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))
 - fonts : 
     + block all fonts (disabled)
-- disable ads (disabled, use preferably Ad Blocker)
+- add save-data header (currently based on [Save-data: on](https://chrome.google.com/webstore/detail/save-data-on/nholpkfnmjbinlhcfihkhiehdaohlibg))
 - disable social widgets (facebook, twitter, instagram, pinterest)
 - block image avatars (disqus, gravatar)
-- add save-data header (currently based on [Save-data: on](https://chrome.google.com/webstore/detail/save-data-on/nholpkfnmjbinlhcfihkhiehdaohlibg))
 - disable css transition and animation (disabled) (:warning: break transitionend / animationend events :warning:)
+- ~~disable ads~~ (disabled, use preferably uBlock)
 
 
 
 
 ### TODO
-- create custom optimised video players and replace all instances of original player
-    + Youtube
-    + Vimeo
-    + Dailymotion
-    + Twitch
-    + Facebook
 - add smart srcset
 - add button to load original srcset
 - rewrite save-data header
