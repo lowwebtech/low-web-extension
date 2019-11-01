@@ -92,6 +92,13 @@ export function embedVideoParams(){
         }else{
           params.quality = '540p'
         }
+
+        // TODO
+        // BUG 
+        //
+        // loop=true&autoplay=1
+        // loop=false&autoplay=false&quality=360p
+        
         break;
     }
 

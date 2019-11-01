@@ -24,12 +24,11 @@ First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrom
 
 Then, here is a list of what low WebExtension does for reducing bandwidth consumption which means less energy consumption.
 - image : 
-    + remove biggest or hidpi images from srcset
-    + ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ (doesn't work) *(not working)*
-    + block all images *(disabled)*
+    + ~~remove biggest or hidpi images from srcset~~ *(not working)*
+    + ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working)*
+    + block format image *(default:false)*
 - video :
     + add or remove attributes html5 video (preload="none", autoplay, loop)
-    + click to load/play embed videos (Youtube, Vimeo, Dailymotion, Twitch, Facebook) *(disabled)*
     + update video embed url : no loop, no autoplay, low quality (if available)
     + custom player for low quality : 
         * Vimeo - quality set via url parameter (`quality`)
@@ -37,16 +36,17 @@ Then, here is a list of what low WebExtension does for reducing bandwidth consum
         * ~~Youtube~~ - doesn't seem to work via API or url parameter
         * ~~Twitch~~ - doesn't seem to work via API or url parameter
         * ~~Facebook~~ - not possible
-    + block all videos *(disabled)*
+    + click to load/play embed videos (Youtube, Vimeo, Dailymotion, Twitch, Facebook) *(default:false)*
+    + block format video *(default:false)*
 - iframe :
     + ~~add lazyloading to all iframes (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working)*
 - fonts : 
-    + block all fonts *(disabled)*
+    + block format font *(default:false)*
 - add save-data header (currently based on [Save-data: on](https://chrome.google.com/webstore/detail/save-data-on/nholpkfnmjbinlhcfihkhiehdaohlibg))
-- disable social widgets (facebook, twitter, instagram, pinterest)
+- block social widgets (facebook, twitter, instagram, pinterest)
 - block image avatars (disqus, gravatar)
 - disable css transition and animation *(disabled)* (:warning: break transitionend / animationend events :warning:)
-- stop &lt;marquee&gt; animations :P
+- disable &lt;marquee&gt; animations :P
 - ~~disable ads~~ *(disabled, use preferably uBlock)*
 
 

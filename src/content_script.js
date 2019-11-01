@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // store.commit('BLOCK_SOCIAL', 1)
   // console.log(store.getters.block_social)
 
-  imageSrcset()
+  // imageSrcset()
   // lazyload()
   stopMarquee()
   videoAttribute()

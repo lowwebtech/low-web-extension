@@ -156,7 +156,7 @@ function cleanSrcset( srcset, width, box ){
       break;
   }
 
-  cleanedSrcset = smart( parsed, box )
+  cleanedSrcset = smallest( parsed, width )
 
   if( cleanedSrcset ){
     return srcsetUtil.stringify(cleanedSrcset)
