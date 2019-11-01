@@ -58,6 +58,7 @@ Then, here is a list of what low WebExtension does for reducing bandwidth consum
 - add metrics
 - add smart srcset
 - look at Netflix
+- build injected script
 - display advice/tips to reduce bandwidth for main websites
 - add button to load original srcset
 - rewrite save-data header

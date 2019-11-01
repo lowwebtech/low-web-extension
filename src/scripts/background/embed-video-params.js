@@ -109,7 +109,6 @@ export function embedVideoParams(){
 
     if( originalSearch != newSearch ){
       url.search = newSearch
-      console.log(url.search)
       o.redirectUrl = url.href
     }else{      
       if( store.getters.video_clicktoload ){
