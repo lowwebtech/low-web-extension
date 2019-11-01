@@ -46,13 +46,17 @@ Then, here is a list of what low WebExtension does for reducing bandwidth consum
 - disable social widgets (facebook, twitter, instagram, pinterest)
 - block image avatars (disqus, gravatar)
 - disable css transition and animation (disabled) (:warning: break transitionend / animationend events :warning:)
+- stop &lt;marquee&gt; animations :P
 - ~~disable ads~~ (disabled, use preferably uBlock)
 
 
 
 
 ### TODO
+- fix/add options
+- extension icon
 - add smart srcset
+- display tips to reduce bandwidth for main websites
 - add button to load original srcset
 - rewrite save-data header
 - look at cache-control and expire for header and response requests
@@ -66,10 +70,10 @@ Then, here is a list of what low WebExtension does for reducing bandwidth consum
 - social
     + facebook regexp for country flag en_US/fr_FR....
     + mimic embed styles
-    + replicate and optimised all widgets
     + look for side-effect
-    + add more networks
-- add fallback for blocked ressources (:warning: cancelling a request is more optimised than redirecting to fallback ressources - redirectUrl)
+- add more social networks
+- 
+- add fallback for blocked ressources
 - take into account connexion network type (wifi/ethernet or 3G/4G)
 - take into account carbon footprint of user's electricity (-> co2signal.com)
 - show advices for websites

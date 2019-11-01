@@ -6,6 +6,7 @@ import imageSrcset from './scripts/content_script/image_srcset'
 import lazyload from './scripts/content_script/lazyload-attribute'
 import videoAttribute from './scripts/content_script/video-attributes'
 import clickToLoadVideo from './scripts/content_script/click-to-load-video'
+import stopMarquee from './scripts/content_script/stop-marquee'
 
 import removeSocial from './scripts/content_script/remove-social'
 import customPlayers from './scripts/content_script/custom-players'
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   imageSrcset()
   lazyload()
+  stopMarquee()
   videoAttribute()
   clickToLoadVideo()
   removeSocial()

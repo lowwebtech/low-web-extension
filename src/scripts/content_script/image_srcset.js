@@ -8,8 +8,13 @@ export default function(){
 
   if( IMAGE_SRCSET > 0 ){
     const imgs = document.querySelectorAll('img')
-    let cleanedSrcset
+    let cleanedSrcset, box
+    let boxes = []
     imgs.forEach((img)=>{
+      boxes.push( img.getBoundingClientRect() )
+    })
+
+    imgs.forEach((img, index)=>{
       
       // check that img is not already loaded
       // TODO
@@ -23,28 +28,30 @@ export default function(){
           width = img.width
         }
 
+        box = boxes[index]
+
         // check srcset
         if( img.getAttribute('srcset') != null ){
           srcset = img.getAttribute('srcset')
-          cleanedSrcset = cleanSrcset( srcset, width )
+          cleanedSrcset = cleanSrcset( srcset, width, box )
           if( cleanedSrcset ) img.setAttribute('srcset', cleanedSrcset )
         }
 
         if( img.dataset.srcset ){
           srcset = img.dataset.srcset
-          cleanedSrcset = cleanSrcset( srcset, width )
+          cleanedSrcset = cleanSrcset( srcset, width, box )
           if( cleanedSrcset ) img.dataset.srcset = cleanedSrcset
         }
 
         if( img.dataset['lazy-srcset'] ){
           srcset = img.dataset['lazy-srcset']
-          cleanedSrcset = cleanSrcset( srcset, width )
+          cleanedSrcset = cleanSrcset( srcset, width, box )
           if( cleanedSrcset ) img.dataset['lazy-srcset'] = cleanedSrcset
         }
   
         if( img.dataset.lowsrcset ){
           srcset = img.dataset.lowsrcset
-          cleanedSrcset = cleanSrcset( srcset, width )
+          cleanedSrcset = cleanSrcset( srcset, width, box )
           if( cleanedSrcset ) img.dataset.lowsrcset = cleanedSrcset
         }
 
@@ -54,7 +61,7 @@ export default function(){
   } 
 }
 
-function noRetinaSrcset( srcset ){
+function noRetina( srcset ){
   
   for ( let i = srcset.length - 1; i >= 0; i -= 1) {
     if( srcset[i].density && srcset[i].density > 1 ){
@@ -65,37 +72,59 @@ function noRetinaSrcset( srcset ){
   return srcset
 }
 
-function smallestSrcset( srcset, width ){
+function smart( srcset, box ){
+
+  srcset = noRetina( srcset )
+  srcset = sortSrcset( srcset )
+
+  let newSrcset = [srcset[0]]
+  
+  srcset.forEach((o, i)=>{
+
+    if( i > 0 ){
+      if( o.width ){
+        let dpiWidth = box.width * window.devicePixelRatio
+        if( dpiWidth > o.width ){
+          newSrcset.push(o)
+        }
+      } 
+    }
+
+  })
+
+  return newSrcset
+
+}
+
+function compare( a, b ) {
+  if ( a.width < b.width ){
+    return -1;
+  }
+  if ( a.width > b.width ){
+    return 1;
+  }
+  return 0;
+}
+
+function sortSrcset( srcset ){
+  return srcset.sort( compare )
+}
+
+function smallest( srcset, width ){
 
   let mini
   let miniWidth = width, miniDensity
 
+  srcset = noRetina(srcset)
+
   srcset.forEach((o)=>{
     if( mini ){
-      let w
-      if( o.density && o.width ){
-        w = o.density * o.width
-      }else if( o.width ){
-        w = o.width
-      }
-
-      if( w ){
-        if( w < miniWidth ){
-          mini = o
-        }
-      }else{
-        if( o.density && o.density < miniDensity ){
-          mini = o
-        }
+      let w = o.width
+      if( w && w < miniWidth ){
+        mini = o
       }
     }else{
       mini = o
-      
-      if( o.density ){
-        miniDensity = o.density
-      }else{
-        miniDensity = 1
-      }
 
       if( o.width ){
         miniWidth = o.width
@@ -104,27 +133,30 @@ function smallestSrcset( srcset, width ){
   })
 
   if( mini && mini.url && mini.url != '' ){
-    let aMini = []
-    aMini.push(mini)
-    return aMini
+    return [mini]
   }else{
     return false
   }
 }
 
 // remove all images except the smallest
-function cleanSrcset( srcset, width ){
+function cleanSrcset( srcset, width, box ){
   const parsed = srcsetUtil.parse(srcset);
   
   let cleanedSrcset
   switch( parseInt(store.getters.image_srcset) ){
     case 1:
-      cleanedSrcset = noRetinaSrcset( parsed )
+      cleanedSrcset = noRetina( parsed )
       break;
     case 2:
-      cleanedSrcset = smallestSrcset( parsed, width )
+      cleanedSrcset = smallest( parsed, width )
+      break;
+    case 3:
+      cleanedSrcset = smart( parsed, box )
       break;
   }
+
+  cleanedSrcset = smart( parsed, box )
 
   if( cleanedSrcset ){
     return srcsetUtil.stringify(cleanedSrcset)

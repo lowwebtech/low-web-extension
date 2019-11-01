@@ -34,8 +34,10 @@ export default function(){
 }
 
 export function videoBlocked( url ){
-  for( let i = 0, lg = videoToBlock.length; i<lg; i++ ){ 
-    if( url.indexOf( videoToBlock[i] ) != -1 ){
+
+  const keys = Object.keys(videoToBlock)
+  for (const key of keys) {
+    if( url.indexOf( videoToBlock[key].url ) != -1 ){
       return true
     }
   }

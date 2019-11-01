@@ -5,6 +5,7 @@
   "manifest_version": 2,
   "icons": {
     "48": "icons/icon_48.png",
+    "96": "icons/icon_96.png",
     "128": "icons/icon_128.png"
   },
   "permissions": [
@@ -19,6 +20,7 @@
     "declarativeContent"
   ],
   "browser_action": {
+    "default_icon": "icons/icon_32.png",
     "default_title": "low-web-extension",
     "default_popup": "popup/popup.html"
   },

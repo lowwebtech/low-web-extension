@@ -1,3 +1,5 @@
+import videoToBlock from '../video-to-block'
+
 export default function(){
 
   let iframes = document.querySelectorAll('iframe')
@@ -6,27 +8,20 @@ export default function(){
 
   iframes.forEach((iframe)=>{
 
-    if( iframe.src.indexOf('youtube.com/embed') != -1 ){
+    const keys = Object.keys(videoToBlock)
+    
+    for (const key of keys) {
+      let video = videoToBlock[key]
+      if( iframe.src.indexOf(video.url) != -1 ){
+        if( video.js ){
+          script = document.createElement('script');
+          script.type = "text/javascript";
+          script.src = chrome.extension.getURL(video.js);
 
-      script = document.createElement('script');
-      script.type = "text/javascript";
-      script.src = chrome.extension.getURL('players/Youtube.js');
-
-      containerScript.appendChild(script);
-    }else if( iframe.src.indexOf( 'dailymotion.com/embed/video' ) != -1 ){
-
-      script = document.createElement('script');
-      script.type = "text/javascript";
-      script.src = chrome.extension.getURL('players/Dailymotion.js');
-
-      containerScript.appendChild(script);
-    }else if( iframe.src.indexOf( 'player.twitch.tv' ) != -1 ){
-
-      script = document.createElement('script');
-      script.type = "text/javascript";
-      script.src = chrome.extension.getURL('players/Twitch.js');
-
-      containerScript.appendChild(script);
+          containerScript.appendChild(script);
+        }
+        break;
+      }
     }
   })
 }

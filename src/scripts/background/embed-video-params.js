@@ -32,7 +32,6 @@ export function embedVideoParams(){
     let params = queryString.parse(url.search)
 
     let loop
-    // TODO disable quality parameters that doesn't work
     switch( url.hostname ){
       case "www.youtube.com":
       case "youtube.com":
@@ -45,11 +44,11 @@ export function embedVideoParams(){
         /* 
         quality parameter doesn't seems to work
         */
-        if( store.getters.video_quality == 'low' ){
-          params.vq = 'small' 
-        }else{
-          params.vq = 'medium'
-        }
+        // if( store.getters.video_quality == 'low' ){
+        //   params.vq = 'small' 
+        // }else{
+        //   params.vq = 'medium'
+        // }
         break;
       case "player.twitch.tv":
         if( store.getters.video_attributes ){
@@ -60,11 +59,11 @@ export function embedVideoParams(){
         /* 
         quality parameter doesn't seems to work
         */
-        if( store.getters.video_quality == 'low' ){
-          params.quality = 'low' 
-        }else{
-          params.quality = 'medium'
-        }
+        // if( store.getters.video_quality == 'low' ){
+        //   params.quality = 'low' 
+        // }else{
+        //   params.quality = 'medium'
+        // }
         break;
       case "www.dailymotion.com":
       case "*.dailymotion.com":
@@ -77,11 +76,11 @@ export function embedVideoParams(){
         /* 
         quality parameter doesn't seems to work
         */
-        if( store.getters.video_quality == 'low' ){
-          params.quality = '240'
-        }else{
-          params.quality = '380'
-        }
+        // if( store.getters.video_quality == 'low' ){
+        //   params.quality = '240'
+        // }else{
+        //   params.quality = '380'
+        // }
         break;
       case "player.vimeo.com":
         if( store.getters.video_attributes ){
