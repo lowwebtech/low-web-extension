@@ -46,7 +46,7 @@ class DailymotionPlayer{
 
             quality = false
             
-            this.player.setQuality('144')
+            this.player.setQuality('380')
             this.player.seek(this.player.currentTime)
 
           }

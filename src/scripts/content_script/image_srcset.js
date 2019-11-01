@@ -78,7 +78,7 @@ function smart( srcset, box ){
   srcset = sortSrcset( srcset )
 
   let newSrcset = [srcset[0]]
-  
+
   srcset.forEach((o, i)=>{
 
     if( i > 0 ){

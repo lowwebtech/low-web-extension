@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // console.log(store.getters.block_social)
 
   imageSrcset()
-  lazyload()
+  // lazyload()
   stopMarquee()
   videoAttribute()
   clickToLoadVideo()
