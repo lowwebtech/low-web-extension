@@ -33,7 +33,7 @@
     {
       "matches": ["<all_urls>"],
       "js": ["content_script.js"],
-      "css": ["css/injected-style.css"],
+      "css": ["content_script.css"],
       "run_at": "document_start"
     }
   ],

@@ -13,10 +13,10 @@ export default function(){
     for (const key of keys) {
       let video = videoToBlock[key]
       if( iframe.src.indexOf(video.url) != -1 ){
-        if( video.js ){
+        if( video.player ){
           script = document.createElement('script');
           script.type = "text/javascript";
-          script.src = chrome.extension.getURL(video.js);
+          script.src = chrome.extension.getURL(video.player);
 
           containerScript.appendChild(script);
         }

@@ -57,13 +57,19 @@ Then, here is a list of what low WebExtension does for reducing bandwidth consum
 - write tests
 - extension icon
 - add metrics
+- images :
+    + serviceworker
+    + giphy
+    + cloudinary
+    + gif click to play
 - click-to-load :
     + add logos
     + vimeo image
     + get title via api
+    + fix css / computed styles
 - netflix
 - build injected script 
-- audit the extension to limit size and processes
+- audit the extension to limit size and processes (reflow)
 - display advice/tips to reduce bandwidth for main websites
 - add button to load original srcset (not need yet)
 - rewrite save-data header

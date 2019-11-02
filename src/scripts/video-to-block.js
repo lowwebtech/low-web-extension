@@ -5,7 +5,7 @@ export default {
     url: 'youtube.com/embed', 
     image: 'https://img.youtube.com/vi/##ID##/mqdefault.jpg',
     icon: '<svg enable-background="new 0 0 68 48" viewBox="0 0 68 48" height="68" width="48"  xmlns="http://www.w3.org/2000/svg"><path d="m66.6 7.5c-.8-2.9-3.1-5.3-6-6.1-5.4-1.4-26.6-1.4-26.6-1.4s-21.2 0-26.6 1.5c-2.9.8-5.3 3.1-6 6.1-1.4 5.3-1.4 16.4-1.4 16.4s0 11.1 1.5 16.5c.8 2.9 3.1 5.3 6 6 5.3 1.5 26.5 1.5 26.5 1.5s21.2 0 26.6-1.4c2.9-.8 5.3-3.1 6-6 1.4-5.5 1.4-16.6 1.4-16.6s0-11.1-1.4-16.5z" fill="#212121"/><path d="m27 34.1 17.8-10.1-17.8-10.1z" fill="#fff"/></svg>'
-    // js: 'players/Youtube.js'
+    // player: 'players/Youtube.js'
   },
   vimeo: {
     id: 'vimeo',
@@ -16,7 +16,7 @@ export default {
   dailymotion:{
     id: 'dailymotion',
     url: 'dailymotion.com/embed/video', 
-    js: 'players/Dailymotion.js',
+    player: 'players/Dailymotion.js',
     image: 'https://www.dailymotion.com/thumbnail/video/##ID##',
     icon: '<svg enable-background="new 0 0 80 80" height="80" width="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><g fill="#fff"><path d="m40.1 80c-21.8 0-40.3-18.5-40.1-40.3.3-21.4 17.7-39.2 38.8-39.7 22.2-.4 40.6 17 41.1 39.1.5 21.9-17.9 40.8-39.8 40.9" opacity=".5"/><path d="m30.8 40.3c0-4.4 0-8.8 0-13.2 0-1 .4-1.6 1.3-1.6.3 0 .6.1 1 .3 7.4 4.1 14.8 8.3 22.2 12.6.3.2.7.4 1.1.6.5.3.9.7.9 1.3s-.4 1-.9 1.3c-3.7 2.1-7.3 4.1-11 6.3-4.1 2.3-8.1 4.6-12.2 6.9 0 0-.2.1-.2.1-1.2.6-2.2 0-2.2-1.3 0-2.2 0-4.4 0-6.6z"/></g></svg>'
   },
@@ -29,7 +29,8 @@ export default {
   twitch:{
     id: 'twitch',
     url: 'player.twitch.tv', 
+    // player: 'players/Twitch.js'
     icon: '<svg class="player-icon-play" id="icon_play" viewBox="0 0 30 30" width="120" height="120" xmlns="http://www.w3.org/2000/svg"><path d="M9 22.066V7.934a.5.5 0 0 1 .777-.416L21 15 9.777 22.482A.5.5 0 0 1 9 22.066z" fill="#FFF"></path></svg>'
-    // js: 'players/Twitch.js'
+    
   }
 }

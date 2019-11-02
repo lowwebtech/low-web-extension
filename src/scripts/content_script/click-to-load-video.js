@@ -10,6 +10,7 @@ export default function(){
   if( store.getters.video_clicktoload ){
 
     let iframes = document.querySelectorAll('iframe')
+    let tempIframes = []
 
     iframes.forEach((iframe)=>{
       let src = iframe.getAttribute('src')
@@ -76,6 +77,7 @@ export default function(){
         tempEl.classList.add('lowweb__click-to-load')
         tempEl.classList.add('lowweb__click-to-load--'+data.id)
 
+        tempIframes.push(tempEl)
 
         // TODO apply computed styles of the iframe
         // TODO need to share same window
@@ -100,13 +102,18 @@ export default function(){
 
         // cloned.classList.add('lowweb__click-to-load')
         parent.replaceChild(tempEl, iframe)
-
+        
       }
 
       // parent.removeChild(iframe)
 
     })
 
+    // TODO remove and get computed styles
+    tempIframes.forEach((el)=>{
+      let box = el.getBoundingClientRect()
+      if( box.height == 0 ) el.style.position = 'absolute'
+    })
   } 
 }
 

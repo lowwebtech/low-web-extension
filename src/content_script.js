@@ -1,3 +1,5 @@
+import './css/injected-style.scss'
+
 global.browser = require('webextension-polyfill');
 
 import store from './store';
@@ -18,8 +20,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // store.commit('BLOCK_SOCIAL', 1)
   // console.log(store.getters.block_social)
 
+  // not working due to browser restriction
   // imageSrcset()
   // lazyload()
+  
   stopMarquee()
   videoAttribute()
   clickToLoadVideo()
