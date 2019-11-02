@@ -16,54 +16,41 @@ export default function(){
       let parent = iframe.parentNode
       let wrapper, id, url
 
+      let cloned = iframe.cloneNode()
+
       if( src && videoBlocked( src ) ){
-        iframe.dataset.src = src
-        iframe.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=='
+        cloned.dataset.src = src
+        cloned.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=='
 
-        let wrapper = document.createElement('div');
-        wrapper.classList.add('lowweb__click-to-load')
-        wrapper.appendChild(iframe)
-        parent.appendChild(wrapper); 
-      
-        wrapper.addEventListener('click', ()=>{
-          wrapper.classList.add('lowweb__click-to-load--clicked')
-          iframe.src = bypassUrlBlock( iframe.dataset.src )
-        })
+        let data 
 
-        // add image
-        // https://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
-
-
-        let imageUrl
-
+        // youtube
         if( src.indexOf( videoToBlock.youtube.url ) != -1 ){
           
+          data = videoToBlock.youtube
           id = getYoutubeId( src )
-          if( id ){
-            imageUrl = videoToBlock.youtube.image
-          }
-
+          
+        // dailymotion
         }else if( src.indexOf( videoToBlock.dailymotion.url ) != -1 ){
 
+          data = videoToBlock.dailymotion
           id = getDailymotionId( src )
-          if( id ){
-            imageUrl = videoToBlock.dailymotion.image
-          }
 
+        // facebook
         }else if( src.indexOf( videoToBlock.facebook.url ) != -1 ){
-
+          
+          data = videoToBlock.facebook
           id = getFacebookId( src )
-          if( id ){
-            imageUrl = videoToBlock.facebook.image
-          }
-
-          /*
-          https://www.facebook.com/ThalassaOff/videos/1320142364777513/&width=500&show_text=true&appId=855770274521224&height=672
-          */
+          
+        }else if( src.indexOf( videoToBlock.twitch.url ) != -1 ) {
+          
+          data = videoToBlock.twitch
 
         }else if( src.indexOf('vimeo.com') != -1 ){
+          
+          data = videoToBlock.vimeo
           /*
-          // TODO to work this script need to be injected to share same window
+          // TODO this script need to be injected to share same window
           id = '156045670'
         
           console.log(window)
@@ -75,25 +62,52 @@ export default function(){
           var script = document.createElement( 'script' );
           script.src = "https://vimeo.com/api/v2/video/" + id + ".json?callback=showThumb";
 
-          iframe.parentNode.insertBefore(script, iframe)
+          cloned.parentNode.insertBefore(script, cloned)
           */
         }
 
-        // console.log(imageUrl, id)
+        // let wrapper = document.createElement('div');
+        // wrapper.classList.add('lowweb__click-to-load')
+        // wrapper.appendChild(cloned)
+        // parent.appendChild(wrapper); 
+      
+        let tempEl = document.createElement('div')
+        tempEl.classList = iframe.classList
+        tempEl.classList.add('lowweb__click-to-load')
+        tempEl.classList.add('lowweb__click-to-load--'+data.id)
 
-        if( imageUrl && id ){
-          imageUrl = imageUrl.replace('##ID##', id)
-          wrapper.style.backgroundImage = 'url('+imageUrl+')'
+
+        // TODO apply computed styles of the iframe
+        // TODO need to share same window
+        tempEl.style.width = iframe.width + 'px'
+        tempEl.style.height = iframe.height + 'px'
+
+        // button
+        if( data.icon ){
+          tempEl.innerHTML = data.icon 
+        }
+        // background image preview
+        if( id ){
+          tempEl.style.backgroundImage = 'url('+ data.image.replace('##ID##', id) +')'
         }
 
+        tempEl.addEventListener('click', ()=>{
+          // cloned.classList.add('lowweb__click-to-load--clicked')
+          cloned.src = bypassUrlBlock( cloned.dataset.src )
+          parent.replaceChild(cloned, tempEl)
+        })
+
+
+        // cloned.classList.add('lowweb__click-to-load')
+        parent.replaceChild(tempEl, iframe)
+
       }
+
+      // parent.removeChild(iframe)
+
     })
 
   } 
-}
-
-function createWrapper(){
-  return wrapper
 }
 
 export function videoBlocked( url ){

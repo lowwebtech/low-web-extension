@@ -23,21 +23,21 @@ A browser extension allows you to block resources and modify the content of a pa
 First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrome](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm), [Firefox](https://addons.mozilla.org/fr/firefox/addon/ublock-origin/)) or a browser like [Brave](https://brave.com/). 
 
 Then, here is a list of what low WebExtension does for reducing bandwidth consumption which means less energy consumption.
-- image : 
-    + ~~remove biggest or hidpi images from srcset~~ *(not working)*
-    + ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working)*
-    + block format image *(default:false)*
 - video :
     + add or remove attributes html5 video (preload="none", autoplay, loop)
     + update video embed url : no loop, no autoplay, low quality (if available)
     + custom player for low quality : 
         * Vimeo - quality set via url parameter (`quality`)
         * Dailymotion - quality set via Dailymotion API
-        * ~~Youtube~~ - doesn't seem to work via API or url parameter
-        * ~~Twitch~~ - doesn't seem to work via API or url parameter
+        * ~~Youtube~~ - quality parameter doesn't seem to work via API or url parameter
+        * ~~Twitch~~ - quality parameter doesn't seem to work via API or url parameter
         * ~~Facebook~~ - not possible
-    + click to load/play embed videos (Youtube, Vimeo, Dailymotion, Twitch, Facebook) *(default:false)*
+    + click to load/play embedded videos (Youtube, Vimeo, Dailymotion, Twitch, Facebook), it only loads iframe (and tons of script) when you click and play it
     + block format video *(default:false)*
+- image : 
+    + ~~remove biggest or hidpi images from srcset~~ *(not working)*
+    + ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working)*
+    + block format image *(default:false)*
 - iframe :
     + ~~add lazyloading to all iframes (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working)*
 - fonts : 
@@ -54,20 +54,24 @@ Then, here is a list of what low WebExtension does for reducing bandwidth consum
 
 ### TODO
 - fix/add options
+- write tests
 - extension icon
 - add metrics
-- add smart srcset
-- look at Netflix
-- build injected script
+- click-to-load :
+    + add logos
+    + vimeo image
+    + get title via api
+- netflix
+- build injected script 
+- audit the extension to limit size and processes
 - display advice/tips to reduce bandwidth for main websites
-- add button to load original srcset
+- add button to load original srcset (not need yet)
 - rewrite save-data header
 - look at cache-control and expire for header and response requests
 - disable unoptimised hide/show jQuery, gsap etc...
 - disable tracking
 - ads :
     + need to be optimised (with WebAssembly)
-    + detect main adblocker
 - fonts
     + remove call to fonts.googleapis.com, fontawesome.com and other services
 - social
