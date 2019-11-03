@@ -9,6 +9,7 @@ import lazyload from './scripts/content_script/lazyload-attribute'
 import videoAttribute from './scripts/content_script/video-attributes'
 import clickToLoadVideo from './scripts/content_script/click-to-load-video'
 import stopMarquee from './scripts/content_script/stop-marquee'
+import giPlayer from './scripts/content_script/gif-player'
 
 import removeSocial from './scripts/content_script/remove-social'
 import customPlayers from './scripts/content_script/custom-players'
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // lazyload()
   
   stopMarquee()
+  giPlayer()
   videoAttribute()
   clickToLoadVideo()
   removeSocial()

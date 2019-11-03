@@ -1,128 +1,148 @@
-.lowweb__click-to-load{
-  background: #000;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  z-index: 2;
-
-  iframe{
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  svg{
-    display: block;
-    position: absolute;
-    z-index: 100;
-  }
-
-  &--youtube {
-    svg{
-      top: 50%;
-      left: 50%;
-      width: 88px;
-      height: 62px;
-      margin-top: -44px;
-      margin-left: -31px;
+.lowweb{
+  &__gif-player{
+    position: relative;
+    &--hided{
+      visibility: hidden;
     }
-    path::first-child{
-      opacity: 0.7
-    }
-    &:hover path::first-child{
-      opacity: 1;
-      fill: red;
-    }
-  }
-
-  &--dailymotion{
-    &:before{
+    canvas{
       position: absolute;
-      content: '';
-      width: 100%;
-      height: 100%;
       top: 0;
       left: 0;
-      background-color: black;
-      opacity: 0.5;
     }
     svg{
-      top: 50%;
-      left: 45px;
-      width: 80px;
-      height: 80px;
-      margin-top: -40px;
-    }
-    &:hover:before{
-      opacity: 0;
-    }
-  }
-
-  &--vimeo {
-    svg{
+      position: absolute;
+      top: 10px;
       left: 10px;
-      bottom: 10px;
-      width: 65px;
-      height: 40px;
-    }
-    &:hover path::first-child{
-      fill: #00ADEF;
+      z-index: 2;
+      cursor: pointer;
     }
   }
-
-  &--facebook {
-    svg{
-      top: 50%;
-      left: 50%;
-      margin-top: -40px;
-      margin-left: -40px;
-    }
-  }
-
-  &--twitch{
-    svg{
-      top: 50%;
-      left: 50%;
-      margin-top: -60px;
-      margin-left: -60px;
-    }
-    &:hover path{
-      fill: #a970ff;
-    }
-  } 
-
-  &--clicked iframe{
-    visibility: visible;
-    pointer-events: auto;
-  }
-  &--clicked::after{
-    display: none;
-  }
-
-/*
-  img{
+  &__click-to-load{
+    background: #000;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     position: relative;
-  }
-  img:before {  
-    content: " ";
-    display: block;
-    position: absolute;
+    display: inline-block;
+    width: 100%;
     height: 100%;
-    width: 100%;
-    background-color: #ccc;
+    cursor: pointer;
+    z-index: 2;
+
+    iframe{
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    svg{
+      display: block;
+      position: absolute;
+      z-index: 100;
+    }
+
+    &--youtube {
+      svg{
+        top: 50%;
+        left: 50%;
+        width: 88px;
+        height: 62px;
+        margin-top: -44px;
+        margin-left: -31px;
+      }
+      path::first-child{
+        opacity: 0.7
+      }
+      &:hover path::first-child{
+        opacity: 1;
+        fill: red;
+      }
+    }
+
+    &--dailymotion{
+      &:before{
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: black;
+        opacity: 0.5;
+      }
+      svg{
+        top: 50%;
+        left: 45px;
+        width: 80px;
+        height: 80px;
+        margin-top: -40px;
+      }
+      &:hover:before{
+        opacity: 0;
+      }
+    }
+
+    &--vimeo {
+      svg{
+        left: 10px;
+        bottom: 10px;
+        width: 65px;
+        height: 40px;
+      }
+      &:hover path::first-child{
+        fill: #00ADEF;
+      }
+    }
+
+    &--facebook {
+      svg{
+        top: 50%;
+        left: 50%;
+        margin-top: -40px;
+        margin-left: -40px;
+      }
+    }
+
+    &--twitch{
+      svg{
+        top: 50%;
+        left: 50%;
+        margin-top: -60px;
+        margin-left: -60px;
+      }
+      &:hover path{
+        fill: #a970ff;
+      }
+    } 
+
+    &--clicked iframe{
+      visibility: visible;
+      pointer-events: auto;
+    }
+    &--clicked::after{
+      display: none;
+    }
   }
-  img:after {  
-    content: attr(alt);
-    display: block;
-    position: absolute;
-    top: 5px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-  }*/
+
+  /*
+    img{
+      position: relative;
+    }
+    img:before {  
+      content: " ";
+      display: block;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: #ccc;
+    }
+    img:after {  
+      content: attr(alt);
+      display: block;
+      position: absolute;
+      top: 5px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+    }*/
 
 }

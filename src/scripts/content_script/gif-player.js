@@ -1,10 +1,14 @@
-import videoToBlock from '../video-to-block'
-
 export default function(){
 
-  let iframes = document.querySelectorAll('iframe')
+  const script = document.createElement('script');
+  script.type = "text/javascript";
+  script.src = chrome.extension.getURL('players/Gif.js');
+  (document.head||document.documentElement).appendChild(script)
+  
+  /*
+  let iframes = document.querySelectorAll('img[src$=".jpg"]')
   let script
-  let containerScript = (document.head||document.documentElement)
+  let containerScript = 
 
   iframes.forEach((iframe)=>{
 
@@ -25,4 +29,5 @@ export default function(){
     }
     
   })
+  */
 }
