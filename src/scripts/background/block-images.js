@@ -26,16 +26,16 @@ export function blockImages(){
         } 
 
         if( url.indexOf('//media.giphy.com/media') != -1 ){
-          console.warn('blocked', url)
+          
           //https://media.giphy.com/media/gHWegg7yI1qOjTmpqN/giphy.gif
           if( url.indexOf('lowweb=AxkdIEKx') == -1 ){
 
             // let newUrl = new URL(url)
             // newUrl.searchParams.append('lowweb', 'AxkdIEKx')
             // newUrl.search = queryString(newUrl.searchParams)
-            // console.log(newUrl)
-
             // o.redirectUrl = newUrl
+            
+            console.warn('blocked', url)
             o.cancel = true
           }
         }

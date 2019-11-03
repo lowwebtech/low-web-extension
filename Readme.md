@@ -1,4 +1,4 @@
-# low WebExtension (early)
+# low web extension (early)
 
 Reduce energy consumption and carbon footprint of your internet browsing.
 
@@ -12,7 +12,9 @@ The Internet consumes about 8% of the electricity produced worldwide and emits 3
 This extension aims to reduce our data and limit the energy consumption of our Internet browsing.
 
 :warning::warning::warning: 
+
 This extension affects electricity consumption when browsing the Internet but not during manufacturing. Manufacturing is the most energy consuming and polluting stage. So let's keep our phones and computers as long as possible !
+
 :warning::warning::warning:
 
 
@@ -22,7 +24,7 @@ A browser extension allows you to block resources and modify the content of a pa
 
 First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrome](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm), [Firefox](https://addons.mozilla.org/fr/firefox/addon/ublock-origin/)) or a browser like [Brave](https://brave.com/). 
 
-Then, here is a list of what low WebExtension does for reducing bandwidth consumption which means less energy consumption.
+Then, here is a list of what low WebExtension does for reducing bandwidth and energy consumption :
 - video :
     + add or remove attributes html5 video (preload="none", autoplay, loop)
     + update video embed url : no loop, no autoplay, low quality (if available)
@@ -35,11 +37,13 @@ Then, here is a list of what low WebExtension does for reducing bandwidth consum
     + click to load/play embedded videos (Youtube, Vimeo, Dailymotion, Twitch, Facebook), it only loads iframe (and tons of script) when you click and play it
     + block format video *(default:false)*
 - image : 
-    + ~~remove biggest or hidpi images from srcset~~ *(not working)*
-    + ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working)*
+    + ~~remove biggest or hidpi images from srcset~~ *(not working due to browser restrictions)*
+    + ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions)*
+    + plays gif when hovering them
+    + plays and load gipfy when hovering them
     + block format image *(default:false)*
 - iframe :
-    + ~~add lazyloading to all iframes (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working)*
+    + ~~add lazyloading to all iframes (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions)*
 - fonts : 
     + block format font *(default:false)*
 - add save-data header (currently based on [Save-data: on](https://chrome.google.com/webstore/detail/save-data-on/nholpkfnmjbinlhcfihkhiehdaohlibg))
@@ -50,6 +54,17 @@ Then, here is a list of what low WebExtension does for reducing bandwidth consum
 - ~~disable ads~~ *(disabled, use preferably uBlock)*
 
 
+## Installation
+
+### Development
+
+- Load repository
+- `npm install
+- `npm run watch` / `npm run build`
+- open `chrome://extensions/`, enable Developer Mode and Load unpacked folder : `dist/`
+
+
+
 
 
 ### TODO
@@ -58,14 +73,21 @@ Then, here is a list of what low WebExtension does for reducing bandwidth consum
 - extension icon
 - add metrics
 - images :
+    + custom srcset for data-src and lazied images
     + serviceworker
     + giphy
+        * regex
+        * more urls
+        * use mp4
+        * smaller sizes
     + cloudinary
-    + gif click to play
-- click-to-load :
+        * q_auto / q_auto:low
+    + gif
+        * play once when entering viewport
+- click-to-load video :
     + add logos
     + vimeo image
-    + get title via api
+    + get title via apis
     + fix css / computed styles
 - netflix
 - build injected script 
@@ -75,8 +97,8 @@ Then, here is a list of what low WebExtension does for reducing bandwidth consum
 - rewrite save-data header
 - look at cache-control and expire for header and response requests
 - disable unoptimised hide/show jQuery, gsap etc...
-- disable tracking
-- ads :
+- ~~disable tracking~~ *use uBlock*
+- ~~ads~~ : *use uBlock*
     + need to be optimised (with WebAssembly)
 - fonts
     + remove call to fonts.googleapis.com, fontawesome.com and other services

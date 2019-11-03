@@ -1,6 +1,6 @@
 {
-  "name": "low-carbon-web",
-  "version": "1.0.0",
+  "name": "low-web-extension",
+  "version": "0.0.1",
   "description": "Reduce energy consumption and carbon footprint of your internet browsing.",
   "author": "lowwebtech@gmail.com",
   "license": "MIT",
@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "abp-filter-parser": "^0.2.0",
-    "ad-block": "^4.1.7",
     "axios": "^0.19.0",
     "psl": "^1.4.0",
     "query-string": "^6.8.3",
