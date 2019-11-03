@@ -1,20 +1,40 @@
 .lowweb{
   &__gif-player{
     position: relative;
-    &--hided{
-      visibility: hidden;
-    }
     canvas{
       position: absolute;
       top: 0;
       left: 0;
+      z-index: 2;
     }
     svg{
       position: absolute;
       top: 10px;
       left: 10px;
-      z-index: 2;
       cursor: pointer;
+    }
+    img{
+      position: relative;
+      z-index: 8;
+      visibility: hidden;
+    }
+    &--play{
+      z-index: 5; 
+    }
+    &--pause{
+      z-index: 10; 
+      visibility: hidden;
+    }
+    &--playing{
+      .lowweb__gif-player--play{
+        visibility: hidden;
+      }
+      .lowweb__gif-player--pause{
+        visibility: visible;
+      }
+      img{
+        visibility: visible;
+      }
     }
   }
   &__click-to-load{
