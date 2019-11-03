@@ -17,6 +17,7 @@ const config = {
     'players/Youtube': './scripts/content_script/players/Youtube.js',
     'players/Twitch': './scripts/content_script/players/Twitch.js',
     'players/Gif': './scripts/content_script/players/Gif.js',
+    'players/Vimeo': './scripts/content_script/players/Vimeo.js',
     'popup/popup': './popup/popup.js',
     'options/options': './options/options.js',
     // 'docs/style.css': './scss/docs.scss',

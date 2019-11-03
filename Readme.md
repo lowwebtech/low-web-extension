@@ -40,7 +40,7 @@ Then, here is a list of what low WebExtension does for reducing bandwidth and en
     + ~~remove biggest or hidpi images from srcset~~ *(not working due to browser restrictions)*
     + ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions)*
     + plays gif when hovering them
-    + plays and load gipfy when hovering them
+    + plays and load giphy when hovering them
     + block format image *(default:false)*
 - iframe :
     + ~~add lazyloading to all iframes (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions)*
@@ -49,7 +49,7 @@ Then, here is a list of what low WebExtension does for reducing bandwidth and en
 - add save-data header (currently based on [Save-data: on](https://chrome.google.com/webstore/detail/save-data-on/nholpkfnmjbinlhcfihkhiehdaohlibg))
 - block social widgets (facebook, twitter, instagram, pinterest)
 - block image avatars (disqus, gravatar)
-- disable css transition and animation *(disabled)* (:warning: break transitionend / animationend events :warning:)
+- disable css transition and animation *(default:false)* (:warning: break transitionend / animationend events :warning:)
 - disable &lt;marquee&gt; animations :P
 - ~~disable ads~~ *(disabled, use preferably uBlock)*
 
@@ -69,12 +69,14 @@ Then, here is a list of what low WebExtension does for reducing bandwidth and en
 
 ### TODO
 - fix/add options
+- oembed
 - write tests
 - extension icon
 - add metrics
 - images :
     + custom srcset for data-src and lazied images
     + serviceworker
+    + replace hi-res by low-res for known websites (https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_400x400.jpg -> https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_x96.jpg)
     + giphy
         * regex
         * more urls
@@ -114,3 +116,14 @@ Then, here is a list of what low WebExtension does for reducing bandwidth and en
 - display time alerts
 - set css prefers-color-scheme to dark
     + look at DarkReader
+
+### TODO add those websites
+- netflix
+- gfycat
+- flickr 
+- livestream
+- cloudinary
+- slideshare
+- soundcloud
+- spotify
+- and more https://oembed.com/#section7

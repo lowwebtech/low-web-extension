@@ -4,6 +4,7 @@ import videoToBlock from '../video-to-block'
 import getYoutubeId from '../utils/get-youtube-id'
 import getDailymotionId from '../utils/get-dailymotion-id'
 import getFacebookId from '../utils/get-facebook-id'
+import getVimeoId from '../utils/get-vimeo-id'
 
 export default function(){
 
@@ -50,27 +51,14 @@ export default function(){
         }else if( src.indexOf('vimeo.com') != -1 ){
           
           data = videoToBlock.vimeo
-          /*
-          // TODO this script need to be injected to share same window
-          id = '156045670'
-        
-          console.log(window)
-          global.showThumb = function(data){
-            console.log('data vimeo', data)
-            // $(id_img).attr('src',data[0].thumbnail_medium);
-          }
+          id = getVimeoId( src )
 
-          var script = document.createElement( 'script' );
-          script.src = "https://vimeo.com/api/v2/video/" + id + ".json?callback=showThumb";
+          let script = document.createElement('script');
+          script.type = "text/javascript";
+          script.src = chrome.extension.getURL('players/Vimeo.js');
+          (document.head||document.documentElement).appendChild(script)
 
-          cloned.parentNode.insertBefore(script, cloned)
-          */
         }
-
-        // let wrapper = document.createElement('div');
-        // wrapper.classList.add('lowweb__click-to-load')
-        // wrapper.appendChild(cloned)
-        // parent.appendChild(wrapper); 
       
         let tempEl = document.createElement('div')
         tempEl.classList = iframe.classList
@@ -88,20 +76,21 @@ export default function(){
         if( data.icon ){
           tempEl.innerHTML = data.icon 
         }
+
         // background image preview
-        if( id ){
+        if( id  && data.image ){
           tempEl.style.backgroundImage = 'url('+ data.image.replace('##ID##', id) +')'
         }
+        if( id ) tempEl.dataset.lowid = id
+        if( data ) tempEl.dataset.lowttype = data.id
+
+        parent.replaceChild(tempEl, iframe)
 
         tempEl.addEventListener('click', ()=>{
           // cloned.classList.add('lowweb__click-to-load--clicked')
           cloned.src = bypassUrlBlock( cloned.dataset.src )
           parent.replaceChild(cloned, tempEl)
         })
-
-
-        // cloned.classList.add('lowweb__click-to-load')
-        parent.replaceChild(tempEl, iframe)
         
       }
 

@@ -22,6 +22,16 @@
       <figcaption>Image with srcset (pixel-ratio defined)</figcaption>
     </figure>
 
+    <figure>
+      <img src="./images/img-lazy.jpg" srcset="./images/img-lazy.jpg 1x, ./images/img-lazy@2x.jpg 2x" sizes="50vw" loading="lazy" />
+      <figcaption>Image with srcset and native loading=lazy</figcaption>
+    </figure>
+
+    <figure>
+      <img data-src="./images/img3.jpg" data-srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" />
+      <figcaption>Image with data-srcset</figcaption>
+    </figure>
+
   </section>
 
   <section>

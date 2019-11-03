@@ -42,6 +42,8 @@ export default new Vuex.Store({
     image_lazyload: 1,
     iframe_lazyload: 1,
 
+    gif_player: 1,
+
     block_images: 0,
     block_videos: 0,
     block_fonts: 0,
