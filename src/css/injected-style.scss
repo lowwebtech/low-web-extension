@@ -1,38 +1,43 @@
 .lowweb{
   &__gif-player{
     position: relative;
-    canvas{
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 2;
-    }
+    display: inline-block;
     svg{
       position: absolute;
       top: 10px;
       left: 10px;
       cursor: pointer;
     }
-    img{
+    // img{
+    //   z-index: 8;
+    // }
+    &--preview{
       position: relative;
-      z-index: 8;
+    //   canvas{
+      z-index: 2;
+    }
+    &--anim{
+      position: absolute;
+      top: 0;
+      left: 0;
       visibility: hidden;
+      z-index: 4;
     }
     &--play{
-      z-index: 5; 
+      z-index: 6; 
     }
-    &--pause{
-      z-index: 10; 
-      visibility: hidden;
-    }
+    // &--pause{
+    //   z-index: 10; 
+    //   visibility: hidden;
+    // }
     &--playing{
       .lowweb__gif-player--play{
         visibility: hidden;
       }
-      .lowweb__gif-player--pause{
-        visibility: visible;
-      }
-      img{
+      // .lowweb__gif-player--pause{
+      //   visibility: visible;
+      // }
+      .lowweb__gif-player--anim{
         visibility: visible;
       }
     }

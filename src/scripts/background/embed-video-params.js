@@ -16,7 +16,7 @@ export function embedVideoParams(){
         if( changeInfo.status == 'loading' ){        
           if( isWebpage( tab.url ) ){
             chrome.tabs.insertCSS(tabId, {
-              file: 'css/injected-style.css'
+              file: 'content_script.css'
             }); 
           }
         } 

@@ -12,6 +12,10 @@ const config = {
   entry: {
     'background': './background.js',
     'content_script': './content_script.js',
+    'players/Dailymotion': './scripts/content_script/players/Dailymotion.js',
+    'players/Youtube': './scripts/content_script/players/Youtube.js',
+    'players/Twitch': './scripts/content_script/players/Twitch.js',
+    'players/Gif': './scripts/content_script/players/Gif.js',
     'popup/popup': './popup/popup.js',
     'options/options': './options/options.js',
   },
@@ -79,7 +83,7 @@ const config = {
     }),
     new CopyWebpackPlugin([
       { from: 'icons', to: 'icons', ignore: ['icon.xcf'] },
-      { from: 'scripts/content_script/players', to: 'players' },
+      // { from: 'scripts/content_script/players', to: 'players' },
       { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
       { from: 'options/options.html', to: 'options/options.html', transform: transformHtml },
       {
