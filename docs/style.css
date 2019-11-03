@@ -1,3 +1,20 @@
+@keyframes animmargin {
+  0% {
+    margin-left: 0px;
+  }
+  100% {
+    margin-left: 400px;
+  }
+}
+@keyframes animtransform {
+  0% {
+    transform: translate3d(0px,0,0);
+  }
+  100% {
+    transform: translate3d(400px,0,0);
+  }
+}
+
 img{
   /*width: 50%;*/
 }
@@ -14,4 +31,33 @@ figure{
 
 .bloc--lazy{
   margin-top: 200vh;
+}
+button{
+  transition: all .3s ease;
+}
+button:hover{
+  background-color: black;
+  color: white;
+}
+
+.circle{
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  border: 10px solid black;
+  border-radius: 100%;
+  transition: all 5s linear;
+}
+
+.transition--3d:hover .circle{
+  transform: translate3d(400px,0,0);
+}
+.transition--reflow:hover .circle{
+  margin-left: 400px;
+}
+.animation--3d .circle{ 
+  animation: animtransform 5s linear alternate infinite;
+}
+.animation--reflow .circle{
+  animation: animmargin 5s linear alternate infinite;
 }

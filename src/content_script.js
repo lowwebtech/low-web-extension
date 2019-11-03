@@ -1,4 +1,4 @@
-import './css/injected-style.scss'
+import './scss/injected-style.scss'
 
 global.browser = require('webextension-polyfill');
 

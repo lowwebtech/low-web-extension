@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtensionReloader = require('webpack-extension-reloader');
 const { VueLoaderPlugin } = require('vue-loader');
 const { version } = require('./package.json');
+const path = require('path')
 
 const config = {
   mode: process.env.NODE_ENV,
@@ -18,10 +19,14 @@ const config = {
     'players/Gif': './scripts/content_script/players/Gif.js',
     'popup/popup': './popup/popup.js',
     'options/options': './options/options.js',
+    // 'docs/style.css': './scss/docs.scss',
+    // 'injected-style.css': './scss/injected-style.scss',
+    // './scss/injected-style.scss': './scss/injected-style.scss',
   },
   output: {
     path: __dirname + '/dist',
     filename: '[name].js',
+    // filename: path.resolve(__dirname, './public/assets/[name]'),
   },
   resolve: {
     extensions: ['.js', '.vue'],

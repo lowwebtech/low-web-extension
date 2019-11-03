@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+
+  <h1>Animations</h1>
+
+  <section>
+    
+    <h2>Marquee (default: enabled)</h2>
+
+    <marquee>marqueeeee text</marquee>
+    <marquee direction="up">marqueeeee text</marquee>
+    <marquee direction="down" width="250" height="200" behavior="alternate">
+      <marquee behavior="alternate">marqueeeee text</marquee>
+    </marquee>
+
+  </section>
+
+  <section>
+
+    <h2>CSS transition (default: disabled)</h2>
+
+    <button>Button</button>
+    <div class="transition--3d">
+      transition : transform (3d)  
+      <div class="circle"></div>
+    </div>
+    <div class="transition--reflow">
+      transition : margin-left (reflow)
+      <div class="circle"></div>  
+    </div>
+    
+  </section>
+
+
+  <section>
+
+    <h2>CSS animation (default: disabled)</h2>
+    <div class="animation--3d">
+      animation : transform (3d)  
+      <div class="circle"></div>
+    </div>
+    <div class="animation--reflow">
+      animation : margin-left (reflow)
+      <div class="circle"></div>  
+    </div>
+    
+  </section>
+
+
+</body>
+</html>

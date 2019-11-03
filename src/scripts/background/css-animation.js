@@ -6,11 +6,9 @@ export function cssAnimation(){
 
   chrome.tabs.onUpdated.addListener(
     function(tabId, changeInfo, tab){
+      let code = ''
       if( store.getters.css_animation ) {
-        if( changeInfo.status == 'loading' ){        
-          if( isWebpage( tab.url ) ){
-            chrome.tabs.insertCSS(tabId, {
-              code: `*, *:before, *:after {
+        code = `*, *:before, *:after {
                 -o-transition: none !important;
                 -moz-transition: none !important;
                 -ms-transition: none !important;
@@ -23,10 +21,20 @@ export function cssAnimation(){
                 -ms-animation: none !important;
                 animation: none !important;
               }`
+              
+        if( changeInfo.status == 'loading' ){        
+          if( isWebpage( tab.url ) ){
+            chrome.tabs.insertCSS(tabId, {
+              code: code
             });
           }
-        } 
+        }
       }
+      // else{
+      //   code = `.lowweb--css_animation {
+      //           display: inline-block;
+      //         }`
+      // }
     }
   );
 }
