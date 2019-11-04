@@ -1,3 +1,4 @@
+import { TOKEN } from '../constants'
 import queryString from 'query-string'
 
 import store from '../../store';
@@ -38,7 +39,7 @@ export function embedVideoParams(){
         if( store.getters.video_attributes ){
           params.loop = 0
           params.rel = 0
-          params.lowweb == 'AxkdIEKx' ? params.autoplay = 1 : params.autoplay = 0 
+          params.lowweb == TOKEN ? params.autoplay = 1 : params.autoplay = 0 
         }
 
         /* 
@@ -53,7 +54,7 @@ export function embedVideoParams(){
       case "player.twitch.tv":
         if( store.getters.video_attributes ){
           params.loop = false
-          params.lowweb == 'AxkdIEKx' ? params.autoplay = true : params.autoplay = false
+          params.lowweb == TOKEN ? params.autoplay = true : params.autoplay = false
         }
 
         /* 
@@ -68,7 +69,7 @@ export function embedVideoParams(){
       case "www.dailymotion.com":
       case "*.dailymotion.com":
         if( store.getters.video_attributes ){
-          params.lowweb == 'AxkdIEKx' ? params.autoplay = true : params.autoplay = false
+          params.lowweb == TOKEN ? params.autoplay = true : params.autoplay = false
           params.loop = false
           params['queue-enable'] = false
         }
@@ -84,7 +85,7 @@ export function embedVideoParams(){
         break;
       case "player.vimeo.com":
         if( store.getters.video_attributes ){
-          params.lowweb == 'AxkdIEKx' ? params.autoplay = true : params.autoplay = false
+          params.lowweb == TOKEN ? params.autoplay = true : params.autoplay = false
           params.loop = false
         }
         if( store.getters.video_quality == 'low' ){
@@ -112,7 +113,7 @@ export function embedVideoParams(){
       o.redirectUrl = url.href
     }else{      
       if( store.getters.video_clicktoload ){
-        if( params.lowweb == 'AxkdIEKx' ){
+        if( params.lowweb == TOKEN ){
           params.autoplay = true
         }
 

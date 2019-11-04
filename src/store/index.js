@@ -11,52 +11,38 @@ import VuexWebExtensions from 'vuex-webextensions';
 
 Vue.use(Vuex);
 
-let shared_vars = [
-  'save_data',
-  'css_animation',
+let state = {
 
-  'image_srcset',
-  'image_lazyload',
-  'iframe_lazyload',
+  save_data: 1,
+  css_animation: 0,
 
-  'block_images',
-  'block_videos',
-  'block_fonts',
-  'block_scripts',
+  image_srcset: 2,
+  image_lazyload: 1,
+  iframe_lazyload: 1,
 
-  'block_social',
-  'block_ads',
+  gif_player: 1,
 
-  'video_quality',
-  'video_clicktoload',
-  'video_attributes'
-]
+  block_images: 0,
+  block_videos: 0,
+  block_fonts: 0,
+  block_scripts: 0,
 
+  block_social: 1,
+  block_ads: 0,
+
+  video_quality: 'low',
+  video_clicktoload: 1,
+  video_attributes: 1
+  
+}
+const keys = Object.keys(state)
+let shared_vars = []
+for (const key of keys) {
+  shared_vars.push(key)
+}
+console.log(shared_vars)
 export default new Vuex.Store({
-  state: {
-
-    save_data: 1,
-    css_animation: 0,
-
-    image_srcset: 2,
-    image_lazyload: 1,
-    iframe_lazyload: 1,
-
-    gif_player: 1,
-
-    block_images: 0,
-    block_videos: 0,
-    block_fonts: 0,
-    block_scripts: 0,
-
-    block_social: 1,
-    block_ads: 0,
-
-    video_quality: 'low',
-    video_clicktoload: 1,
-    video_attributes: 1
-    
-  },
+  state: state,
   getters,
   mutations,
   // actions,

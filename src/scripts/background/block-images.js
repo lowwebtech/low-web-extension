@@ -1,6 +1,7 @@
+import { TOKEN } from '../constants'
 import queryString from 'query-string'
 import store from '../../store';
-import urls_to_block from '../images-to-block'
+import images_to_block from '../images-to-block'
 import RequestManager from './RequestManager'
 
 export function blockImages(){
@@ -16,10 +17,9 @@ export function blockImages(){
       const tab = RequestManager.getTab( tabId )
 
       if( tab ){
-        for( let i = 0, lg = urls_to_block.length; i<lg; i++ ){      
-          if( tab.domain != urls_to_block[i][1]
-            && url.indexOf(urls_to_block[i][0]) != -1 ){
-            // o.redirectUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mM88x8AAp0BzdNtlUkAAAAASUVORK5CYII='
+        for( let i = 0, lg = images_to_block.length; i<lg; i++ ){      
+          if( tab.domain != images_to_block[i][1]
+            && url.indexOf(images_to_block[i][0]) != -1 ){
             console.warn('blocked', url)
             o.cancel = true
           }
@@ -28,7 +28,7 @@ export function blockImages(){
         if( url.indexOf('//media.giphy.com/media') != -1 ){
           
           //https://media.giphy.com/media/gHWegg7yI1qOjTmpqN/giphy.gif
-          if( url.indexOf('lowweb=AxkdIEKx') == -1 ){
+          if( url.indexOf('lowweb='+TOKEN) == -1 ){
 
             // let newUrl = new URL(url)
             // newUrl.searchParams.append('lowweb', 'AxkdIEKx')

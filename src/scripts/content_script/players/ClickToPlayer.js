@@ -17,10 +17,12 @@ import providersJson from '../../../providers.json'
   let players = document.querySelectorAll('.lowweb__click-to-load')
   players.forEach(( player )=>{
 
-    console.log(player)
     let videoUrl, oembedUrl
     const type = player.dataset.lowtype
     const data = videoToBlock[type]
+
+    console.log(player)
+    console.log(data)
 
     // button
     if( data.icon ){
@@ -29,8 +31,6 @@ import providersJson from '../../../providers.json'
 
     const id = getId( player.dataset.lowsrc, type )
 
-    console.log(data)
-
     if( data.video_url != '' && data.oembed != '' && id ) {
       
       videoUrl = data.video_url.replace('##ID##', id) 
@@ -38,27 +38,39 @@ import providersJson from '../../../providers.json'
       if( videoUrl ){
         
         oembedUrl = data.oembed + '?format=json&url='+encodeURIComponent(videoUrl)
+
         console.log(videoUrl)
         console.log(oembedUrl)
 
-        fetch(oembedUrl,{mode:'no-cors'})
-          .then(
-            function(response) {
-              if (response.status !== 200) {
-                console.log('Looks like there was a problem. Status Code: ' +
-                  response.status);
-                return;
-              }
+        extract(videoUrl).then((oembed) => {
+          console.log('result')
+          console.log(oembed)
+          if( oembed.thumbnail_url ){
+            player.style.backgroundImage = 'url('+ oembed.thumbnail_url +')'
+          }
 
-              // Examine the text in the response
-              response.json().then(function(data) {
-                console.log(data);
-              });
-            }
-          )
-          .catch(function(err) {
-            console.log('Fetch Error :-S', err);
-          });
+        }).catch((err) => {
+          console.trace(err)
+        }); 
+
+        // fetch(oembedUrl,{mode:'no-cors'})
+        //   .then(
+        //     function(response) {
+        //       if (response.status !== 200) {
+        //         console.log('Looks like there was a problem. Status Code: ' +
+        //           response.status);
+        //         return;
+        //       }
+
+        //       // Examine the text in the response
+        //       response.json().then(function(data) {
+        //         console.log(data);
+        //       });
+        //     }
+        //   )
+        //   .catch(function(err) {
+        //     console.log('Fetch Error :-S', err);
+        //   });
 
         // fetch(oembedUrl,{mode:'no-cors'})
         //   .then(function(response) {
@@ -69,15 +81,6 @@ import providersJson from '../../../providers.json'
         //     // var objectURL = URL.createObjectURL(myBlob);
         //     // myImage.src = objectURL;
         //   });
-
-        
-        extract(videoUrl).then((oembed) => {
-          console.log('result')
-          console.log(oembed)
-        }).catch((err) => {
-          console.log("errereoroeroer", videoUrl)
-          console.trace(err)
-        }); 
         
       }
     
