@@ -35,12 +35,13 @@ let state = {
   video_attributes: 1
   
 }
+
 const keys = Object.keys(state)
 let shared_vars = []
 for (const key of keys) {
   shared_vars.push(key)
 }
-console.log(shared_vars)
+
 export default new Vuex.Store({
   state: state,
   getters,

@@ -11,12 +11,12 @@ export function embedVideoParams(){
 
   console.log('video_clicktoload', store.getters.video_clicktoload)
 
-  chrome.tabs.onUpdated.addListener(
+  browser.tabs.onUpdated.addListener(
     function(tabId, changeInfo, tab){
       if( store.getters.video_clicktoload ) {
         if( changeInfo.status == 'loading' ){        
           if( isWebpage( tab.url ) ){
-            chrome.tabs.insertCSS(tabId, {
+            browser.tabs.insertCSS(tabId, {
               file: 'content_script.css'
             }); 
           }
@@ -24,6 +24,27 @@ export function embedVideoParams(){
       }
     }
   );
+
+  browser.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      console.log("message", request.message)
+      if (request.message == "oembed") {
+
+        fetch(request.options.oembedUrl)
+          .then( (res) => {
+            return res.json()
+          })
+          .then( (json) => {
+            sendResponse(json)
+          })
+          .catch(function(error) {
+            console.log('oembed error');
+            console.log(error);
+          })
+      }
+
+      return true
+    });
 
   browser.webRequest.onBeforeRequest.addListener( (details)=>{
 

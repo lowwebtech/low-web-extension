@@ -18,7 +18,7 @@ const config = {
     // 'players/Twitch': './scripts/content_script/players/Twitch.js',
     // 'players/Vimeo': './scripts/content_script/players/Vimeo.js',
     'players/Gif': './scripts/content_script/players/Gif.js',
-    'players/ClickToPlayer': './scripts/content_script/players/ClickToPlayer.js',
+    // 'players/ClickToPlayer': './scripts/content_script/players/ClickToPlayer.js',
     'popup/popup': './popup/popup.js',
     'options/options': './options/options.js',
     // 'docs/style.css': './scss/docs.scss',

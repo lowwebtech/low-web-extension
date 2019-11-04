@@ -72,7 +72,7 @@ Then, here is a list of what low WebExtension does for reducing bandwidth and en
 - oembed
 - write tests
 - extension icon
-- add metrics
+- add metrics (or not!)
 - images :
     + custom srcset for data-src and lazied images
     + serviceworker
@@ -86,6 +86,7 @@ Then, here is a list of what low WebExtension does for reducing bandwidth and en
         * q_auto / q_auto:low
     + gif
         * play once when entering viewport
+    + emoji
 - click-to-load video :
     + add logos
     + vimeo image

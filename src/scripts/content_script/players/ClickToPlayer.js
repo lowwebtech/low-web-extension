@@ -1,11 +1,7 @@
 import { extract, setProviderList } from 'oembed-parser'
 
 import videoToBlock from '../../video-to-block'
-// import YoutubePlayer from './YoutubePlayer'
-import getYoutubeId from '../../utils/get-youtube-id'
-import getDailymotionId from '../../utils/get-dailymotion-id'
-import getFacebookId from '../../utils/get-facebook-id'
-import getVimeoId from '../../utils/get-vimeo-id'
+// import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId } from '../utils/get-video-id'
 
 import providersJson from '../../../providers.json'
 
@@ -20,9 +16,6 @@ import providersJson from '../../../providers.json'
     let videoUrl, oembedUrl
     const type = player.dataset.lowtype
     const data = videoToBlock[type]
-
-    console.log(player)
-    console.log(data)
 
     // button
     if( data.icon ){
@@ -39,21 +32,35 @@ import providersJson from '../../../providers.json'
         
         oembedUrl = data.oembed + '?format=json&url='+encodeURIComponent(videoUrl)
 
+        chrome.runtime.sendMessage({msg: "oembed", options: { 
+          type: type,
+          videoUrl: videoUrl,
+          oembedUrl: oembedUrl
+        }}, function(res) {
+          console.log(res);
+        });
+
         console.log(videoUrl)
         console.log(oembedUrl)
 
-        extract(videoUrl).then((oembed) => {
-          console.log('result')
-          console.log(oembed)
-          if( oembed.thumbnail_url ){
-            player.style.backgroundImage = 'url('+ oembed.thumbnail_url +')'
-          }
+        // extract(videoUrl, {mode:'no-cors', credentials:'include'}).then((oembed) => {
+        //   console.log('result')
+        //   console.log(oembed.text())
+        //   console.log(oembed.json())
+        //   return oembed.text()
+        // })
+        // .then((data) => {
+        //   // resolve(data ? JSON.parse(data) : {})
+        // })
+        // .then((test) => {
+        //   console.log('test', test)
+        // })
+        // .catch((error) => {
+        //   console.error('error', error)
+        //   // reject(error)
+        // }) 
 
-        }).catch((err) => {
-          console.trace(err)
-        }); 
-
-        // fetch(oembedUrl,{mode:'no-cors'})
+        // fetch(oembedUrl,{mode:'no-cors', credentials:'include'})
         //   .then(
         //     function(response) {
         //       if (response.status !== 200) {
@@ -71,23 +78,10 @@ import providersJson from '../../../providers.json'
         //   .catch(function(err) {
         //     console.log('Fetch Error :-S', err);
         //   });
-
-        // fetch(oembedUrl,{mode:'no-cors'})
-        //   .then(function(response) {
-        //     console.log(response)
-        //     return response;
-        //   })
-        //   .then(function(myBlob) {
-        //     // var objectURL = URL.createObjectURL(myBlob);
-        //     // myImage.src = objectURL;
-        //   });
         
       }
-    
-    } 
-
+    }
   })
-  
 }())
 
 
