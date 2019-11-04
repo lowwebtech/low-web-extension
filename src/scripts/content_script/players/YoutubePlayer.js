@@ -20,11 +20,11 @@ export default class YoutubePlayer{
       }
     }
 
-    if( this.originalIframe.getAttribute('width') ){
-      params.width = this.originalIframe.getAttribute('width')
+    if( this.originalIframe.width ){
+      params.width = this.originalIframe.width
     }
-    if( this.originalIframe.getAttribute('height') ){
-      params.height = this.originalIframe.getAttribute('height')
+    if( this.originalIframe.height ){
+      params.height = this.originalIframe.height
     }
 
     this.originalIframe.parentNode.replaceChild(this.newEl, this.originalIframe)

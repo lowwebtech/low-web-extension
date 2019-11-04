@@ -9,11 +9,11 @@ export default class DailymotionPlayer{
         
       }
     }
-    if( this.originalIframe.getAttribute('width') ){
-      params.width = this.originalIframe.getAttribute('width')
+    if( this.originalIframe.width ){
+      params.width = this.originalIframe.width
     }
-    if( this.originalIframe.getAttribute('height') ){
-      params.height = this.originalIframe.getAttribute('height')
+    if( this.originalIframe.height ){
+      params.height = this.originalIframe.height
     }
 
     this.newEl = document.createElement('div')

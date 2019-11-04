@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   giPlayer()
   videoAttribute()
   clickToLoadVideo()
+  // customPlayers()
   removeSocial()
-  customPlayers()
   
   // var fullURL = chrome.runtime.getURL("./scripts/content_script/sw.js");
   // console.log(fullURL)

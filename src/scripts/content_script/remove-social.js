@@ -13,7 +13,7 @@ function removeSocialIframes(){
   let iframes = document.querySelectorAll('iframe')
   iframes.forEach( (iframe, index)=>{
 
-    let src = iframe.getAttribute('src')
+    let src = iframe.src
     if( src && socialBlocked( src ) ){
       iframe.parentNode.removeChild(iframe)
     }
@@ -25,7 +25,7 @@ function removeSocialScripts(){
   let scripts = document.querySelectorAll('script')
 
   scripts.forEach( (script, index)=>{
-    let src = script.getAttribute('src')
+    let src = script.src
     if( src && socialBlocked( src ) ){
       script.parentNode.removeChild(script)
     }else{

@@ -31,10 +31,10 @@ export default function(){
         box = boxes[index]
 
         // check srcset
-        if( img.getAttribute('srcset') != null ){
-          srcset = img.getAttribute('srcset')
+        if( img.srcset != null ){
+          srcset = img.srcset
           cleanedSrcset = cleanSrcset( srcset, width, box )
-          if( cleanedSrcset ) img.setAttribute('srcset', cleanedSrcset )
+          if( cleanedSrcset ) img.srcset = cleanedSrcset
         }
 
         if( img.dataset.srcset ){

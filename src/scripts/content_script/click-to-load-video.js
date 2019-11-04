@@ -1,10 +1,7 @@
-import store from '../../store'
 import queryString from 'query-string'
+
+import store from '../../store'
 import videoToBlock from '../video-to-block'
-import getYoutubeId from '../utils/get-youtube-id'
-import getDailymotionId from '../utils/get-dailymotion-id'
-import getFacebookId from '../utils/get-facebook-id'
-import getVimeoId from '../utils/get-vimeo-id'
 
 export default function(){
 
@@ -12,58 +9,113 @@ export default function(){
 
     let iframes = document.querySelectorAll('iframe')
     let tempIframes = []
+    let iframeReplaced = false
+
+    console.log("----")
 
     iframes.forEach((iframe)=>{
-      let src = iframe.getAttribute('src')
-      let parent = iframe.parentNode
-      let wrapper, id, url
 
-      let cloned = iframe.cloneNode()
-
+      let src = iframe.src
+      if( !src || src == '' ){
+        src = iframe.dataset.src
+      }
+  
       if( src && videoBlocked( src ) ){
+     
+        iframeReplaced = true
+
+        let wrapper, id, url
+        let parent = iframe.parentNode   
+
+        let cloned = iframe.cloneNode()
         cloned.dataset.src = src
         cloned.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg=='
 
-        let data 
+        let data, videoUrl, oembedUrl
+        const keys = Object.keys(videoToBlock)
+        let type
+        for (const key of keys) {
+          if( src.indexOf( videoToBlock[key].embed_url ) != -1 ){
+            
+            type = key
+            data = videoToBlock[type]
 
-        // youtube
-        if( src.indexOf( videoToBlock.youtube.url ) != -1 ){
-          
-          data = videoToBlock.youtube
-          id = getYoutubeId( src )
-          
-        // dailymotion
-        }else if( src.indexOf( videoToBlock.dailymotion.url ) != -1 ){
-
-          data = videoToBlock.dailymotion
-          id = getDailymotionId( src )
-
-        // facebook
-        }else if( src.indexOf( videoToBlock.facebook.url ) != -1 ){
-          
-          data = videoToBlock.facebook
-          id = getFacebookId( src )
-          
-        }else if( src.indexOf( videoToBlock.twitch.url ) != -1 ) {
-          
-          data = videoToBlock.twitch
-
-        }else if( src.indexOf('vimeo.com') != -1 ){
-          
-          data = videoToBlock.vimeo
-          id = getVimeoId( src )
-
-          let script = document.createElement('script');
-          script.type = "text/javascript";
-          script.src = chrome.extension.getURL('players/Vimeo.js');
-          (document.head||document.documentElement).appendChild(script)
-
+          }
         }
+        //     if( data.video_url != '' && data.oembed != '' && id ) {
+              
+        //       videoUrl = data.video_url.replace('##ID##', id) 
+              
+        //       if( videoUrl ){
+                
+        //         oembedUrl = data.oembed + '?format=json&url='+encodeURIComponent(videoUrl)
+        //         console.log(videoUrl)
+        //         console.log(oembedUrl)
+
+        //         fetch(oembedUrl,{mode:'no-cors'})
+        //           .then(function(response) {
+        //             console.log(response)
+        //             console.log(response.headers.get("content-type"))
+        //             return response;
+        //           })
+        //           .then(function(myBlob) {
+        //             // var objectURL = URL.createObjectURL(myBlob);
+        //             // myImage.src = objectURL;
+        //           });
+        //         /*
+        //         extract(videoUrl).then((oembed) => {
+        //           console.log('result')
+        //           console.log(oembed)
+        //         }).catch((err) => {
+        //           console.log("errereoroeroer", videoUrl)
+        //           console.trace(err)
+        //         }); 
+        //         */
+        //       }
+            
+        //     } 
+        //     break
+        //   }
+        // }
+
+        // // youtube
+        // if( src.indexOf( videoToBlock.youtube.embed_url ) != -1 ){
+          
+        //   data = videoToBlock.youtube
+        //   id = getYoutubeId( src )
+          
+        // // dailymotion
+        // }else if( src.indexOf( videoToBlock.dailymotion.embed_url ) != -1 ){
+
+        //   data = videoToBlock.dailymotion
+        //   id = getDailymotionId( src )
+
+        // // facebook
+        // }else if( src.indexOf( videoToBlock.facebook.embed_url ) != -1 ){
+          
+        //   data = videoToBlock.facebook
+        //   id = getFacebookId( src )
+          
+        // }else if( src.indexOf( videoToBlock.twitch.embed_url ) != -1 ) {
+          
+        //   data = videoToBlock.twitch
+
+        // }else if( src.indexOf('vimeo.com') != -1 ){
+          
+        //   data = videoToBlock.vimeo
+        //   id = getVimeoId( src )
+
+        //   // let script = document.createElement('script');
+        //   // script.type = "text/javascript";
+        //   // script.src = chrome.extension.getURL('players/Vimeo.js');
+        //   // (document.head||document.documentElement).appendChild(script)
+
+        // }
       
         let tempEl = document.createElement('div')
         tempEl.classList = iframe.classList
         tempEl.classList.add('lowweb__click-to-load')
-        tempEl.classList.add('lowweb__click-to-load--'+data.id)
+        tempEl.classList.add('lowweb__click-to-load--'+type)
 
         tempIframes.push(tempEl)
 
@@ -72,17 +124,13 @@ export default function(){
         tempEl.style.width = iframe.width + 'px'
         tempEl.style.height = iframe.height + 'px'
 
-        // button
-        if( data.icon ){
-          tempEl.innerHTML = data.icon 
-        }
-
         // background image preview
-        if( id  && data.image ){
-          tempEl.style.backgroundImage = 'url('+ data.image.replace('##ID##', id) +')'
-        }
+        // if( id  && data.image ){
+        //   tempEl.style.backgroundImage = 'url('+ data.image.replace('##ID##', id) +')'
+        // }
         if( id ) tempEl.dataset.lowid = id
-        if( data ) tempEl.dataset.lowttype = data.id
+        if( data ) tempEl.dataset.lowtype = data.id
+        tempEl.dataset.lowsrc = iframe.src||iframe.dataset.src
 
         parent.replaceChild(tempEl, iframe)
 
@@ -98,11 +146,19 @@ export default function(){
 
     })
 
-    // TODO remove and get computed styles
-    tempIframes.forEach((el)=>{
-      let box = el.getBoundingClientRect()
-      if( box.height == 0 ) el.style.position = 'absolute'
-    })
+    if( iframeReplaced ){
+
+      let script = document.createElement('script');
+      script.type = "text/javascript";
+      script.src = chrome.extension.getURL('players/ClickToPlayer.js');
+      (document.head||document.documentElement).appendChild(script)
+      
+      // TODO remove and get computed styles
+      tempIframes.forEach((el)=>{
+        let box = el.getBoundingClientRect()
+        if( box.height == 0 ) el.style.position = 'absolute'
+      })
+    }
   } 
 }
 
@@ -110,7 +166,7 @@ export function videoBlocked( url ){
 
   const keys = Object.keys(videoToBlock)
   for (const key of keys) {
-    if( url.indexOf( videoToBlock[key].url ) != -1 ){
+    if( url.indexOf( videoToBlock[key].embed_url ) != -1 ){
       return true
     }
   }

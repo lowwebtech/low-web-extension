@@ -25,7 +25,7 @@ export default function(){
       let imgs = document.querySelectorAll('img')
       imgs.forEach((img)=>{
         if( ! isAlreadyLazied( img ) ){
-          img.setAttribute('loading', 'lazy')  
+          img.loading = 'lazy'
         }
       })
     }
@@ -34,7 +34,7 @@ export default function(){
       let iframes = document.querySelectorAll('iframe')
       iframes.forEach((iframe)=>{
         if( ! isAlreadyLazied( iframe ) ){
-          iframe.setAttribute('loading', 'lazy') 
+          iframe.loading = 'lazy'
         }
       })
     }
@@ -45,11 +45,11 @@ export default function(){
       let imgs = document.querySelectorAll('img')
       imgs.forEach((img)=>{
         if( ! isAlreadyLazied( img ) ){
-          if( img.getAttribute('src') ){
-            img.setAttribute('data-lowsrc', img.getAttribute('src'))
+          if( img.src ){
+            img.dataset.lowsrc = img.src
           }
-          if( img.getAttribute('srcset') ){
-            img.setAttribute('data-lowsrcset', img.getAttribute('srcset'))
+          if( img.srcset ){
+            img.dataset.lowsrcset = img.srcset
           }
           img.removeAttribute('src')
           img.removeAttribute('srcset') 
@@ -61,8 +61,8 @@ export default function(){
       let iframes = document.querySelectorAll('iframe:not([data-src])')
       iframes.forEach((iframe)=>{
         if( ! isAlreadyLazied( iframe ) ){
-          if( iframe.getAttribute('src') ){
-            iframe.setAttribute('data-lowsrc', iframe.getAttribute('src'))
+          if( iframe.src ){
+            iframe.dataset.lowsrc = iframe.src
           }
           iframe.removeAttribute('src')
         }

@@ -6,16 +6,14 @@ export default function(){
   let script
   let containerScript = (document.head||document.documentElement)
 
-  console.log(iframes)
   iframes.forEach((iframe)=>{
 
     const keys = Object.keys(videoToBlock)
     
     for (const key of keys) {
       let video = videoToBlock[key]
-      console.log(video.url)
-      console.log(iframe.src)
-      if( iframe.src.indexOf(video.url) != -1 ){
+
+      if( iframe.src.indexOf(video.embed_url) != -1 ){
         if( video.player ){
           script = document.createElement('script');
           script.type = "text/javascript";

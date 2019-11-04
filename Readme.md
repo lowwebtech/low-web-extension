@@ -126,4 +126,5 @@ Then, here is a list of what low WebExtension does for reducing bandwidth and en
 - slideshare
 - soundcloud
 - spotify
+- medium
 - and more https://oembed.com/#section7
