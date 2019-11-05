@@ -1,4 +1,7 @@
 .lowweb{
+  &--hidden{
+    visibility: hidden !important;
+  }
   &__gif-player{
     position: relative;
     display: inline-block;
@@ -39,6 +42,11 @@
       // }
       .lowweb__gif-player--anim{
         visibility: visible;
+      }
+    }
+    &--small{
+      svg{
+        display: none;
       }
     }
   }

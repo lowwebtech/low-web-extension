@@ -25,9 +25,9 @@ export function blockImages(){
           }
         } 
 
-        if( url.indexOf('//media.giphy.com/media') != -1 ){
+        if( url.indexOf('.giphy.com/media') != -1 ){
           
-          //https://media.giphy.com/media/gHWegg7yI1qOjTmpqN/giphy.gif
+          //https:.giphy.com/media/gHWegg7yI1qOjTmpqN/giphy.gif
           if( url.indexOf('lowweb='+TOKEN) == -1 ){
 
             // let newUrl = new URL(url)

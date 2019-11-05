@@ -27,9 +27,9 @@ export function embedVideoParams(){
 
   browser.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-      console.log("message", request.message)
+      
       if (request.message == "oembed") {
-
+        console.log("message", request.message)
         fetch(request.options.oembedUrl)
           .then( (res) => {
             return res.json()

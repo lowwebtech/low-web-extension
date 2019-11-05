@@ -1,41 +1,60 @@
+// TODO detect animated gif
+// animated-gif-detector doesn't seem to work
+// import isAnimated from 'animated-gif-detector'
+
 export default class GifPlayer{
   constructor( gif ){
 
     this.gif = gif
     this.playing = false
 
-    this.canvas = document.createElement('canvas')
-    this.canvas.classList.add('lowweb__gif-player--preview')
-    this.context = this.canvas.getContext('2d')
+    this.gif.classList.add('lowweb--hidden')
 
-    if( gif.width ){
-      this.canvas.width = gif.width
-      this.canvas.height = gif.height
-    }
-
-    let container = document.createElement('div')
-    container.classList.add('lowweb__gif-player')
-    gif.parentNode.insertBefore(container, gif)
-    container.innerHTML = '<svg class="lowweb__gif-player--play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg><svg class="lowweb__gif-player--pause" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g fill="#fff"><path d="m0 0h7v20h-7z"/><path d="m11 0h7v20h-7z"/></g></svg>'
-    container.appendChild(this.canvas)
-    container.appendChild(gif)
-    // gif.parentNode.insertBefore(this.canvas, gif.nextSibling);
-
-    gif.classList.add('lowweb__gif-player--anim')
-
-    this.container = container
-
-    if( ! gif.complete ){
-      gif.onload = ()=>{
-        console.log('load complete')
-        this.draw()
+    if( ! this.gif.complete ){
+      this.gif.onload = ()=>{
+        this.build()
       }
     }else{
-      this.draw()
+      this.build()
     }
-    
-    container.addEventListener('mouseenter', ()=>this.play())
-    container.addEventListener('mouseleave', ()=>this.stop())
+
+  }
+
+  build(){
+
+    if( this.isAnimated && ! this.isSmall() ){
+
+      this.canvas = document.createElement('canvas')
+      this.canvas.classList.add('lowweb__gif-player--preview')
+      this.context = this.canvas.getContext('2d')
+
+      this.gif.classList.remove('lowweb--hidden')
+
+      if( this.gif.width ){
+        this.canvas.width = this.gif.width
+        this.canvas.height = this.gif.height
+      }
+
+      let container = document.createElement('div')
+      container.classList.add('lowweb__gif-player')
+      if( this.isSmall() ) container.classList.add('lowweb__gif-player--small')
+      this.gif.parentNode.insertBefore(container, this.gif)
+
+      container.innerHTML = '<svg class="lowweb__gif-player--play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg><svg class="lowweb__gif-player--pause" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g fill="#fff"><path d="m0 0h7v20h-7z"/><path d="m11 0h7v20h-7z"/></g></svg>'
+      container.appendChild(this.canvas)
+      container.appendChild(this.gif)
+      // gif.parentNode.insertBefore(this.canvas, gif.nextSibling);
+
+      this.gif.classList.add('lowweb__gif-player--anim')
+      this.container = container
+
+      container.addEventListener('mouseenter', ()=>this.play())
+      container.addEventListener('mouseleave', ()=>this.stop())
+
+      this.draw()
+
+    }
+
   }
   // toggle(){
   //   if( this.playing ) this.stop()
@@ -59,5 +78,20 @@ export default class GifPlayer{
   }
   draw(){
     this.context.drawImage( this.gif, 0, 0 )
+  }
+
+  isAnimated(){
+    // TODO detect animated gif
+    return true
+  }
+  isSmall(){
+    if( this.gif.width < 32 || this.gif.height < 32 ){
+      return true
+    }else if( this.gif.naturalWidth 
+      && (this.gif.naturalWidth < 32 || this.gif.naturalHeight < 32) ){
+      return true
+    }else{
+      return false
+    }
   }
 }

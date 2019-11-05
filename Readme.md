@@ -63,7 +63,8 @@ Then, here is a list of what low WebExtension does for reducing bandwidth and en
 - `npm run watch` / `npm run build`
 - open `chrome://extensions/`, enable Developer Mode and Load unpacked folder : `dist/`
 
-
+Pages for test : 
+https://lowwebtech.github.io/low-web-extension/
 
 
 
