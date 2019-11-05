@@ -1,3 +1,5 @@
+import './styles/gif.scss'
+
 export default function(){
 
   const script = document.createElement('script');

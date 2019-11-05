@@ -1,4 +1,4 @@
-import store from '../../store'
+import store from '../store'
 import isWebpage from '../utils/is-webpage'
 
 // TODO find solution for events transitionend / animationend

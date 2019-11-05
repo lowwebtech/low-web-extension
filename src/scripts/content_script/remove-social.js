@@ -1,4 +1,4 @@
-import store from '../../store'
+import store from '../store'
 import urls_to_block from '../social-to-block'
 
 

@@ -1,7 +1,7 @@
 import { TOKEN } from '../constants'
 import queryString from 'query-string'
 
-import store from '../../store';
+import store from '../store';
 import urls_to_block from '../social-to-block'
 import RequestManager from './RequestManager'
 import isWebpage from '../utils/is-webpage'
@@ -29,7 +29,6 @@ export function embedVideoParams(){
     function(request, sender, sendResponse) {
       
       if (request.message == "oembed") {
-        console.log("message", request.message)
         fetch(request.options.oembedUrl)
           .then( (res) => {
             return res.json()
@@ -38,13 +37,13 @@ export function embedVideoParams(){
             sendResponse(json)
           })
           .catch(function(error) {
-            console.log('oembed error');
-            console.log(error);
+            console.log('oembed error', error);
           })
       }
 
       return true
-    });
+    }
+  );
 
   browser.webRequest.onBeforeRequest.addListener( (details)=>{
 
@@ -62,30 +61,14 @@ export function embedVideoParams(){
           params.rel = 0
           params.lowweb == TOKEN ? params.autoplay = 1 : params.autoplay = 0 
         }
-
-        /* 
-        quality parameter doesn't seems to work
-        */
-        // if( store.getters.video_quality == 'low' ){
-        //   params.vq = 'small' 
-        // }else{
-        //   params.vq = 'medium'
-        // }
+        // vq (small/medium) doesn't work
         break;
       case "player.twitch.tv":
         if( store.getters.video_attributes ){
           params.loop = false
           params.lowweb == TOKEN ? params.autoplay = true : params.autoplay = false
         }
-
-        /* 
-        quality parameter doesn't seems to work
-        */
-        // if( store.getters.video_quality == 'low' ){
-        //   params.quality = 'low' 
-        // }else{
-        //   params.quality = 'medium'
-        // }
+        // quality (low/medium) doesn't work
         break;
       case "www.dailymotion.com":
       case "*.dailymotion.com":
@@ -94,15 +77,7 @@ export function embedVideoParams(){
           params.loop = false
           params['queue-enable'] = false
         }
-
-        /* 
-        quality parameter doesn't seems to work
-        */
-        // if( store.getters.video_quality == 'low' ){
-        //   params.quality = '240'
-        // }else{
-        //   params.quality = '380'
-        // }
+        // quality (240/380) doesn't work
         break;
       case "player.vimeo.com":
         if( store.getters.video_attributes ){
@@ -114,13 +89,6 @@ export function embedVideoParams(){
         }else{
           params.quality = '540p'
         }
-
-        // TODO
-        // BUG 
-        //
-        // loop=true&autoplay=1
-        // loop=false&autoplay=false&quality=360p
-        
         break;
     }
 

@@ -6,7 +6,6 @@ import GiphyPlayer from './GiphyPlayer'
   let gifs = document.querySelectorAll('img[src$=".gif"]')
   let giphies = []
   gifs.forEach((gif)=>{
-    console.log(gif.src)
     if( gif.src.indexOf('.giphy.com/media') != -1 ){
       giphies.push( new GiphyPlayer( gif ) )
     }else{
@@ -24,7 +23,7 @@ import GiphyPlayer from './GiphyPlayer'
       .then(
         function(response) {
           if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ' +
+            console.warn('Looks like there was a problem. Status Code: ' +
               response.status);
             return;
           }
@@ -38,7 +37,7 @@ import GiphyPlayer from './GiphyPlayer'
         }
       )
       .catch(function(err) {
-        console.log('Fetch Error :-S', err);
+        console.warn('Fetch Error :-S', err);
       });
   }
 

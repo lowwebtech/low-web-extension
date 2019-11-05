@@ -1,0 +1,48 @@
+.lowweb__gif-player{
+  position: relative;
+  display: inline-block;
+  svg{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+  }
+  // img{
+  //   z-index: 8;
+  // }
+  &--preview{
+    position: relative;
+  //   canvas{
+    z-index: 2;
+  }
+  &--anim{
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    z-index: 4;
+  }
+  &--play{
+    z-index: 6; 
+  }
+  // &--pause{
+  //   z-index: 10; 
+  //   visibility: hidden;
+  // }
+  &--playing{
+    .lowweb__gif-player--play{
+      visibility: hidden;
+    }
+    // .lowweb__gif-player--pause{
+    //   visibility: visible;
+    // }
+    .lowweb__gif-player--anim{
+      visibility: visible;
+    }
+  }
+  &--small{
+    svg{
+      display: none;
+    }
+  }
+}

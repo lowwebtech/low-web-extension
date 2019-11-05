@@ -21,6 +21,13 @@ export default class GiphyPlayer{
     let container = document.createElement('div')
     container.classList.add('lowweb__gif-player')
     container.classList.add('lowweb__gif-player--giphy')
+
+    // TODO better computed styles
+    this.computedStyles = window.getComputedStyle(gif)
+    if( this.computedStyles.getPropertyValue('position') != 'static' ){
+      container.style.position = this.computedStyles.getPropertyValue('position') 
+    }
+
     gif.parentNode.insertBefore(container, gif)
     container.innerHTML = '<svg class="lowweb__gif-player--play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg>'
 

@@ -1,23 +1,26 @@
 global.browser = require('webextension-polyfill');
 
-import store from './store';
+import store from './scripts/store';
 import RequestManager from './scripts/background/RequestManager'
+import Blocker from './scripts/background/Blocker'
 
-import { saveDataHeader } from './scripts/background/save-data'
-import { blockFiles } from './scripts/background/block-files'
-import { blockSocial } from './scripts/background/block-social'
-import { blockAds } from './scripts/background/block-ads'
-import { blockImages } from './scripts/background/block-images'
+import { blockFiles } from './scripts/background/block/block-files'
+import { blockSocial } from './scripts/background/block/block-social'
+// import { blockAds } from './scripts/background/block/block-ads'
+import { blockImages } from './scripts/background/block/block-images'
+
+import { saveDataHeader } from './scripts/background/header/save-data'
 import { cssAnimation } from './scripts/background/css-animation'
 import { embedVideoParams } from './scripts/background/embed-video-params'
 
 browser.runtime.onInstalled.addListener(function() {
 
   RequestManager.init()
+  Blocker.init()
 
   blockFiles()
   blockSocial()
-  blockAds()
+  // blockAds()
   blockImages()
   
   embedVideoParams()

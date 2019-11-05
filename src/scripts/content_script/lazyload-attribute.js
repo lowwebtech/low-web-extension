@@ -1,4 +1,4 @@
-import store from '../../store';
+import store from '../store';
 import LazyLoad from 'vanilla-lazyload'
 
 let lazyloadSupported = false

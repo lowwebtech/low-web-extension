@@ -35,12 +35,21 @@ export default class GifPlayer{
         this.canvas.height = this.gif.height
       }
 
+
       let container = document.createElement('div')
       container.classList.add('lowweb__gif-player')
       if( this.isSmall() ) container.classList.add('lowweb__gif-player--small')
-      this.gif.parentNode.insertBefore(container, this.gif)
+
+      // TODO better computed styles
+      this.computedStyles = window.getComputedStyle(this.gif)
+      if( this.computedStyles.getPropertyValue('position') != 'static' ){
+        container.style.position = this.computedStyles.getPropertyValue('position') 
+      }
 
       container.innerHTML = '<svg class="lowweb__gif-player--play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg><svg class="lowweb__gif-player--pause" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g fill="#fff"><path d="m0 0h7v20h-7z"/><path d="m11 0h7v20h-7z"/></g></svg>'
+      
+      this.gif.parentNode.insertBefore(container, this.gif)
+
       container.appendChild(this.canvas)
       container.appendChild(this.gif)
       // gif.parentNode.insertBefore(this.canvas, gif.nextSibling);

@@ -1,13 +1,11 @@
-import store from '../../store';
+import store from '../store';
 import RequestManager from './RequestManager'
 
 import * as ABPFilterParser from 'abp-filter-parser';
 import easyListTxt from '../../easylist2.txt'
 
-
 let parsedFilterData = {};
 ABPFilterParser.parse(easyListTxt, parsedFilterData);
-
 
 export function blockAds(){
   browser.webRequest.onBeforeRequest.addListener(

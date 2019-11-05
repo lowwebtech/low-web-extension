@@ -1,6 +1,7 @@
+import './styles/click-to-load.scss'
 import queryString from 'query-string'
 
-import store from '../../store'
+import store from '../store'
 import videoToBlock from '../video-to-block'
 
 import { BASE64_PNG, TOKEN } from '../constants'
@@ -13,8 +14,6 @@ export default function(){
     let iframes = document.querySelectorAll('iframe')
     let tempIframes = []
     let iframeReplaced = false
-
-    console.log("----")
 
     iframes.forEach((iframe)=>{
 

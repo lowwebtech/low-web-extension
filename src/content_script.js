@@ -1,8 +1,8 @@
-import './scss/injected-style.scss'
+import './scss/default.scss'
 
 global.browser = require('webextension-polyfill');
 
-import store from './store';
+import store from './scripts/store';
 
 import imageSrcset from './scripts/content_script/image_srcset'
 import lazyload from './scripts/content_script/lazyload-attribute'
