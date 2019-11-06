@@ -1,11 +1,17 @@
-import './styles/click-to-load.scss'
 import queryString from 'query-string'
 
-import store from '../store'
-import videoToBlock from '../video-to-block'
+import '../styles/click-to-load.scss'
+import store from '../../store'
+import videoToBlock from '../../video-to-block'
 
-import { BASE64_PNG, TOKEN } from '../constants'
-import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId } from '../utils/get-video-id'
+import { BASE64_PNG, TOKEN } from '../../constants'
+import { 
+  getYoutubeId, 
+  getDailymotionId, 
+  getFacebookId, 
+  getVimeoId, 
+  getTwitchId 
+} from '../../utils/get-video-id'
 
 export default function(){
 

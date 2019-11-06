@@ -2,11 +2,12 @@
 export default {
   youtube: {
     id: 'youtube',
+    domains: ['youtube.com'],
     embed_url: 'youtube.com/embed', 
     video_url: 'https://www.youtube.com/watch?v=##ID##',
     oembed: 'https://www.youtube.com/oembed',
     image: '',//'https://img.youtube.com/vi/##ID##/mqdefault.jpg',
-    player: '',//players/Youtube.js
+    player: 'players/Youtube.js',
     icon: '<svg enable-background="new 0 0 68 48" viewBox="0 0 68 48" height="68" width="48"  xmlns="http://www.w3.org/2000/svg"><path d="m66.6 7.5c-.8-2.9-3.1-5.3-6-6.1-5.4-1.4-26.6-1.4-26.6-1.4s-21.2 0-26.6 1.5c-2.9.8-5.3 3.1-6 6.1-1.4 5.3-1.4 16.4-1.4 16.4s0 11.1 1.5 16.5c.8 2.9 3.1 5.3 6 6 5.3 1.5 26.5 1.5 26.5 1.5s21.2 0 26.6-1.4c2.9-.8 5.3-3.1 6-6 1.4-5.5 1.4-16.6 1.4-16.6s0-11.1-1.4-16.5z" fill="#212121"/><path d="m27 34.1 17.8-10.1-17.8-10.1z" fill="#fff"/></svg>'
   },
   vimeo: {
@@ -21,6 +22,7 @@ export default {
   },
   dailymotion:{
     id: 'dailymotion',
+    domains: ['dailymotion.com'],
     embed_url: 'dailymotion.com/embed/video', 
     video_url: 'https://www.dailymotion.com/video/##ID##',
     oembed: 'https://www.dailymotion.com/services/oembed',

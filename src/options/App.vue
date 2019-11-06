@@ -178,7 +178,7 @@
 </template>
 
 <script>
-import store from '../store'
+import store from '../scripts/store'
 export default {
   name: 'App',
   methods:{

@@ -1,18 +1,9 @@
-import YoutubePlayer from './YoutubePlayer'
+// import YoutubePlayer from './YoutubePlayer'
 
 (function(){
 
-  window.onYouTubeIframeAPIReady = ()=>{
-    let iframes = document.querySelectorAll('iframe')
-    iframes.forEach((iframe)=>{
-      if( iframe.src.indexOf('youtube.com/embed') != -1 ){
-        new YoutubePlayer( iframe )
-      }
-    })
-  }
+  let player = document.getElementById('movie_player') || document.querySelector('.ytp-embed')
+  // console.log(player.getAvailableQualityLevels())
+  player.setPlaybackQualityRange('tiny')
 
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  document.body.appendChild(tag)
-  
 }())

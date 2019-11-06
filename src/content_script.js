@@ -6,13 +6,14 @@ import store from './scripts/store';
 
 import imageSrcset from './scripts/content_script/image_srcset'
 import lazyload from './scripts/content_script/lazyload-attribute'
-import videoAttribute from './scripts/content_script/video-attributes'
-import clickToLoadVideo from './scripts/content_script/click-to-load-video'
-import stopMarquee from './scripts/content_script/stop-marquee'
+import stopMarquee from './scripts/content_script/animation/stop-marquee'
 import giPlayer from './scripts/content_script/gif-player'
 
 import removeSocial from './scripts/content_script/remove-social'
-import customPlayers from './scripts/content_script/custom-players'
+
+import videoAttribute from './scripts/content_script/video/video-attributes'
+import clickToLoadVideo from './scripts/content_script/video/click-to-load-video'
+import customPlayers from './scripts/content_script/video/custom-players'
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
@@ -29,7 +30,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   giPlayer()
   videoAttribute()
   clickToLoadVideo()
-  // customPlayers()
+  customPlayers()
   removeSocial()
   
   // var fullURL = chrome.runtime.getURL("./scripts/content_script/sw.js");
