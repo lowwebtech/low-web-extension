@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 
-import '../styles/click-to-load.scss'
+import './click-to-load.scss'
 import store from '../../store'
 import videoToBlock from '../../video-to-block'
 

@@ -1,4 +1,4 @@
-import './styles/gif.scss'
+import './gif.scss'
 
 export default function(){
 
