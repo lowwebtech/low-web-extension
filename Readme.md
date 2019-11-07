@@ -32,9 +32,9 @@ Then, here is a list of what low WebExtension does for reducing bandwidth and en
         * Dailymotion
         * ~~Twitch~~ - quality parameter doesn't seem to work via API or url parameter
         * ~~Facebook~~ - not possible
-    + add or remove attributes html5 video (preload="none", autoplay, loop)
-    + update video embed url : no loop, no autoplay, low quality (if available)
     + click to load/play embedded videos (Youtube, Vimeo, Dailymotion, Twitch, Facebook), it only loads iframe (and tons of script) when you click and play it
+    + add or remove attributes html5 video (autoplay, loop)
+    + update video embed url : no loop, no autoplay, low quality (if available)
     + block format video *(default:false)*
 - image : 
     + ~~remove biggest or hidpi images from srcset~~ *(only works with lazy-loaded images eg. data-srcset, data-lazysrcset)*
@@ -69,7 +69,6 @@ https://lowwebtech.github.io/low-web-extension/
 
 
 ### TODO
-- fix/add options
 - oembed
 - write tests
 - extension icon
@@ -87,22 +86,14 @@ https://lowwebtech.github.io/low-web-extension/
     + gif
         * play once when entering viewport
     + emoji
-- click-to-load video :
-    + add logos
-    + vimeo image
-    + get title via apis
-    + fix css / computed styles
 - netflix
 - build injected script 
 - audit the extension to limit size and processes (reflow)
 - display advice/tips to reduce bandwidth for main websites
-- add button to load original srcset (not need yet)
 - rewrite save-data header
+- CSP
 - look at cache-control and expire for header and response requests
 - disable unoptimised hide/show jQuery, gsap etc...
-- ~~disable tracking~~ *use uBlock*
-- ~~ads~~ : *use uBlock*
-    + need to be optimised (with WebAssembly)
 - fonts
     + remove call to fonts.googleapis.com, fontawesome.com and other services
 - social
@@ -113,10 +104,13 @@ https://lowwebtech.github.io/low-web-extension/
 - add fallback for blocked ressources
 - take into account connexion network type (wifi/ethernet or 3G/4G)
 - take into account carbon footprint of user's electricity (-> co2signal.com)
-- replace main scripts (jquery...) and styles (bootstrap..) with cdn/cache versions
+- replace main scripts (jquery...) and styles (bootstrap..) with cdn or cached versions
 - display time alerts
 - set css prefers-color-scheme to dark
     + look at DarkReader
+- ~~disable tracking~~ *use uBlock*
+- ~~ads~~ : *use uBlock*
+    + need to be optimised (with WebAssembly)
 
 ### TODO add those websites
 - netflix

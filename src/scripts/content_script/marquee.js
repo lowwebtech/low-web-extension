@@ -1,8 +1,14 @@
+import store from '../store'
+
 export default function(){
   
-  const marquees = document.querySelectorAll('marquee')
-  marquees.forEach((marquee)=>{
-    marquee.stop()
-  })
+  if( store.state.marquee_animation ){
+
+    const marquees = document.querySelectorAll('marquee')
+    marquees.forEach((marquee)=>{
+      marquee.stop()
+    })
+     
+  }
 
 }

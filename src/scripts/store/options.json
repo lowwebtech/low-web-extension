@@ -49,6 +49,12 @@
     "value": 0
   },
   {
+    "id": "marquee_animation", 
+    "label": "Disable marquee animation",
+    "type": "bool",
+    "value": 1
+  },
+  {
     "id": "image_srcset", 
     "label": "Image srcset",
     "type": "select",
