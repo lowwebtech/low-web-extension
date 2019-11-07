@@ -3,6 +3,8 @@ import queryString from 'query-string'
 import './click-to-load.scss'
 import store from '../../store'
 import videoToBlock from '../../video-to-block'
+import { insertAfter } from '../utils/insert-after'
+import { getRandomId } from '../../utils/get-random-id'
 
 import { BASE64_PNG, TOKEN } from '../../constants'
 import { 
@@ -37,7 +39,7 @@ export default function(){
 
         let cloned = iframe.cloneNode()
         cloned.dataset.src = src
-        cloned.src = BASE64_PNG
+        // cloned.src = BASE64_PNG
 
         let data, type
         
@@ -58,11 +60,6 @@ export default function(){
         tempEl.classList = iframe.classList
         tempEl.classList.add('lowweb__click-to-load')
         tempEl.classList.add('lowweb__click-to-load--'+type)
-
-        // TODO apply computed styles of the iframe
-        // TODO need to share same window
-        tempEl.style.width = iframe.width + 'px'
-        tempEl.style.height = iframe.height + 'px'
 
         if( id ) tempEl.dataset.lowid = id
         if( data ) tempEl.dataset.lowtype = data.id
@@ -92,16 +89,25 @@ export default function(){
                 thumb = data.image.replace('##ID##', id)
               }
               if( type == 'youtube' ) thumb = thumb.replace('hqdefault','mqdefault')
-              tempEl.style.backgroundImage = `url(${thumb})`
+              if( thumb ) tempEl.style.backgroundImage = `url(${thumb})`
             });
           }
         }
+        
+        let computeid = getRandomId()
+        iframe.classList.add('lowweb__click-to-load--original')
+        iframe.dataset.computeid = computeid
+        tempEl.dataset.computeid = computeid
+        iframe.src = BASE64_PNG
 
         tempIframes.push(tempEl)
-        parent.replaceChild(tempEl, iframe)
+        insertAfter(tempEl,iframe)
+        // parent.replaceChild(tempEl, iframe)
+        // parent.insertBefore(tempEl, parent.nextSibling)
 
         tempEl.addEventListener('click', ()=>{
           // cloned.classList.add('lowweb__click-to-load--clicked')
+          console.log(cloned.dataset.src)
           cloned.src = bypassUrlBlock( cloned.dataset.src )
           parent.replaceChild(cloned, tempEl)
         })
@@ -112,19 +118,15 @@ export default function(){
 
     })
 
-    // if( iframeReplaced ){
+    console.log('add compute-styles', iframeReplaced)
+    if( iframeReplaced ){
 
-      // let script = document.createElement('script');
-      // script.type = "text/javascript";
-      // script.src = chrome.extension.getURL('players/ClickToPlayer.js');
-      // (document.head||document.documentElement).appendChild(script)
+      let script = document.createElement('script');
+      script.type = "text/javascript";
+      script.src = chrome.extension.getURL('utils/compute-styles.js');
+      (document.head||document.documentElement).appendChild(script)
       
-      // TODO remove and get computed styles
-      tempIframes.forEach((el)=>{
-        let box = el.getBoundingClientRect()
-        if( box.height == 0 ) el.style.position = 'absolute'
-      })
-    // }
+    }
   } 
 }
 
@@ -140,6 +142,11 @@ function videoBlocked( url ){
 }
 
 function bypassUrlBlock( u ){
+
+  // TODO clean url
+  if( u.substring(0, 2) == '//' ){
+    u = 'https:' + u
+  }
 
   let url = new URL( u )
   let params = queryString.parse(url.search)

@@ -4,6 +4,7 @@ import queryString from 'query-string'
 import store from '../store';
 import urls_to_block from '../social-to-block'
 import RequestManager from './RequestManager'
+import Blocker from './Blocker'
 import isWebpage from '../utils/is-webpage'
 
 // TODO check if quality params work
@@ -45,7 +46,8 @@ export function embedVideoParams(){
     }
   );
 
-  browser.webRequest.onBeforeRequest.addListener( (details)=>{
+
+  const action = (details)=>{
 
     let url = new URL( details.url )
 
@@ -90,6 +92,8 @@ export function embedVideoParams(){
           params.quality = '540p'
         }
         break;
+        // TODO
+        // case "facebook" data-autoplay=true/false
     }
 
 
@@ -105,15 +109,13 @@ export function embedVideoParams(){
         if( params.lowweb == TOKEN ){
           params.autoplay = true
         }
-
-      //    else{
-      //     o.cancel = true
-      //   }
       } 
     }
 
     return o;
-  },{
+  }
+
+  const filter = {
     urls: [
       "*://*.youtube.com/embed/*",
       "*://player.vimeo.com/*",
@@ -121,8 +123,10 @@ export function embedVideoParams(){
       "*://player.twitch.tv/?*",
       "*://*.facebook.com/plugins/video.php*",
     ]
-  },
-  ["blocking"]);
+  }
+
+  // Blocker.addUrlsToBlock( images_to_block )
+  Blocker.filterRequest( action, filter )
 
 }
 

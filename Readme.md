@@ -37,7 +37,7 @@ Then, here is a list of what low WebExtension does for reducing bandwidth and en
     + click to load/play embedded videos (Youtube, Vimeo, Dailymotion, Twitch, Facebook), it only loads iframe (and tons of script) when you click and play it
     + block format video *(default:false)*
 - image : 
-    + ~~remove biggest or hidpi images from srcset~~ *(not working due to browser restrictions)*
+    + ~~remove biggest or hidpi images from srcset~~ *(only works with lazy-loaded images eg. data-srcset, data-lazysrcset)*
     + ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions)*
     + plays gif when hovering them
     + plays and load giphy when hovering them
@@ -75,7 +75,6 @@ https://lowwebtech.github.io/low-web-extension/
 - extension icon
 - add metrics (or not!)
 - images :
-    + custom srcset for data-src and lazied images
     + serviceworker
     + replace hi-res by low-res for known websites (https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_400x400.jpg -> https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_x96.jpg)
     + giphy

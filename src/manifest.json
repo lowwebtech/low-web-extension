@@ -39,7 +39,8 @@
   ],
   "web_accessible_resources": [
     "options.js",
-    "players/*"
+    "players/*",
+    "utils/*"
   ],
   "options_ui": {
     "page": "options/options.html"
