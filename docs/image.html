@@ -62,7 +62,7 @@
     <img src="https://c.disquscdn.com/uploads/users/29408/8062/avatar92.jpg" />
   </section>
   
-
+<!-- 
   <section class="bloc--lazy">
     
     <h2>Lazy Image (not working)</h2>
@@ -83,5 +83,15 @@
     </figure>
 
   </section>
+ -->
+  <script type="text/javascript">
+    window.addEventListener("DOMContentLoaded", (event) => {
+      var images = document.querySelectorAll('img[data-src]')
+      for( var i = 0, lg = images.length; i<lg; i++ ){
+        images[i].srcset = images[i].dataset.srcset
+        images[i].src = images[i].dataset.src
+      }
+    });
+  </script>
 </body>
 </html>

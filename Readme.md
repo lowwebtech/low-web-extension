@@ -26,14 +26,14 @@ First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrom
 
 Then, here is a list of what low WebExtension does for reducing bandwidth and energy consumption :
 - video :
-    + add or remove attributes html5 video (preload="none", autoplay, loop)
-    + update video embed url : no loop, no autoplay, low quality (if available)
     + custom player for low quality : 
-        * Vimeo - quality set via url parameter (`quality`)
-        * Dailymotion - quality set via Dailymotion API
-        * ~~Youtube~~ - quality parameter doesn't seem to work via API or url parameter
+        * Youtube
+        * Vimeo
+        * Dailymotion
         * ~~Twitch~~ - quality parameter doesn't seem to work via API or url parameter
         * ~~Facebook~~ - not possible
+    + add or remove attributes html5 video (preload="none", autoplay, loop)
+    + update video embed url : no loop, no autoplay, low quality (if available)
     + click to load/play embedded videos (Youtube, Vimeo, Dailymotion, Twitch, Facebook), it only loads iframe (and tons of script) when you click and play it
     + block format video *(default:false)*
 - image : 

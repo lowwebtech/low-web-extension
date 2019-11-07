@@ -11,7 +11,7 @@ if ('loading' in HTMLImageElement.prototype) {
 // lazyloadSupported = false
 
 // TODO
-// doesn't work, try to block images without a unique key
+// doesn't work
 export default function(){
 
   const IMAGE_LAZYLOAD = store.getters.image_lazyload

@@ -7,58 +7,40 @@ export default function(){
   console.log('LOWWEB >>>>>>>>>> image srcset', IMAGE_SRCSET )
 
   if( IMAGE_SRCSET > 0 ){
-    const imgs = document.querySelectorAll('img')
-    let cleanedSrcset, box
-    let boxes = []
-    imgs.forEach((img)=>{
-      boxes.push( img.getBoundingClientRect() )
-    })
 
-    imgs.forEach((img, index)=>{
-      
-      // check that img is not already loaded
-      // TODO
-      if( ! img.complete || ( img.complete && img.src == '' ) ){
+    filterImages( 'srcset' )
+    filterImages( 'lazy-srcset' )
 
-        let srcset, width = 9999
-        // TODO check actual size with getBoundinClientRect
-        if( img.dataset.width ){
-          width = img.dataset.width
-        }else if( img.width ){
-          width = img.width
-        }
-
-        box = boxes[index]
-
-        // check srcset
-        if( img.srcset != null ){
-          srcset = img.srcset
-          cleanedSrcset = cleanSrcset( srcset, width, box )
-          if( cleanedSrcset ) img.srcset = cleanedSrcset
-        }
-
-        if( img.dataset.srcset ){
-          srcset = img.dataset.srcset
-          cleanedSrcset = cleanSrcset( srcset, width, box )
-          if( cleanedSrcset ) img.dataset.srcset = cleanedSrcset
-        }
-
-        if( img.dataset['lazy-srcset'] ){
-          srcset = img.dataset['lazy-srcset']
-          cleanedSrcset = cleanSrcset( srcset, width, box )
-          if( cleanedSrcset ) img.dataset['lazy-srcset'] = cleanedSrcset
-        }
-  
-        if( img.dataset.lowsrcset ){
-          srcset = img.dataset.lowsrcset
-          cleanedSrcset = cleanSrcset( srcset, width, box )
-          if( cleanedSrcset ) img.dataset.lowsrcset = cleanedSrcset
-        }
-
-      }
-
-    }) 
   } 
+}
+
+function filterImages( name ){
+
+  const imgs = document.querySelectorAll('img[data-'+name+']')
+  let cleanedSrcset
+
+  imgs.forEach((img, index)=>{
+    let srcset, width = 9999
+    if( img.dataset[name] ){
+      if( img.dataset.width ){
+        width = img.dataset.width
+      }else if( img.width ){
+        width = img.width
+      }
+    
+      srcset = img.dataset[name]
+      cleanedSrcset = cleanSrcset( srcset, width )
+      if( cleanedSrcset ) img.dataset[name] = cleanedSrcset
+    }
+
+    // check srcset
+    // if( img.srcset != null ){
+    //   srcset = img.srcset
+    //   cleanedSrcset = cleanSrcset( srcset, width )
+    //   if( cleanedSrcset ) img.srcset = cleanedSrcset
+    // }
+
+  }) 
 }
 
 function noRetina( srcset ){
@@ -72,25 +54,34 @@ function noRetina( srcset ){
   return srcset
 }
 
-function smart( srcset, box ){
+function smart( srcset, width ){
 
   srcset = noRetina( srcset )
   srcset = sortSrcset( srcset )
 
-  let newSrcset = [srcset[0]]
+  let newSrcset
+  // TEMP
+  if( srcset.length > 1 ){
+    let lg = Math.round( srcset.length / 2 )
+    newSrcset = srcset.slice(0,lg)
+  }else{
+    newSrcset = srcset
+  }
 
-  srcset.forEach((o, i)=>{
+  // TODO parse sizes or getBoundingClientRect to determine  size of the image
+  // srcset.forEach((o, i)=>{
+    
+  //   if( i > 0 ){
+  //     if( o.width ){
+  //       let dpiWidth = box.width * window.devicePixelRatio
+  //       console.log(dpiWidth, o.width)
+  //       if( dpiWidth > o.width ){
+  //         newSrcset.push(o)
+  //       }
+  //     } 
+  //   }
 
-    if( i > 0 ){
-      if( o.width ){
-        let dpiWidth = box.width * window.devicePixelRatio
-        if( dpiWidth > o.width ){
-          newSrcset.push(o)
-        }
-      } 
-    }
-
-  })
+  // })
 
   return newSrcset
 
@@ -140,7 +131,7 @@ function smallest( srcset, width ){
 }
 
 // remove all images except the smallest
-function cleanSrcset( srcset, width, box ){
+function cleanSrcset( srcset, width ){
   const parsed = srcsetUtil.parse(srcset);
   
   let cleanedSrcset
@@ -152,11 +143,11 @@ function cleanSrcset( srcset, width, box ){
       cleanedSrcset = smallest( parsed, width )
       break;
     case 3:
-      cleanedSrcset = smart( parsed, box )
+      cleanedSrcset = smart( parsed, width )
       break;
   }
 
-  cleanedSrcset = smallest( parsed, width )
+      cleanedSrcset = smart( parsed, width )
 
   if( cleanedSrcset ){
     return srcsetUtil.stringify(cleanedSrcset)

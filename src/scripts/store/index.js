@@ -16,7 +16,7 @@ let state = {
   save_data: 1,
   css_animation: 0,
 
-  image_srcset: 2,
+  image_srcset: 3,
   image_lazyload: 1,
   iframe_lazyload: 1,
 

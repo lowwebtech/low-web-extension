@@ -4,6 +4,8 @@
 
   let player = document.getElementById('movie_player') || document.querySelector('.ytp-embed')
   // console.log(player.getAvailableQualityLevels())
-  player.setPlaybackQualityRange('tiny')
+  if( player ){
+    player.setPlaybackQualityRange('tiny') 
+  }
 
 }())

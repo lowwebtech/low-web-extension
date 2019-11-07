@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // console.log(store.getters.block_social)
 
   // not working due to browser restriction
-  // imageSrcset()
+  imageSrcset()
   // lazyload()
   
   marquee()
