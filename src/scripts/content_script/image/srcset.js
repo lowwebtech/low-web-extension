@@ -4,7 +4,6 @@ import store from '../../store';
 export default function(){
 
   const IMAGE_SRCSET = store.getters.image_srcset
-  console.log('LOWWEB >>>>>>>>>> image srcset', IMAGE_SRCSET )
 
   if( IMAGE_SRCSET > 0 ){
 

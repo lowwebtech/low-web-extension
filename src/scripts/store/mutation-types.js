@@ -1,18 +1,7 @@
-// export const UPDATE_FOO = 'UPDATE_FOO';
-export const SAVE_DATA = 'SAVE_DATA';
-export const CSS_ANIMATION = 'CSS_ANIMATION';
-export const IMAGE_SRCSET = 'IMAGE_SRCSET';
-export const IMAGE_LAZYLOAD = 'IMAGE_LAZYLOAD';
-export const IFRAME_LAZYLOAD = 'IFRAME_LAZYLOAD';
-
-export const BLOCK_IMAGES = 'BLOCK_IMAGES';
-export const BLOCK_VIDEOS = 'BLOCK_VIDEOS';
-export const BLOCK_FONTS = 'BLOCK_FONTS';
-export const BLOCK_SCRIPTS = 'BLOCK_SCRIPTS';
-
-export const BLOCK_SOCIAL = 'BLOCK_SOCIAL';
-export const BLOCK_ADS = 'BLOCK_ADS';
-
-export const VIDEO_QUALITY = 'VIDEO_QUALITY';
-export const VIDEO_CLICKTOLOAD = 'VIDEO_CLICKTOLOAD';
-export const VIDEO_ATTRIBUTES = 'VIDEO_ATTRIBUTES';
+import jsonOptions from './options.json'
+const types = {}
+for( let i = 0, lg = jsonOptions.length; i<lg; i++ ){
+  let o = jsonOptions[i]
+  types[o.id] = o.id
+}
+export default types

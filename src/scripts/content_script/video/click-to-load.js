@@ -79,7 +79,7 @@ export default function(){
               videoUrl: videoUrl,
               oembedUrl: oembedUrl
             }}, function(oembed) {
-              console.log(oembed)
+              
               let thumb = oembed.thumbnail_url
               // some oembed doesn't provided thumbnail_url
               if( ! thumb && data.image != '' ){
@@ -87,8 +87,6 @@ export default function(){
               }
               if( type == 'youtube' ) thumb = thumb.replace('hqdefault','mqdefault')
               if( thumb ) tempEl.style.backgroundImage = `url(${thumb})`
-
-              console.log(type, data.skin)
 
               // button
               if( data.skin ){
@@ -146,7 +144,6 @@ export default function(){
 
     })
 
-    console.log('add compute-styles', iframeReplaced)
     if( iframeReplaced ){
 
       let script = document.createElement('script');

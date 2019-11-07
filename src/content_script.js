@@ -18,11 +18,8 @@ import customPlayers from './scripts/content_script/video/custom-players'
 document.addEventListener('DOMContentLoaded', ()=>{
 
   console.log('-------')
-  console.log(store.getters.block_social)
-  // store.commit('BLOCK_SOCIAL', 1)
-  // console.log(store.getters.block_social)
+  console.log('gif_player', store.getters.gif_player)
 
-  // not working due to browser restriction
   imageSrcset()
   // lazyload()
   

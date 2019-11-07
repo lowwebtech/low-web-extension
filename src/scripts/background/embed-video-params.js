@@ -56,8 +56,6 @@ export function embedVideoParams(){
 
       let url = new URL( details.url )
 
-      console.log('embed-video', details)
-      // console.log('embed-video', details)
       let originalSearch = url.search
       let params = queryString.parse(url.search)
 

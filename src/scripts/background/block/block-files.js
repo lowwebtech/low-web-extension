@@ -16,9 +16,9 @@ export function blockFiles(){
       case 'imageset':
         cancel = store.getters.block_images
         break;
-      case 'script':
-        cancel = store.getters.block_scripts
-        break;
+      // case 'script':
+      //   cancel = store.getters.block_scripts
+      //   break;
       default:
         cancel = 0
         break;

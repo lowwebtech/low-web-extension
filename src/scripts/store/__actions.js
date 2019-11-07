@@ -1,44 +1,42 @@
-import * as types from './mutation-types';
+import types from './mutation-types';
+import jsonOptions from './options.json'
 
 export const setSaveData = ({ commit }, payload) => {
-  commit(types.SAVE_DATA, payload);
+  commit(types.save_data, payload);
 };
 export const setCssAnimation = ({ commit }, payload) => {
-  commit(types.CSS_ANIMATION, payload);
+  commit(types.css_animation, payload);
 };
 export const setBlockImages = ({ commit }, payload) => {
-  commit(types.BLOCK_IMAGES, payload);
+  commit(types.block_images, payload);
 };
 export const setBlockVideos = ({ commit }, payload) => {
-  commit(types.BLOCK_VIDEOS, payload);
+  commit(types.block_videos, payload);
 };
 export const setBlockFonts = ({ commit }, payload) => {
-  commit(types.BLOCK_FONTS, payload);
+  commit(types.block_fonts, payload);
 };
-export const setBlockScripts = ({ commit }, payload) => {
-  commit(types.BLOCK_SCRIPTS, payload);
+export const setGifPlayer = ({ commit }, payload) => {
+  commit(types.gif_player, payload);
 };
 export const setImageSrcset = ({ commit }, payload) => {
-  commit(types.IMAGE_SRCSET, payload);
+  commit(types.image_srcset, payload);
 };
 export const setImageLazyload = ({ commit }, payload) => {
-  commit(types.IMAGE_LAZYLOAD, payload);
+  commit(types.image_lazyload, payload);
 };
 export const setIframeLazyload = ({ commit }, payload) => {
-  commit(types.IFRAME_LAZYLOAD, payload);
+  commit(types.iframe_lazyload, payload);
 };
 export const setBlockSocial = ({ commit }, payload) => {
-  commit(types.BLOCK_SOCIAL, payload);
-};
-export const setBlockAds = ({ commit }, payload) => {
-  commit(types.BLOCK_ADS, payload);
+  commit(types.block_social, payload);
 };
 export const setVideoQuality = ({ commit }, payload) => {
-  commit(types.VIDEO_QUALITY, payload);
+  commit(types.video_quality, payload);
 };
 export const setVideoClicktoload = ({ commit }, payload) => {
-  commit(types.VIDEO_CLICKTOLOAD, payload);
+  commit(types.video_clicktoload, payload);
 };
 export const setVideoAttributes = ({ commit }, payload) => {
-  commit(types.VIDEO_ATTRIBUTES, payload);
+  commit(types.video_attributes, payload);
 };

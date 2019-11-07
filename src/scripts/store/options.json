@@ -1,0 +1,116 @@
+[
+  {
+    "id": "save_data", 
+    "label": "Send save-data header",
+    "type": "bool",
+    "value": 1
+  },
+  {
+    "id": "css_animation", 
+    "label": "Disable css animation",
+    "type": "bool",
+    "value": 0
+  },
+  {
+    "id": "image_srcset", 
+    "label": "Image srcset",
+    "type": "select",
+    "value": 3,
+    "options":[
+      {
+        "value": 3,
+        "label": "Smart (recommended)"
+      },
+      {
+        "value": 2,
+        "label": "Remove all except minus"
+      },
+      {
+        "value": 1,
+        "label": "Remove retina"
+      },
+      {
+        "value": 0,
+        "label": "Do nothing"
+      }
+    ]
+  },
+  {
+    "id": "image_lazyload", 
+    "label": "Image lazyload",
+    "type": "bool",
+    "value": 1
+  },
+  {
+    "id": "iframe_lazyload", 
+    "label": "iframe lazyload",
+    "type": "bool",
+    "value": 1
+  },
+  {
+    "id": "gif_player", 
+    "label": "custom gif player",
+    "type": "bool",
+    "value": 0
+  },
+  {
+    "id": "block_images", 
+    "label": "block images",
+    "type": "bool",
+    "value": 0
+  },
+  {
+    "id": "block_videos", 
+    "label": "block videos",
+    "type": "bool",
+    "value": 0
+  },
+  {
+    "id": "block_fonts", 
+    "label": "block fonts",
+    "type": "bool",
+    "value": 0
+  },
+  {
+    "id": "block_social", 
+    "label": "Block social widgets",
+    "type": "bool",
+    "value": 1
+  },
+  {
+    "id": "video_quality", 
+    "label": "Video quality",
+    "type": "select",
+    "value": 2,
+    "options":[
+      {
+        "value": 1,
+        "label": "Lowest"
+      },
+      {
+        "value": 2,
+        "label": "Low (recommended)"
+      },
+      {
+        "value": 3,
+        "label": "Medium"
+      },
+      {
+        "value": 0,
+        "label": "Do nothing"
+      }
+    ]
+  },
+  {
+    "id": "video_clicktoload", 
+    "label": "Click to load/play video embed",
+    "type": "bool",
+    "value": 1
+  },
+  {
+    "id": "video_attributes", 
+    "label": "Video custom attributes",
+    "type": "bool",
+    "value": 1
+  }
+]
