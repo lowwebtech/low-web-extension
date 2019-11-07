@@ -68,19 +68,6 @@ function smart( srcset, width ){
   }
 
   // TODO parse sizes or getBoundingClientRect to determine  size of the image
-  // srcset.forEach((o, i)=>{
-    
-  //   if( i > 0 ){
-  //     if( o.width ){
-  //       let dpiWidth = box.width * window.devicePixelRatio
-  //       console.log(dpiWidth, o.width)
-  //       if( dpiWidth > o.width ){
-  //         newSrcset.push(o)
-  //       }
-  //     } 
-  //   }
-
-  // })
 
   return newSrcset
 
@@ -154,16 +141,3 @@ function cleanSrcset( srcset, width ){
     return false
   }
 }
-  // chrome.tabs.onUpdated.addListener(
-  //   function(tabId, changeInfo, tab){
-  //     console.log(tab)
-  //     console.log(document)
-  //   }
-  // );
-
-  // chrome.tabs.onUpdated.addListener(
-  //   function(tabId, changeInfo, tab){
-  //     console.log(tab)
-  //     console.log(document)
-  //   }
-  // );

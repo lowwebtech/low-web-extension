@@ -6,7 +6,7 @@ export default function(){
     // TODO add button play
     let videos = document.querySelectorAll('video')
     videos.forEach((item)=>{
-      item.preload = 'none'
+      // item.preload = 'none' // TODO
       item.removeAttribute('autoplay');
       item.removeAttribute('loop');
     }) 

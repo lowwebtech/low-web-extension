@@ -17,9 +17,6 @@ import customPlayers from './scripts/content_script/video/custom-players'
 
 document.addEventListener('DOMContentLoaded', ()=>{
 
-  console.log('-------')
-  console.log('gif_player', store.getters.gif_player)
-
   imageSrcset()
   // lazyload()
   
@@ -30,18 +27,4 @@ document.addEventListener('DOMContentLoaded', ()=>{
   customPlayers()
   removeSocial()
   
-  // var fullURL = chrome.runtime.getURL("./scripts/content_script/sw.js");
-  // console.log(fullURL)
 })
-// console.log(fullURL);
-// if ('serviceWorker' in navigator) {
-//   // window.addEventListener('load', () => {
-//     navigator.serviceWorker.register('./scripts/sw.js')
-//       .then(registration => {
-//         console.log(`Service Worker registered! Scope: ${registration.scope}`);
-//       })
-//       .catch(err => {
-//         console.log(`Service Worker registration failed: ${err}`);
-//       });
-//   // });
-// }

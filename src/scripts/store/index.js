@@ -22,7 +22,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   plugins: [VuexWebExtensions({
     persistentStates: shared_vars,
-    loggerLevel: 'debug'
+    // loggerLevel: 'debug'
   })],
   state: state,
   getters: getters,

@@ -1,6 +1,8 @@
 global.browser = require('webextension-polyfill');
 
 import store from './scripts/store';
+import isWebpage from './scripts/utils/is-webpage'
+
 import RequestManager from './scripts/background/RequestManager'
 import Blocker from './scripts/background/Blocker'
 
@@ -17,6 +19,21 @@ browser.runtime.onInstalled.addListener(function() {
 
   RequestManager.init()
   Blocker.init()
+
+
+  browser.tabs.onUpdated.addListener(
+    function(tabId, changeInfo, tab){
+      if( store.getters.video_clicktoload ) {
+        if( changeInfo.status == 'loading' ){        
+          if( isWebpage( tab.url ) ){
+            browser.tabs.insertCSS(tabId, {
+              file: 'content_script.css'
+            }); 
+          }
+        } 
+      }
+    }
+  );
 
   blockFiles()
   blockSocial()

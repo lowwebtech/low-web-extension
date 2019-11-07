@@ -1,3 +1,4 @@
+import { GIPHY_TOKEN } from '../../../constants'
 import GifPlayer from './GifPlayer'
 import GiphyPlayer from './GiphyPlayer'
 
@@ -19,7 +20,7 @@ import GiphyPlayer from './GiphyPlayer'
       ids.push(giphy.id)
     })
 
-    fetch('https://api.giphy.com/v1/gifs?api_key=WOfkdCJZ5ZbYzERVBz996efvXADEKASm&ids='+ids.toString())
+    fetch('https://api.giphy.com/v1/gifs?api_key='+GIPHY_TOKEN+'&ids='+ids.toString())
       .then(
         function(response) {
           if (response.status !== 200) {

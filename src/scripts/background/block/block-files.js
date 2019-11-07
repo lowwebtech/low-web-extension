@@ -5,7 +5,8 @@ export function blockFiles(){
 
   let action = function(details) {
     let cancel
-    switch( details.type ){
+    let { type, url } = details
+    switch( type ){
       case 'video':
         cancel = store.getters.block_videos
         break;
@@ -22,6 +23,10 @@ export function blockFiles(){
       default:
         cancel = 0
         break;
+    }
+
+    if( cancel ){
+      console.warn('blocked', url)
     }
 
     return {

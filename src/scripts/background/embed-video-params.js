@@ -5,26 +5,9 @@ import store from '../store';
 import urls_to_block from '../social-to-block'
 import RequestManager from './RequestManager'
 import Blocker from './Blocker'
-import isWebpage from '../utils/is-webpage'
 
 // TODO check if quality params work
 export function embedVideoParams(){
-
-  console.log('video_clicktoload', store.getters.video_clicktoload)
-
-  browser.tabs.onUpdated.addListener(
-    function(tabId, changeInfo, tab){
-      if( store.getters.video_clicktoload ) {
-        if( changeInfo.status == 'loading' ){        
-          if( isWebpage( tab.url ) ){
-            browser.tabs.insertCSS(tabId, {
-              file: 'content_script.css'
-            }); 
-          }
-        } 
-      }
-    }
-  );
 
   browser.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
@@ -91,10 +74,17 @@ export function embedVideoParams(){
             params.lowweb == TOKEN ? params.autoplay = true : params.autoplay = false
             params.loop = false
           }
-          if( store.getters.video_quality == 'low' ){
-            params.quality = '360p'
-          }else{
-            params.quality = '540p'
+          
+          switch(store.getters.video_quality){
+            case 1:
+              params.quality = '240p'
+              break;
+            case 2:
+              params.quality = '360p'
+              break;
+            case 3:
+              params.quality = '540p'
+              break;
           }
           break;
           // TODO
