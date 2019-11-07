@@ -65,15 +65,12 @@ export default function(){
         if( data ) tempEl.dataset.lowtype = data.id
         tempEl.dataset.lowsrc = iframe.src||iframe.dataset.src
 
-        // button
-        if( data.icon ){
-          tempEl.innerHTML = data.icon 
-        }
-        
         let videoUrl, oembedUrl
 
         if( data.video_url != '' && data.oembed != '' && id ) {
+
           videoUrl = data.video_url.replace('##ID##', id) 
+
           if( videoUrl ){
             oembedUrl = data.oembed + '?format=json&url='+encodeURIComponent(videoUrl)
 
@@ -82,7 +79,7 @@ export default function(){
               videoUrl: videoUrl,
               oembedUrl: oembedUrl
             }}, function(oembed) {
-              
+              console.log(oembed)
               let thumb = oembed.thumbnail_url
               // some oembed doesn't provided thumbnail_url
               if( ! thumb && data.image != '' ){
@@ -90,6 +87,38 @@ export default function(){
               }
               if( type == 'youtube' ) thumb = thumb.replace('hqdefault','mqdefault')
               if( thumb ) tempEl.style.backgroundImage = `url(${thumb})`
+
+              console.log(type, data.skin)
+
+              // button
+              if( data.skin ){
+                let skin = data.skin
+                let title
+                
+                if( oembed.title ) {
+                  title = oembed.title
+                }else if( oembed.provider_name.toLowerCase() == 'facebook'){
+                  let parser = new DOMParser()
+                  let html = parser.parseFromString(oembed.html, 'text/html');
+                  let t = html.querySelector('blockquote > a')
+                  if( t ){
+                    title = t.textContent
+                  }
+                }
+
+                if( title ){
+                  skin = skin.replace('##TITLE##', title)
+                }
+                if( oembed.description ) {
+                  skin = skin.replace('##DESCRIPTION##', oembed.description)
+                }
+                if( oembed.author_name ) {
+                  skin = skin.replace('##AUTHOR##', oembed.author_name)
+                }
+
+                tempEl.innerHTML = skin 
+              }
+              
             });
           }
         }
@@ -107,7 +136,6 @@ export default function(){
 
         tempEl.addEventListener('click', ()=>{
           // cloned.classList.add('lowweb__click-to-load--clicked')
-          console.log(cloned.dataset.src)
           cloned.src = bypassUrlBlock( cloned.dataset.src )
           parent.replaceChild(cloned, tempEl)
         })
@@ -174,6 +202,7 @@ function getId( url, type ){
       break;
     case 'twitch': 
       id = getTwitchId( url ) 
+      console.log('twitch id', id)
       break;
     case 'facebook': 
       id = getFacebookId( url ) 

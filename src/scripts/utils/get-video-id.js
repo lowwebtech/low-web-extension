@@ -22,8 +22,14 @@ export function getDailymotionId( url ){
 }
 export function getTwitchId( url ){
   // TODO twitch regex
-  const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i;
-  return matchRegexID( url, regex )
+  let u = new URL(url)
+  const params = queryString.parse(u.search)
+  
+  if( params.video ){
+    return params.video.substr(1)
+  }else{
+    return null
+  }
 }
 export function getFacebookId( url ){
   // TODO
