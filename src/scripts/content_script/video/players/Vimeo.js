@@ -1,40 +1,46 @@
-import VimeoPlayer from './VimeoPlayer'
-import getVimeoId from '../../utils/get-vimeo-id'
+// import VimeoPlayer from '@vimeo/player'
+// import VimeoPlayer from './VimeoPlayer'
+import { getVimeoId } from '../../../utils/get-video-id'
 
 (function(){
 
-  let id
-  let ids = []
 
-  let vimeos = document.querySelectorAll('.lowweb__click-to-load--vimeo')
-  vimeos.forEach((vimeo)=>{
-    // if( vimeo.src.indexOf('player.vimeo.com/video/') != -1 ){
-    //   id = getVimeoId(vimeo.src)
-      console.log(vimeo)
-      ids.push( vimeo.dataset.lowid )
-      // new VimeoPlayer( iframe )
-    // }
-  })
+  // const initPlayer = ()=>{
+    
+  //   let interval = setInterval(()=>{
+  //     // try {
+  //     //   // console.log(vimeo)
+  //     //   // console.log(Vimeo)
+  //     //   console.log(window.vimeo.clip_page_config)
+        
+  //     //   const player = new Vimeo.Player(document.querySelector('.player'), {
+  //     //     id: 350222721,
+  //     //     quality: '240p'
+  //     //     // width: 640,
+  //     //     // loop: true
+  //     //   })
+  //     //   // console.log(document.querySelector('.player').getDuration())
+  //     //   // console.log(player)
+  //     //   console.log(player.getDuration())
+  //     //   clearInterval( interval )
+  //     // }
+  //     // catch(error) {
+  //     //   console.error(error);
+  //     // }
+  //     const btNext = document.querySelectorAll('#continuous_play_toggle')
+  //     if( btNext ){
+  //       console.log('unchecked')
+  //       clearInterval( interval )
+  //       btNext.checked = false 
+  //     }
+  //   },500)
 
-  console.log('IDS', ids.toString())
-  
-  global.showThumb = function(data){
-    console.log('showThumb', data)
-
-    let vimeos = document.querySelectorAll('.lowweb__click-to-load--vimeo')
-    vimeos.forEach((vimeo)=>{
-      // if( vimeo.src.indexOf('player.vimeo.com/video/') != -1 ){
-      //   id = getVimeoId(vimeo.src)
-        new VimeoPlayer( vimeo, data )
-      // }
-    })
-  }
-
-  console.log(`https://vimeo.com/api/v2/video/${ ids[0] }.json?callback=showThumb`)
-  // console.log("https://api.vimeo.com/videos?uri=" + ids.toString() + "&callback=showThumb")
-  var tag = document.createElement( 'script' );
-  tag.src = `https://vimeo.com/api/v2/video/${ ids[0] }.json?callback=showThumb`
-  console.log(tag.src)
-  document.body.appendChild(tag)
+  // }
+ 
+  // var tag = document.createElement( 'script' );
+  // tag.onload = initPlayer
+  // tag.type = "text/javascript";
+  // tag.src = 'https://player.vimeo.com/api/player.js'
+  // document.body.appendChild(tag)
   
 }())

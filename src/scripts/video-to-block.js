@@ -2,7 +2,7 @@
 export default {
   youtube: {
     id: 'youtube',
-    domains: ['youtube.com'],
+    domains: ['youtube.com','youtu.be'],
     embed_url: 'youtube.com/embed', 
     video_url: 'https://www.youtube.com/watch?v=##ID##',
     oembed: 'https://www.youtube.com/oembed',
@@ -12,11 +12,12 @@ export default {
   },
   vimeo: {
     id: 'vimeo',
+    domains: ['vimeo.com'],
     embed_url: 'player.vimeo.com/video/',
     video_url: 'https://vimeo.com/##ID##',
     oembed: 'https://vimeo.com/api/oembed.json',
     image: '',
-    player: '',//players/Vimeo.js
+    player: 'players/Vimeo.js',
     skin: '<svg enable-background="new 0 0 65 40" height="65" width="40" viewBox="0 0 65 40" xmlns="http://www.w3.org/2000/svg"><path d="m60 40h-55c-2.8 0-5-2.2-5-5v-30c0-2.8 2.2-5 5-5h55c2.8 0 5 2.2 5 5v30c0 2.8-2.2 5-5 5z" fill-opacity="0.75" /><path d="m26 9.4 19.8 10.6-19.8 10.6" fill="#fff"/></svg><div class="lowweb__container"><div class="lowweb__title">##TITLE##</div><br><div class="lowweb__author"><span>by</span> ##AUTHOR##</div></div>'
     // image: 'https://vimeo.com/api/v2/video/##ID##.json?callback=showThumb'
   },

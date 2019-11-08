@@ -29,10 +29,6 @@ export default function(){
               }              
             }
 
-            console.log(video)
-            console.log(store.state.video_quality)
-            console.log(jsUrl)
-
             let script = document.createElement('script');
             script.type = "text/javascript";
             script.src = chrome.extension.getURL(jsUrl);
