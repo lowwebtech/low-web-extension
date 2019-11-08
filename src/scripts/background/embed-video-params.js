@@ -119,7 +119,6 @@ export function embedVideoParams(){
     ]
   }
 
-  // Blocker.addUrlsToBlock( images_to_block )
   Blocker.filterRequest( action, filter )
 
 }

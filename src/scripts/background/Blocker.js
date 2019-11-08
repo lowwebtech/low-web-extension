@@ -42,7 +42,8 @@ const blockUrls = function( details ){
   const tab = RequestManager.getTab( tabId )
   if( tab ){
     for( let i = 0, lg = urlsToBlock.length; i<lg; i++ ){
-      if( urlsToBlock[i][1] != -1
+
+      if( urlsToBlock[i][1] != -1//
         && tab.domain != urlsToBlock[i][1]
         && url.indexOf(urlsToBlock[i][0]) != -1 ){
         cancel = true
@@ -50,12 +51,14 @@ const blockUrls = function( details ){
     } 
   }
 
-  // block other urls
+  // block other urls -1
   for( let i = 0, lg = urlsToBlock.length; i<lg; i++ ){
-    if( urlsToBlock[i][1] == -1
-      && url.indexOf(urlsToBlock[i][0]) != -1 ){
+    
+    let regex = new RegExp( escapeRegExp(urlsToBlock[i][0]).replace(/\*/g, '.*') )
+    if( regex.test(url) ){
       cancel = true
     }
+
   }
 
   let o = {}
@@ -65,6 +68,11 @@ const blockUrls = function( details ){
   }
   
   return o
+}
+
+const escapeRegExp = string => {
+  return string.replace(/[.+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  // return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
 class BlockRequest{

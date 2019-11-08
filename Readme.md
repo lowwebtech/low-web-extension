@@ -85,6 +85,7 @@ https://lowwebtech.github.io/low-web-extension/
         * q_auto / q_auto:low
     + gif
         * play once when entering viewport
+        * pause/resume on enter/leave
     + emoji
 - netflix
 - build injected script 
