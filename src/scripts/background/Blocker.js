@@ -54,6 +54,7 @@ const blockUrls = function( details ){
   // block other urls -1
   for( let i = 0, lg = urlsToBlock.length; i<lg; i++ ){
     
+    // TODO more advanced test and regex
     let regex = new RegExp( escapeRegExp(urlsToBlock[i][0]).replace(/\*/g, '.*') )
     if( regex.test(url) ){
       cancel = true

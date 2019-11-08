@@ -11,7 +11,7 @@
   <section>
   
     <h2>Srcset</h2>
-
+    
     <figure>
       <img src="./images/img3.jpg" srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" />
       <figcaption>
@@ -35,6 +35,30 @@
       <img data-src="./images/img3.jpg" data-srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" />
       <figcaption>Image with data-srcset</figcaption>
     </figure>
+
+    <picture>
+      <source srcset="./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img3.jpg 1x" />
+      <img src="img3.jpg" alt="Bar" />
+    </picture>
+    Image (picture+source) with retina srcset
+
+    <picture>
+      <source data-srcset="./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img3.jpg 1x" />
+      <img src="img3.jpg" alt="Bar" />
+    </picture>
+    Image (picture+source) with dataset and retina srcset
+
+    <picture>
+      <source media="(min-width: 1024px)" srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" />
+      <img src="img3.jpg" alt="Bar" />
+    </picture>
+    Image (picture+source) with mediaqueries srcset
+
+    <picture>
+      <source media="(min-width: 1024px)" data-srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" />
+      <img src="img3.jpg" alt="Bar" />
+    </picture>
+    Image (picture+source) with dataset and mediaqueries srcset
 
   </section>
 
