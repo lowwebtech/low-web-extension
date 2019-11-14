@@ -93,8 +93,9 @@ https://lowwebtech.github.io/low-web-extension/
 - display advice/tips to reduce bandwidth for main websites
 - rewrite save-data header
 - CSP
+- no smooth scroll scroll-behavior: initial / scrollTo(), scrollBy(), scrollIntoView() / jQuery
 - look at cache-control and expire for header and response requests
-- disable unoptimised hide/show jQuery, gsap etc...
+- disable unoptimised hide/show/scroll jQuery, gsap etc...
 - fonts
     + remove call to fonts.googleapis.com, fontawesome.com and other services
 - social

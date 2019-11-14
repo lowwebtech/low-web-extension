@@ -95,7 +95,7 @@ export default function(){
                 
                 if( oembed.title ) {
                   title = oembed.title
-                }else if( oembed.provider_name.toLowerCase() == 'facebook'){
+                }else if( oembed.provider_name && oembed.provider_name.toLowerCase() == 'facebook'){
                   let parser = new DOMParser()
                   let html = parser.parseFromString(oembed.html, 'text/html');
                   let t = html.querySelector('blockquote > a')

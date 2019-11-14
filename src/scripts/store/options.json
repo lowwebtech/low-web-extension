@@ -58,7 +58,7 @@
     "id": "image_srcset", 
     "label": "Image srcset",
     "type": "select",
-    "value": 3,
+    "value": 1,
     "options":[
       {
         "value": 3,

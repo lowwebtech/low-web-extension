@@ -9,19 +9,33 @@ import mutations from './mutations';
 
 import VuexWebExtensions from 'vuex-webextensions';
 
-let state = {}
-let shared_vars = []
+// localStorage.clear()
+
+let state = {
+
+  active: true,
+  pausedWebsites: [],
+  pausedPages: [],
+
+  url: undefined,
+  hostname: undefined,
+  
+
+}
+
 for( let i = 0, lg = jsonOptions.length; i<lg; i++ ){
   let o = jsonOptions[i]
   state[ o.id ] = o.value 
-  shared_vars.push(o.id)
+  // persistent_vars.push(o.id)
 }
+
+let persistent_vars = Object.keys(state)
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   plugins: [VuexWebExtensions({
-    persistentStates: shared_vars,
+    persistentStates: persistent_vars,
     // loggerLevel: 'debug'
   })],
   state: state,

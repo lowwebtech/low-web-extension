@@ -14,6 +14,10 @@ class RequestManager{
     return this.tabStorage[tabId]
   }
 
+  getCurrentTab(){
+    return this.tabStorage[browser.tabs.getCurrent()] 
+  }
+
   init(){
 
     browser.webRequest.onBeforeRequest.addListener( (details)=>{
