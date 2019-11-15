@@ -11,8 +11,8 @@ getters.pausedWebsites = state => state.pausedWebsites
 getters.pausedPages = state => state.pausedPages
 
 getters.isPagePaused = state => {
-  console.log('#######isPagePaused', state.url)
-  console.log('#######isPagePaused', state.pausedPages)
+  // console.log('#######isPagePaused', state.url)
+  // console.log('#######isPagePaused', state.pausedPages)
   return state.pausedPages.indexOf( state.url ) != -1
 }
 getters.isWebsitePaused = state => {
@@ -23,14 +23,14 @@ getters.isWebsitePaused = state => {
 }
 getters.isActive = (state, getters) => {
   
-  console.log('---------')
-  console.log('url', state.url)
-  console.log('global active', state.active)
-  console.log('isPagePaused', getters.isPagePaused)
-  console.log('pausedPages', state.pausedPages)
-  console.log('isWebsitePaused', getters.isWebsitePaused)
-  console.log('pausedWebsites', state.pausedWebsites)
-  console.log('---------')
+  // console.log('---------')
+  // console.log('url', state.url)
+  // console.log('global active', state.active)
+  // console.log('isPagePaused', getters.isPagePaused)
+  // console.log('pausedPages', state.pausedPages)
+  // console.log('isWebsitePaused', getters.isWebsitePaused)
+  // console.log('pausedWebsites', state.pausedWebsites)
+  // console.log('---------')
 
   if( state.active 
     && ! getters.isPagePaused

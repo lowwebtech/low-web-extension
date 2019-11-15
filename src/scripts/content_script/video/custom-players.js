@@ -10,11 +10,13 @@ export default function(){
     
     for (const key of keys) {
       let video = videoToBlock[key]
+      let jsUrl
+      
       if( video.player && video.player != '' ){
         for( let i = 0, lg = video.domains.length; i<lg; i++ ){
           if( window.location.hostname.indexOf(video.domains[i]) != -1 ){
 
-            let jsUrl = video.player
+            jsUrl = video.player
             if( video.id == "youtube" ){
               switch( store.state.video_quality ){
                 case 1:
@@ -29,6 +31,8 @@ export default function(){
               }              
             }
 
+            console.log('--------',video.id)
+
             let script = document.createElement('script');
             script.type = "text/javascript";
             script.src = chrome.extension.getURL(jsUrl);
@@ -36,6 +40,18 @@ export default function(){
 
             i = lg
           }
+        }
+      }else if( video.external_player && video.external_player != ''){
+        if( video.domains.indexOf(window.location.hostname) == -1 ){
+
+          jsUrl = video.external_player
+          console.log(jsUrl)
+
+          let script = document.createElement('script');
+          script.type = "text/javascript";
+          script.src = chrome.extension.getURL(jsUrl);
+          containerScript.appendChild(script);
+
         }
       }
     }

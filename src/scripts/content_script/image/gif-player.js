@@ -7,7 +7,6 @@ export default function(){
 
     const exclude = ['giphy.com']
 
-    console.log(store.state.hostname)
     if( exclude.indexOf(store.state.hostname) == -1 ){
 
       const script = document.createElement('script');

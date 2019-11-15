@@ -4,13 +4,15 @@ import DailymotionPlayer from './DailymotionPlayer'
 
   window.dmAsyncInit = function(){
     let iframes = document.querySelectorAll('iframe')
+    console.log('dmAsyncInit', iframes)
     iframes.forEach((iframe)=>{
       if( iframe.src.indexOf('dailymotion.com/embed/video') != -1 ){
-        new DailymotionPlayer( iframe )
+        const player = new DailymotionPlayer( iframe )
+        console.log(player)
       }
     })
   }
-  
+  console.log('dailymotion player')
   var tag = document.createElement('script');
   // TODO async or not ?
   tag.async = true

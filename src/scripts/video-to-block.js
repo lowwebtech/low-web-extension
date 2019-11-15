@@ -17,7 +17,7 @@ export default {
     video_url: 'https://vimeo.com/##ID##',
     oembed: 'https://vimeo.com/api/oembed.json',
     image: '',
-    player: 'players/Vimeo.js',
+    player: '',//'players/Vimeo.js',
     skin: '<svg enable-background="new 0 0 65 40" height="65" width="40" viewBox="0 0 65 40" xmlns="http://www.w3.org/2000/svg"><path d="m60 40h-55c-2.8 0-5-2.2-5-5v-30c0-2.8 2.2-5 5-5h55c2.8 0 5 2.2 5 5v30c0 2.8-2.2 5-5 5z" fill-opacity="0.75" /><path d="m26 9.4 19.8 10.6-19.8 10.6" fill="#fff"/></svg><div class="lowweb__container"><div class="lowweb__title">##TITLE##</div><br><div class="lowweb__author"><span>by</span> ##AUTHOR##</div></div>'
     // image: 'https://vimeo.com/api/v2/video/##ID##.json?callback=showThumb'
   },
@@ -27,7 +27,8 @@ export default {
     embed_url: 'dailymotion.com/embed/video', 
     video_url: 'https://www.dailymotion.com/video/##ID##',
     oembed: 'https://www.dailymotion.com/services/oembed',
-    player: 'players/Dailymotion.js',
+    player: '',//'players/Dailymotion.js',
+    external_player: 'players/Dailymotion.js',
     image: '',
     skin: '<svg enable-background="new 0 0 80 80" height="80" width="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><g fill="#fff"><path d="m40.1 80c-21.8 0-40.3-18.5-40.1-40.3.3-21.4 17.7-39.2 38.8-39.7 22.2-.4 40.6 17 41.1 39.1.5 21.9-17.9 40.8-39.8 40.9" opacity=".5"/><path d="m30.8 40.3c0-4.4 0-8.8 0-13.2 0-1 .4-1.6 1.3-1.6.3 0 .6.1 1 .3 7.4 4.1 14.8 8.3 22.2 12.6.3.2.7.4 1.1.6.5.3.9.7.9 1.3s-.4 1-.9 1.3c-3.7 2.1-7.3 4.1-11 6.3-4.1 2.3-8.1 4.6-12.2 6.9 0 0-.2.1-.2.1-1.2.6-2.2 0-2.2-1.3 0-2.2 0-4.4 0-6.6z"/></g></svg><div class="lowweb__container"><div class="lowweb__author">##AUTHOR##</div><div class="lowweb__title">##TITLE##</div></div>'
   },

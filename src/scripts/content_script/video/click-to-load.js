@@ -136,6 +136,7 @@ export default function(){
           // cloned.classList.add('lowweb__click-to-load--clicked')
           cloned.src = bypassUrlBlock( cloned.dataset.src )
           parent.replaceChild(cloned, tempEl)
+
         })
         
       }
@@ -198,8 +199,7 @@ function getId( url, type ){
       id = getDailymotionId( url ) 
       break;
     case 'twitch': 
-      id = getTwitchId( url ) 
-      console.log('twitch id', id)
+      id = getTwitchId( url )
       break;
     case 'facebook': 
       id = getFacebookId( url ) 
