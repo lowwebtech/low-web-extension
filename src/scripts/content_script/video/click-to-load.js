@@ -137,6 +137,18 @@ export default function(){
           cloned.src = bypassUrlBlock( cloned.dataset.src )
           parent.replaceChild(cloned, tempEl)
 
+          if( data.external_player && data.external_player != ''){
+            if( data.domains.indexOf(window.location.hostname) == -1 ){
+
+              const jsUrl = data.external_player
+
+              let script = document.createElement('script');
+              script.type = "text/javascript";
+              script.src = chrome.extension.getURL(jsUrl);
+              parent.appendChild(script);
+
+            }
+          }
         })
         
       }

@@ -18,6 +18,9 @@ export function getVimeoId( url ){
 }
 export function getDailymotionId( url ){
   const regex = /^(?:(?:https?):)?(?:\/\/)?(?:www\.)?(?:(?:dailymotion\.com(?:\/embed)?\/video)|dai\.ly)\/([a-zA-Z0-9]+)(?:_[\w_-]+)?$/i;
+  console.log(url)
+  console.log(matchRegexID( url, regex ))
+  
   return matchRegexID( url, regex )
 }
 export function getTwitchId( url ){
