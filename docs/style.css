@@ -26,6 +26,20 @@ section > img{
   /*position: relative;*/
 }
 
+body{
+  text-align: center;
+  background-color: #F0F0F0;
+}
+section{
+  background-color: white;
+  margin: 20px;
+  padding: 20px;
+}
+h2{
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
 .bloc{
   margin: 0 auto;
   text-align: center;

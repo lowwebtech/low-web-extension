@@ -86,9 +86,12 @@ https://lowwebtech.github.io/low-web-extension/
     + cloudinary
         * q_auto / q_auto:low
     + gif
+        * test animated
         * play once when entering viewport
         * pause/resume on enter/leave
     + emoji
+- videos
+    + stop autoplay youtube channel (and all)
 - netflix
 - build injected script 
 - audit the extension to limit size and processes (reflow)

@@ -9,71 +9,86 @@
   <h1>Images</h1>
 
   <section>
-  
+
     <h2>Srcset</h2>
     
-    <figure>
-      <img src="./images/img3.jpg" srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" />
-      <figcaption>
-        Image with srcset (width defined)<br>
-        not working images is already loading when srcset is updated
-      </figcaption>
-    </figure>
 
-    <figure>
-      <img src="./images/img3.jpg" srcset="./images/img3.jpg 1x, ./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img25.jpg 8x" sizes="50vw" loading="lazy" />
-      <figcaption>Image with srcset (pixel-ratio defined)<br>
+    <p>
+      <figure>
+        <img src="./images/img3.jpg" srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" />
+        <figcaption>
+          Image with srcset (width defined)<br>
+          not working images is already loading when srcset is updated
+        </figcaption>
+      </figure>
+    </p>
+
+    <p>
+      <figure>
+        <img src="./images/img3.jpg" srcset="./images/img3.jpg 1x, ./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img25.jpg 8x" sizes="50vw" loading="lazy" />
+        <figcaption>Image with srcset (pixel-ratio defined)<br>
         not working images is already loading when srcset is updated</figcaption>
-    </figure>
+      </figure>
+    </p>
 
-    <figure>
-      <img src="./images/img-lazy.jpg" srcset="./images/img-lazy.jpg 1x, ./images/img-lazy@2x.jpg 2x" sizes="50vw" loading="lazy" />
-      <figcaption>Image with srcset and native loading=lazy</figcaption>
-    </figure>
+    <p>
+      <figure>
+        <img src="./images/img-lazy.jpg" srcset="./images/img-lazy.jpg 1x, ./images/img-lazy@2x.jpg 2x" sizes="50vw" loading="lazy" />
+        <figcaption>Image with srcset and native loading=lazy</figcaption>
+      </figure>
+    </p>
 
-    <figure>
-      <img data-src="./images/img3.jpg" data-srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" />
-      <figcaption>Image with data-srcset</figcaption>
-    </figure>
+    <p>
+      <figure>
+        <img data-src="./images/img3.jpg" data-srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" />
+        <figcaption>Image with data-srcset</figcaption>
+      </figure>
+    </p>
 
-    <picture>
-      <source srcset="./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img3.jpg 1x" />
-      <img src="img3.jpg" alt="Bar" />
-    </picture>
-    Image (picture+source) with retina srcset
-
-    <picture>
-      <source data-srcset="./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img3.jpg 1x" />
-      <img src="img3.jpg" alt="Bar" />
-    </picture>
-    Image (picture+source) with dataset and retina srcset
-
-    <picture>
-      <source media="(min-width: 1024px)" srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" />
-      <img src="img3.jpg" alt="Bar" />
-    </picture>
-    Image (picture+source) with mediaqueries srcset
-
-    <picture>
-      <source media="(min-width: 1024px)" data-srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" />
-      <img src="img3.jpg" alt="Bar" />
-    </picture>
-    Image (picture+source) with dataset and mediaqueries srcset
-
+    <p>
+      <picture>
+        <source srcset="./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img3.jpg 1x" />
+        <img src="img3.jpg" alt="Bar" />
+      </picture>
+      <br>
+      Image (picture+source) with retina srcset
+    </p>
+    <p>
+      <picture>
+        <source data-srcset="./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img3.jpg 1x" />
+        <img src="img3.jpg" alt="Bar" />
+      </picture>
+      <br>
+      Image (picture+source) with dataset and retina srcset
+    </p>
+    <p>
+      <picture>
+        <source media="(min-width: 1024px)" srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" />
+        <img src="img3.jpg" alt="Bar" />
+      </picture>
+      <br>
+      Image (picture+source) with mediaqueries srcset
+    </p>
+    <p>
+      <picture>
+        <source media="(min-width: 1024px)" data-srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" />
+        <img src="img3.jpg" alt="Bar" />
+      </picture>
+      <br>
+      Image (picture+source) with dataset and mediaqueries srcset
+    </p>
   </section>
 
   <section>
-    
+
     <h2>Gif</h2>
     <img src="images/frog.gif" width="480" height="264" />
     <img src="https://a.disquscdn.com/get?url=https%3A%2F%2Fmedia1.giphy.com%2Fmedia%2F3o751Yxe9UjX26BZbG%2Fgiphy.gif&key=rBkX3cS6Oy3Eb9nlFQdnKA&w=600&h" width="480" height="358" />
 
-    
-
   </section>
 
   <section>
-    
+
     <h2>Giphy</h2>
     <img src="https://media.giphy.com/media/gHWegg7yI1qOjTmpqN/giphy.gif" width="776" height="436" />
     <img src="https://media.giphy.com/media/3oKGzmQHuY2rFhEn96/giphy.gif" width="480" height="480" />
@@ -111,15 +126,15 @@
     </figure>
 
   </section>
- -->
-  <script type="text/javascript">
-    window.addEventListener("DOMContentLoaded", (event) => {
-      var images = document.querySelectorAll('img[data-src]')
-      for( var i = 0, lg = images.length; i<lg; i++ ){
-        images[i].srcset = images[i].dataset.srcset
-        images[i].src = images[i].dataset.src
-      }
-    });
-  </script>
+-->
+<script type="text/javascript">
+  window.addEventListener("DOMContentLoaded", (event) => {
+    var images = document.querySelectorAll('img[data-src]')
+    for( var i = 0, lg = images.length; i<lg; i++ ){
+      images[i].srcset = images[i].dataset.srcset
+      images[i].src = images[i].dataset.src
+    }
+  });
+</script>
 </body>
 </html>

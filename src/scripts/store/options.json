@@ -3,6 +3,7 @@
     "id": "video_quality", 
     "label": "Video quality",
     "type": "select",
+    "info": "This option reduce quality of videos (ex Youtube : Lowest=144p, Low=240p, Medium=360p). Lower quality means less data and calculation",
     "value": 2,
     "options":[
       {
@@ -27,38 +28,43 @@
     "id": "video_clicktoload", 
     "label": "Video click to load/play embed",
     "type": "bool",
-    "value": 1
+    "value": 1,
+    "info": "This option 'transform' iframe video embeds into 'low' preview of these videos. You have to click on it to load and play the iframe and the video. It avoid loading tons of script and files, if you're not watching the video."
   },
   {
     "id": "video_attributes", 
     "label": "Video custom attributes",
     "type": "bool",
-    "value": 1
+    "value": 1,
+    "info": "This option adds attributes to video elements : loop='false', autoplay='false' (possibly preload='none')"
   },
-  
   {
     "id": "save_data", 
     "label": "Send save-data header",
     "type": "bool",
-    "value": 1
+    "value": 1,
+    "info": "Add header 'Save-data:on'. Some websites may reduce the weight of a page if save-data is enabled."
   },
   {
-    "id": "css_animation", 
-    "label": "Disable css animation",
+    "id": "gif_player", 
+    "label": "custom gif player",
     "type": "bool",
-    "value": 0
+    "value": 1,
+    "info": "With this option, you have to hover the gif for playing it, it avoid permanent rendering of the screen. For services like giphy, it only load optimized images when hovering."
   },
   {
-    "id": "marquee_animation", 
-    "label": "Disable marquee animation",
+    "id": "block_social", 
+    "label": "Block social widgets",
     "type": "bool",
-    "value": 1
+    "value": 1,
+    "info": "Block social widgets, like Share Button, Like Button etc..."
   },
   {
     "id": "image_srcset", 
     "label": "Image srcset",
     "type": "select",
     "value": 3,
+    "info": "Images may contain high-definition resolutions. This option remove biggest images (works only for lazy-loaded images).",
     "options":[
       {
         "value": 3,
@@ -79,22 +85,32 @@
     ]
   },
   {
+    "id": "css_animation", 
+    "label": "Disable css animation",
+    "type": "bool",
+    "value": 0,
+    "info": "Disable css transition and animation. Animations force browser to render and may cause reflow."
+  },
+  {
+    "id": "marquee_animation", 
+    "label": "Disable marquee animation",
+    "type": "bool",
+    "value": 1,
+    "info": "Disable old marquee animations. Animations may cause render and reflow"
+  },
+  {
     "id": "image_lazyload", 
     "label": "Image lazyload",
     "type": "bool",
-    "value": 1
+    "value": 1,
+    "info": "Add lazy loading to images (not working)"
   },
   {
     "id": "iframe_lazyload", 
     "label": "iframe lazyload",
     "type": "bool",
-    "value": 0
-  },
-  {
-    "id": "gif_player", 
-    "label": "custom gif player",
-    "type": "bool",
-    "value": 1
+    "value": 0,
+    "info": "Add lazy loading to iframes (not working)"
   },
   {
     "id": "block_images", 
@@ -113,11 +129,5 @@
     "label": "block fonts",
     "type": "bool",
     "value": 0
-  },
-  {
-    "id": "block_social", 
-    "label": "Block social widgets",
-    "type": "bool",
-    "value": 1
   }
 ]

@@ -9,26 +9,30 @@ export function blockImages(){
 
     let o = {}
 
-    const exclude = ['giphy.com']
-    
-    if( exclude.indexOf(store.state.hostname) == -1 ){
+    if( store.getters.gif_player ){
 
-      const { url } = details
+      const exclude = ['giphy.com']
+      
+      if( exclude.indexOf(store.state.hostname) == -1 ){
 
-      // giphy image url
-      if( url.indexOf('.giphy.com/media') != -1 ){
-        if( url.indexOf('lowweb='+TOKEN) == -1 ){
+        const { url } = details
+
+        // giphy image url
+        if( url.indexOf('.giphy.com/media') != -1 ){
+          if( url.indexOf('lowweb='+TOKEN) == -1 ){
+            o.cancel = true
+          }
+        }
+
+        // giphy embed iframe
+        if( url.indexOf('giphy.com/embed/') != -1 ){
           o.cancel = true
         }
-      }
 
-      // giphy embed iframe
-      if( url.indexOf('giphy.com/embed/') != -1 ){
-        o.cancel = true
-      }
-
-      if( o.cancel == true ){
-        console.warn('blocked', url) 
+        if( o.cancel == true ){
+          console.warn('blocked', url) 
+        }
+        
       }
       
     }
