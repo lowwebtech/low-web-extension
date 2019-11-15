@@ -9,7 +9,7 @@ import lazyload from './scripts/content_script/lazyload'
 import marquee from './scripts/content_script/marquee'
 import gifPlayer from './scripts/content_script/image/gif-player'
 
-import removeSocial from './scripts/content_script/iframe/remove-social'
+import social from './scripts/content_script/iframe/social'
 
 import videoAttribute from './scripts/content_script/video/attributes'
 import clickToLoadVideo from './scripts/content_script/video/click-to-load'
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     videoAttribute()
     clickToLoadVideo()
     customPlayers()
-    removeSocial()
+    social()
   // }
 
 })    
