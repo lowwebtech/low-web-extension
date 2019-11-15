@@ -1,21 +1,33 @@
-export default class GiphyPlayer{
-  constructor( gif ){
+import browserInfo from 'browser-info';
 
-    this.original = gif.cloneNode()
+export default class GiphyPlayer{
+  constructor( el ){
+  
+    this.original = el.cloneNode()
+    
 
     this.playing = false
     this.first = true
 
-    const src = gif.src
-    this.id = parseGiphyUrl( src )
+    const src = el.src
+    if( el.tagName == 'IFRAME' ){
+      this.id = getIdFromEmbed( src )
+    }else{
+      this.id = getIdFromImage( src )
+    }
+
+    this.webp = supportWebp()
+
+    console.warn(src)
+    console.warn(this.id)
 
     // TODO reuse original
     this.preview = document.createElement('img')
-    this.preview.width = gif.width
-    this.preview.height = gif.height
+    this.preview.width = el.width
+    this.preview.height = el.height
 
     this.animated = document.createElement('img')
-    this.animated.classList = gif.classList
+    this.animated.classList = el.classList
     this.animated.classList.add('lowweb__gif-player--anim')
 
     let container = document.createElement('div')
@@ -23,16 +35,16 @@ export default class GiphyPlayer{
     container.classList.add('lowweb__gif-player--giphy')
 
     // TODO better computed styles
-    this.computedStyles = window.getComputedStyle(gif)
+    this.computedStyles = window.getComputedStyle(el)
     if( this.computedStyles.getPropertyValue('position') != 'static' ){
       container.style.position = this.computedStyles.getPropertyValue('position') 
     }
 
-    gif.parentNode.insertBefore(container, gif)
+    el.parentNode.insertBefore(container, el)
     container.innerHTML = '<svg class="lowweb__gif-player--play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg>'
 
     container.appendChild(this.preview)
-    gif.parentNode.removeChild(gif)
+    el.parentNode.removeChild(el)
 
     this.container = container
 
@@ -43,6 +55,8 @@ export default class GiphyPlayer{
     this.preview.onload = ()=>{
       this.addEvents()
     }
+    // console.log(data)
+    // TODO find best size / mp4 / webp
     this.preview.src = data.images.downsized_still.url + '&lowweb=AxkdIEKx'// fixed_height_still
   }
   addEvents(){
@@ -57,6 +71,7 @@ export default class GiphyPlayer{
         this.first = false
         this.animated.width = this.original.width
         this.animated.height = this.original.height
+        // TODO find best size / mp4 / webp
         this.animated.src = this.data.images.downsized.url + '&lowweb=AxkdIEKx';
         this.container.appendChild(this.animated)
       }
@@ -75,14 +90,35 @@ export default class GiphyPlayer{
   }
 }
 
-function parseGiphyUrl( url ){
+function getIdFromEmbed( url ){
+  url = url.split('giphy.com/embed/')
+  if( url.length > 1 ) {
+    return url[1]
+  }else{
+    return false
+  }
+}
+
+function getIdFromImage( url ){
   // TODO regex
   url = url.split('.giphy.com/media/')
 
   if( url.length > 1 ) {
-    return url[1].replace('/giphy.gif', '')
+    if( url[1].indexOf('/giphy.gif') != -1 ) return url[1].replace('/giphy.gif', '')
+    else if( url[1].indexOf('/giphy.webp') != -1 ) return url[1].replace('/giphy.webp', '')
   }else{
     return false
   }
+}
 
+function supportWebp(){
+  const info = browserInfo();
+  console.log(info)
+  switch( info.name.toLowerCase() ){
+    case "chrome":
+    case "firefox":
+    case "opera":
+      return true
+  }
+  return false
 }

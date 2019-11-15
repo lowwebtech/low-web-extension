@@ -58,7 +58,7 @@
     "id": "image_srcset", 
     "label": "Image srcset",
     "type": "select",
-    "value": 1,
+    "value": 3,
     "options":[
       {
         "value": 3,
@@ -82,7 +82,7 @@
     "id": "image_lazyload", 
     "label": "Image lazyload",
     "type": "bool",
-    "value": 0
+    "value": 1
   },
   {
     "id": "iframe_lazyload", 
@@ -94,7 +94,7 @@
     "id": "gif_player", 
     "label": "custom gif player",
     "type": "bool",
-    "value": 0
+    "value": 1
   },
   {
     "id": "block_images", 

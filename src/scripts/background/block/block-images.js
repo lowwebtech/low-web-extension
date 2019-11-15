@@ -5,23 +5,38 @@ import Blocker from '../Blocker'
 
 export function blockImages(){
 
-  const action = (details) => {
+  const blockGiphy = (details) => {
 
     let o = {}
 
-    const { url } = details
+    const exclude = ['giphy.com']
+    
+    if( exclude.indexOf(store.state.hostname) == -1 ){
 
-    if( url.indexOf('.giphy.com/media') != -1 ){
-      if( url.indexOf('lowweb='+TOKEN) == -1 ){
-        console.warn('blocked', url)
+      const { url } = details
+
+      // giphy image url
+      if( url.indexOf('.giphy.com/media') != -1 ){
+        if( url.indexOf('lowweb='+TOKEN) == -1 ){
+          o.cancel = true
+        }
+      }
+
+      // giphy embed iframe
+      if( url.indexOf('giphy.com/embed/') != -1 ){
         o.cancel = true
       }
+
+      if( o.cancel == true ){
+        console.warn('blocked', url) 
+      }
+      
     }
 
     return o
   }
 
   Blocker.addUrlsToBlock( images_to_block )
-  Blocker.filterRequest( action )
+  Blocker.filterRequest( blockGiphy )
 
 }

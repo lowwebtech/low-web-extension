@@ -70,9 +70,9 @@ https://lowwebtech.github.io/low-web-extension/
 
 ### TODO
 - oembed
+- debug popup
 - write tests
 - extension icon
-- add metrics (or not!)
 - images :
     + serviceworker
     + replace hi-res by low-res for known websites (https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_400x400.jpg -> https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_x96.jpg)

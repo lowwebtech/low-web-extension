@@ -4,15 +4,25 @@ import GiphyPlayer from './GiphyPlayer'
 
 (function(){
 
-  let gifs = document.querySelectorAll('img[src$=".gif"]')
+  let imgs = document.querySelectorAll('img')
+
   let giphies = []
-  gifs.forEach((gif)=>{
-    if( gif.src.indexOf('.giphy.com/media') != -1 ){
-      giphies.push( new GiphyPlayer( gif ) )
-    }else{
-      new GifPlayer( gif ) 
+  imgs.forEach((img)=>{
+    console.log(img.src.indexOf('.giphy.com/media'))
+    if( img.src.indexOf('.giphy.com/media') != -1 ){
+      giphies.push( new GiphyPlayer( img ) )
+    }else if( img.src.indexOf('.gif') != -1 ){
+      new GifPlayer( img ) 
     }
   })
+
+  let iframes = document.querySelectorAll('iframe')
+  iframes.forEach((iframe)=>{
+    if( iframe.src.indexOf('giphy.com/embed/') != -1 ){
+      giphies.push( new GiphyPlayer( iframe ) )
+    }
+  })
+
 
   if( giphies.length > 0 ){
     let ids = []

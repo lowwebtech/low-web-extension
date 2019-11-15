@@ -20,7 +20,7 @@ const config = {
     'players/Youtube-medium': './scripts/content_script/video/players/Youtube-medium.js',
     // 'players/Twitch': './scripts/content_script/video/players/Twitch.js',
     // 'players/Vimeo': './scripts/content_script/video/players/Vimeo.js',
-    'players/Gif': './scripts/content_script/video/players/Gif.js',
+    'players/Gif': './scripts/content_script/image/players/Gif.js',
     'utils/compute-styles': './scripts/content_script/utils/compute-styles.js',
     // 'players/ClickToPlayer': './scripts/content_script/video/players/ClickToPlayer.js',
     'popup/popup': './popup/popup.js',

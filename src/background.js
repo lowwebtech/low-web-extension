@@ -18,7 +18,7 @@ import { embedVideoParams } from './scripts/background/embed-video-params'
 // TODO add more listener
 browser.runtime.onInstalled.addListener(function() {
 
-  if( store.getters.isActive ){
+  // if( store.getters.isActive ){
 
     RequestManager.init()
     Blocker.init()
@@ -46,6 +46,7 @@ browser.runtime.onInstalled.addListener(function() {
 
     saveDataHeader()
     cssAnimation()
-  }
+    
+  // }
 });
 

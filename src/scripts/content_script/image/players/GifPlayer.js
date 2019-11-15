@@ -10,6 +10,8 @@ export default class GifPlayer{
 
     this.gif.classList.add('lowweb--hidden')
 
+
+    // console.log('complete', this.gif.complete)
     if( ! this.gif.complete ){
       this.gif.onload = ()=>{
         this.build()
@@ -22,7 +24,10 @@ export default class GifPlayer{
 
   build(){
 
-    if( this.isAnimated && ! this.isSmall() ){
+    // console.log(this.isSmall())
+    
+    if( this.isAnimated() && ! this.isSmall() ){
+
 
       this.canvas = document.createElement('canvas')
       this.canvas.classList.add('lowweb__gif-player--preview')
@@ -40,6 +45,8 @@ export default class GifPlayer{
       container.classList.add('lowweb__gif-player')
       if( this.isSmall() ) container.classList.add('lowweb__gif-player--small')
 
+      // console.log(this.canvas)
+
       // TODO better computed styles
       this.computedStyles = window.getComputedStyle(this.gif)
       if( this.computedStyles.getPropertyValue('position') != 'static' ){
@@ -56,6 +63,8 @@ export default class GifPlayer{
 
       this.gif.classList.add('lowweb__gif-player--anim')
       this.container = container
+
+      console.log(container)
 
       container.addEventListener('mouseenter', ()=>this.play())
       container.addEventListener('mouseleave', ()=>this.stop())

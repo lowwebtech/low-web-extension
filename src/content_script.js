@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   console.log("ACTIVE", store.getters.isActive)
 
-  if( store.getters.isActive ){
+  // if( store.getters.isActive ){
 
     imageSrcset()
     // lazyload()
@@ -43,6 +43,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     clickToLoadVideo()
     customPlayers()
     removeSocial()
-  }
+  // }
 
 })    
