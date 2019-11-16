@@ -139,6 +139,7 @@ export default {
 }
 
 .input{
+  white-space: nowrap;
   &__field{
     width: 180px;
   }
@@ -178,6 +179,7 @@ export default {
     background-color: white;
     left: 30px;
     top: 0;
+    white-space: initial;
   }
 }
 

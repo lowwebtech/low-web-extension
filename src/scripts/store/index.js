@@ -20,7 +20,6 @@ let state = {
   url: undefined,
   hostname: undefined,
   
-
 }
 
 for( let i = 0, lg = jsonOptions.length; i<lg; i++ ){

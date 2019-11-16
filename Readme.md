@@ -1,6 +1,6 @@
 :warning: early development (tested on Chrome), do not use permanently
 
-# low web extension
+# lowweb extension
 
 Reduce energy consumption and carbon footprint of your internet browsing.
 
@@ -26,7 +26,7 @@ A browser extension allows you to block resources and modify the content of a pa
 
 First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrome](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm), [Firefox](https://addons.mozilla.org/fr/firefox/addon/ublock-origin/)) or a browser like [Brave](https://brave.com/). 
 
-Then, here is a list of what low web extension does for reducing bandwidth and energy consumption :
+Then, here is a list of what lowweb extension does for reducing bandwidth and energy consumption :
 - video :
     + custom player for low quality : 
         * Youtube

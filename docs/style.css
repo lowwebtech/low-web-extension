@@ -47,6 +47,9 @@ h2{
   margin-bottom: 10px;
 }
 
+ul{
+  text-align: left;
+}
 .bloc--lazy{
   margin-top: 200vh;
 }
