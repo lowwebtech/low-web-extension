@@ -37,7 +37,9 @@
   "web_accessible_resources": [
     "options.js",
     "players/*",
-    "utils/*"
+    "utils/*",
+    "1x1.gif",
+    "1x1-black.gif"
   ],
   "options_ui": {
     "page": "options/options.html"

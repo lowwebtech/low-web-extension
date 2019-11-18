@@ -64,8 +64,12 @@ const blockUrls = function( details ){
 
   let o = {}
   if( cancel ) {
-    console.warn('blocked', url)
-    o.cancel = true
+    console.warn('blocked', details)
+    if( details.type == 'image' ){
+      o.redirectUrl = chrome.extension.getURL('1x1-black.gif')
+    }else{
+      o.cancel = true 
+    }
   }
   
   return o

@@ -25,17 +25,15 @@ browser.runtime.onInstalled.addListener(function() {
 
     browser.tabs.onUpdated.addListener(
       function(tabId, changeInfo, tab){
-        if( store.getters.video_clicktoload ) {
-          if( changeInfo.status == 'loading' ){        
-            if( isWebpage( tab.url ) ){
-              browser.tabs.insertCSS(tabId, {
-                file: 'content_script.css'
-              }); 
-            }
-          } 
+        if( store.getters.video_clicktoload
+          && changeInfo.status == 'loading'
+          && isWebpage( tab.url ) ){
+          browser.tabs.insertCSS(tabId, {
+            file: 'content_script.css'
+          }); 
         }
       }
-      );
+    );
 
     blockFiles()
     blockSocial()

@@ -13,11 +13,8 @@ The Internet consumes about 8% of the electricity produced worldwide and emits 3
 
 This extension aims to reduce our data and limit the energy consumption of our Internet browsing.
 
-:warning::warning::warning: 
-
 This extension affects electricity consumption when browsing the Internet but not during manufacturing. Manufacturing is the most energy consuming and polluting stage. So let's keep our phones and computers as long as possible !
 
-:warning::warning::warning:
 
 
 ## How ?
@@ -78,6 +75,7 @@ https://lowwebtech.github.io/low-web-extension/
 - images :
     + serviceworker
     + replace hi-res by low-res for known websites (https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_400x400.jpg -> https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_x96.jpg)
+    + low-res avatar
     + giphy
         * regex
         * more urls
