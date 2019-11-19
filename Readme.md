@@ -26,14 +26,14 @@ First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrom
 Then, here is a list of what lowweb extension does for reducing bandwidth and energy consumption :
 - video :
     + custom player for low quality : 
-        * Youtube
-        * Vimeo
-        * Dailymotion
+        * Youtube (only on youtube.com, not for embeds)
+        * Vimeo (only for embeds)
+        * Dailymotion (only for embeds)
         * ~~Twitch~~ - quality parameter doesn't seem to work via API or url parameter
         * ~~Facebook~~ - not possible
-    + click to load/play embedded videos (Youtube, Vimeo, Dailymotion, Twitch, Facebook), it only loads iframe (and tons of script) when you click and play it
+    + click to load/play video embeds, it only loads iframe (and tons of script) when you click and play it (Youtube, Vimeo, Dailymotion, Twitch, Facebook)
     + add or remove attributes html5 video (autoplay, loop)
-    + update video embed url : no loop, no autoplay, low quality (if available)
+    + update video embed url : no loop, no autoplay
     + block format video *(default:false)*
 - image : 
     + ~~remove biggest or hidpi images from srcset~~ *(only works with lazy-loaded images eg. data-srcset, data-lazysrcset)*
@@ -105,11 +105,10 @@ https://lowwebtech.github.io/low-web-extension/
     + facebook regexp for country flag en_US/fr_FR....
     + mimic embed styles
     + look for side-effect
-- add more social networks
+- add more social networks (linkedin)
 - add fallback for blocked ressources
 - take into account connexion network type (wifi/ethernet or 3G/4G)
 - take into account carbon footprint of user's electricity (-> co2signal.com)
-- replace main scripts (jquery...) and styles (bootstrap..) with cdn or cached versions
 - display time alerts
 - set css prefers-color-scheme to dark
     + look at DarkReader
@@ -119,9 +118,14 @@ https://lowwebtech.github.io/low-web-extension/
 
 ### TODO add those websites
 - netflix
-- gfycat
-- flickr 
+- brightcove
+- hulu
+- ustream
 - livestream
+- gfycat
+- tenor
+- flickr 
+- linkedin
 - cloudinary
 - slideshare
 - soundcloud

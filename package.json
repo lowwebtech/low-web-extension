@@ -2,7 +2,7 @@
   "name": "low-web-extension",
   "version": "0.0.1",
   "description": "Reduce energy consumption and carbon footprint of your internet browsing.",
-  "author": "lowwebtech@gmail.com",
+  "author": "vico@lowweb.tech",
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
