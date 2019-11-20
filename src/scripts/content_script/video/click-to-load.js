@@ -122,9 +122,13 @@ export default function(){
         }
         
         let computeid = getRandomId()
-        iframe.classList.add('lowweb__click-to-load--original')
+
+        iframe.classList.add('lowweb__compute-styles--original')
+        tempEl.classList.add('lowweb__compute-styles')
+        
         iframe.dataset.computeid = computeid
         tempEl.dataset.computeid = computeid
+        
         iframe.src = BASE64_PNG
 
         tempIframes.push(tempEl)
@@ -156,15 +160,6 @@ export default function(){
       // parent.removeChild(iframe)
 
     })
-
-    if( iframeReplaced ){
-
-      let script = document.createElement('script');
-      script.type = "text/javascript";
-      script.src = chrome.extension.getURL('utils/compute-styles.js');
-      (document.head||document.documentElement).appendChild(script)
-      
-    }
   } 
 }
 

@@ -22,15 +22,19 @@
     visibility: hidden;
     z-index: 4;
   }
-  &--play{
+  &__play{
     z-index: 6; 
+    width: 10%;
+    height: auto;
+    max-width: 50px;
+    min-width: 20px;
   }
   // &--pause{
   //   z-index: 10; 
   //   visibility: hidden;
   // }
   &--playing{
-    .lowweb__gif-player--play{
+    .lowweb__gif-player__play{
       visibility: hidden;
     }
     // .lowweb__gif-player--pause{

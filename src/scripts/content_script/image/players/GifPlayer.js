@@ -1,6 +1,7 @@
 // TODO detect animated gif
 // animated-gif-detector doesn't seem to work
 // import isAnimated from 'animated-gif-detector'
+import '../../../utils/animated-gif-detect'
 
 export default class GifPlayer{
   constructor( gif ){
@@ -24,10 +25,7 @@ export default class GifPlayer{
 
   build(){
 
-    // console.log(this.isSmall())
-    
     if( this.isAnimated() && ! this.isSmall() ){
-
 
       this.canvas = document.createElement('canvas')
       this.canvas.classList.add('lowweb__gif-player--preview')
@@ -53,7 +51,7 @@ export default class GifPlayer{
         container.style.position = this.computedStyles.getPropertyValue('position') 
       }
 
-      container.innerHTML = '<svg class="lowweb__gif-player--play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg><svg class="lowweb__gif-player--pause" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><g fill="#fff"><path d="m0 0h7v20h-7z"/><path d="m11 0h7v20h-7z"/></g></svg>'
+      container.innerHTML = '<svg class="lowweb__gif-player__play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg>'
       
       this.gif.parentNode.insertBefore(container, this.gif)
 
@@ -64,7 +62,7 @@ export default class GifPlayer{
       this.gif.classList.add('lowweb__gif-player--anim')
       this.container = container
 
-      console.log(container)
+      // console.log(container)
 
       container.addEventListener('mouseenter', ()=>this.play())
       container.addEventListener('mouseleave', ()=>this.stop())
@@ -95,14 +93,23 @@ export default class GifPlayer{
     }
   }
   draw(){
-    this.context.drawImage( this.gif, 0, 0 )
+    this.context.drawImage( this.gif, 0, 0, this.canvas.width, this.canvas.height )
   }
 
   isAnimated(){
     // TODO detect animated gif
+
+    // need blob
+    // window.animatedGifDetect.process(this.gif, ()=>{
+    //   console.log('is animated')
+    // }, ()=>{
+    //   console.log('is not animated')
+    // })
+
     return true
   }
   isSmall(){
+    //
     if( this.gif.width < 32 || this.gif.height < 32 ){
       return true
     }else if( this.gif.naturalWidth 

@@ -3,13 +3,14 @@ import RequestManager from './RequestManager'
 let blockRequests = []
 let urlsToBlock = []
 
+const blankImage = chrome.extension.getURL('1x1-black.gif')
+
 class Blocker{
   constructor(){
 
   }
 
   init(){
-    this.blankImage = chrome.extension.getURL('1x1-black.gif')
     this.filterRequest( blockUrls )
   }
 
@@ -67,7 +68,7 @@ const blockUrls = function( details ){
   if( cancel ) {
     console.warn('blocked', details)
     if( details.type == 'image' ){
-      o.redirectUrl = this.blankImage
+      o.redirectUrl = blankImage
     }else{
       o.cancel = true 
     }

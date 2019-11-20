@@ -1,10 +1,11 @@
 import browserInfo from 'browser-info';
+import { BASE64_GIF } from '../../../constants'
+import { getRandomId } from '../../../utils/get-random-id'
 
 export default class GiphyPlayer{
   constructor( el ){
   
     this.original = el.cloneNode()
-    
 
     this.playing = false
     this.first = true
@@ -17,9 +18,6 @@ export default class GiphyPlayer{
     }
 
     this.webp = supportWebp()
-
-    console.warn(src)
-    console.warn(this.id)
 
     // TODO reuse original
     this.preview = document.createElement('img')
@@ -34,17 +32,20 @@ export default class GiphyPlayer{
     container.classList.add('lowweb__gif-player')
     container.classList.add('lowweb__gif-player--giphy')
 
-    // TODO better computed styles
-    this.computedStyles = window.getComputedStyle(el)
-    if( this.computedStyles.getPropertyValue('position') != 'static' ){
-      container.style.position = this.computedStyles.getPropertyValue('position') 
-    }
-
     el.parentNode.insertBefore(container, el)
-    container.innerHTML = '<svg class="lowweb__gif-player--play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg>'
+    container.innerHTML = '<svg class="lowweb__gif-player__play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg>'
 
     container.appendChild(this.preview)
-    el.parentNode.removeChild(el)
+
+
+    let computeid = getRandomId()
+    container.dataset.computeid = computeid
+    el.dataset.computeid = computeid
+
+    container.classList.add('lowweb__compute-styles')
+    el.classList.add('lowweb__compute-styles--original')
+    // el.parentNode.removeChild(el)
+    el.src = BASE64_GIF
 
     this.container = container
 
@@ -55,7 +56,7 @@ export default class GiphyPlayer{
     this.preview.onload = ()=>{
       this.addEvents()
     }
-    // console.log(data)
+    
     // TODO find best size / mp4 / webp
     this.preview.src = data.images.downsized_still.url + '&lowweb=AxkdIEKx'// fixed_height_still
   }
@@ -113,7 +114,6 @@ function getIdFromImage( url ){
 
 function supportWebp(){
   const info = browserInfo();
-  console.log(info)
   switch( info.name.toLowerCase() ){
     case "chrome":
     case "firefox":
