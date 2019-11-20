@@ -4,5 +4,5 @@
 export default function isWebpageUrl( url ){
   // var re = new RegExp("^(http|https)://", "i");
   // return re.test(url);
-  return url.startsWith('http');
+  return url && url.startsWith('http');
 }

@@ -38,7 +38,8 @@
     "players/*",
     "utils/*",
     "1x1.gif",
-    "1x1-black.gif"
+    "1x1-black.gif",
+    "youpornplayer.js"
   ],
   "options_ui": {
     "page": "options/options.html"

@@ -9,6 +9,7 @@ class Blocker{
   }
 
   init(){
+    this.blankImage = chrome.extension.getURL('1x1-black.gif')
     this.filterRequest( blockUrls )
   }
 
@@ -66,7 +67,7 @@ const blockUrls = function( details ){
   if( cancel ) {
     console.warn('blocked', details)
     if( details.type == 'image' ){
-      o.redirectUrl = chrome.extension.getURL('1x1-black.gif')
+      o.redirectUrl = this.blankImage
     }else{
       o.cancel = true 
     }

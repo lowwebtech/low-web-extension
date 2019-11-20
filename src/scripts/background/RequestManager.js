@@ -112,7 +112,10 @@ class RequestManager{
       if( tabs.length > 0 ){
         let t = tabs[0]
         if( this.tabStorage && this.tabStorage[t.id] ){
-          this.tabStorage[t.id].domain = getHostname( t.url )
+          const hostname = getHostname( t.url )
+          if( hostname ){
+            this.tabStorage[t.id].domain = hostname
+          }
         }
       }
     });

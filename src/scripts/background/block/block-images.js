@@ -32,6 +32,12 @@ const blockGiphy = (details) => {
       }
       
     }
+
+    // if( details.url.indexOf('mhp1138.player.HTML5Player') != -1 ){
+    //   console.warn(details)
+    //   console.log(chrome.extension.getURL('youpornplayer.js'))
+    //   o.redirectUrl = chrome.extension.getURL('youpornplayer.js')
+    // }
     
   }
 
