@@ -15,18 +15,11 @@ import videoAttribute from './scripts/content_script/video/attributes'
 import clickToLoadVideo from './scripts/content_script/video/click-to-load'
 import customPlayers from './scripts/content_script/video/custom-players'
 
+console.log('*****init content_script******')
 
 document.addEventListener('DOMContentLoaded', ()=>{    
 
-  // console.log(store.getters.active)
-  // console.log(store.getters.pausedWebsites)
-  // console.log(store.getters.pausedPages)
-
-  // setInterval( ()=>{
-  //   console.log(store.getters.active)
-  //   console.log(store.getters.pausedWebsites)
-  //   console.log(store.getters.pausedPages)
-  // }, 3000 )
+  console.log('DOMContentLoaded')
 
   store.commit('url', window.location.href)
 
@@ -46,12 +39,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // }
 
 
-    // if( iframeReplaced ){
-
-      let script = document.createElement('script');
-      script.type = "text/javascript";
-      script.src = chrome.extension.getURL('utils/compute-styles.js');
-      (document.head||document.documentElement).appendChild(script)
-      
-    // }
+    // script to inject to get 'real' window and compute css styles
+    let script = document.createElement('script');
+    script.type = "text/javascript";
+    script.src = chrome.extension.getURL('utils/compute-styles.js');
+    (document.head||document.documentElement).appendChild(script)
+    
 })    

@@ -14,7 +14,9 @@ export default [
   // twitter
   ['twimg.com/profile_images/', -1],
   // linkedin
-  ['media.licdn.com/dms/image/*/profile-displayphoto', -1],
+  ['licdn.com/dms/image/*/profile-displayphoto', -1],
+  ['licdn.com/dms/image/*/company-logo', -1],
+
   // viadeo
   ['.viadeo-static.com/*/member/', -1],
   // github
@@ -27,7 +29,7 @@ export default [
   ['thumbs.redditmedia.com', -1],
   ['redditmedia.com/*/styles/communityIcon_', -1],
   // skyrock
-  ['mgl.skyrock.net/art/',-1]
+  ['mgl.skyrock.net/art/',-1],
 
 
   // TODO

@@ -102,8 +102,8 @@ export function embedVideoParams(){
         response.redirectUrl = url.href
       }else{      
         if( store.getters.video_clicktoload ){
-          if( params.lowweb == TOKEN ){
-            params.autoplay = true
+          if( params.lowweb != TOKEN ){
+            response.cancel = true
           }
         } 
       }

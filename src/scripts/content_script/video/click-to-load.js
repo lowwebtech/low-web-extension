@@ -4,7 +4,7 @@ import './click-to-load.scss'
 import store from '../../store'
 import videoToBlock from '../../video-to-block'
 import { insertAfter } from '../utils/insert-after'
-import { getRandomId } from '../../utils/get-random-id'
+import { prepareForStyleComputing } from '../utils/prepare-to-compute'
 
 import { BASE64_PNG, TOKEN } from '../../constants'
 import { 
@@ -20,7 +20,6 @@ export default function(){
   if( store.getters.video_clicktoload ){
 
     let iframes = document.querySelectorAll('iframe')
-    let tempIframes = []
     let iframeReplaced = false
 
     iframes.forEach((iframe)=>{
@@ -121,23 +120,11 @@ export default function(){
           }
         }
         
-        let computeid = getRandomId()
-
-        iframe.classList.add('lowweb__compute-styles--original')
-        tempEl.classList.add('lowweb__compute-styles')
-        
-        iframe.dataset.computeid = computeid
-        tempEl.dataset.computeid = computeid
-        
-        iframe.src = BASE64_PNG
-
-        tempIframes.push(tempEl)
+        prepareForStyleComputing( tempEl, iframe )
         insertAfter(tempEl,iframe)
-        // parent.replaceChild(tempEl, iframe)
-        // parent.insertBefore(tempEl, parent.nextSibling)
 
         tempEl.addEventListener('click', ()=>{
-          // cloned.classList.add('lowweb__click-to-load--clicked')
+
           cloned.src = bypassUrlBlock( cloned.dataset.src )
           parent.replaceChild(cloned, tempEl)
 
@@ -185,6 +172,12 @@ function bypassUrlBlock( u ){
   let params = queryString.parse(url.search)
   params.lowweb = TOKEN
 
+  if( u.indexOf('youtube') != -1 ){
+    params.autoplay = 1
+  }else{
+    params.autoplay = true  
+  }
+  
   let newSearch = queryString.stringify(params)
   url.search = newSearch
   return url.href

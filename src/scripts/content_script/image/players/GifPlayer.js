@@ -1,7 +1,9 @@
 // TODO detect animated gif
-// animated-gif-detector doesn't seem to work
 // import isAnimated from 'animated-gif-detector'
-import '../../../utils/animated-gif-detect'
+// import '../../../utils/animated-gif-detect'
+// blob
+
+import { prepareForStyleComputing } from '../../utils/prepare-to-compute'
 
 export default class GifPlayer{
   constructor( gif ){
@@ -38,18 +40,11 @@ export default class GifPlayer{
         this.canvas.height = this.gif.height
       }
 
-
       let container = document.createElement('div')
       container.classList.add('lowweb__gif-player')
       if( this.isSmall() ) container.classList.add('lowweb__gif-player--small')
 
-      // console.log(this.canvas)
-
-      // TODO better computed styles
-      this.computedStyles = window.getComputedStyle(this.gif)
-      if( this.computedStyles.getPropertyValue('position') != 'static' ){
-        container.style.position = this.computedStyles.getPropertyValue('position') 
-      }
+      prepareForStyleComputing( container, this.gif )
 
       container.innerHTML = '<svg class="lowweb__gif-player__play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg>'
       

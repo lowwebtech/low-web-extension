@@ -1,9 +1,16 @@
 (function(){
 
+  let computeTos, computeFroms
+  // const excludeStyles = ['block-size', 'inline-size', 'perspective-origin', 'transform-origin']
+
+  // list of css properties to copy, from original element to replaced element
+  // ex : iframe youtube -> div
+  const properties = ['position','display','box-sizing','width','height','padding','padding-top','padding-right','padding-bottom','padding-left','margin','margin-top','margin-right','margin-bottom','margin-left','top','right','bottom','left','max-height','min-height','max-width','min-width','overflow-x','overflow-y','pointer-events','visibility']
+
   window.lowComputeStyles = function(){
 
-    let computeTos = document.querySelectorAll('.lowweb__compute-styles')
-    let computeFroms = document.querySelectorAll('.lowweb__compute-styles--original')
+    computeTos = document.querySelectorAll('.lowweb__compute-styles')
+    computeFroms = document.querySelectorAll('.lowweb__compute-styles--original')
 
     // get dummy element to get computed styles compared to default values
     const dummyIFRAME = document.createElement( 'iframe' );
@@ -21,7 +28,7 @@
 
     // TODO find a better way to get/set computed style
     let computeid, compEl, dummyStyle, cs, style
-    for( let i = 0, lg = computeTos.length; i<lg; i++ ){
+    for( let i = 0, lg = computeFroms.length; i<lg; i++ ){
       
       compEl = computeTos[i]
       computeid = compEl.dataset.computeid
@@ -41,24 +48,26 @@
           // get the differences
           var diff = {};
           for( var key in cs ) {
-            if(cs.hasOwnProperty(key)
-                  && style[ key ] !== cs[ key ] )
-            {
+            if(cs.hasOwnProperty(key) && style[ key ] !== cs[ key ] ){
               diff[ key ] = cs[ key ];
             }
           }
 
           // set the difference
           for( var key in diff ) {
-            compEl.style[key] = cs[key]
+            if( properties.indexOf(key) != -1 ){
+              compEl.style[key] = cs[key]  
+            }
           }
 
-          // if( cs.getPropertyValue('position') != 'static' ){
-          //   compEl.style.position = cs.getPropertyValue('position') 
-          // }
-          // if( cs.getPropertyValue('display') != 'inline' ){
-          //   compEl.style.display = cs.getPropertyValue('inline-block') 
-          // }
+          if( cs.getPropertyValue('position') == 'absolute' ){
+            compEl.style.width = ''
+            compEl.style.height = ''
+          }
+
+          if( compEl.style.display == '' ){
+            compEl.style.display = 'inline-block'
+          }
 
           j = lgj
 
@@ -68,21 +77,22 @@
 
     }
 
-    for( let i = 0, lg = computeFroms.length; i<lg; i++ ){ 
-      computeFroms[i].parentNode.removeChild(computeFroms[i])
-    }
-
     dummyIFRAME.remove();
     dummyIMG.remove();
     dummy.remove();
 
   }
 
-  // function setProperty( el, name ){
-  //   // TODO exclude default value
-  //   if( cs.getPropertyValue(name) ){
-  //     console.log(name)
-  //     el.style[name] = cs.getPropertyValue(name) 
-  //   }
-  // }
+  window.addEventListener('load', (e)=>{
+
+    // TODO :(
+    lowComputeStyles()
+    lowComputeStyles()
+
+    for( let i = 0, lg = computeFroms.length; i<lg; i++ ){ 
+      computeTos[i].classList.remove('lowweb__compute-styles')
+      computeFroms[i].parentNode.removeChild(computeFroms[i])
+    }
+  } )
+  
 }())

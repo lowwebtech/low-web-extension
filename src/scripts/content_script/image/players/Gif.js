@@ -6,12 +6,12 @@ import GiphyPlayer from './GiphyPlayer'
 
   let imgs = document.querySelectorAll('img')
 
-  let giphies = []
+  let giphies = [], gifs = []
   imgs.forEach((img)=>{
     if( img.src.indexOf('.giphy.com/media') != -1 ){
       giphies.push( new GiphyPlayer( img ) )
     }else if( img.src.indexOf('.gif') != -1 ){// TODO add animated webp
-      new GifPlayer( img ) 
+      gifs.push( new GifPlayer( img ) )
     }
   })
 
@@ -43,8 +43,8 @@ import GiphyPlayer from './GiphyPlayer'
             data.data.forEach((gifdata, index)=>{
               giphies[index].setData(gifdata)
             })
-            console.log(window.lowComputeStyles)
-            requestAnimationFrame(()=>window.lowComputeStyles())
+
+            window.lowComputeStyles()
           });
         }
       )

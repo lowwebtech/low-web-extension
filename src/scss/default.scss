@@ -2,6 +2,9 @@
   &--hidden{
     visibility: hidden !important;
   }
+  &__compute-styles{
+    display: none!important;
+  }
 }
 
 // TODO avoid *
