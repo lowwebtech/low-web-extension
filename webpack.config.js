@@ -14,7 +14,7 @@ const config = {
     'background': './background.js',
     'content_script': './content_script.js',
     'players/Dailymotion': './scripts/content_script/video/players/Dailymotion.js',
-    'players/Youporn': './scripts/content_script/video/players/Youporn.js',
+    // 'players/Youporn': './scripts/content_script/video/players/Youporn.js',
     'players/Youtube-tiny': './scripts/content_script/video/players/Youtube-tiny.js',
     'players/Youtube-small': './scripts/content_script/video/players/Youtube-small.js',
     'players/Youtube-medium': './scripts/content_script/video/players/Youtube-medium.js',

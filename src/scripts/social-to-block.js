@@ -7,13 +7,9 @@ export default [
   // ['facebook.com/plugins/post.php', 'facebook.com'],
   ['facebook.com/plugins/comment_embed.php', 'facebook.com'],
   // ['www.facebook.com/plugins/comment_embed.php', 'facebook.com'],
-
   ['connect.facebook.net/*/sdk.js', 'facebook.com'],
   ['connect.facebook.net/*/fbevents.js', 'facebook.com'],
-
   ['platform.twitter.com/widgets.js', 'twitter.com'],
-
   ['www.instagram.com/embed.js', 'instagram.com'],
-  
-  ['assets.pinterest.com/js/pinit.js', 'pinterest.com']
-]
+  ['assets.pinterest.com/js/pinit.js', 'pinterest.com'],
+];

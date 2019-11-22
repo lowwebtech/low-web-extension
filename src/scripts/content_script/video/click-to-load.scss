@@ -12,22 +12,18 @@
     z-index: 2;
     text-align: left;
     color: white !important;
-
     iframe{
       visibility: hidden;
       pointer-events: none;
     }
-
     svg{
       display: block;
       position: absolute;
       z-index: 100;
     }
-
     p{
       margin: 0;
     }
-
     &--youtube {
       svg{
         top: 50%;
@@ -41,7 +37,6 @@
         fill-opacity: 1;
         fill: red;
       }
-
       .lowweb__title{
         color: #eee;
         font-size: 18px;
@@ -56,7 +51,6 @@
         text-align: left;
       }
     }
-
     &--dailymotion{
       &:before{
         position: absolute;
@@ -78,7 +72,6 @@
       // &:hover:before{
       //   opacity: 0;
       // }
-
       .lowweb__container{
         position: absolute;
         left: 170px;
@@ -99,7 +92,6 @@
         font-size: 14px;
       }
     }
-
     &--vimeo {
       svg{
         left: 10px;
@@ -111,7 +103,6 @@
         fill: #00ADEF;
         fill-opacity: 1;
       }
-
       .lowweb__container{
         margin: 1em;
         font-family: "Helvetica Neue",Helvetica,Arial!important; 
@@ -124,7 +115,6 @@
         font-weight: 700;
         background-color: rgba(23,35,34,.75);
       }
-
       .lowweb__author{
         display: inline-block;
         margin-top: 2px;
@@ -138,7 +128,6 @@
         }
       }
     }
-
     &--facebook {
       svg{
         top: 50%;
@@ -162,7 +151,6 @@
         }
       }
     }
-
     &--twitch{
       svg{
         top: 50%;
@@ -180,7 +168,6 @@
         background-color: black;
         opacity: 0.5;
       }
-
       &:hover path{
         fill: #a970ff;
       }
@@ -201,7 +188,6 @@
         }
       }
     } 
-
     &--clicked iframe{
       visibility: visible;
       pointer-events: auto;

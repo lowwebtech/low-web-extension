@@ -1,40 +1,35 @@
 import store from '../../store';
-import Blocker from '../Blocker'
-
-export function blockFiles(){
-
+import Blocker from '../Blocker';
+export function blockFiles() {
   let action = function(details) {
-    let cancel
-    let { type, url } = details
-    switch( type ){
+    let cancel;
+    let { type, url } = details;
+    switch (type) {
       case 'video':
-        cancel = store.getters.block_videos
+        cancel = store.getters.block_videos;
         break;
       case 'font':
-        cancel = store.getters.block_fonts
+        cancel = store.getters.block_fonts;
         break;
       case 'image':
       case 'imageset':
-        cancel = store.getters.block_images
+        cancel = store.getters.block_images;
         break;
       // case 'script':
-      //   cancel = store.getters.block_scripts
+      //   cancel = store.getters.block_scripts;
       //   break;
       default:
-        cancel = 0
+        cancel = 0;
         break;
     }
-
-    if( cancel ){
-      console.warn('blocked', url)
+    if (cancel) {
+      console.warn('blocked', url);
     }
-
     return {
-      cancel: cancel == 1
-    }
-  }
-
-  Blocker.filterRequest( action )
+      cancel: cancel === 1,
+    };
+  };
+  Blocker.filterRequest(action);
 }
 // TODO look at those types
 /*

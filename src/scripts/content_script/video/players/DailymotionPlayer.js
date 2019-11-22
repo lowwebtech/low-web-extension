@@ -1,52 +1,50 @@
-import {getDailymotionId} from '../../../utils/get-video-id'
+import { getDailymotionId } from '../../../utils/get-video-id';
 
-export default class DailymotionPlayer{
-  constructor( iframe ){
-
-    this.originalIframe = iframe
+export default class DailymotionPlayer {
+  constructor(iframe) {
+    this.originalIframe = iframe;
     let params = {
-      video: getDailymotionId( this.originalIframe.dataset.src ),
+      video: getDailymotionId(this.originalIframe.dataset.src),
       params: {
         autoplay: true,
-        mute: true
-      }
+        mute: true,
+      },
+    };
+    let qualityFirst = true;
+
+    if (this.originalIframe.width) {
+      params.width = this.originalIframe.width;
     }
-    if( this.originalIframe.width ){
-      params.width = this.originalIframe.width
-    }
-    if( this.originalIframe.height ){
-      params.height = this.originalIframe.height
+    if (this.originalIframe.height) {
+      params.height = this.originalIframe.height;
     }
 
-    this.newEl = document.createElement('div')
-    this.originalIframe.parentNode.replaceChild(this.newEl, this.originalIframe)
-    
-    let qualityFirst = true
-    this.player = DM.player(this.newEl, params);
-    this.player.addEventListener('apiready', ()=>{
-      console.log('-- DAILYMOTION -- apiready')
+    this.newEl = document.createElement('div');
+    this.originalIframe.parentNode.replaceChild(this.newEl, this.originalIframe);
+
+    this.player = window.DM.player(this.newEl, params);
+    this.player.addEventListener('apiready', () => {
       // var quality = true
-      this.player.addEventListener('qualitiesavailable', ()=>{
+      this.player.addEventListener('qualitiesavailable', () => {
         // console.log('-- DAILYMOTION -- qualitiesavailable')
         // console.log(this.player.quality)
-      })
-    })
-    this.player.addEventListener('playing', ()=>{
+      });
+    });
+    this.player.addEventListener('playing', () => {
       // console.log('-- DAILYMOTION -- playing', this.player.quality)
-      if( qualityFirst ){ 
+      if (qualityFirst) {
         // quality change seems to work after playing
-        qualityFirst = false
-        this.player.pause()
-        this.player.setQuality('240')
-        this.player.play()
+        qualityFirst = false;
+        this.player.pause();
+        this.player.setQuality('240');
+        this.player.play();
       }
-    })
-    this.player.addEventListener('qualitychange', ()=>{
+    });
+    this.player.addEventListener('qualitychange', () => {
       // console.log('-- DAILYMOTION -- qualitychange', this.player.quality)
-    })
-    this.player.addEventListener('rebuffer', ()=>{
+    });
+    this.player.addEventListener('rebuffer', () => {
       // console.log('-- DAILYMOTION -- rebuffer')
-    })
-
+    });
   }
 }

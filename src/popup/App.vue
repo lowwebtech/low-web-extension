@@ -6,12 +6,10 @@
     <!-- <button @click="resetActive">Reset</button> -->
   </div>
 </template>
-
 <script>
-import store from '../scripts/store'
-import getHostname from '../scripts/utils/get-hostname'
-import { mapGetters, mapState } from 'vuex'
-
+// import store from '../scripts/store';
+// import getHostname from '../scripts/utils/get-hostname';
+// import { mapGetters, mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -20,69 +18,57 @@ export default {
       active: this.$store.state.active,
       // pausePageText: '',
       // pauseWebsiteText: '',
-      pauseText: ''
+      pauseText: '',
     };
   },
-  computed:{
+  computed: {
     // ...mapGetters([
     //   'isPagePaused',
     //   'isWebsitePaused',
     //   // ...
     // ])
   },
-  mounted(){
-    // this.pauseText =
-    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs)=>{
-      if( tabs.length > 0 ){
-        let t = tabs[0]
-        this.$store.commit('url', t.url)
-
-        // this.textTogglePage()
-        // this.textToggleWebsite()
-        this.textToggleActive()
-
-        console.log('------->mounted url', t.url)
-        setTimeout(()=>{
-          // console.log('------->active', this.$store.state.pausedPages)
-          console.log('------->active', this.$store.getters.isActive)
-        },1)
+  mounted() {
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+      if (tabs.length > 0) {
+        let t = tabs[0];
+        this.$store.commit('url', t.url);
+        // this.textTogglePage();
+        // this.textToggleWebsite();
+        this.textToggleActive();
       }
-    }) 
+    });
   },
   methods: {
-    // textTogglePage(){
+    // textTogglePage() {
     //   console.log('---textTogglePage',this.$store.getters.isPagePaused)
-      
-    //   if( this.$store.getters.isPagePaused ){
+    //   if (this.$store.getters.isPagePaused) {
     //     this.pausePageText = 'Run on this page'
-    //   }else{
+    //   } else {
     //     this.pausePageText = "Don't run on this page"
     //   }
-      
     // },
-    // textToggleWebsite(){
+    // textToggleWebsite() {
     //   console.log('---textToggleWebsite',this.$store.getters.isWebsitePaused)
-      
-    //   if( this.$store.getters.isWebsitePaused ){
+    //   if (this.$store.getters.isWebsitePaused) {
     //     this.pauseWebsiteText = 'Run on this website'
-    //   }else{
+    //   } else {
     //     this.pauseWebsiteText = "Don't run on this website"
     //   }
-      
     // },
-    textToggleActive(){
-      console.log('---textToggleActive',this.$store.state.active)
-      if( this.$store.state.active ){
-        this.pauseText = "Extension enabled"
-      }else{
-        this.pauseText = 'Extension disabled'
+    textToggleActive() {
+      console.log('---textToggleActive', this.$store.state.active);
+      if (this.$store.state.active) {
+        this.pauseText = 'Extension enabled';
+      } else {
+        this.pauseText = 'Extension disabled';
       }
     },
-    // pausePage(){
+    // pausePage() {
     //   // console.log('pausePage')
-    //   chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs)=>{
+    //   chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
     //     // console.log(tabs.length)
-    //     if( tabs.length > 0 ){
+    //     if (tabs.length > 0) {
     //       let t = tabs[0]
     //       // console.log(t.url)
     //       this.$store.commit('togglePage', t.url)
@@ -90,35 +76,34 @@ export default {
     //     }
     //   })
     // },
-    // pauseWebsite(){
+    // pauseWebsite() {
     //   // console.log('pauseWebsite')
-    //   chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, (tabs)=>{
+    //   chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
     //     // console.log(tabs.length)
-    //     if( tabs.length > 0 ){
+    //     if (tabs.length > 0) {
     //       let t = tabs[0]
-    //       this.$store.commit('toggleWebsite', getHostname( t.url ))
+    //       this.$store.commit('toggleWebsite', getHostname(t.url))
     //       this.textToggleWebsite()
     //     }
     //   })
     // },
-    pauseAll(){
+    pauseAll() {
       // console.log('pauseAll', this.$store.state)
-      this.$store.commit('active', !this.$store.state.active)
-      this.textToggleActive()
+      this.$store.commit('active', !this.$store.state.active);
+      this.textToggleActive();
     },
-    // resetActive(){
+    // resetActive() {
     //   this.$store.commit('resetActive')
-    // }    
-  }
+    // }
+  },
 };
 </script>
-
 <style lang="scss" scoped>
-body{
+body {
   padding: 0;
   margin: 0;
 }
-button{
+button {
   white-space: nowrap;
   padding: 6px 10px;
   display: block;
