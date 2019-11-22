@@ -54,10 +54,10 @@ export default {
     id: 'twitch',
     embed_url: 'player.twitch.tv', 
     video_url: 'https://www.twitch.tv/videos/##ID##',
-    oembed: 'https://api.twitch.tv/v4/oembed',
+    oembed: '',//https://api.twitch.tv/v4/oembed
     image: '',
     player: '',//players/Twitch.js
-    skin: '<svg class="player-icon-play" id="icon_play" viewBox="0 0 30 30" width="120" height="120" xmlns="http://www.w3.org/2000/svg"><path d="M9 22.066V7.934a.5.5 0 0 1 .777-.416L21 15 9.777 22.482A.5.5 0 0 1 9 22.066z" fill="#FFF"></path></svg><div class="lowweb__container"><div class="lowweb__author">##AUTHOR##</div><div class="lowweb__title">##TITLE##</div></div>'
+    skin: '<svg class="player-icon-play" id="icon_play" viewBox="0 0 30 30" width="120" height="120" xmlns="http://www.w3.org/2000/svg"><path d="M9 22.066V7.934a.5.5 0 0 1 .777-.416L21 15 9.777 22.482A.5.5 0 0 1 9 22.066z" fill="#FFF"></path></svg>'
     
   }
 }
