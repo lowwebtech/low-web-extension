@@ -23,7 +23,8 @@
   "background": {
     "scripts": [
       "background.js"
-    ]
+    ],
+    "persistent": true
   },
   "content_scripts": [
     {
@@ -37,13 +38,13 @@
       "all_frames": false
     }
   ],
+  "content_security_policy": "script-src 'self'; object-src 'self'",
   "web_accessible_resources": [
     "options.js",
     "players/*",
     "utils/*",
     "1x1.gif",
-    "1x1-black.gif",
-    "youpornplayer.js"
+    "1x1-black.gif"
   ],
   "options_ui": {
     "page": "options/options.html"

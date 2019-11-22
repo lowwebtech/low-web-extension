@@ -161,6 +161,7 @@ function videoBlocked( url ){
   return false
 }
 
+// TODO use message to temporary white-list iframe
 function bypassUrlBlock( u ){
 
   // TODO clean url
