@@ -15,36 +15,31 @@ import { saveDataHeader } from './scripts/background/header/save-data'
 import { cssAnimation } from './scripts/background/css-animation'
 import { embedVideoParams } from './scripts/background/embed-video-params'
 
-// TODO add more listener
-browser.runtime.onInstalled.addListener(function() {
+// browser.runtime.onInstalled.addListener(function() {
+// });
 
-  // if( store.getters.isActive ){
 
-    RequestManager.init()
-    Blocker.init()
+RequestManager.init()
+Blocker.init()
 
-    browser.tabs.onUpdated.addListener(
-      function(tabId, changeInfo, tab){
-        if( store.getters.video_clicktoload
-          && changeInfo.status == 'loading'
-          && isWebpage( tab.url ) ){
-          browser.tabs.insertCSS(tabId, {
-            file: 'content_script.css'
-          }); 
-        }
-      }
-    );
+browser.tabs.onUpdated.addListener(
+  function(tabId, changeInfo, tab){
+    if( store.getters.video_clicktoload
+      && changeInfo.status == 'loading'
+      && isWebpage( tab.url ) ){
+      browser.tabs.insertCSS(tabId, {
+        file: 'content_script.css'
+      }); 
+    }
+  }
+);
 
-    blockFiles()
-    blockSocial()
-    // blockAds()
-    blockImages()
-    
-    embedVideoParams()
+blockFiles()
+blockSocial()
+// blockAds()
+blockImages()
 
-    saveDataHeader()
-    cssAnimation()
-    
-  // }
-});
+embedVideoParams()
 
+saveDataHeader()
+cssAnimation()
