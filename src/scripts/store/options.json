@@ -119,8 +119,20 @@
     "value": 0
   },
   {
-    "id": "block_videos", 
-    "label": "block videos",
+    "id": "block_medias", 
+    "label": "block medias (video/sound)",
+    "type": "bool",
+    "value": 0
+  },
+  {
+    "id": "block_objects",
+    "label": "block objects (object/embed)",
+    "type": "bool",
+    "value": 0
+  },
+  {
+    "id": "block_subframes", 
+    "label": "block subframes (iframe/frame)",
     "type": "bool",
     "value": 0
   },

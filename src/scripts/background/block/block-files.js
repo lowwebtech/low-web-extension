@@ -6,8 +6,14 @@ export function blockFiles() {
     let cancel;
     let { type, url } = details;
     switch (type) {
-      case 'video':
-        cancel = store.getters.block_videos;
+      case 'media':
+        cancel = store.getters.block_medias;
+        break;
+      case 'object':
+        cancel = store.getters.block_objects;
+        break;
+      case 'sub_frame':
+        cancel = store.getters.block_subframes;
         break;
       case 'font':
         cancel = store.getters.block_fonts;
@@ -30,7 +36,10 @@ export function blockFiles() {
       cancel: cancel === 1,
     };
   };
-  Blocker.filterRequest(action);
+
+  if( store.getters.isBlockFile ){
+    Blocker.filterRequest(action); 
+  }
 }
 // TODO look at those types
 /*
