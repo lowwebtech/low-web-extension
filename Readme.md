@@ -72,6 +72,7 @@ https://lowwebtech.github.io/low-web-extension/
 - debug popup
 - write tests
 - extension icon
+- custom print styles (better font, small size, no image or b&w...)
 - images :
     + serviceworker
     + replace hi-res by low-res for known websites (https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_400x400.jpg -> https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_x96.jpg)

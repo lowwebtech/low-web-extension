@@ -1,5 +1,6 @@
 import store from '../store';
 // import LazyLoad from 'vanilla-lazyload';
+
 let lazyloadSupported = false;
 if ('loading' in HTMLImageElement.prototype) {
   lazyloadSupported = true;

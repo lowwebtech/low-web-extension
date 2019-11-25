@@ -17,8 +17,8 @@
       <figure>
         <img src="./images/img3.jpg" srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" />
         <figcaption>
-          Image with srcset (width defined)<br>
-          not working images is already loading when srcset is updated
+          Image with srcset (width (w) defined)<br>
+          Not working :( images are already loading when extension update srcset
         </figcaption>
       </figure>
     </p>
@@ -26,22 +26,28 @@
     <p>
       <figure>
         <img src="./images/img3.jpg" srcset="./images/img3.jpg 1x, ./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img25.jpg 8x" sizes="50vw" loading="lazy" />
-        <figcaption>Image with srcset (pixel-ratio defined)<br>
-        not working images is already loading when srcset is updated</figcaption>
+        <figcaption>
+          Image with srcset (pixel-ratio defined)<br>
+          Not working :( images are already loading when extension update srcset
+        </figcaption>
       </figure>
     </p>
 
     <p>
       <figure>
         <img src="./images/img-lazy.jpg" srcset="./images/img-lazy.jpg 1x, ./images/img-lazy@2x.jpg 2x" sizes="50vw" loading="lazy" />
-        <figcaption>Image with srcset and native loading=lazy</figcaption>
+        <figcaption>
+          Image with srcset and native loading=lazy
+        </figcaption>
       </figure>
     </p>
 
     <p>
       <figure>
         <img data-src="./images/img3.jpg" data-srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" />
-        <figcaption>Image with data-srcset</figcaption>
+        <figcaption>
+          Image with data-srcset
+        </figcaption>
       </figure>
     </p>
 
@@ -128,13 +134,13 @@
   </section>
 -->
 <script type="text/javascript">
-  window.addEventListener("DOMContentLoaded", (event) => {
-    var images = document.querySelectorAll('img[data-src]')
-    for( var i = 0, lg = images.length; i<lg; i++ ){
-      images[i].srcset = images[i].dataset.srcset
-      images[i].src = images[i].dataset.src
-    }
-  });
+  // window.addEventListener("DOMContentLoaded", (event) => {
+  //   var images = document.querySelectorAll('img[data-src]')
+  //   for( var i = 0, lg = images.length; i<lg; i++ ){
+  //     images[i].srcset = images[i].dataset.srcset
+  //     images[i].src = images[i].dataset.src
+  //   }
+  // });
 </script>
 </body>
 </html>
