@@ -1,0 +1,15 @@
+c.disquscdn.com/uploads/users/
+uploads.disquscdn.com/
+disquscdn.com*avatar92
+gravatar.com/avatar/
+twimg.com/profile_images/
+licdn.com/dms/image/*/profile-displayphoto
+licdn.com/dms/image/*/company-logo
+.viadeo-static.com/*/member/
+avatars*.githubusercontent.com/u/
+media.tumblr.com/avatar_
+pinimg.com/75x75_RS/
+thumbs.redditmedia.com
+redditmedia.com/*/styles/communityIcon_
+mgl.skyrock.net/art/
+.stack.imgur.com/

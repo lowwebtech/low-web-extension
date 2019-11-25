@@ -27,6 +27,8 @@ export default [
   ['redditmedia.com/*/styles/communityIcon_', -1],
   // skyrock
   ['mgl.skyrock.net/art/', -1],
+  // stackoverflow
+  ['.stack.imgur.com/', -1],
 
   // TODO
   /*

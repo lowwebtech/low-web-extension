@@ -2,7 +2,9 @@ import RequestManager from './RequestManager';
 
 let blockRequests = [];
 let urlsToBlock = [];
-const blankImage = chrome.extension.getURL('1x1-black.gif');
+
+// TODO get lower (working) black gif (and more colors)
+const blankImage = chrome.extension.getURL('images/1x1-black.gif');
 
 class Blocker {
   init() {
@@ -53,11 +55,13 @@ const escapeRegExp = string => {
   return string.replace(/[.+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
   // return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 };
+
 class BlockRequest {
   constructor(callback, filter) {
     this.callback = callback;
     this.filter = filter;
   }
 }
+
 let blocker = new Blocker();
 export default blocker;

@@ -50,7 +50,7 @@ Then, here is a list of what lowweb extension does for reducing bandwidth and en
 - block image avatars (disqus, gravatar)
 - disable css transition and animation *(default:false)* (:warning: break transitionend / animationend events :warning:)
 - disable &lt;marquee&gt; animations :P
-- ~~disable ads~~ *(disabled, use preferably uBlock)*
+- ~~disable ads~~ *(disabled, use preferably uBlock Origin)*
 
 
 ## Installation
@@ -106,16 +106,14 @@ https://lowwebtech.github.io/low-web-extension/
     + facebook regexp for country flag en_US/fr_FR....
     + mimic embed styles
     + look for side-effect
-- add more social networks (linkedin)
 - add fallback for blocked ressources
 - take into account connexion network type (wifi/ethernet or 3G/4G)
 - take into account carbon footprint of user's electricity (-> co2signal.com)
 - display time alerts
 - set css prefers-color-scheme to dark
     + look at DarkReader
-- ~~disable tracking~~ *use uBlock*
-- ~~ads~~ : *use uBlock*
-    + need to be optimised (with WebAssembly)
+- ~~disable tracking~~ *use uBlock Origin*
+- ~~ads~~ : *use uBlock Origin*
 
 ### TODO add those websites
 - netflix
@@ -124,6 +122,7 @@ https://lowwebtech.github.io/low-web-extension/
 - ustream
 - livestream
 - gfycat
+- imgur
 - tenor
 - flickr 
 - linkedin

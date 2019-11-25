@@ -10,7 +10,6 @@ export function embedVideoParams() {
     // ensure it's an iframe
     if (details.type === 'sub_frame') {
       let url = new URL(details.url);
-      let originalSearch = url.search;
       let params = queryString.parse(url.search);
       let originalParams = Object.assign({}, params);
       switch (url.hostname) {
@@ -21,9 +20,9 @@ export function embedVideoParams() {
             params = setEmbedParam(params, 'rel', '0');
             // params.loop = 0;
             // params.rel = 0;
-            if( params.lowweb === TOKEN ){
+            if (params.lowweb === TOKEN) {
               params.autoplay = 1;
-            }else{
+            } else {
               params = setEmbedParam(params, 'autoplay', '0');
             }
           }
@@ -33,9 +32,9 @@ export function embedVideoParams() {
           if (store.getters.video_attributes) {
             params = setEmbedParam(params, 'loop', 'false');
             // params.loop = false;
-            if( params.lowweb === TOKEN ){
+            if (params.lowweb === TOKEN) {
               params.autoplay = true;
-            }else{
+            } else {
               params = setEmbedParam(params, 'autoplay', 'false');
             }
           }
@@ -48,9 +47,9 @@ export function embedVideoParams() {
             params = setEmbedParam(params, 'queue-enable', 'false');
             // params.loop = false;
             // params['queue-enable'] = false;
-            if( params.lowweb === TOKEN ){
+            if (params.lowweb === TOKEN) {
               params.autoplay = true;
-            }else{
+            } else {
               params = setEmbedParam(params, 'autoplay', 'false');
             }
           }
@@ -60,9 +59,9 @@ export function embedVideoParams() {
           if (store.getters.video_attributes) {
             params = setEmbedParam(params, 'loop', 'false');
             // params.loop = false;
-            if( params.lowweb === TOKEN ){
+            if (params.lowweb === TOKEN) {
               params.autoplay = true;
-            }else{
+            } else {
               params = setEmbedParam(params, 'autoplay', 'false');
             }
           }
@@ -84,7 +83,7 @@ export function embedVideoParams() {
 
       // redirect if params changed
       // TODO try to merge redirectUrl and cancel
-      if( JSON.stringify(params) !== JSON.stringify(originalParams) ){
+      if (JSON.stringify(params) !== JSON.stringify(originalParams)) {
         let newSearch = queryString.stringify(params);
         url.search = newSearch;
         response.redirectUrl = url.href;
@@ -103,15 +102,15 @@ export function embedVideoParams() {
   Blocker.filterRequest(action, filter);
 }
 
-function setEmbedParam(params, name, value){
+function setEmbedParam(params, name, value) {
   // console.log('---');
   // console.log(typeof params[name]);
   // console.log(name, typeof params[name], typeof value,  params[name] !== value);
   // // console.log(value);
-  if( typeof params[name] !== 'undefined' && params[name] !== value ){
+  if (typeof params[name] !== 'undefined' && params[name] !== value) {
     params[name] = value;
   }
-  return params
+  return params;
 }
 /*
 https://www.youtube.com/embed/XO4q9oVrWWw?autoplay=0&rel=0&loop=0&vq=small|medium|large  //240, 360, 540

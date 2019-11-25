@@ -36,9 +36,9 @@ getters.isActive = (state, getters) => {
   }
 };
 getters.isBlockFile = state => {
-  if( getters.block_medias === 1 || getters.block_objects === 1 || getters.block_subframes === 1 || getters.block_fonts === 1 || getters.block_images === 1 ){
+  if (getters.block_medias === 1 || getters.block_objects === 1 || getters.block_subframes === 1 || getters.block_fonts === 1 || getters.block_images === 1) {
     return true;
-  }else{
+  } else {
     return false;
   }
 };

@@ -38,8 +38,8 @@ export function blockFiles() {
     };
   };
 
-  if( store.getters.isBlockFile ){
-    Blocker.filterRequest(action); 
+  if (store.getters.isBlockFile) {
+    Blocker.filterRequest(action);
   }
 }
 

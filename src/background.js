@@ -1,8 +1,6 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
-import store from './scripts/store';
-import isWebpage from './scripts/utils/is-webpage';
 import RequestManager from './scripts/background/RequestManager';
 import Blocker from './scripts/background/Blocker';
 import { blockFiles } from './scripts/background/block/block-files';

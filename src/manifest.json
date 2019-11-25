@@ -43,8 +43,7 @@
     "options.js",
     "players/*",
     "utils/*",
-    "1x1.gif",
-    "1x1-black.gif"
+    "images/*"
   ],
   "options_ui": {
     "page": "options/options.html"
