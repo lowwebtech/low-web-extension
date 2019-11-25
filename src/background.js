@@ -1,5 +1,6 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
+
 import store from './scripts/store';
 import isWebpage from './scripts/utils/is-webpage';
 import RequestManager from './scripts/background/RequestManager';
@@ -11,7 +12,8 @@ import { blockImages } from './scripts/background/block/block-images';
 import { saveDataHeader } from './scripts/background/header/save-data';
 import { cssAnimation } from './scripts/background/css-animation';
 import { embedVideoParams } from './scripts/background/embed-video-params';
-/* eslint-disable import/first, indent */
+/* eslint-enable import/first, indent */
+
 // browser.runtime.onInstalled.addListener(function() {
 // });
 RequestManager.init();

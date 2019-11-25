@@ -1,9 +1,13 @@
 import './gif.scss';
 import store from '../../store';
+
 export default function() {
   if (store.getters.gif_player) {
+    // TODO better exclusion
     const exclude = ['giphy.com'];
     if (exclude.indexOf(store.state.hostname) === -1) {
+      // TODO insert script only when gif
+      // document.querySelectorAll('img[src*=".gif"]').length
       const script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = chrome.extension.getURL('players/Gif.js');

@@ -1,5 +1,6 @@
 import store from '../../store';
 import Blocker from '../Blocker';
+
 export function blockFiles() {
   let action = function(details) {
     let cancel;

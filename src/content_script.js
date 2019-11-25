@@ -1,5 +1,6 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
+
 import './scss/default.scss';
 import store from './scripts/store';
 import imageSrcset from './scripts/content_script/image/srcset';
@@ -11,6 +12,7 @@ import videoAttribute from './scripts/content_script/video/attributes';
 import clickToLoadVideo from './scripts/content_script/video/click-to-load';
 import customPlayers from './scripts/content_script/video/custom-players';
 /* eslint-enable import/first, indent */
+
 document.addEventListener('DOMContentLoaded', () => {
   store.commit('url', window.location.href);
   // console.log("ACTIVE", store.getters.isActive)

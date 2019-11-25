@@ -1,4 +1,5 @@
 import queryString from 'query-string';
+
 function matchRegexID(str, regex) {
   let result = str.match(regex);
   if (result && result.length > 1) {

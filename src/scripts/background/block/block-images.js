@@ -2,6 +2,7 @@ import { TOKEN } from '../../constants';
 import store from '../../store';
 import imagesToBlock from '../../images-to-block';
 import Blocker from '../Blocker';
+
 const blockGiphy = details => {
   let o = {};
   if (store.getters.gif_player) {

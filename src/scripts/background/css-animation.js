@@ -1,5 +1,6 @@
 import store from '../store';
 import isWebpage from '../utils/is-webpage';
+
 // TODO find solution for events transitionend / animationend
 export function cssAnimation() {
   chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {

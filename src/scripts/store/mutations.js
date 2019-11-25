@@ -1,5 +1,6 @@
 import jsonOptions from './options.json';
 import getHostname from '../utils/get-hostname';
+
 const mutations = {};
 for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
   let o = jsonOptions[i];
@@ -7,6 +8,7 @@ for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
     state[o.id] = parseInt(payload);
   };
 }
+
 mutations.url = function(state, url) {
   state.url = url;
   state.hostname = getHostname(url);

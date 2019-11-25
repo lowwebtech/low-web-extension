@@ -1,7 +1,9 @@
 import RequestManager from './RequestManager';
+
 let blockRequests = [];
 let urlsToBlock = [];
 const blankImage = chrome.extension.getURL('1x1-black.gif');
+
 class Blocker {
   init() {
     this.filterRequest(blockUrls);

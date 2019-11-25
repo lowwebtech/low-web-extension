@@ -5,6 +5,7 @@ import getters from './getters';
 import mutations from './mutations';
 // import * as actions from './actions';
 import VuexWebExtensions from 'vuex-webextensions';
+
 // localStorage.clear()
 let state = {
   active: true,

@@ -2,6 +2,7 @@ import { TOKEN } from '../constants';
 import queryString from 'query-string';
 import store from '../store';
 import Blocker from './Blocker';
+
 // TODO check if quality params work
 export function embedVideoParams() {
   browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {

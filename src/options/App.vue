@@ -29,6 +29,7 @@
 <script>
 import store from '../scripts/store';
 import jsonOptions from '../scripts/store/options.json';
+
 export default {
   name: 'App',
   data() {

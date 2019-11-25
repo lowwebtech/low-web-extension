@@ -1,5 +1,6 @@
 import store from '../../store';
 import videoToBlock from '../../video-to-block';
+
 export default function() {
   if (store.state.video_quality > 0) {
     const keys = Object.keys(videoToBlock);
