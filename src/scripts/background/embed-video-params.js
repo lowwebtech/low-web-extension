@@ -3,63 +3,68 @@ import queryString from 'query-string';
 import store from '../store';
 import Blocker from './Blocker';
 
-// TODO check if quality params work
 export function embedVideoParams() {
-  browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    // TODO move to separate js
-    if (request.message === 'oembed') {
-      fetch(request.options.oembedUrl)
-        .then(res => {
-          return res.json();
-        })
-        .then(json => {
-          sendResponse(json);
-        })
-        .catch(function(error) {
-          console.log('oembed error', error);
-        });
-    }
-    return true;
-  });
-
   const action = details => {
     let response = {};
+
     // ensure it's an iframe
     if (details.type === 'sub_frame') {
       let url = new URL(details.url);
       let originalSearch = url.search;
       let params = queryString.parse(url.search);
-
+      let originalParams = Object.assign({}, params);
       switch (url.hostname) {
         case 'www.youtube.com':
         case 'youtube.com':
           if (store.getters.video_attributes) {
-            params.loop = 0;
-            params.rel = 0;
-            params.lowweb === TOKEN ? (params.autoplay = 1) : (params.autoplay = 0);
+            params = setEmbedParam(params, 'loop', '0');
+            params = setEmbedParam(params, 'rel', '0');
+            // params.loop = 0;
+            // params.rel = 0;
+            if( params.lowweb === TOKEN ){
+              params.autoplay = 1;
+            }else{
+              params = setEmbedParam(params, 'autoplay', '0');
+            }
           }
           // vq (small/medium) doesn't work
           break;
         case 'player.twitch.tv':
           if (store.getters.video_attributes) {
-            params.loop = false;
-            params.lowweb === TOKEN ? (params.autoplay = true) : (params.autoplay = false);
+            params = setEmbedParam(params, 'loop', 'false');
+            // params.loop = false;
+            if( params.lowweb === TOKEN ){
+              params.autoplay = true;
+            }else{
+              params = setEmbedParam(params, 'autoplay', 'false');
+            }
           }
           // quality (low/medium) doesn't work
           break;
         case 'www.dailymotion.com':
         case '*.dailymotion.com':
           if (store.getters.video_attributes) {
-            params.lowweb === TOKEN ? (params.autoplay = true) : (params.autoplay = false);
-            params.loop = false;
-            params['queue-enable'] = false;
+            params = setEmbedParam(params, 'loop', 'false');
+            params = setEmbedParam(params, 'queue-enable', 'false');
+            // params.loop = false;
+            // params['queue-enable'] = false;
+            if( params.lowweb === TOKEN ){
+              params.autoplay = true;
+            }else{
+              params = setEmbedParam(params, 'autoplay', 'false');
+            }
           }
           // quality (240/380) doesn't work
           break;
         case 'player.vimeo.com':
           if (store.getters.video_attributes) {
-            params.lowweb === TOKEN ? (params.autoplay = true) : (params.autoplay = false);
-            params.loop = false;
+            params = setEmbedParam(params, 'loop', 'false');
+            // params.loop = false;
+            if( params.lowweb === TOKEN ){
+              params.autoplay = true;
+            }else{
+              params = setEmbedParam(params, 'autoplay', 'false');
+            }
           }
           switch (store.getters.video_quality) {
             case 1:
@@ -76,16 +81,16 @@ export function embedVideoParams() {
         // TODO
         // case "facebook" data-autoplay=true/false
       }
-      let newSearch = queryString.stringify(params);
-      originalSearch = originalSearch.slice(1);
-      if (originalSearch !== newSearch) {
+
+      // redirect if params changed
+      // TODO try to merge redirectUrl and cancel
+      if( JSON.stringify(params) !== JSON.stringify(originalParams) ){
+        let newSearch = queryString.stringify(params);
         url.search = newSearch;
         response.redirectUrl = url.href;
-      } else {
-        if (store.getters.video_clicktoload) {
-          if (params.lowweb !== TOKEN) {
-            response.cancel = true;
-          }
+      } else if (store.getters.video_clicktoload) {
+        if (params.lowweb !== TOKEN) {
+          response.cancel = true;
         }
       }
     }
@@ -96,6 +101,17 @@ export function embedVideoParams() {
     urls: ['*://*.youtube.com/embed/*', '*://player.vimeo.com/*', '*://*.dailymotion.com/embed/*', '*://player.twitch.tv/?*', '*://*.facebook.com/plugins/video.php*'],
   };
   Blocker.filterRequest(action, filter);
+}
+
+function setEmbedParam(params, name, value){
+  // console.log('---');
+  // console.log(typeof params[name]);
+  // console.log(name, typeof params[name], typeof value,  params[name] !== value);
+  // // console.log(value);
+  if( typeof params[name] !== 'undefined' && params[name] !== value ){
+    params[name] = value;
+  }
+  return params
 }
 /*
 https://www.youtube.com/embed/XO4q9oVrWWw?autoplay=0&rel=0&loop=0&vq=small|medium|large  //240, 360, 540

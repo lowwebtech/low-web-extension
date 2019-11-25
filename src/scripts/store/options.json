@@ -119,6 +119,12 @@
     "value": 0
   },
   {
+    "id": "block_scripts", 
+    "label": "block scripts (script)",
+    "type": "bool",
+    "value": 0
+  },
+  {
     "id": "block_medias", 
     "label": "block medias (video/sound)",
     "type": "bool",

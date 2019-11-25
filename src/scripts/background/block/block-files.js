@@ -10,6 +10,7 @@ export function blockFiles() {
         cancel = store.getters.block_medias;
         break;
       case 'object':
+      case 'object_subrequest':
         cancel = store.getters.block_objects;
         break;
       case 'sub_frame':
@@ -22,9 +23,9 @@ export function blockFiles() {
       case 'imageset':
         cancel = store.getters.block_images;
         break;
-      // case 'script':
-      //   cancel = store.getters.block_scripts;
-      //   break;
+      case 'script':
+        cancel = store.getters.block_scripts;
+        break;
       default:
         cancel = 0;
         break;
@@ -41,6 +42,7 @@ export function blockFiles() {
     Blocker.filterRequest(action); 
   }
 }
+
 // TODO look at those types
 /*
 https://developer.mozilla.org/fr/docs/Mozilla/Add-ons/WebExtensions/API/webRequest/ResourceType
