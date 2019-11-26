@@ -13,3 +13,7 @@ thumbs.redditmedia.com
 redditmedia.com/*/styles/communityIcon_
 mgl.skyrock.net/art/
 .stack.imgur.com/
+.quoracdn.net/main-thumb-
+medium.com/fit/c/
+imdoc.fr/prod/avatars/
+jeuxvideo.com/avatar-

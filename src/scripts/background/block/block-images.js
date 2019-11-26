@@ -6,6 +6,7 @@ import * as ABPFilterParser from 'abp-filter-parser';
 // import imagesToBlock from '../../images-to-block';
 import avatarTxt from '../../../lists/avatar.txt';
 
+const BLANK_IMAGE = chrome.extension.getURL('images/1x1-black.gif');
 // const avatarTxt = chrome.extension.getURL('lists/avatar.txt');
 let parsedFilterData = {};
 ABPFilterParser.parse(avatarTxt, parsedFilterData);
@@ -48,8 +49,9 @@ const blockAvatar = details => {
         elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
       });
       if (cancel) {
-        console.warn('blocked', url);
-        o.cancel = true;
+        o.redirectUrl = BLANK_IMAGE;
+        // console.warn('blocked', url);
+        // o.cancel = true;
       }
     }
   }

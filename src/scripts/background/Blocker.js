@@ -4,7 +4,7 @@ let blockRequests = [];
 let urlsToBlock = [];
 
 // TODO get lower (working) black gif (and more colors)
-const blankImage = chrome.extension.getURL('images/1x1-black.gif');
+const BLANK_IMAGE = chrome.extension.getURL('images/1x1-black.gif');
 
 class Blocker {
   init() {
@@ -44,7 +44,7 @@ const blockUrls = function(details) {
   if (cancel) {
     console.warn('blocked', details);
     if (details.type === 'image') {
-      o.redirectUrl = blankImage;
+      o.redirectUrl = BLANK_IMAGE;
     } else {
       o.cancel = true;
     }
