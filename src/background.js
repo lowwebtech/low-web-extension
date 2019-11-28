@@ -26,7 +26,10 @@ Blocker.init();
 //   }
 // });
 
-onMessageOEmbed();
+browser.runtime.onConnect.addListener(port => {
+  console.log('connected ', port);
+  onMessageOEmbed(port);
+});
 
 blockFiles();
 blockSocial();

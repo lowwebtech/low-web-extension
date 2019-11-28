@@ -6,8 +6,6 @@ import * as ABPFilterParser from 'abp-filter-parser';
 // TODO externalize avatar list
 import avatarTxt from '../../../lists/avatar.txt';
 
-const BLANK_IMAGE = browser.runtime.getURL('images/1x1-black.gif');
-
 let parsedFilterData = {};
 ABPFilterParser.parse(avatarTxt, parsedFilterData);
 
@@ -21,7 +19,7 @@ const blockGiphy = details => {
       if (url.indexOf('.giphy.com/media') !== -1) {
         if (url.indexOf('lowweb=' + TOKEN) === -1) {
           // o.cancel = true;
-          o.redirectUrl = BLANK_IMAGE;
+          o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');;
         }
       }
       // giphy embed iframe
@@ -51,7 +49,7 @@ const blockAvatar = details => {
       });
 
       if (cancel) {
-        o.redirectUrl = BLANK_IMAGE;
+        o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');;
         // console.warn('blocked', url);
         // o.cancel = true;
       }

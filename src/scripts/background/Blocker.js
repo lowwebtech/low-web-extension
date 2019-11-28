@@ -3,9 +3,6 @@ import RequestManager from './RequestManager';
 let blockRequests = [];
 let urlsToBlock = [];
 
-// TODO get lower (working) black gif (and more colors)
-const BLANK_IMAGE = browser.runtime.getURL('images/1x1-black.gif');
-
 class Blocker {
   init() {
     this.filterRequest(blockUrls);
@@ -44,7 +41,7 @@ const blockUrls = function(details) {
   if (cancel) {
     console.warn('blocked', details);
     if (details.type === 'image') {
-      o.redirectUrl = BLANK_IMAGE;
+      o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');
     } else {
       o.cancel = true;
     }
