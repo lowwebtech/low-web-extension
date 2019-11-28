@@ -12,4 +12,6 @@ export default [
   ['platform.twitter.com/widgets.js', 'twitter.com'],
   ['www.instagram.com/embed.js', 'instagram.com'],
   ['assets.pinterest.com/js/pinit.js', 'pinterest.com'],
+  ['open.spotify.com/follow/', 'spotify.com'],
+  // ['open.spotify.com/embed/', 'spotify.com'],
 ];

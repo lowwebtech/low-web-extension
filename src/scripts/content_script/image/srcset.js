@@ -21,6 +21,7 @@ function filterImages(name) {
       } else if (img.width) {
         width = img.width;
       }
+      console.log(img.sizes);
       srcset = img.dataset[name];
       cleanedSrcset = cleanSrcset(srcset, width);
       if (cleanedSrcset) img.dataset[name] = cleanedSrcset;

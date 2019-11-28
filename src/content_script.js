@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // script to inject to get 'real' window and compute css styles
   let script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src = chrome.extension.getURL('utils/compute-styles.js');
+  script.async = true;
+  script.src = browser.runtime.getURL('utils/compute-styles.js');
   (document.head || document.documentElement).appendChild(script);
 });

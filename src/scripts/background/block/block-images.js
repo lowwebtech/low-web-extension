@@ -3,11 +3,11 @@ import { TOKEN } from '../../constants';
 import Blocker from '../Blocker';
 import RequestManager from '../RequestManager';
 import * as ABPFilterParser from 'abp-filter-parser';
-// import imagesToBlock from '../../images-to-block';
+// TODO externalize avatar list
 import avatarTxt from '../../../lists/avatar.txt';
 
-const BLANK_IMAGE = chrome.extension.getURL('images/1x1-black.gif');
-// const avatarTxt = chrome.extension.getURL('lists/avatar.txt');
+const BLANK_IMAGE = browser.runtime.getURL('images/1x1-black.gif');
+
 let parsedFilterData = {};
 ABPFilterParser.parse(avatarTxt, parsedFilterData);
 
@@ -20,7 +20,8 @@ const blockGiphy = details => {
       // giphy image url
       if (url.indexOf('.giphy.com/media') !== -1) {
         if (url.indexOf('lowweb=' + TOKEN) === -1) {
-          o.cancel = true;
+          // o.cancel = true;
+          o.redirectUrl = BLANK_IMAGE;
         }
       }
       // giphy embed iframe

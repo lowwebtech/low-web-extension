@@ -90,7 +90,7 @@ class RequestManager {
     }
   }
   queryDomain() {
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+    browser.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
       if (tabs.length > 0) {
         let t = tabs[0];
         if (this.tabStorage && this.tabStorage[t.id]) {

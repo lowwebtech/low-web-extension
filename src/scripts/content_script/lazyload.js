@@ -8,9 +8,9 @@ if ('loading' in HTMLImageElement.prototype) {
   // Fetch and apply a polyfill/JavaScript library
   // for lazy-loading instead.
 }
-// lazyloadSupported = false
-// TODO
-// doesn't work
+
+// !! DOESN'T WORK !!
+// browser already starts loading images
 export default function() {
   const IMAGE_LAZYLOAD = store.getters.image_lazyload;
   const IFRAME_LAZYLOAD = store.getters.iframe_lazyload;

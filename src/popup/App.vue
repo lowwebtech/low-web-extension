@@ -29,7 +29,7 @@ export default {
     // ])
   },
   mounted() {
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+    browser.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
       if (tabs.length > 0) {
         let t = tabs[0];
         this.$store.commit('url', t.url);
@@ -66,7 +66,7 @@ export default {
     },
     // pausePage() {
     //   // console.log('pausePage')
-    //   chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+    //   browser.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
     //     // console.log(tabs.length)
     //     if (tabs.length > 0) {
     //       let t = tabs[0]
@@ -78,7 +78,7 @@ export default {
     // },
     // pauseWebsite() {
     //   // console.log('pauseWebsite')
-    //   chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+    //   browser.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
     //     // console.log(tabs.length)
     //     if (tabs.length > 0) {
     //       let t = tabs[0]

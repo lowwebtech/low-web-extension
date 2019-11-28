@@ -49,7 +49,7 @@ export default function() {
           videoUrl = data.video_url.replace('##ID##', id);
           if (videoUrl) {
             oembedUrl = data.oembed + '?format=json&url=' + encodeURIComponent(videoUrl);
-            chrome.runtime.sendMessage(
+            browser.runtime.sendMessage(
               {
                 message: 'oembed',
                 options: {
@@ -107,7 +107,7 @@ export default function() {
               const jsUrl = data.external_player;
               let script = document.createElement('script');
               script.type = 'text/javascript';
-              script.src = chrome.extension.getURL(jsUrl);
+              script.src = browser.runtime.getURL(jsUrl);
               parent.appendChild(script);
             }
           }

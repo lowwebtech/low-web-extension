@@ -16,7 +16,7 @@ function customSocial() {
     let embedUrl = url.origin + url.pathname;
     let oembedUrl = 'https://api.instagram.com/oembed?format=json&url=' + encodeURIComponent(embedUrl);
 
-    chrome.runtime.sendMessage(
+    browser.runtime.sendMessage(
       {
         message: 'oembed',
         options: {

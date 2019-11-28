@@ -4,7 +4,7 @@ let blockRequests = [];
 let urlsToBlock = [];
 
 // TODO get lower (working) black gif (and more colors)
-const BLANK_IMAGE = chrome.extension.getURL('images/1x1-black.gif');
+const BLANK_IMAGE = browser.runtime.getURL('images/1x1-black.gif');
 
 class Blocker {
   init() {

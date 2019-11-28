@@ -10,7 +10,7 @@ export default function() {
       // document.querySelectorAll('img[src*=".gif"]').length
       const script = document.createElement('script');
       script.type = 'text/javascript';
-      script.src = chrome.extension.getURL('players/Gif.js');
+      script.src = browser.runtime.getURL('players/Gif.js');
       (document.head || document.documentElement).appendChild(script);
     }
   }

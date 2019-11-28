@@ -68,7 +68,12 @@ https://lowwebtech.github.io/low-web-extension/
 
 
 ### TODO
+- define global option (hardcore / low / medium) and update accordingly other options
+- split content_script start/end/idle
+- message between background blocker and content_script for temporary white-list
+- listen dom change
 - oembed
+- look at data:text/html for blocked iframe
 - debug popup
 - write tests
 - extension icon
@@ -91,15 +96,19 @@ https://lowwebtech.github.io/low-web-extension/
     + emoji
 - videos
     + stop autoplay youtube channel (and all)
-- netflix
-- build injected script 
+    + netflix
+- smaller injected script 
 - audit the extension to limit size and processes (reflow)
 - display advice/tips to reduce bandwidth for main websites
+- display time alerts
 - rewrite save-data header
+- block chatbot
 - CSP
+- try to debounce/throttle events like resize/scroll...
 - no smooth scroll scroll-behavior: initial / scrollTo(), scrollBy(), scrollIntoView() / jQuery
 - look at cache-control and expire for header and response requests
 - disable unoptimised hide/show/scroll jQuery, gsap etc...
+- publish external list for blockers : avatar, font services, chatbot
 - fonts
     + remove call to fonts.googleapis.com, fontawesome.com and other services
 - social
@@ -109,7 +118,6 @@ https://lowwebtech.github.io/low-web-extension/
 - add fallback for blocked ressources
 - take into account connexion network type (wifi/ethernet or 3G/4G)
 - take into account carbon footprint of user's electricity (-> co2signal.com)
-- display time alerts
 - set css prefers-color-scheme to dark
     + look at DarkReader
 - ~~disable tracking~~ *use uBlock Origin*

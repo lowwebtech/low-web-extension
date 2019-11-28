@@ -1,0 +1,5 @@
+use.typekit.net/$stylesheet
+fonts.googleapis.com/css
+fonts.gstatic.com
+kit.fontawesome.com
+use.fontawesome.com

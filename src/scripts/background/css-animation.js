@@ -3,7 +3,7 @@ import isWebpage from '../utils/is-webpage';
 
 // TODO find solution for events transitionend / animationend
 export function cssAnimation() {
-  chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     if (store.getters.css_animation) {
       if (changeInfo.status === 'loading') {
         if (isWebpage(tab.url)) {
@@ -19,7 +19,7 @@ export function cssAnimation() {
             -ms-animation: none !important;
             animation: none !important;
           }`;
-          chrome.tabs.insertCSS(tabId, {
+          browser.tabs.insertCSS(tabId, {
             code: code,
           });
         }

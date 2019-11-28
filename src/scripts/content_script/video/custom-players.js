@@ -29,7 +29,7 @@ export default function() {
             }
             let script = document.createElement('script');
             script.type = 'text/javascript';
-            script.src = chrome.extension.getURL(jsUrl);
+            script.src = browser.runtime.getURL(jsUrl);
             containerScript.appendChild(script);
             i = lg;
           }
@@ -40,7 +40,7 @@ export default function() {
           // console.log(jsUrl)
           // let script = document.createElement('script');
           // script.type = 'text/javascript';
-          // script.src = chrome.extension.getURL(jsUrl);
+          // script.src = browser.runtime.getURL(jsUrl);
           // containerScript.appendChild(script);
         }
       }
