@@ -2,7 +2,7 @@
 // import isAnimated from 'animated-gif-detector'
 // import '../../../utils/animated-gif-detect'
 // blob
-import { prepareForStyleComputing } from '../../utils/prepare-to-compute';
+// import { prepareForStyleComputing } from '../../utils/prepare-to-compute';
 
 export default class GifPlayer {
   constructor(gif) {
@@ -35,7 +35,7 @@ export default class GifPlayer {
         container.classList.add('lowweb__gif-player--small');
       }
 
-      prepareForStyleComputing(container, this.gif);
+      // prepareForStyleComputing(container, this.gif);
 
       container.innerHTML =
         '<svg class="lowweb__gif-player__play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg>';

@@ -21,7 +21,7 @@ class RequestManager {
           this.addTab(tabId);
         }
         if (!this.tabStorage[tabId].domain) {
-          this.queryDomain();
+          this.queryDomain(tabId);
         }
 
         this.tabStorage[tabId].requests[requestId] = {
@@ -63,7 +63,7 @@ class RequestManager {
 
     browser.tabs.onUpdated.addListener(tabId => {
       this.addTab(tabId);
-      this.queryDomain();
+      this.queryDomain(tabId);
     });
 
     browser.tabs.onActivated.addListener(tab => {
@@ -89,18 +89,33 @@ class RequestManager {
       };
     }
   }
-  queryDomain() {
-    browser.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
-      if (tabs.length > 0) {
-        let t = tabs[0];
-        if (this.tabStorage && this.tabStorage[t.id]) {
-          const hostname = getHostname(t.url);
-          if (hostname) {
-            this.tabStorage[t.id].domain = hostname;
+  queryDomain(tabId) {
+    if (this.tabStorage[tabId].waitingDomain !== true) {
+      this.tabStorage[tabId].waitingDomain = true;
+      browser.tabs.query({ active: true, lastFocusedWindow: true }).then(
+        tabs => {
+          let domainOk = false;
+          if (tabs.length > 0) {
+            let t = tabs[0];
+            if (this.tabStorage && this.tabStorage[t.id]) {
+              const hostname = getHostname(t.url);
+              if (hostname) {
+                this.tabStorage[t.id].domain = hostname;
+                domainOk = true;
+              }
+            }
+          }
+          if (!domainOk) {
+            this.tabStorage[tabId].waitingDomain = false;
+          }
+        },
+        error => {
+          if (error) {
+            this.tabStorage[tabId].waitingDomain = false;
           }
         }
-      }
-    });
+      );
+    }
   }
 }
 

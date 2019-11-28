@@ -50,50 +50,54 @@
     const defaultIFRAMEStyles = getComputedStyle(dummyIFRAME);
 
     let computeid;
-    let compEl;
+    let compFromEl;
+    let compToEl;
     let cs;
     let style;
     // TODO find a better way to get/set computed style
     for (let i = 0, lg = computeFroms.length; i < lg; i++) {
-      compEl = computeTos[i];
-      computeid = compEl.dataset.computeid;
+      compFromEl = computeFroms[i];
+      computeid = compFromEl.dataset.computeid;
+      compToEl = findComputeTo(computeid);
 
-      switch (compEl.tagName.toUpperCase()) {
-        case 'IMG':
-          style = defaultIMGStyles;
-          break;
-        case 'IFRAME':
-          style = defaultIFRAMEStyles;
-          break;
-        default:
-          style = defaultStyles;
-          break;
-      }
+      if (compToEl) {
+        switch (compToEl.tagName.toUpperCase()) {
+          case 'IMG':
+            style = defaultIMGStyles;
+            break;
+          case 'IFRAME':
+            style = defaultIFRAMEStyles;
+            break;
+          default:
+            style = defaultStyles;
+            break;
+        }
 
-      for (let j = 0, lgj = computeFroms.length; j < lgj; j++) {
-        if (computeid === computeFroms[j].dataset.computeid) {
-          cs = window.getComputedStyle(computeFroms[i]);
-          // get the differences
-          let diff = {};
-          for (let key in cs) {
-            if (cs.hasOwnProperty(key) && style[key] !== cs[key]) {
-              diff[key] = cs[key];
+        for (let j = 0, lgj = computeFroms.length; j < lgj; j++) {
+          if (computeid === computeFroms[j].dataset.computeid) {
+            cs = window.getComputedStyle(computeFroms[i]);
+            // get the differences
+            let diff = {};
+            for (let key in cs) {
+              if (cs.hasOwnProperty(key) && style[key] !== cs[key]) {
+                diff[key] = cs[key];
+              }
             }
-          }
-          // set the difference
-          for (let key in diff) {
-            if (properties.indexOf(key) !== -1) {
-              compEl.style[key] = cs[key];
+            // set the difference
+            for (let key in diff) {
+              if (properties.indexOf(key) !== -1) {
+                compToEl.style[key] = cs[key];
+              }
             }
+            if (cs.getPropertyValue('position') === 'absolute') {
+              compToEl.style.width = '';
+              compToEl.style.height = '';
+            }
+            if (compToEl.style.display === '') {
+              compToEl.style.display = 'inline-block';
+            }
+            j = lgj;
           }
-          if (cs.getPropertyValue('position') === 'absolute') {
-            compEl.style.width = '';
-            compEl.style.height = '';
-          }
-          if (compEl.style.display === '') {
-            compEl.style.display = 'inline-block';
-          }
-          j = lgj;
         }
       }
     }
@@ -102,12 +106,21 @@
     dummy.remove();
   };
 
+  function findComputeTo(id) {
+    for (let i = 0, lg = computeTos.length; i < lg; i++) {
+      if (computeTos[i].dataset.computeid === id) {
+        return computeTos[i];
+      }
+    }
+  }
+
   window.addEventListener('load', e => {
     // TODO :(
     window.lowComputeStyles();
     window.lowComputeStyles();
     for (let i = 0, lg = computeFroms.length; i < lg; i++) {
       computeTos[i].classList.remove('lowweb__compute-styles');
+      console.log('remove', computeFroms[i]);
       computeFroms[i].parentNode.removeChild(computeFroms[i]);
     }
   });

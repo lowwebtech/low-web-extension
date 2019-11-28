@@ -49,6 +49,7 @@ const blockAvatar = details => {
         // domain: tab.domain,
         elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
       });
+
       if (cancel) {
         o.redirectUrl = BLANK_IMAGE;
         // console.warn('blocked', url);

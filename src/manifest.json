@@ -10,6 +10,7 @@
   },
   "permissions": [
     "<all_urls>",
+    "tabs",
     "webRequest",
     "webRequestBlocking",
     "activeTab",

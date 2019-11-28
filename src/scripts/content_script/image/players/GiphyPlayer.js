@@ -1,6 +1,7 @@
 import browserInfo from 'browser-info';
 import { BASE64_GIF } from '../../../constants';
-import { getRandomId } from '../../../utils/get-random-id';
+// import { getRandomId } from '../../../utils/get-random-id';
+import { prepareForStyleComputing } from '../../utils/prepare-to-compute';
 
 export default class GiphyPlayer {
   constructor(el) {
@@ -33,11 +34,8 @@ export default class GiphyPlayer {
     container.innerHTML =
       '<svg class="lowweb__gif-player__play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg>';
     container.appendChild(this.preview);
-    let computeid = getRandomId();
-    container.dataset.computeid = computeid;
-    el.dataset.computeid = computeid;
-    container.classList.add('lowweb__compute-styles');
-    el.classList.add('lowweb__compute-styles--original');
+    prepareForStyleComputing(container, el);
+
     // el.parentNode.removeChild(el);
     el.src = BASE64_GIF;
     this.container = container;

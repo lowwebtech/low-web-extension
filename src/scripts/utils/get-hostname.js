@@ -1,6 +1,8 @@
 // import psl from 'psl'
 export default function extractHostname(url) {
+  // console.log(url)
   if (url) {
+    // console.log('yo')
     var hostname;
     if (url.indexOf('//') > -1) {
       hostname = url.split('/')[2];
