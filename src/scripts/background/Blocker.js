@@ -24,7 +24,7 @@ class Blocker {
     }
     console.log(abpFilters);
   }
-  removeListToBlock(list){
+  removeListToBlock(list) {
     if (lists.indexOf(list) !== -1) {
       console.log(lists.length);
       lists.splice(lists.indexOf(list), 1);
@@ -32,7 +32,7 @@ class Blocker {
       console.log(lists.length);
     }
   }
-  recreateListToBlock(){
+  recreateListToBlock() {
     abpFilters = {};
     console.log(abpFilters);
     for (let i = 0; i < lists.length; i++) {
@@ -40,8 +40,8 @@ class Blocker {
     }
     console.log(abpFilters);
   }
-
 }
+
 const blockUrls = function(details) {
   let cancel;
 
@@ -57,7 +57,7 @@ const blockUrls = function(details) {
   let o = {};
   if (cancel) {
     console.warn('blocked', details);
-    if (details.type === 'image') {
+    if (type === 'image') {
       o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');
     } else {
       o.cancel = true;

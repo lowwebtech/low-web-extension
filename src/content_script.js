@@ -50,7 +50,3 @@ document.addEventListener('DOMContentLoaded', () => {
   script.src = browser.runtime.getURL('utils/compute-styles.js');
   (document.head || document.documentElement).appendChild(script);
 });
-
-setInterval(()=>{
-  
-},1000);

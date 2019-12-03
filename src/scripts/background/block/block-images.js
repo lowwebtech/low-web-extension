@@ -7,7 +7,7 @@ import avatarTxt from '../../../lists/avatar.txt';
 
 const blockGiphy = details => {
   let o = {};
-  
+
   if (store.getters.gif_player) {
     const exclude = ['giphy.com'];
     if (exclude.indexOf(store.state.hostname) === -1) {

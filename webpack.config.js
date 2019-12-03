@@ -48,6 +48,15 @@ const config = {
         exclude: /node_modules/,
       },
       {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          configFile: '.eslintrc.js'
+          // eslint options (if necessary)
+        },
+      },
+      {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },

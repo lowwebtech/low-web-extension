@@ -7,12 +7,12 @@ export function blockFonts() {
     (state, getters) => getters.block_fonts,
     (newValue, oldValue) => {
       console.log(`Updating from ${oldValue} to ${newValue}`);
-      if( newValue == 0 ){
-        Blocker.removeListToblock(fontsTxt);    
-      }else{
+      if (newValue === 0) {
+        Blocker.removeListToblock(fontsTxt);
+      } else {
         Blocker.addListToblock(fontsTxt);
       }
-    },
+    }
   );
   console.log('blockFonts', store.getters.block_fonts);
   if (store.getters.block_fonts === 1) {
