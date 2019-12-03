@@ -1,13 +1,9 @@
 import store from '../../store';
 import { TOKEN } from '../../constants';
 import Blocker from '../Blocker';
-import RequestManager from '../RequestManager';
-import * as ABPFilterParser from 'abp-filter-parser';
+
 // TODO externalize avatar list
 import avatarTxt from '../../../lists/avatar.txt';
-
-let parsedFilterData = {};
-ABPFilterParser.parse(avatarTxt, parsedFilterData);
 
 const blockGiphy = details => {
   let o = {};
@@ -19,7 +15,7 @@ const blockGiphy = details => {
       if (url.indexOf('.giphy.com/media') !== -1) {
         if (url.indexOf('lowweb=' + TOKEN) === -1) {
           // o.cancel = true;
-          o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');;
+          o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');
         }
       }
       // giphy embed iframe
@@ -34,33 +30,7 @@ const blockGiphy = details => {
   return o;
 };
 
-const blockAvatar = details => {
-  let o = {};
-
-  // TODO add option
-  // if (store.getters.block_images) {
-  const { tabId, url, type } = details;
-  if (type === 'image') {
-    const tab = RequestManager.getTab(tabId);
-    if (tab && tab.domain) {
-      const cancel = ABPFilterParser.matches(parsedFilterData, url, {
-        // domain: tab.domain,
-        elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
-      });
-
-      if (cancel) {
-        o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');;
-        // console.warn('blocked', url);
-        // o.cancel = true;
-      }
-    }
-  }
-  // }
-  return o;
-};
-
 export function blockImages() {
-  // Blocker.addUrlsToBlock(imagesToBlock);
   Blocker.filterRequest(blockGiphy);
-  Blocker.filterRequest(blockAvatar);
+  Blocker.addListToblock(avatarTxt);
 }

@@ -49,51 +49,55 @@ export default function() {
           videoUrl = data.video_url.replace('##ID##', id);
           if (videoUrl) {
             oembedUrl = data.oembed + '?format=json&url=' + encodeURIComponent(videoUrl);
-            browser.runtime.sendMessage(
-              {
-                message: 'oembed',
-                options: {
-                  type: type,
-                  videoUrl: videoUrl,
-                  oembedUrl: oembedUrl,
-                },
-              },
-              function(oembed) {
-                let thumb = oembed.thumbnail_url;
-                // some oembed doesn't provided thumbnail_url
-                if (!thumb && data.image !== '') {
-                  thumb = data.image.replace('##ID##', id);
-                }
-                if (type === 'youtube') thumb = thumb.replace('hqdefault', 'mqdefault');
-                if (thumb) tempEl.style.backgroundImage = `url(${thumb})`;
-                // button
-                if (data.skin) {
-                  let skin = data.skin;
-                  let title;
 
-                  if (oembed.title) {
-                    title = oembed.title;
-                  } else if (oembed.provider_name && oembed.provider_name.toLowerCase() === 'facebook') {
-                    let parser = new DOMParser();
-                    let html = parser.parseFromString(oembed.html, 'text/html');
-                    let t = html.querySelector('blockquote > a');
-                    if (t) {
-                      title = t.textContent;
-                    }
-                  }
-                  if (title) {
-                    skin = skin.replace('##TITLE##', title);
-                  }
-                  if (oembed.description) {
-                    skin = skin.replace('##DESCRIPTION##', oembed.description);
-                  }
-                  if (oembed.author_name) {
-                    skin = skin.replace('##AUTHOR##', oembed.author_name);
-                  }
-                  tempEl.innerHTML = skin;
-                }
+            const options = {
+              message: 'oembed',
+              options: {
+                type: type,
+                videoUrl: videoUrl,
+                oembedUrl: oembedUrl,
+              },
+            };
+            const callback = function(oembed) {
+              let thumb = oembed.thumbnail_url;
+              // some oembed doesn't provided thumbnail_url
+              if (!thumb && data.image !== '') {
+                thumb = data.image.replace('##ID##', id);
               }
-            );
+              if (type === 'youtube') thumb = thumb.replace('hqdefault', 'mqdefault');
+              if (thumb) tempEl.style.backgroundImage = `url(${thumb})`;
+              // button
+              if (data.skin) {
+                let skin = data.skin;
+                let title;
+
+                if (oembed.title) {
+                  title = oembed.title;
+                } else if (oembed.provider_name && oembed.provider_name.toLowerCase() === 'facebook') {
+                  let parser = new DOMParser();
+                  let html = parser.parseFromString(oembed.html, 'text/html');
+                  let t = html.querySelector('blockquote > a');
+                  if (t) {
+                    title = t.textContent;
+                  }
+                }
+                if (title) {
+                  skin = skin.replace('##TITLE##', title);
+                }
+                if (oembed.description) {
+                  skin = skin.replace('##DESCRIPTION##', oembed.description);
+                }
+                if (oembed.author_name) {
+                  skin = skin.replace('##AUTHOR##', oembed.author_name);
+                }
+                tempEl.innerHTML = skin;
+              }
+            };
+
+            browser.runtime.sendMessage(options).then(callback, e => {
+              console.error('error message click-to-load');
+              console.error(e);
+            });
           }
         }
 

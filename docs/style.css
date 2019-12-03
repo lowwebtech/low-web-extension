@@ -17,6 +17,7 @@
 
 img.half{
   width: 50%;
+  height: auto;
 }
 figure{
   margin: 0;

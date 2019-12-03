@@ -1,7 +1,8 @@
 import RequestManager from './RequestManager';
+import * as ABPFilterParser from 'abp-filter-parser';
 
 let blockRequests = [];
-let urlsToBlock = [];
+let abpFilters = {};
 
 class Blocker {
   init() {
@@ -13,30 +14,22 @@ class Blocker {
     blockRequests.push(request);
     browser.webRequest.onBeforeRequest.addListener(callback, filter, ['blocking']);
   }
-  addUrlsToBlock(urls) {
-    urlsToBlock = [...urlsToBlock, ...urls];
+  addListToblock(list) {
+    ABPFilterParser.parse(list, abpFilters);
   }
 }
 const blockUrls = function(details) {
-  let cancel = false;
-  const { tabId, url } = details;
-  // block urls with domain
+  let cancel;
+
+  const { tabId, url, type } = details;
   const tab = RequestManager.getTab(tabId);
   if (tab) {
-    for (let i = 0, lg = urlsToBlock.length; i < lg; i++) {
-      if (urlsToBlock[i][1] !== -1 && tab.domain !== urlsToBlock[i][1] && url.indexOf(urlsToBlock[i][0]) !== -1) {
-        cancel = true;
-      }
-    }
+    cancel = ABPFilterParser.matches(abpFilters, url, {
+      // domain: tab.domain,
+      // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
+    });
   }
-  // block other urls -1
-  for (let i = 0, lg = urlsToBlock.length; i < lg; i++) {
-    // TODO more advanced test and regex
-    let regex = new RegExp(escapeRegExp(urlsToBlock[i][0]).replace(/\*/g, '.*'));
-    if (regex.test(url)) {
-      cancel = true;
-    }
-  }
+
   let o = {};
   if (cancel) {
     console.warn('blocked', details);
@@ -47,10 +40,6 @@ const blockUrls = function(details) {
     }
   }
   return o;
-};
-const escapeRegExp = string => {
-  return string.replace(/[.+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-  // return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 };
 
 class BlockRequest {

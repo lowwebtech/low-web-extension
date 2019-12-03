@@ -37,13 +37,16 @@
   window.lowComputeStyles = function() {
     computeTos = document.querySelectorAll('.lowweb__compute-styles');
     computeFroms = document.querySelectorAll('.lowweb__compute-styles--original');
+
     // get dummy element to get computed styles compared to default values
+    const fragment = document.createDocumentFragment();
     const dummyIFRAME = document.createElement('iframe');
-    document.body.appendChild(dummyIFRAME);
     const dummyIMG = document.createElement('img');
-    document.body.appendChild(dummyIMG);
     const dummy = document.createElement('element-' + new Date().getTime());
-    document.body.appendChild(dummy);
+    fragment.appendChild(dummyIFRAME);
+    fragment.appendChild(dummyIMG);
+    fragment.appendChild(dummy);
+    document.body.appendChild(fragment);
 
     const defaultStyles = getComputedStyle(dummy);
     const defaultIMGStyles = getComputedStyle(dummyIMG);
@@ -54,14 +57,16 @@
     let compToEl;
     let cs;
     let style;
+
     // TODO find a better way to get/set computed style
     for (let i = 0, lg = computeFroms.length; i < lg; i++) {
       compFromEl = computeFroms[i];
       computeid = compFromEl.dataset.computeid;
       compToEl = findComputeTo(computeid);
 
+      console.log(compFromEl.width);
       if (compToEl) {
-        switch (compToEl.tagName.toUpperCase()) {
+        switch (compFromEl.tagName.toUpperCase()) {
           case 'IMG':
             style = defaultIMGStyles;
             break;
@@ -83,12 +88,25 @@
                 diff[key] = cs[key];
               }
             }
+
+            if (compFromEl.width) {
+              diff['width'] = compFromEl.width;
+            }
+            if (compFromEl.height) {
+              diff['height'] = compFromEl.height;
+            }
+
             // set the difference
             for (let key in diff) {
               if (properties.indexOf(key) !== -1) {
                 compToEl.style[key] = cs[key];
               }
             }
+
+            // switch (compFromEl.tagName.toUpperCase()) {
+            //   case 'IFRAME':
+            console.log(compFromEl.width, style['width'], cs.getPropertyValue('width'));
+
             if (cs.getPropertyValue('position') === 'absolute') {
               compToEl.style.width = '';
               compToEl.style.height = '';
@@ -115,12 +133,9 @@
   }
 
   window.addEventListener('load', e => {
-    // TODO :(
-    window.lowComputeStyles();
     window.lowComputeStyles();
     for (let i = 0, lg = computeFroms.length; i < lg; i++) {
       computeTos[i].classList.remove('lowweb__compute-styles');
-      console.log('remove', computeFroms[i]);
       computeFroms[i].parentNode.removeChild(computeFroms[i]);
     }
   });
