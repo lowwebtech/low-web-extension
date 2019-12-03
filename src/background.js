@@ -1,6 +1,7 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
+import store from './scripts/store'
 import RequestManager from './scripts/background/RequestManager';
 import Blocker from './scripts/background/Blocker';
 import { blockFiles } from './scripts/background/block/block-files';
@@ -14,20 +15,34 @@ import { embedVideoParams } from './scripts/background/embed-video-params';
 import { onMessageOEmbed } from './scripts/background/message/oembed';
 /* eslint-enable import/first, indent */
 
-browser.runtime.onInstalled.addListener(port => {
-  RequestManager.init();
-  Blocker.init();
+browser.runtime.onInstalled.addListener((details) => { 
+  
+  // store.watch(
+  //   (state, getters) => getters.block_fonts,
+  //   (newValue, oldValue) => {
+  //     console.log(`Updating from ${oldValue} to ${newValue}`);
+  //   },
+  // );
 
-  blockFiles();
-  blockFonts();
-  blockSocial();
-  blockImages();
-  // blockAds();
+  setTimeout(()=>{
 
-  embedVideoParams();
-  saveDataHeader();
-  cssAnimation();
+    RequestManager.init();
+    Blocker.init();
+    
+    saveDataHeader();
+    
+    blockFiles();
+    blockFonts();
+    blockSocial();
+    blockImages();
+    // blockAds();
+    embedVideoParams();
+    cssAnimation();
+
+  }, 100);
+
 });
+
 browser.runtime.onConnect.addListener(port => {
   onMessageOEmbed(port);
 });

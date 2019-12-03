@@ -1,7 +1,9 @@
 import RequestManager from './RequestManager';
+// look at faster filter -> webassembly
 import * as ABPFilterParser from 'abp-filter-parser';
 
 let blockRequests = [];
+let lists = [];
 let abpFilters = {};
 
 class Blocker {
@@ -15,8 +17,30 @@ class Blocker {
     browser.webRequest.onBeforeRequest.addListener(callback, filter, ['blocking']);
   }
   addListToblock(list) {
-    ABPFilterParser.parse(list, abpFilters);
+    console.log(abpFilters);
+    if (lists.indexOf(list) === -1) {
+      lists.push(list);
+      ABPFilterParser.parse(list, abpFilters);
+    }
+    console.log(abpFilters);
   }
+  removeListToBlock(list){
+    if (lists.indexOf(list) !== -1) {
+      console.log(lists.length);
+      lists.splice(lists.indexOf(list), 1);
+      this.recreateListToBlock();
+      console.log(lists.length);
+    }
+  }
+  recreateListToBlock(){
+    abpFilters = {};
+    console.log(abpFilters);
+    for (let i = 0; i < lists.length; i++) {
+      ABPFilterParser.parse(lists[i], abpFilters);
+    }
+    console.log(abpFilters);
+  }
+
 }
 const blockUrls = function(details) {
   let cancel;

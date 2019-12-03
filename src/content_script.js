@@ -1,3 +1,7 @@
+// chrome.storage.sync.get(['testValue'], function(result) {
+//   console.log('testValue currently is ' + result.testValue);
+// });
+
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
@@ -46,3 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
   script.src = browser.runtime.getURL('utils/compute-styles.js');
   (document.head || document.documentElement).appendChild(script);
 });
+
+setInterval(()=>{
+  
+},1000);

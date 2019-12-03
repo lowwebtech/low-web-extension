@@ -6,7 +6,6 @@ import mutations from './mutations';
 // import * as actions from './actions';
 import VuexWebExtensions from 'vuex-webextensions';
 
-// localStorage.clear()
 let state = {
   active: true,
   pausedWebsites: [],
@@ -14,6 +13,14 @@ let state = {
   url: undefined,
   hostname: undefined,
 };
+
+// chrome.storage.sync.set({testValue: 'hello'}, function() {
+//   console.log('testValue is set');
+// });
+
+// chrome.storage.sync.get(['testValue'], function(result) {
+//   console.log('testValue currently is ' + result.testValue);
+// });
 
 for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
   let o = jsonOptions[i];
@@ -25,8 +32,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   plugins: [
     VuexWebExtensions({
+      loggerLevel: 'debug',
       persistentStates: persistentVars,
-      // loggerLevel: 'debug'
     }),
   ],
   state: state,
