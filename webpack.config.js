@@ -103,6 +103,7 @@ const config = {
     new CopyWebpackPlugin([
       { from: 'icons', to: 'icons', ignore: ['icon.xcf'] },
       { from: 'images', to: 'images' },
+      { from: 'oembed', to: 'oembed' },
       // { from: 'lists', to: 'lists' },
       // { from: 'scripts/content_script/players', to: 'players' },
       { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
