@@ -14,6 +14,7 @@ const config = {
     'background': './background.js',
     'content_script': './content_script.js',
     '../docs/style': './docs.js',
+    'oembed/style': './embed.js',
     'players/Dailymotion': './scripts/content_script/video/players/Dailymotion.js',
     // 'players/Youporn': './scripts/content_script/video/players/Youporn.js',
     'players/Youtube-tiny': './scripts/content_script/video/players/Youtube-tiny.js',
