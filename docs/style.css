@@ -1,98 +1,86 @@
-@keyframes animmargin {
-  0% {
-    margin-left: 0px;
-  }
-  100% {
-    margin-left: 400px;
-  }
-}
-@keyframes animtransform {
-  0% {
-    transform: translate3d(0px,0,0);
-  }
-  100% {
-    transform: translate3d(400px,0,0);
-  }
-}
-
-img.half{
+img.half {
   width: 50%;
-  height: auto;
-}
-figure{
-  margin: 0;
-}
+  height: auto; }
 
-section > img{
-  /*position: relative;*/
-}
+figure {
+  margin: 0; }
 
-body{
+section > img {
+  /*position: relative;*/ }
+
+body {
   text-align: center;
-  background-color: #F0F0F0;
-}
-section{
+  background-color: #F0F0F0; }
+
+section {
   background-color: white;
   margin: 20px;
-  padding: 20px;
-}
-h2{
-  margin-top: 0;
-  margin-bottom: 20px;
-}
+  padding: 20px; }
 
-.bloc{
+h2 {
+  margin-top: 0;
+  margin-bottom: 20px; }
+
+.bloc {
   margin: 0 auto;
   text-align: center;
   border: 1px solid black;
-  margin-bottom: 10px;
-}
+  margin-bottom: 10px; }
 
-ul{
-  text-align: left;
-}
-.bloc--lazy{
-  margin-top: 200vh;
-}
-button{
-  transition: all .3s ease;
-}
-button:hover{
+ul {
+  text-align: left; }
+
+.bloc--lazy {
+  margin-top: 200vh; }
+
+button {
+  transition: all .3s ease; }
+
+button:hover {
   background-color: black;
-  color: white;
-}
+  color: white; }
 
-.circle{
+.circle {
   width: 100px;
   height: 100px;
   background-color: red;
   border: 10px solid black;
   border-radius: 100%;
-  transition: all 5s linear;
-}
+  transition: all 5s linear; }
 
-.transition--3d:hover .circle{
-  transform: translate3d(400px,0,0);
-}
-.transition--reflow:hover .circle{
-  margin-left: 400px;
-}
-.animation--3d .circle{ 
-  animation: animtransform 5s linear alternate infinite;
-}
-.animation--reflow .circle{
-  animation: animmargin 5s linear alternate infinite;
-}
+.transition--3d:hover .circle {
+  transform: translate3d(400px, 0, 0); }
+
+.transition--reflow:hover .circle {
+  margin-left: 400px; }
+
+.animation--3d .circle {
+  animation: animtransform 5s linear alternate infinite; }
+
+.animation--reflow .circle {
+  animation: animmargin 5s linear alternate infinite; }
 
 @font-face {
   font-family: 'Croissant One';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/croissantone/v7/3y9n6bU9bTPg4m8NDy3Kq24UA3NgnrUeN--VHQ.woff2) format('woff2');
-}
-.font--typekit{
-  font-family: "gilbert",sans-serif;
-}
-.font--google{
-  font-family: "Croissant One",sans-serif;
-}
+  src: url(https://fonts.gstatic.com/s/croissantone/v7/3y9n6bU9bTPg4m8NDy3Kq24UA3NgnrUeN--VHQ.woff2) format("woff2"); }
+
+.font--typekit {
+  font-family: "gilbert",sans-serif; }
+
+.font--google {
+  font-family: "Croissant One",sans-serif; }
+
+@keyframes animmargin {
+  0% {
+    margin-left: 0px; }
+  100% {
+    margin-left: 400px; } }
+
+@keyframes animtransform {
+  0% {
+    transform: translate3d(0px, 0, 0); }
+  100% {
+    transform: translate3d(400px, 0, 0); } }
+
