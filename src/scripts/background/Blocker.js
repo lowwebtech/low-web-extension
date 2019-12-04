@@ -12,11 +12,18 @@ class Blocker {
   }
   filterRequest(callback, filter = {}) {
     filter = Object.assign({ urls: ['<all_urls>'] }, filter);
-    let request = new BlockRequest(callback, filter);
-    blockRequests.push(request);
+
+    const blockRequest = new BlockRequest(callback, filter);
+    blockRequests.push(blockRequest);
+
     browser.webRequest.onBeforeRequest.addListener(callback, filter, ['blocking']);
+
+    return blockRequest;
   }
-  addListToblock(list) {
+  unfilterRequest(blockRequest) {
+    console.log('unfilterRequest', blockRequests.indexOf(blockRequest));
+  }
+  addListToBlock(list) {
     console.log(abpFilters);
     if (lists.indexOf(list) === -1) {
       lists.push(list);
@@ -26,19 +33,15 @@ class Blocker {
   }
   removeListToBlock(list) {
     if (lists.indexOf(list) !== -1) {
-      console.log(lists.length);
       lists.splice(lists.indexOf(list), 1);
       this.recreateListToBlock();
-      console.log(lists.length);
     }
   }
   recreateListToBlock() {
     abpFilters = {};
-    console.log(abpFilters);
     for (let i = 0; i < lists.length; i++) {
       ABPFilterParser.parse(lists[i], abpFilters);
     }
-    console.log(abpFilters);
   }
 }
 

@@ -4,6 +4,6 @@ import Blocker from '../Blocker';
 
 export function blockSocial() {
   if (store.getters.block_social === 1) {
-    Blocker.addListToblock(socialListTxt);
+    Blocker.addListToBlock(socialListTxt);
   }
 }

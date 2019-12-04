@@ -33,5 +33,5 @@ const blockGiphy = details => {
 
 export function blockImages() {
   Blocker.filterRequest(blockGiphy);
-  Blocker.addListToblock(avatarTxt);
+  Blocker.addListToBlock(avatarTxt);
 }

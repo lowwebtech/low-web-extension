@@ -38,8 +38,21 @@ export function blockFiles() {
     };
   };
 
+  let blockRequest;
+  store.watch(
+    (state, getters) => getters.isBlockFile,
+    (newValue, oldValue) => {
+      console.log(`Updating isBlockFile from ${oldValue} to ${newValue}`);
+      if (newValue === 0) {
+        Blocker.unfilterRequest(blockRequest);
+      } else {
+        blockRequest = Blocker.filterRequest(action);
+      }
+    }
+  );
+
   if (store.getters.isBlockFile) {
-    Blocker.filterRequest(action);
+    blockRequest = Blocker.filterRequest(action);
   }
 }
 

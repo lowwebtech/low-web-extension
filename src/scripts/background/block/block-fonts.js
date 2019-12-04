@@ -8,14 +8,14 @@ export function blockFonts() {
     (newValue, oldValue) => {
       console.log(`Updating from ${oldValue} to ${newValue}`);
       if (newValue === 0) {
-        Blocker.removeListToblock(fontsTxt);
+        Blocker.removeListToBlock(fontsTxt);
       } else {
-        Blocker.addListToblock(fontsTxt);
+        Blocker.addListToBlock(fontsTxt);
       }
     }
   );
   console.log('blockFonts', store.getters.block_fonts);
   if (store.getters.block_fonts === 1) {
-    Blocker.addListToblock(fontsTxt);
+    Blocker.addListToBlock(fontsTxt);
   }
 }
