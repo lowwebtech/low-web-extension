@@ -23,40 +23,52 @@ A browser extension allows you to block resources and modify the content of a pa
 
 First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrome](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm), [Firefox](https://addons.mozilla.org/fr/firefox/addon/ublock-origin/)) or a browser like [Brave](https://brave.com/). 
 
+
 ### Video
 
-Plus de 80% des données tranférées sur Internet est de la vidéo. Cette extension tente donc d'en limiter l'utilisation et la qualité : 
+More than 80% of the data transferred over the Internet is video. This extension tries to limit their use and the quality of the videos: 
 
-- quand c'est possible, l'extension choisit une qualité de vidéo faible. Par exemple sur Youtube.com, la vidéo sera jouée en 240p, 360p ou 480p (pas de HD/4K)
+- when possible, the extension chooses a low video quality. For example on Youtube.com, the video will be played in 240p, 360p or 480p (Youtube, Vimeo, Dailymotion)
+- embed video iframes are blocked and a light preview is displayed. The click on a preview opens the video on the original site. We use oEmbed to get informations about the videos (Youtube, Vimeo, Dailymotion, Facebook).
+- remove autoplay and loop settings for embed videos and native html &lt;video&gt;
+- optionnaly block all requests of type: video *(default:false)*
 
-Then, here is a list of what lowweb extension does for reducing bandwidth and energy consumption :
-- video :
-    + custom player for low quality : 
-        * Youtube (only on youtube.com, not for embeds)
-        * Vimeo (only for embeds)
-        * Dailymotion (only for embeds)
-        * ~~Twitch~~ - quality parameter doesn't seem to work via API or url parameter
-        * ~~Facebook~~ - not possible
-    + click to load/play video embeds, it only loads iframe (and tons of script) when you click and play it (Youtube, Vimeo, Dailymotion, Twitch, Facebook)
-    + add or remove attributes html5 video (autoplay, loop)
-    + update video embed url : no loop, no autoplay
-    + block format video *(default:false)*
-- image : 
-    + ~~remove biggest or hidpi images from srcset~~ *(only works with lazy-loaded images eg. data-srcset, data-lazysrcset)*
-    + ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions)*
-    + plays gif when hovering them
-    + plays and load giphy when hovering them
-    + block format image *(default:false)*
-- iframe :
-    + ~~add lazyloading to all iframes (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions)*
-- fonts : 
-    + block format font *(default:false)*
-- add save-data header (currently based on [Save-data: on](https://chrome.google.com/webstore/detail/save-data-on/nholpkfnmjbinlhcfihkhiehdaohlibg))
-- block social widgets (facebook, twitter, instagram, pinterest)
-- block image avatars (disqus, gravatar)
+
+### Image
+
+Several optimizations are made on the images, some are blocked and others displayed in smaller sizes.
+
+- block the avatar images of many services including Gravatar, Discus, Twitter, Linkedin, Github, Pinterest, Reddit and more...
+- ~~remove biggest or hidpi images from srcset~~, this prevents the browser from loading images that are too big. *(only works with lazy-loaded images eg. data-srcset, data-lazysrcset. None-lazyloaded images are already loading when the extension starts and it is not possible to stop loading them)*
+- stop animated GIF and play them when hovering. Animated GIF force browser to re-render part of the screen, it consumes CPU/GPU process.
+- customize embeds of Giphy. Original animated images are blocked and replaced by static images. Animated image is loaded and played when hovering.
+- ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions, images are loading when extension start and it's not possible to stop them)*
+- optionnaly block all requests of type: image *(default:false)*
+
+
+### And more
+
+- block different social embed like Facebook like or share buttons. It mostly blocks scripts from embeds, so when possible embeds are still displayed and customized with injected css and when necessary datas are loaded from oEmbed.
+- add the header `Save-data: on` to all requests (currently based on [Save-data: on](https://chrome.google.com/webstore/detail/save-data-on/nholpkfnmjbinlhcfihkhiehdaohlibg)). This header can be interpreted by websites to reduce weight of pages.
+- optionnaly block all requests of type: font (+ url from font services like Google Fonts) *(default:false)*
 - disable css transition and animation *(default:false)* (:warning: break transitionend / animationend events :warning:)
 - disable &lt;marquee&gt; animations :P
-- ~~disable ads~~ *(disabled, use preferably uBlock Origin)*
+
+
+## Results
+
+Some results of optimisations from [various test pages](https://lowwebtech.github.io/low-web-extension/) :
+
+|        | with extension      | without extension     |      |
+|--------|---------------------|-----------------------|------|
+| video  | 588Kb / 36 requests | 14.3Mb / 169 requests | ~96% |
+| image  | 2.8Mb / 26 requests | 10Mb / 12 requests    | ~72% |
+| social | 332Kb / 40 requests | 7.5Mb / 280 requests  | ~95% |
+| giphy  | 320Kb / 28 requests | 12.3Mb / 31 requests  | ~97% |
+
+*note 1: these pages are particularly favorable for optimizations*
+*note 3: theses results are for firstload*
+*note 2: extension add requests to local files, it increased the number of requests especially for image*
 
 
 ## Installation
@@ -68,7 +80,7 @@ Then, here is a list of what lowweb extension does for reducing bandwidth and en
 - `npm run watch` / `npm run build`
 - open `chrome://extensions/`, enable Developer Mode and Load unpacked folder : `dist/`
 
-Pages for test : 
+Pages for tests : 
 https://lowwebtech.github.io/low-web-extension/
 
 
