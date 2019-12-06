@@ -7,6 +7,7 @@ Reduce energy consumption and carbon footprint of your internet browsing.
 :green_heart::herb::deciduous_tree::evergreen_tree::earth_africa:
 
 
+
 ## Why ?
 
 The Internet consumes about 8% of the electricity produced worldwide and emits 3 to 4% of total greenhouse gas emissions. Every request, every resource, every calculation, is small amounts of electricity consumed ... and we visit billions of pages, make billions of computer operations, load billions of terabytes... needing to run millions of servers, millions of antennas, millions of miles of fiber and especially devices like telephones always more powerful and ever more obsolete.
@@ -14,6 +15,7 @@ The Internet consumes about 8% of the electricity produced worldwide and emits 3
 This extension aims to reduce our data and limit the energy consumption of our Internet browsing.
 
 This extension affects electricity consumption when browsing the Internet but not during manufacturing. Manufacturing is the most energy consuming and polluting stage. So let's keep our phones and computers as long as possible !
+
 
 
 
@@ -38,10 +40,10 @@ More than 80% of the data transferred over the Internet is video. This extension
 
 Several optimizations are made on the images, some are blocked and others displayed in smaller sizes.
 
-- block the avatar images of many services including Gravatar, Discus, Twitter, Linkedin, Github, Pinterest, Reddit and more...
-- ~~remove biggest or hidpi images from srcset~~, this prevents the browser from loading images that are too big. *(only works with lazy-loaded images eg. data-srcset, data-lazysrcset. None-lazyloaded images are already loading when the extension starts and it is not possible to stop loading them)*
+- block the avatar images of many services including Gravatar, Discus, Twitter, Linkedin, Github, Pinterest, Reddit and [more...](https://github.com/lowwebtech/low-web-extension/blob/master/src/lists/avatar.txt)
 - stop animated GIF and play them when hovering. Animated GIF force browser to re-render part of the screen, it consumes CPU/GPU process.
 - customize embeds of Giphy. Original animated images are blocked and replaced by static images. Animated image is loaded and played when hovering.
+- remove biggest or hidpi images from srcset. This prevents the browser from loading images that are too big. *(only works with lazy-loaded images eg. data-srcset, data-lazysrcset. None lazyloaded images are loading already when the extension starts and it is not possible to stop loading them)*
 - ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions, images are loading when extension start and it's not possible to stop them)*
 - optionnaly block all requests of type: image *(default:false)*
 
@@ -53,6 +55,7 @@ Several optimizations are made on the images, some are blocked and others displa
 - optionnaly block all requests of type: font (+ url from font services like Google Fonts) *(default:false)*
 - disable css transition and animation *(default:false)* (:warning: break transitionend / animationend events :warning:)
 - disable &lt;marquee&gt; animations :P
+
 
 
 ## Results
@@ -67,16 +70,18 @@ Some results of optimisations from [various test pages](https://lowwebtech.githu
 | giphy  | 320Kb / 28 requests | 12.3Mb / 31 requests  | ~97% |
 
 *note 1: these pages are particularly favorable for optimizations*
-*note 3: theses results are for firstload*
-*note 2: extension add requests to local files, it increased the number of requests especially for image*
+
+*note 2: theses results are for firstload*
+
+*note 3: extension add requests to local files, it increased the number of requests especially for image*
 
 
 ## Installation
 
 ### Development
 
-- Load repository
-- `npm install
+- load repository
+- `npm install`
 - `npm run watch` / `npm run build`
 - open `chrome://extensions/`, enable Developer Mode and Load unpacked folder : `dist/`
 
@@ -87,19 +92,17 @@ https://lowwebtech.github.io/low-web-extension/
 
 ### TODO
 - define global option (hardcore / low / medium) and update accordingly other options
+- reactive options, most options take effect after a reload of the extension
 - split content_script start/end/idle
-- message between background blocker and content_script for temporary white-list
 - listen dom change
 - oembed
-- remove HD/4K button from players
 - debug popup
+- message between background blocker and content_script for temporary white-list
 - write tests
 - extension icon
 - custom print styles (better font, small size, no image or b&w...)
 - images :
-    + serviceworker
-    + replace hi-res by low-res for known websites (https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_400x400.jpg -> https://pbs.twimg.com/profile_images/1171362892874223616/1PmWY1AX_x96.jpg)
-    + low-res avatar
+    + replace hi-res by low-res for image services
     + giphy
         * regex
         * more urls
@@ -107,15 +110,18 @@ https://lowwebtech.github.io/low-web-extension/
         * smaller sizes
     + cloudinary
         * q_auto / q_auto:low
+        * smaller size
     + gif
-        * test animated
+        * detect if gif is animated
         * play once when entering viewport
         * pause/resume on enter/leave
     + emoji
 - videos
     + stop autoplay youtube channel (and all)
+    + remove HD/4K button from players
     + netflix
-- smaller injected script 
+- smaller injected script and styles
+- inject script and styles only when needed
 - audit the extension to limit size and processes (reflow)
 - display advice/tips to reduce bandwidth for main websites
 - display time alerts
@@ -127,10 +133,9 @@ https://lowwebtech.github.io/low-web-extension/
 - look at cache-control and expire for header and response requests
 - disable unoptimised hide/show/scroll jQuery, gsap etc...
 - publish external list for blockers : avatar, font services, chatbot
-- fonts
-    + remove call to fonts.googleapis.com, fontawesome.com and other services
+- ~~remove call to fonts.googleapis.com, fontawesome.com and other services~~
 - social
-    + facebook regexp for country flag en_US/fr_FR....
+    ~~+ facebook regexp for country flag en_US/fr_FR....~~
     + mimic embed styles
     + look for side-effect
 - add fallback for blocked ressources
@@ -150,11 +155,9 @@ https://lowwebtech.github.io/low-web-extension/
 - gfycat
 - imgur
 - tenor
-- flickr 
 - linkedin
 - cloudinary
 - slideshare
 - soundcloud
-- spotify
 - medium
 - and more https://oembed.com/#section7
