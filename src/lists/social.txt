@@ -1,14 +1,15 @@
 facebook.com/plugins/page.php$domain=~facebook.com
 facebook.com/plugins/like.php$domain=~facebook.com
+facebook.com/plugins/post.php$domain=~facebook.com
 facebook.com/plugins/share_button.php$domain=~facebook.com
 facebook.com/plugins/comment_embed.php$domain=~facebook.com
 connect.facebook.net/*/sdk.js$domain=~facebook.com
 connect.facebook.net/*/fbevents.js$domain=~facebook.com
-! facebook.com/plugins/post.php$domain=~facebook.com
-! facebook.com/plugins/comment_embed.php$domain=~facebook.com
 
 platform.twitter.com/widgets.js$domain=~twitter.com
 instagram.com/embed.js$domain=~instagram.com
 assets.pinterest.com/js/pinit.js$domain=~pinterest.com
 open.spotify.com/follow/$domain=~spotify.com
 ! open.spotify.com/embed/$domain=~spotify.com
+embedr.flickr.com/assets/client-code.js$domain=~flickr.com
+embed.redditmedia.com/widgets/platform.js$domain=~reddit.com

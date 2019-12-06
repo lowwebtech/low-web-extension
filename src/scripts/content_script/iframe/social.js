@@ -24,13 +24,15 @@ function customSocial() {
       },
     };
     const callback = function(res) {
-      const img = document.createElement('img');
-      img.style.width = '100%';
-      img.style.height = 'auto';
-      img.src = res.thumbnail_url;
-      const container = embed.querySelector('a');
-      container.innerHTML = '';
-      container.appendChild(img);
+      if (res && res.thumbnail_url) {
+        const img = document.createElement('img');
+        img.style.width = '100%';
+        img.style.height = 'auto';
+        img.src = res.thumbnail_url;
+        const container = embed.querySelector('a');
+        container.innerHTML = '';
+        container.appendChild(img);
+      }
     };
     browser.runtime.sendMessage(options).then(callback, e => {
       console.error('error message social');

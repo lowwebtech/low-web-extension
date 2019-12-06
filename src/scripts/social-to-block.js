@@ -4,7 +4,7 @@ export default [
   ['facebook.com/plugins/page.php', 'facebook.com'],
   ['facebook.com/plugins/like.php', 'facebook.com'],
   ['facebook.com/plugins/share_button.php', 'facebook.com'],
-  // ['facebook.com/plugins/post.php', 'facebook.com'],
+  ['facebook.com/plugins/post.php', 'facebook.com'],
   ['facebook.com/plugins/comment_embed.php', 'facebook.com'],
   // ['www.facebook.com/plugins/comment_embed.php', 'facebook.com'],
   ['connect.facebook.net/*/sdk.js', 'facebook.com'],

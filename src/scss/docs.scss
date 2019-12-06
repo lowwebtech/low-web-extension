@@ -1,7 +1,10 @@
 .lowdocs{
 
 }
-
+img{
+  width: 100%;
+  height: auto;
+}
 img.half{
   width: 50%;
   height: auto;
@@ -27,11 +30,16 @@ h2{
   margin-top: 0;
   margin-bottom: 20px;
 }
+h3 + p{
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
 
 .bloc{
   margin: 0 auto;
   text-align: center;
-  border: 1px solid black;
+  border: 1px solid #AAA;
+  background-color: #F9F9F9;
   margin-bottom: 10px;
 }
 

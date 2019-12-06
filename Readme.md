@@ -23,6 +23,12 @@ A browser extension allows you to block resources and modify the content of a pa
 
 First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrome](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm), [Firefox](https://addons.mozilla.org/fr/firefox/addon/ublock-origin/)) or a browser like [Brave](https://brave.com/). 
 
+### Video
+
+Plus de 80% des données tranférées sur Internet est de la vidéo. Cette extension tente donc d'en limiter l'utilisation et la qualité : 
+
+- quand c'est possible, l'extension choisit une qualité de vidéo faible. Par exemple sur Youtube.com, la vidéo sera jouée en 240p, 360p ou 480p (pas de HD/4K)
+
 Then, here is a list of what lowweb extension does for reducing bandwidth and energy consumption :
 - video :
     + custom player for low quality : 
@@ -73,7 +79,7 @@ https://lowwebtech.github.io/low-web-extension/
 - message between background blocker and content_script for temporary white-list
 - listen dom change
 - oembed
-- look at data:text/html for blocked iframe
+- remove HD/4K button from players
 - debug popup
 - write tests
 - extension icon
