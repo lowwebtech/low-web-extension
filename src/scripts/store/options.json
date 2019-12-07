@@ -102,7 +102,7 @@
     "id": "image_lazyload", 
     "label": "Image lazyload",
     "type": "bool",
-    "value": 1,
+    "value": 0,
     "info": "Add lazy loading to images (not working)"
   },
   {

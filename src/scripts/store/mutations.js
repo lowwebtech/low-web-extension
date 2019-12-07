@@ -1,5 +1,6 @@
 import jsonOptions from './options.json';
 import getHostname from '../utils/get-hostname';
+import store from './index';
 
 const mutations = {};
 for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
@@ -12,6 +13,62 @@ for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
 mutations.url = function(state, url) {
   state.url = url;
   state.hostname = getHostname(url);
+};
+mutations.level = function(state, level) {
+  state.level = parseInt(level);
+  console.log('switch level', level);
+  switch (store.getters.level) {
+    case 0:
+      console.log('hardcore', store);
+      store.commit('video_quality', 1);
+      store.commit('video_clicktoload', 1);
+      store.commit('video_attributes', 1);
+      store.commit('save_data', 1);
+      store.commit('gif_player', 1);
+      store.commit('block_social', 1);
+      store.commit('image_srcset', 2);
+      store.commit('css_animation', 1);
+      store.commit('marquee_animation', 1);
+      store.commit('block_images', 1);
+      // store.commit('block_scripts', 1);
+      store.commit('block_medias', 1);
+      store.commit('block_objects', 1);
+      store.commit('block_subframes', 1);
+      store.commit('block_fonts', 1);
+      break;
+    case 1:
+      store.commit('video_quality', 2);
+      store.commit('video_clicktoload', 1);
+      store.commit('video_attributes', 1);
+      store.commit('save_data', 1);
+      store.commit('gif_player', 1);
+      store.commit('block_social', 1);
+      store.commit('image_srcset', 3);
+      store.commit('css_animation', 0);
+      store.commit('marquee_animation', 1);
+      store.commit('block_images', 0);
+      store.commit('block_medias', 0);
+      store.commit('block_objects', 0);
+      store.commit('block_subframes', 0);
+      store.commit('block_fonts', 1);
+      break;
+    case 2:
+      store.commit('video_quality', 3);
+      store.commit('video_clicktoload', 1);
+      store.commit('video_attributes', 1);
+      store.commit('save_data', 1);
+      store.commit('gif_player', 0);
+      store.commit('block_social', 1);
+      store.commit('image_srcset', 3);
+      store.commit('css_animation', 0);
+      store.commit('marquee_animation', 1);
+      store.commit('block_images', 0);
+      store.commit('block_medias', 0);
+      store.commit('block_objects', 0);
+      store.commit('block_subframes', 0);
+      store.commit('block_fonts', 0);
+      break;
+  }
 };
 mutations.active = function(state, active) {
   state.active = active;

@@ -1,6 +1,18 @@
 <template>
-  <div>
+  <div :class="['options', {'options--active': active}]">
     <div class="status"></div>
+    
+    <div class="input input--level">
+      <p class="input__label">Level of optimization</p>
+      <label>
+        <select name="level" v-on:change="updateLevel">
+          <option value="0">Hardcore</option>
+          <option value="1">Low</option>
+          <option value="2">Medium</option>
+        </select>
+      </label>
+    </div>
+
     <div v-for="input in json" :class="'input input--' + input.id" :key="`input-${input.id}`">
       <p class="input__label">{{ input.label }}</p>
       <div v-if="input.type === 'bool'" class="input__field inline">
@@ -27,7 +39,6 @@
   </div>
 </template>
 <script>
-import store from '../scripts/store';
 import jsonOptions from '../scripts/store/options.json';
 
 export default {
@@ -35,9 +46,13 @@ export default {
   data() {
     return {
       json: jsonOptions,
+      active: false,
     };
   },
   methods: {
+    updateLevel(){
+      this.$store.commit('level', this.getSelectValue('level'));
+    },
     saveOptions() {
       for (let i = 0, lg = this.json.length; i < lg; i++) {
         let o = jsonOptions[i];
@@ -50,7 +65,7 @@ export default {
             val = this.getSelectValue(o.id);
             break;
         }
-        store.commit(o.id, val);
+        this.$store.commit(o.id, val);
       }
       // Update status to let user know options were saved.
       var status = this.$el.querySelector('.status');
@@ -92,13 +107,15 @@ export default {
         let o = jsonOptions[i];
         switch (o.type) {
           case 'bool':
-            this.checkRadioButton(o.id, store.getters[o.id]);
+            this.checkRadioButton(o.id, this.$store.getters[o.id]);
             break;
           case 'select':
-            this.checkSelect(o.id, store.getters[o.id]);
+            this.checkSelect(o.id, this.$store.getters[o.id]);
             break;
         }
       }
+      this.checkSelect('level', this.$store.getters.level);
+      this.active = true;
     }, 300);
   },
 };
@@ -110,6 +127,12 @@ export default {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+.options{
+  visibility: hidden;
+  &--active{
+    visibility: visible;
+  }
 }
 .inline {
   display: inline-block;

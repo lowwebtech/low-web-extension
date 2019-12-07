@@ -103,16 +103,15 @@
               }
             }
 
-            // switch (compFromEl.tagName.toUpperCase()) {
-            //   case 'IFRAME':
-            console.log(compFromEl.width, style['width'], cs.getPropertyValue('width'));
-
             if (cs.getPropertyValue('position') === 'absolute') {
               compToEl.style.width = '';
               compToEl.style.height = '';
             }
             if (compToEl.style.display === '') {
               compToEl.style.display = 'inline-block';
+            }
+            if (compToEl.style.display === 'inline-block') {
+              compToEl.style.height = '';
             }
             j = lgj;
           }

@@ -12,6 +12,7 @@ let state = {
   pausedPages: [],
   url: undefined,
   hostname: undefined,
+  level: 1,
 };
 
 // chrome.storage.sync.set({testValue: 'hello'}, function() {

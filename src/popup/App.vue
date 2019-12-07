@@ -1,13 +1,26 @@
 <template>
-  <div>
+  <div class="popup">
     <!-- <button @click="pausePage" v-html="pausePageText"></button>
     <button @click="pauseWebsite" v-html="pauseWebsiteText"></button> -->
+    Level of optimization<br>
+    <input type="radio" id="hardcore" v-model="level" value="0" v-on:change="updateLevel">
+    <label for="hardcore">Hardcore</label>
+    <input type="radio" id="low" v-model="level" value="1" v-on:change="updateLevel">
+    <label for="low">Low</label>
+    <input type="radio" id="medium" v-model="level" value="2" v-on:change="updateLevel">
+    <label for="medium">Medium</label>
+    <br>
+    
     <button @click="pauseAll" v-html="pauseText"></button>
     <!-- <button @click="resetActive">Reset</button> -->
   </div>
 </template>
 <script>
-// import store from '../scripts/store';
+/* eslint-disable import/first, indent */
+global.browser = require('webextension-polyfill');
+import store from '../scripts/store';
+/* eslint-enable import/first, indent */
+
 // import getHostname from '../scripts/utils/get-hostname';
 // import { mapGetters, mapState } from 'vuex';
 export default {
@@ -18,6 +31,7 @@ export default {
       active: this.$store.state.active,
       // pausePageText: '',
       // pauseWebsiteText: '',
+      level: this.$store.state.level,
       pauseText: '',
     };
   },
@@ -29,17 +43,24 @@ export default {
     // ])
   },
   mounted() {
-    browser.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
-      if (tabs.length > 0) {
-        let t = tabs[0];
-        this.$store.commit('url', t.url);
-        // this.textTogglePage();
-        // this.textToggleWebsite();
-        this.textToggleActive();
-      }
-    });
+    browser.tabs.query({ active: true, lastFocusedWindow: true }).then(
+      tabs => {
+        if (tabs.length > 0) {
+          let t = tabs[0];
+          this.$store.commit('url', t.url);
+          // this.textTogglePage();
+          // this.textToggleWebsite();
+          this.textToggleActive();
+          console.log(this.$store.state.level)
+        }
+      });
   },
   methods: {
+    updateLevel(){
+      console.log('popup level', this.level);
+      console.log('popup level', this.$store.state.level);
+      this.$store.commit('level', this.level);
+    },
     // textTogglePage() {
     //   console.log('---textTogglePage',this.$store.getters.isPagePaused)
     //   if (this.$store.getters.isPagePaused) {
@@ -107,5 +128,8 @@ button {
   white-space: nowrap;
   padding: 6px 10px;
   display: block;
+}
+.popup{
+  width: 300px; 
 }
 </style>

@@ -7,6 +7,7 @@ for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
 }
 
 getters.active = state => state.active;
+getters.level = state => state.level;
 getters.pausedWebsites = state => state.pausedWebsites;
 getters.pausedPages = state => state.pausedPages;
 getters.isPagePaused = state => {

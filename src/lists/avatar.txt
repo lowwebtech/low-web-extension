@@ -32,4 +32,6 @@ img.wiocha.pl/av/$image
 i.etsystatic.com/iusa$image
 i.etsystatic.com/isla$image
 ak.picdn.net/contributors/*/avatars$image
-muscache.com/im/pictures/user/
+muscache.com/im/pictures/user/$image
+mozit.cloud/letter_avatar/
+mozit.cloud/user_avatar/

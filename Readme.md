@@ -1,6 +1,4 @@
-:warning: early development (tested on Chrome), do not use permanently
-
-# lowweb extension
+# low web extension (beta)
 
 Reduce energy consumption and carbon footprint of your internet browsing.
 
@@ -28,21 +26,21 @@ First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrom
 
 ### Video
 
-More than 80% of the data transferred over the Internet is video. This extension tries to limit their use and the quality of the videos: 
+More than 80% of the data transferred over the Internet are videos. This extension tries to limit their use and the quality of the videos: 
 
 - when possible, the extension chooses a low video quality. For example on Youtube.com, the video will be played in 240p, 360p or 480p (Youtube, Vimeo, Dailymotion)
 - embed video iframes are blocked and a light preview is displayed. The click on a preview opens the video on the original site. We use oEmbed to get informations about the videos (Youtube, Vimeo, Dailymotion, Facebook).
-- remove autoplay and loop settings for embed videos and native html &lt;video&gt;
+- remove autoplay and loop parameters for embed videos and native html &lt;video&gt;
 - optionnaly block all requests of type: video *(default:false)*
 
 
 ### Image
 
-Several optimizations are made on the images, some are blocked and others displayed in smaller sizes.
+Several optimizations are made on the images, some are blocked and some displayed in smaller sizes.
 
-- block the avatar images of many services including Gravatar, Discus, Twitter, Linkedin, Github, Pinterest, Reddit and [more...](https://github.com/lowwebtech/low-web-extension/blob/master/src/lists/avatar.txt)
-- stop animated GIF and play them when hovering. Animated GIF force browser to re-render part of the screen, it consumes CPU/GPU process.
-- customize embeds of Giphy. Original animated images are blocked and replaced by static images. Animated image is loaded and played when hovering.
+- block avatar images of many services including Gravatar, Discus, Twitter, Linkedin, Github, Pinterest, Reddit and [more...](https://github.com/lowwebtech/low-web-extension/blob/master/src/lists/avatar.txt)
+- stop animated GIF and play them when hovering. An animated GIF force browser to re-render part of the screen, it consumes CPU/GPU processes.
+- custom embeds for Giphy images. Original animated images are blocked and replaced by static images. Animated image is loaded and played when hovering.
 - remove biggest or hidpi images from srcset. This prevents the browser from loading images that are too big. *(only works with lazy-loaded images eg. data-srcset, data-lazysrcset. None lazyloaded images are loading already when the extension starts and it is not possible to stop loading them)*
 - ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions, images are loading when extension start and it's not possible to stop them)*
 - optionnaly block all requests of type: image *(default:false)*
@@ -50,9 +48,9 @@ Several optimizations are made on the images, some are blocked and others displa
 
 ### And more
 
-- block different social embed like Facebook like or share buttons. It mostly blocks scripts from embeds, so when possible embeds are still displayed and customized with injected css and when necessary datas are loaded from oEmbed.
+- block different social embeds like Facebook like or share buttons. It mostly blocks scripts from embeds, so when possible embeds are still displayed and customized with injected css and when necessary datas are loaded from oEmbed.
 - add the header `Save-data: on` to all requests (currently based on [Save-data: on](https://chrome.google.com/webstore/detail/save-data-on/nholpkfnmjbinlhcfihkhiehdaohlibg)). This header can be interpreted by websites to reduce weight of pages.
-- optionnaly block all requests of type: font (+ url from font services like Google Fonts) *(default:false)*
+- optionnaly block all requests of type: font (+ urls from font services like Google Fonts) *(default:false)*
 - disable css transition and animation *(default:false)* (:warning: break transitionend / animationend events :warning:)
 - disable &lt;marquee&gt; animations :P
 
@@ -73,7 +71,7 @@ Some results of optimisations from [various test pages](https://lowwebtech.githu
 
 *note 2: theses results are for firstload*
 
-*note 3: extension add requests to local files, it increased the number of requests especially for image*
+*note 3: extension adds requests to local files, it increased the number of requests especially for image*
 
 
 ## Installation
