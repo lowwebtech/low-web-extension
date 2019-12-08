@@ -3,7 +3,10 @@ import jsonOptions from './options.json';
 const getters = {};
 for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
   let o = jsonOptions[i];
-  getters[o.id] = state => state[o.id];
+
+  getters[o.id] = state => {
+    return parseInt(state[o.id]);
+  };
 }
 
 getters.active = state => state.active;
@@ -36,7 +39,7 @@ getters.isActive = (state, getters) => {
     return false;
   }
 };
-getters.isBlockFile = state => {
+getters.isBlockFile = (state, getters) => {
   if (getters.block_medias === 1 || getters.block_objects === 1 || getters.block_subframes === 1 || getters.block_fonts === 1 || getters.block_images === 1) {
     return true;
   } else {

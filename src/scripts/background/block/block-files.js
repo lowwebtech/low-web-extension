@@ -4,7 +4,7 @@ import Blocker from '../Blocker';
 export function blockFiles() {
   let action = function(details) {
     let cancel;
-    let { type, url } = details;
+    let { type } = details;
     switch (type) {
       case 'media':
         cancel = store.getters.block_medias;
@@ -31,18 +31,39 @@ export function blockFiles() {
         break;
     }
     if (cancel) {
-      console.warn('blocked', url);
+      // console.warn('blocked', url);
     }
     return {
       cancel: cancel === 1,
     };
   };
 
+  watchOption('isBlockFile', action);
+  // let blockRequest;
+  // store.watch(
+  //   (state, getters) => getters.isBlockFile,
+  //   (newValue, oldValue) => {
+  //     console.log(`Updating isBlockFile from ${oldValue} to ${newValue}`);
+  //     if (newValue === 0) {
+  //       Blocker.unfilterRequest(blockRequest);
+  //     } else {
+  //       blockRequest = Blocker.filterRequest(action);
+  //     }
+  //   }
+  // );
+
+  // if (store.getters.isBlockFile) {
+  //   blockRequest = Blocker.filterRequest(action);
+  // }
+}
+
+function watchOption(name, action) {
   let blockRequest;
   store.watch(
-    (state, getters) => getters.isBlockFile,
+    (state, getters) => getters[name],
     (newValue, oldValue) => {
-      console.log(`Updating isBlockFile from ${oldValue} to ${newValue}`);
+      console.log(oldValue, newValue);
+      console.log(`Updating ${name} from ${oldValue} to ${newValue}`);
       if (newValue === 0) {
         Blocker.unfilterRequest(blockRequest);
       } else {
@@ -51,7 +72,7 @@ export function blockFiles() {
     }
   );
 
-  if (store.getters.isBlockFile) {
+  if (store.getters[name]) {
     blockRequest = Blocker.filterRequest(action);
   }
 }

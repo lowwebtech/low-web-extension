@@ -24,12 +24,10 @@ class Blocker {
     console.log('unfilterRequest', blockRequests.indexOf(blockRequest));
   }
   addListToBlock(list) {
-    console.log(abpFilters);
     if (lists.indexOf(list) === -1) {
       lists.push(list);
       ABPFilterParser.parse(list, abpFilters);
     }
-    console.log(abpFilters);
   }
   removeListToBlock(list) {
     if (lists.indexOf(list) !== -1) {
@@ -59,7 +57,7 @@ const blockUrls = function(details) {
 
   let o = {};
   if (cancel) {
-    console.warn('blocked', details);
+    // console.warn('blocked', details);
     if (type === 'image') {
       o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');
     } else {

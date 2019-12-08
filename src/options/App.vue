@@ -12,12 +12,25 @@
         </select>
       </label>
     </div>
+<!-- 
+    <div class="input input--image_srcset">
+      <p class="input__label">image_srcset of optimization</p>
+      <label>
+        <select v-model="image_srcset" name="image_srcset">
+          <option value="0">Hardcore</option>
+          <option value="1">Low</option>
+          <option value="2">Medium</option>
+        </select>
+      </label>
+    </div> -->
+
+    <hr />
 
     <div v-for="input in json" :class="'input input--' + input.id" :key="`input-${input.id}`">
       <p class="input__label">{{ input.label }}</p>
       <div v-if="input.type === 'bool'" class="input__field inline">
-        <label><input type="radio" :name="input.id" :test="$store[input.id]" :v-model="$store[input.id]" value="1" :checked="$store.getters[input.id]==1?'checked':false" /> True</label>
-        <label><input type="radio" :name="input.id" :v-model="$store[input.id]" value="0" :checked="$store.getters[input.id]==0?'checked':false" /> False</label>
+        <label><input type="radio" :key="`${input.id}-1`" :name="input.id" :v-model="getModelId(input.id)" value="1" :checked="$store.getters[input.id]==1?'checked':false" /> True</label>
+        <label><input type="radio" :key="`${input.id}-0`" :name="input.id" :v-model="getModelId(input.id)" value="0" :checked="$store.getters[input.id]==0?'checked':false" /> False</label>
       </div>
       <div v-if="input.type === 'select'" class="input__field inline">
         <label>
@@ -45,8 +58,9 @@ import store from '../scripts/store';
 // import { mapFields } from 'vuex-map-fields';
 
 let fields = Object.keys(store.state);
-console.log(fields);
-// fields.push('level');
+let jsonFields = jsonOptions.map(a => a.id);
+// console.log(jsonFields);
+jsonFields.push('level');
 
 export default {
   name: 'App',
@@ -62,13 +76,16 @@ export default {
         return this.$store.state.level;
       },
       set (value) {
-        console.log('setLevel', value);
         this.$store.commit('level', value);
       }
-    }
-    // ...mapFields(fields),
+    },
+    // ...mapFields(jsonFields),
   },
   methods: {
+    getModelId(id){
+      console.log('getModelId', id);
+      return id;
+    },
     // updateLevel(){
     //   console.log(this.$store.state);
     //   // console.log(this.level, this.getSelectValue('level'));
@@ -83,7 +100,7 @@ export default {
             val = this.getInputValue(o.id);
             break;
           case 'select':
-            // val = this.getSelectValue(o.id);
+            val = this.getSelectValue(o.id);
             break;
         }
         this.$store.commit(o.id, val);
@@ -137,13 +154,32 @@ export default {
       //   }
       // }
       // this.checkSelect('level', this.$store.getters.level);
-      console.log(this.$store.getters.save_data);
+      // console.log(this.$computed);
       this.active = true;
     }, 300);
 
     console.log(this)
   },
 };
+function mapFields(fields) {
+  let computeds = {};
+  console.log('mapFields', this);
+  for (let field of fields) {
+    console.log(field);
+    computeds[field] = {
+      get() {
+        console.log('get', field, this.$store.state[field]);
+        return this.$store.state[field];
+      },
+      set(value) {
+        console.log('set', field, value);
+        this.$store.commit(field, value);
+      }
+    }
+  }
+  console.log(computeds);
+  return computeds;
+}
 </script>
 <style lang="scss" scoped>
 *,

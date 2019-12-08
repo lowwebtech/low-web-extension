@@ -38,7 +38,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   plugins: [
     VuexWebExtensions({
-      loggerLevel: 'debug',
+      // loggerLevel: 'debug',
       persistentStates: persistentVars,
     }),
   ],

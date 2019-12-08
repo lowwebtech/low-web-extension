@@ -5,8 +5,9 @@ import store from './index';
 const mutations = {};
 for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
   let o = jsonOptions[i];
-  mutations[o.id] = function(state, payload) {
-    state[o.id] = payload;
+  mutations[o.id] = function(state, value) {
+    console.log('update', o.id, value);
+    state[o.id] = value;
   };
 }
 
@@ -19,7 +20,6 @@ mutations.level = function(state, level) {
   // console.log('switch level', level, store.getters.level);
   switch (parseInt(level)) {
     case 0:
-      console.log('hardcore', store);
       store.commit('video_quality', 1);
       store.commit('video_clicktoload', 1);
       store.commit('video_attributes', 1);
