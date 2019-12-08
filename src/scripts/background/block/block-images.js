@@ -8,7 +8,7 @@ import avatarTxt from '../../../lists/avatar.txt';
 const blockGiphy = details => {
   let o = {};
 
-  if (store.getters.gif_player === 1 && store.getters.block_image === 0) {
+  // if (store.getters.gif_player === 1 && store.getters.block_images === 0) {
     const exclude = ['giphy.com'];
     if (exclude.indexOf(store.state.hostname) === -1) {
       const { url } = details;
@@ -27,12 +27,12 @@ const blockGiphy = details => {
         console.warn('blocked', url);
       }
     }
-  }
+  // }
   return o;
 };
 
 export function blockImages() {
-  watchFilter('block_giphy', blockGiphy);
+  watchFilter('block_giphy', blockGiphy, { urls: ['<all_urls>'] });
   watchList('block_avatar', avatarTxt);
   // Blocker.filterRequest(blockGiphy);
   // Blocker.addListToBlock(avatarTxt);

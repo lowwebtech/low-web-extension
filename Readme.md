@@ -89,8 +89,6 @@ https://lowwebtech.github.io/low-web-extension/
 
 
 ### TODO
-- define global option (hardcore / low / medium) and update accordingly other options
-- reactive options, most options take effect after a reload of the extension
 - split content_script start/end/idle
 - listen dom change
 - oembed
@@ -98,6 +96,7 @@ https://lowwebtech.github.io/low-web-extension/
 - message between background blocker and content_script for temporary white-list
 - write tests
 - extension icon
+- webassembly
 - custom print styles (better font, small size, no image or b&w...)
 - images :
     + replace hi-res by low-res for image services
@@ -116,7 +115,7 @@ https://lowwebtech.github.io/low-web-extension/
     + emoji
 - videos
     + stop autoplay youtube channel (and all)
-    + remove HD/4K button from players
+    + remove/hide HD/4K button from players
     + netflix
 - smaller injected script and styles
 - inject script and styles only when needed
@@ -141,10 +140,10 @@ https://lowwebtech.github.io/low-web-extension/
 - take into account carbon footprint of user's electricity (-> co2signal.com)
 - set css prefers-color-scheme to dark
     + look at DarkReader
-- ~~disable tracking~~ *use uBlock Origin*
-- ~~ads~~ : *use uBlock Origin*
+- ~~define global option (hardcore / low / medium) and update accordingly other options~~
+- ~~reactive options, most options take effect after a reload of the extension~~
 
-### TODO add those websites
+### TODO add these websites
 - netflix
 - brightcove
 - hulu

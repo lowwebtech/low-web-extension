@@ -64,7 +64,6 @@
       computeid = compFromEl.dataset.computeid;
       compToEl = findComputeTo(computeid);
 
-      console.log(compFromEl.width);
       if (compToEl) {
         switch (compFromEl.tagName.toUpperCase()) {
           case 'IMG':
