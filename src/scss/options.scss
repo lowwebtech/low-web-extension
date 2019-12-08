@@ -1,0 +1,77 @@
+// body { 
+//   width: 500px;
+//   max-width: 500px;
+//   height: 500px;
+//   overflow: hidden;
+// }
+
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.options{
+  max-width: 400px;
+  width: 100%;
+  visibility: hidden;
+  &--active{
+    visibility: visible;
+  }
+}
+.inline {
+  display: inline-block;
+}
+.input {
+  white-space: nowrap;
+  &__field {
+    width: 180px;
+  }
+  &__label {
+    margin: 0;
+    display: inline-block;
+    width: 180px;
+  }
+  &__info {
+    display: inline-block;
+    margin: 0;
+    position: relative;
+    span {
+      cursor: pointer;
+      border: 1px solid black;
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      margin: 2px;
+      text-align: center;
+      border-radius: 100%;
+      font-weight: bold;
+    }
+    &:hover {
+      .input__info-text {
+        visibility: visible;
+      }
+    }
+  }
+  &__info-text {
+    padding: 2px 4px;
+    visibility: hidden;
+    position: absolute;
+    width: 250px;
+    border: 1px solid black;
+    background-color: white;
+    right: 30px;
+    top: 0;
+    white-space: initial;
+  }
+}
+.status{
+  margin-top: 10px;
+  height: 20px;
+  font-weight: bold;
+}
+button {
+  margin-top: 10px;
+}

@@ -110,7 +110,6 @@ https://lowwebtech.github.io/low-web-extension/
         * smaller size
     + gif
         * detect if gif is animated
-        * play once when entering viewport
         * pause/resume on enter/leave
     + emoji
 - videos

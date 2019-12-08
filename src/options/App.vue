@@ -51,6 +51,7 @@ let fields = Object.keys(store.state);
 let jsonFields = jsonOptions.map(a => a.id);
 // console.log(jsonFields);
 // jsonFields.push('level');
+let timeout;
 
 export default {
   name: 'App',
@@ -58,7 +59,7 @@ export default {
     return {
       status: '',
       json: jsonOptions,
-      active: false,
+      active: true,
     };
   },
   computed: {
@@ -100,7 +101,8 @@ export default {
     },
     saved(){
       this.status = 'Options saved.';
-      setTimeout(() => {
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => {
         this.status = '';
       }, 1500);
     },
@@ -115,7 +117,6 @@ export default {
     },
     checkSelect(name, value) {
       var select = this.$el.querySelector('select[name="' + name + '"]');
-      console.log(name, select);
       var options = select.querySelectorAll('option');
       for (let i = 0, lg = options.length; i < lg; i++) {
         if (options[i].value === value) {
@@ -133,93 +134,12 @@ export default {
   },
   mounted() {
     // TODO find why state isn't init yet
-    setTimeout(() => {
-      this.active = true;
-    }, 300);
+    // setTimeout(() => {
+    //   this.active = true;
+    // }, 300);
   },
 };
-function mapFields(fields) {
-  let computeds = {};
-  for (let field of fields) {
-    console.log(field);
-    computeds[field] = {
-      get() {
-        return this.$store.state[field];
-      },
-      set(value) {
-        this.$store.commit(field, value);
-      }
-    }
-  }
-  return computeds;
-}
 </script>
 <style lang="scss" scoped>
-*,
-*:before,
-*:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-.options{
-  visibility: hidden;
-  &--active{
-    visibility: visible;
-  }
-}
-.inline {
-  display: inline-block;
-}
-.input {
-  white-space: nowrap;
-  &__field {
-    width: 180px;
-  }
-  &__label {
-    margin: 0;
-    display: inline-block;
-    min-width: 180px;
-  }
-  &__info {
-    display: inline-block;
-    margin: 0;
-    position: relative;
-    span {
-      cursor: pointer;
-      border: 1px solid black;
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      line-height: 18px;
-      margin: 2px;
-      text-align: center;
-      border-radius: 100%;
-      font-weight: bold;
-    }
-    &:hover {
-      .input__info-text {
-        visibility: visible;
-      }
-    }
-  }
-  &__info-text {
-    padding: 2px 4px;
-    visibility: hidden;
-    position: absolute;
-    width: 250px;
-    border: 1px solid black;
-    background-color: white;
-    left: 30px;
-    top: 0;
-    white-space: initial;
-  }
-}
-.status{
-  margin-top: 10px;
-  font-weight: bold;
-}
-button {
-  margin-top: 10px;
-}
+@import "../scss/options.scss";
 </style>
