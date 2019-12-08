@@ -1,6 +1,5 @@
 <template>
   <div :class="['options', {'options--active': active}]">
-    <div class="status"></div>
     
     <div class="input input--level">
       <p class="input__label">Level of optimization</p>
@@ -29,12 +28,12 @@
     <div v-for="input in json" :class="'input input--' + input.id" :key="`input-${input.id}`">
       <p class="input__label">{{ input.label }}</p>
       <div v-if="input.type === 'bool'" class="input__field inline">
-        <label><input type="radio" :key="`${input.id}-1`" :name="input.id" :v-model="getModelId(input.id)" value="1" :checked="$store.getters[input.id]==1?'checked':false" /> True</label>
-        <label><input type="radio" :key="`${input.id}-0`" :name="input.id" :v-model="getModelId(input.id)" value="0" :checked="$store.getters[input.id]==0?'checked':false" /> False</label>
+        <label><input type="radio" :key="`${input.id}-1`" :name="input.id" value="1" :checked="$store.getters[input.id]==1?'checked':false" @input="onFieldChange" /> True</label>
+        <label><input type="radio" :key="`${input.id}-0`" :name="input.id" value="0" :checked="$store.getters[input.id]==0?'checked':false" @input="onFieldChange" /> False</label>
       </div>
       <div v-if="input.type === 'select'" class="input__field inline">
         <label>
-          <select :name="input.id" :v-model="$store[input.id]">
+          <select :name="input.id" @input="onFieldChange">
             <option v-for="option in input.options" :value="option.value" :key="`option-${option.value}`" :selected="$store.getters[input.id]==option.value?'selected':false">
               {{ option.label }}
             </option>
@@ -48,7 +47,9 @@
         </div>
       </div>
     </div>
-    <button id="save" @click="saveOptions">Save</button>
+    <!-- <button id="save" @click="saveOptions">Save</button> -->
+    <div class="status"><b>{{ status }}</b></div>
+    
   </div>
 </template>
 
@@ -60,12 +61,13 @@ import store from '../scripts/store';
 let fields = Object.keys(store.state);
 let jsonFields = jsonOptions.map(a => a.id);
 // console.log(jsonFields);
-jsonFields.push('level');
+// jsonFields.push('level');
 
 export default {
   name: 'App',
   data() {
     return {
+      status: '',
       json: jsonOptions,
       active: false,
     };
@@ -77,6 +79,7 @@ export default {
       },
       set (value) {
         this.$store.commit('level', value);
+        this.saved();
       }
     },
     // ...mapFields(jsonFields),
@@ -91,6 +94,9 @@ export default {
     //   // console.log(this.level, this.getSelectValue('level'));
     //   this.$store.commit('setLevel', this.getSelectValue('level'));
     // },
+    onFieldChange(){
+      this.saveOptions();
+    },
     saveOptions() {
       for (let i = 0, lg = this.json.length; i < lg; i++) {
         let o = jsonOptions[i];
@@ -105,12 +111,13 @@ export default {
         }
         this.$store.commit(o.id, val);
       }
-      // Update status to let user know options were saved.
-      var status = this.$el.querySelector('.status');
-      status.textContent = 'Options saved.';
-      setTimeout(function() {
-        status.textContent = '';
-      }, 750);
+      this.saved();
+    },
+    saved(){
+      this.status = 'Options saved.';
+      setTimeout(() => {
+        this.status = '';
+      }, 1500);
     },
     checkRadioButton(name, value) {
       var radiobuttons = this.$el.querySelectorAll('input[name="' + name + '"]');
@@ -241,6 +248,10 @@ function mapFields(fields) {
     top: 0;
     white-space: initial;
   }
+}
+.status{
+  margin-top: 10px;
+  font-weight: bold;
 }
 button {
   margin-top: 10px;
