@@ -1,6 +1,6 @@
 import store from '../../store';
 import { TOKEN } from '../../constants';
-import Blocker from '../Blocker';
+import { watchList, watchFilter } from '../../store/watch';
 
 // TODO externalize avatar list
 import avatarTxt from '../../../lists/avatar.txt';
@@ -32,6 +32,8 @@ const blockGiphy = details => {
 };
 
 export function blockImages() {
-  Blocker.filterRequest(blockGiphy);
-  Blocker.addListToBlock(avatarTxt);
+  watchFilter('block_giphy', blockGiphy);
+  watchList('block_avatar', avatarTxt);
+  // Blocker.filterRequest(blockGiphy);
+  // Blocker.addListToBlock(avatarTxt);
 }

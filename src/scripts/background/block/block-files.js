@@ -1,5 +1,5 @@
 import store from '../../store';
-import Blocker from '../Blocker';
+import { watchFilter } from '../../store/watch';
 
 export function blockFiles() {
   let action = function(details) {
@@ -38,43 +38,7 @@ export function blockFiles() {
     };
   };
 
-  watchOption('isBlockFile', action);
-  // let blockRequest;
-  // store.watch(
-  //   (state, getters) => getters.isBlockFile,
-  //   (newValue, oldValue) => {
-  //     console.log(`Updating isBlockFile from ${oldValue} to ${newValue}`);
-  //     if (newValue === 0) {
-  //       Blocker.unfilterRequest(blockRequest);
-  //     } else {
-  //       blockRequest = Blocker.filterRequest(action);
-  //     }
-  //   }
-  // );
-
-  // if (store.getters.isBlockFile) {
-  //   blockRequest = Blocker.filterRequest(action);
-  // }
-}
-
-function watchOption(name, action) {
-  let blockRequest;
-  store.watch(
-    (state, getters) => getters[name],
-    (newValue, oldValue) => {
-      console.log(oldValue, newValue);
-      console.log(`Updating ${name} from ${oldValue} to ${newValue}`);
-      if (newValue === 0) {
-        Blocker.unfilterRequest(blockRequest);
-      } else {
-        blockRequest = Blocker.filterRequest(action);
-      }
-    }
-  );
-
-  if (store.getters[name]) {
-    blockRequest = Blocker.filterRequest(action);
-  }
+  watchFilter('isBlockFile', action);
 }
 
 // TODO look at those types

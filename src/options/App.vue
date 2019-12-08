@@ -2,7 +2,7 @@
   <div :class="['options', {'options--active': active}]">
     
     <div class="input input--level">
-      <p class="input__label">Level of optimization</p>
+      <p class="input__label">Presets</p>
       <label>
         <select v-model="level" name="level">
           <option value="0">Hardcore</option>
@@ -11,17 +11,6 @@
         </select>
       </label>
     </div>
-<!-- 
-    <div class="input input--image_srcset">
-      <p class="input__label">image_srcset of optimization</p>
-      <label>
-        <select v-model="image_srcset" name="image_srcset">
-          <option value="0">Hardcore</option>
-          <option value="1">Low</option>
-          <option value="2">Medium</option>
-        </select>
-      </label>
-    </div> -->
 
     <hr />
 
@@ -82,6 +71,7 @@ export default {
         this.saved();
       }
     },
+    // TODO find why :v-model not working
     // ...mapFields(jsonFields),
   },
   methods: {
@@ -89,11 +79,6 @@ export default {
       console.log('getModelId', id);
       return id;
     },
-    // updateLevel(){
-    //   console.log(this.$store.state);
-    //   // console.log(this.level, this.getSelectValue('level'));
-    //   this.$store.commit('setLevel', this.getSelectValue('level'));
-    // },
     onFieldChange(){
       this.saveOptions();
     },
@@ -149,42 +134,23 @@ export default {
   mounted() {
     // TODO find why state isn't init yet
     setTimeout(() => {
-      // for (let i = 0, lg = this.json.length; i < lg; i++) {
-      //   let o = jsonOptions[i];
-      //   switch (o.type) {
-      //     case 'bool':
-      //       // this.checkRadioButton(o.id, this.$store.getters[o.id]);
-      //       break;
-      //     case 'select':
-      //       // this.checkSelect(o.id, this.$store.getters[o.id]);
-      //       break;
-      //   }
-      // }
-      // this.checkSelect('level', this.$store.getters.level);
-      // console.log(this.$computed);
       this.active = true;
     }, 300);
-
-    console.log(this)
   },
 };
 function mapFields(fields) {
   let computeds = {};
-  console.log('mapFields', this);
   for (let field of fields) {
     console.log(field);
     computeds[field] = {
       get() {
-        console.log('get', field, this.$store.state[field]);
         return this.$store.state[field];
       },
       set(value) {
-        console.log('set', field, value);
         this.$store.commit(field, value);
       }
     }
   }
-  console.log(computeds);
   return computeds;
 }
 </script>

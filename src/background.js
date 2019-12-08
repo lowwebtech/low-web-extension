@@ -16,13 +16,6 @@ import { onMessageOEmbed } from './scripts/background/message/oembed';
 /* eslint-enable import/first, indent */
 
 browser.runtime.onInstalled.addListener(details => {
-  // store.watch(
-  //   (state, getters) => getters.block_fonts,
-  //   (newValue, oldValue) => {
-  //     console.log(`Updating from ${oldValue} to ${newValue}`);
-  //   },
-  // );
-
   setTimeout(() => {
     RequestManager.init();
     Blocker.init();

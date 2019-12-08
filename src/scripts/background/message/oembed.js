@@ -6,6 +6,7 @@ export function onMessageOEmbed(port) {
           return res.json();
         })
         .then(json => {
+          // TODO return promise
           sendResponse(json);
         })
         .catch(function(error) {

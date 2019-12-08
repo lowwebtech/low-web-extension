@@ -4,7 +4,7 @@ import videoToBlock from '../../video-to-block';
 import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId } from '../../utils/get-video-id';
 
 export default function() {
-  if (store.getters.video_clicktoload) {
+  if (store.getters.video_clicktoload === 1) {
     let iframes = document.querySelectorAll('iframe');
 
     if (iframes.length > 0) {

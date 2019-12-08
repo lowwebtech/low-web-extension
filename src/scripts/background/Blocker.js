@@ -21,7 +21,12 @@ class Blocker {
     return blockRequest;
   }
   unfilterRequest(blockRequest) {
-    console.log('unfilterRequest', blockRequests.indexOf(blockRequest));
+    if (blockRequests.indexOf(blockRequest) !== -1) {
+      blockRequests.splice(blockRequests.indexOf(blockRequest), 1);
+      if (browser.webRequest.onBeforeRequest.hasListener(blockRequest.callback)) {
+        browser.webRequest.onBeforeRequest.removeListener(blockRequest.callback);
+      }
+    }
   }
   addListToBlock(list) {
     if (lists.indexOf(list) === -1) {
@@ -40,6 +45,7 @@ class Blocker {
     for (let i = 0; i < lists.length; i++) {
       ABPFilterParser.parse(lists[i], abpFilters);
     }
+    console.log(abpFilters.filters.length);
   }
 }
 
