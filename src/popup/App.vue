@@ -31,7 +31,7 @@ export default {
       active: this.$store.state.active,
       // pausePageText: '',
       // pauseWebsiteText: '',
-      level: this.$store.state.level,
+      // level: this.$store.state.level,
       pauseText: '',
     };
   },

@@ -6,7 +6,7 @@ const mutations = {};
 for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
   let o = jsonOptions[i];
   mutations[o.id] = function(state, payload) {
-    state[o.id] = parseInt(payload);
+    state[o.id] = payload;
   };
 }
 
@@ -15,9 +15,9 @@ mutations.url = function(state, url) {
   state.hostname = getHostname(url);
 };
 mutations.level = function(state, level) {
-  state.level = parseInt(level);
-  console.log('switch level', level);
-  switch (store.getters.level) {
+  state.level = level;
+  // console.log('switch level', level, store.getters.level);
+  switch (parseInt(level)) {
     case 0:
       console.log('hardcore', store);
       store.commit('video_quality', 1);
@@ -30,7 +30,9 @@ mutations.level = function(state, level) {
       store.commit('css_animation', 1);
       store.commit('marquee_animation', 1);
       store.commit('block_images', 1);
-      // store.commit('block_scripts', 1);
+      store.commit('block_scripts', 0);
+      store.commit('image_lazyload', 0);
+      store.commit('iframe_lazyload', 0);
       store.commit('block_medias', 1);
       store.commit('block_objects', 1);
       store.commit('block_subframes', 1);
