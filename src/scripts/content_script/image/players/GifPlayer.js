@@ -37,6 +37,7 @@ export default class GifPlayer {
         container.classList.add('lowweb__gif-player--small');
       }
 
+      // TODO compute style
       // prepareForStyleComputing(container, this.gif);
 
       container.innerHTML =
