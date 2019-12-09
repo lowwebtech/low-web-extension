@@ -108,8 +108,7 @@ function customIframes(style) {
           };
 
           browser.runtime.sendMessage(options).then(callback, e => {
-            console.error('error message click-to-load');
-            console.error(e);
+            console.error('error message click-to-load', e);
           });
         }
       }
