@@ -12,113 +12,107 @@
   <section>
 
     <h2>Srcset</h2>
-    <!-- 
-    <p>
-      <figure>
-        <img src="./images/img3.jpg" srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" />
-        <figcaption>
-          Image with srcset (width (w) defined)<br>
-          Not working :( images are already loading when extension update srcset
-        </figcaption>
-      </figure>
-    </p>
+    <figure>
+      <figcaption>
+        <b>Image with native srcset</b><br>
+        Not working :( images are already loading when extension update srcset.
+      </figcaption>
+      <img class="half" src="./images/image1.png" srcset="./images/image1.png 400w, ./images/image2.png 800w, ./images/image3.png 1600w" sizes="100vw" width="400" height="200" />
+    </figure>
+
+    <hr />
+
+    <figure>
+      <figcaption>
+        <b>Image with data-srcset</b><br>
+        Should display 1 or 2 (not 3, image3.png should not be loaded).
+      </figcaption>
+      <img class="half" data-src="./images/image1.png" data-srcset="./images/image1.png 400w, ./images/image2.png 800w, ./images/image3.png 1600w" sizes="100vw" width="400" height="200" />
+    </figure>
+
+    <hr />
 
     <p>
-      <figure>
-        <img src="./images/img3.jpg" srcset="./images/img3.jpg 1x, ./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img25.jpg 8x" sizes="50vw" loading="lazy" />
-        <figcaption>
-          Image with srcset (pixel-ratio defined)<br>
-          Not working :( images are already loading when extension update srcset
-        </figcaption>
-      </figure>
+      <b>Image (picture+source) with retina native srcset</b><br>
+      Not working :( images are already loading when extension update srcset.
     </p>
+    <picture>
+      <source srcset="./images/image1.png 1x, ./images/image2.png 2x, ./images/image3.png 4x" width="400" height="200" />
+      <img src="./images/image1.png" class="half" width="400" height="200" />
+    </picture>
 
+    <hr />
+<!-- 
     <p>
-      <figure>
-        <img src="./images/img-lazy.jpg" srcset="./images/img-lazy.jpg 1x, ./images/img-lazy@2x.jpg 2x" sizes="50vw" loading="lazy" />
-        <figcaption>
-          Image with srcset and native loading=lazy
-        </figcaption>
-      </figure>
-    </p> -->
-
-    <p>
-      <figure>
-        <img data-src="./images/img3.jpg" data-srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" loading="lazy" class="half" width="717" height="159" />
-        <figcaption>
-          Image with data-srcset
-        </figcaption>
-      </figure>
-    </p>
-
-    <p>
-      <picture>
-        <source srcset="./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img3.jpg 1x" width="717" height="159" />
-        <img src="./images/img3.jpg" alt="Bar" class="half" width="717" height="159" />
-      </picture>
-      <br>
-      Image (picture+source) with retina srcset
-    </p>
-    <p>
-      <picture>
-        <source data-srcset="./images/img6.jpg 2x, ./images/img12.jpg 4x, ./images/img3.jpg 1x" sizes="50vw" class="half" width="717" height="159" />
-        <img data-src="./images/img3.jpg" alt="Bar" class="half" width="717" height="159" />
-      </picture>
-      <br>
       Image (picture+source) with dataset and retina srcset
     </p>
+    <picture>
+      <source data-srcset="./images/image1.png 1x, ./images/image2.png 2x, ./images/image3.png 4x" sizes="100vw" class="half" width="400" height="200" />
+      <img data-src="./images/image1.png" alt="Bar" class="half" width="400" height="200" />
+    </picture>
+
+    <hr /> -->
+
     <p>
-      <picture>
-        <source media="(min-width: 1024px)" srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" class="half" width="717" height="159" />
-        <img src="./images/img3.jpg" alt="Bar" class="half" width="717" height="159" />
-      </picture>
-      <br>
-      Image (picture+source) with mediaqueries srcset
+      <b>Image (picture+source) with mediaqueries srcset</b><br>
+      Not working yet. Should display 1 or 2 (not 3, image3.png should not be loaded).
     </p>
-    <!-- <p>
-      <picture>
-        <source media="(min-width: 1024px)" data-srcset="./images/img3.jpg 359w, ./images/img6.jpg 717w, ./images/img12.jpg 1434w, ./images/img25.jpg 2867w" sizes="50vw" />
-        <img src="./images/img3.jpg" alt="Bar" />
-      </picture>
-      <br>
-      Image (picture+source) with dataset and mediaqueries srcset
-    </p> -->
+    <picture>
+      <source media="(min-width: 1024px)" srcset="./images/image1.png 400w, ./images/image2.png 800w, ./images/image3.png 1600w" sizes="100vw" class="half" width="400" height="200" />
+      <img src="./images/image1.png" alt="Bar" class="half" width="400" height="200" />
+    </picture>
+
   </section>
 
   <section>
 
     <h2>Gif</h2>
+    
+    <p>
+      <b>Native &lt;img&gt; element</b><br>
+      Gif should not be animated. Animation only plays when mouse is over.
+    </p>
+
     <img src="images/frog.gif" width="480" height="264" />
-    <img src="https://a.disquscdn.com/get?url=https%3A%2F%2Fmedia1.giphy.com%2Fmedia%2F3o751Yxe9UjX26BZbG%2Fgiphy.gif&key=rBkX3cS6Oy3Eb9nlFQdnKA&w=600&h" width="480" height="358" />
 
   </section>
 
   <section>
 
     <h2>Giphy</h2>
+
+    <p>
+      <b>Gif from GIPHY</b><br>
+      Animated Gif should not be loaded and animated. Only a static preview is loaded. Animation only loads and plays when mouse is over.
+    </p>
+
     <img src="https://media.giphy.com/media/gHWegg7yI1qOjTmpqN/giphy.gif" width="776" height="436" />
-    <img src="https://media.giphy.com/media/3oKGzmQHuY2rFhEn96/giphy.gif" width="480" height="480" />
     <img src="https://media.giphy.com/media/gJuTwM3yuQ8f3rE8KV/giphy.gif" width="480" height="480" />
 
   </section>
 
   <section>
-    <h2>Gravatar</h2>
+
+    <h2>Avatar</h2>
+
+    <p>
+      Avatar images should be blocked, replaced by a 1x1 black gif (loaded from local)
+    </p>
     <img src="https://www.gravatar.com/avatar/6365dbfa6be95764fa9edde1e233ae60" width="32" height="32" />
     <img src="https://secure.gravatar.com/avatar/6365dbfa6be95764fa9edde1e233ae60" width="32" height="32" />
-    <h2>Disqus</h2>
     <img src="https://a.disquscdn.com/1568930115/images/noavatar92.png" width="32" height="32" />
     <img src="https://c.disquscdn.com/uploads/users/29408/8062/avatar92.jpg" width="32" height="32" />
+    
   </section>
   
-<script type="text/javascript">
-  window.addEventListener("DOMContentLoaded", (event) => {
-    var images = document.querySelectorAll('img[data-src]')
-    for( var i = 0, lg = images.length; i<lg; i++ ){
-      images[i].srcset = images[i].dataset.srcset
-      images[i].src = images[i].dataset.src
-    }
-  });
-</script>
+  <script type="text/javascript">
+    window.addEventListener("DOMContentLoaded", (event) => {
+      var images = document.querySelectorAll('img[data-src]')
+      for( var i = 0, lg = images.length; i<lg; i++ ){
+        images[i].srcset = images[i].dataset.srcset
+        images[i].src = images[i].dataset.src
+      }
+    });
+  </script>
 </body>
 </html>

@@ -12,43 +12,52 @@
   <section>
     
     <h2>Native</h2>
-    <video src="videos/small.mp4" type="video/mp4" width="320" height="240" controls muted autoplay></video>
-    <video width="320" height="240" controls muted autoplay>
+    <p>If <b>video_attributes</b> is enabled, video should not autoplay and loop</p>
+    <video width="320" height="240" controls muted autoplay loop>
       <source src="videos/small.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
-
+    <p>note : preload="none" has no effect, browser already start loading the video</p>
   </section>
   <section>
     
     <h2>Youtube</h2>
-    <iframe title="youtube" width="560" height="315" src="https://www.youtube.com/embed/XO4q9oVrWWw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="test"></iframe>  
-
+    <p>If <b>video_clicktoload</b> is enabled, Youtube iframe should be blocked and replaced by an optimized iframe containing only an image, a title, a button and a link, no script (styled like original Youtube). A click should launch the video on youtube.com in a low quality.</p>
+    <iframe title="youtube" width="560" height="315" src="https://www.youtube.com/embed/XO4q9oVrWWw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="test"></iframe>
+    <p>note 1 : quality setting is only available on Youtube.com (via an hack)</p>
+    <p>note 2 : presets harcore = 144p, low = 240p, medium = 360p</p>
   </section>
   <section>
     
     <h2>Vimeo</h2>
+    <p>If <b>video_clicktoload</b> is enabled, Vimeo iframe should be blocked and replaced by an optimized iframe containing only an image, a title, a button and a link, no script (styled like original Vimeo). A click should launch the video in a new tab (iframe url + quality parameter) in a low quality.</p>
     <iframe src="https://player.vimeo.com/video/156045670" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-
+    <p>note 1 : quality setting is only available for embed url with quality parameter</p>
+    <p>note 2 : presets harcore = 240p, low = 360p, medium = 540p</p>
   </section>
 
   <section>
     
     <h2>Dailymotion</h2>
+    <p>If <b>video_clicktoload</b> is enabled, Dailymotion iframe should be blocked and replaced by an optimized iframe containing only an image, a title, a button and a link, no script (styled like original Dailymotion). A click should launch the video in a new tab without quality optimisation :(</p>
     <iframe frameborder="0" width="480" height="270" src="https://www.dailymotion.com/embed/video/x78ibyg" allowfullscreen="" allow="autoplay"></iframe>
+    <p>note : quality parameters doesn't work</p>
 
   </section>
 
   <section>
     
     <h2>Facebook</h2>
+    <p>If <b>video_clicktoload</b> is enabled, Facebook iframe should be blocked and replaced by an optimized iframe containing only an image, a title, a button and a link, no script (styled like original Facebook). A click should launch the video in a new tab without quality optimisation :(</p>
     <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FThalassaOff%2Fvideos%2F1320142364777513%2F&width=500&show_text=true&appId=855770274521224&height=500" width="500" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
+    <p>note : quality parameters is not available for facebook video</p>
     
   </section>
   
   <section>
     
     <h2>Twitch</h2>
+    <p>Twitch embed is no longer supported. Twitch closed their oEmbed service.</p>
     <iframe src="https://player.twitch.tv/?video=v501659150&loop=true&autoplay=false" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
 
   </section>
