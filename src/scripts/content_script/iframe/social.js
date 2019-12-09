@@ -30,7 +30,7 @@ function customSocial() {
         img.style.height = 'auto';
         img.src = res.thumbnail_url;
         const container = embed.querySelector('a');
-        container.innerHTML = '';
+        container.textContent = '';
         container.appendChild(img);
       }
     };

@@ -1,6 +1,7 @@
 import './click-to-load.scss';
 import store from '../../store';
 import videoToBlock from '../../video-to-block';
+import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
 import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId } from '../../utils/get-video-id';
 
 export default function() {
@@ -94,6 +95,9 @@ function customIframes(style) {
                   skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" />');
                 }
                 if (videoUrl) {
+                  if (videoUrl.indexOf(videoToBlock[type].embed_url) !== -1) {
+                    videoUrl = sanitizeEmbedUrl(videoUrl, true);
+                  }
                   skin = skin.replace('##VIDEO_URL##', videoUrl);
                 }
 

@@ -24,10 +24,12 @@ export default class GifPlayer {
       this.canvas.classList.add('lowweb__gif-player--preview');
       this.context = this.canvas.getContext('2d');
       this.gif.classList.remove('lowweb--hidden');
+
       if (this.gif.width) {
         this.canvas.width = this.gif.width;
         this.canvas.height = this.gif.height;
       }
+
       let container = document.createElement('div');
       container.classList.add('lowweb__gif-player');
 

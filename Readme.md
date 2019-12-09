@@ -92,7 +92,6 @@ https://lowwebtech.github.io/low-web-extension/
 - split content_script start/end/idle
 - listen dom change
 - oembed
-- debug popup
 - message between background blocker and content_script for temporary white-list
 - write tests
 - extension icon
@@ -139,8 +138,7 @@ https://lowwebtech.github.io/low-web-extension/
 - take into account carbon footprint of user's electricity (-> co2signal.com)
 - set css prefers-color-scheme to dark
     + look at DarkReader
-- ~~define global option (hardcore / low / medium) and update accordingly other options~~
-- ~~reactive options, most options take effect after a reload of the extension~~
+
 
 ### TODO add these websites
 - netflix

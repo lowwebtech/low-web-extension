@@ -2,3 +2,6 @@
 /*.log
 /dist
 /dist-zip
+
+*.map
+.DS_Store

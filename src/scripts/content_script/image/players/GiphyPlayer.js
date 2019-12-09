@@ -32,7 +32,7 @@ export default class GiphyPlayer {
     el.parentNode.insertBefore(container, el);
 
     container.innerHTML =
-      '<svg class="lowweb__gif-player__play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg>';
+      '<svg class="lowweb__gif-player__play" width="23" height="23" enable-background="new 0 0 23.2 23.2" viewBox="0 0 23.2 23.2" xmlns="http://www.w3.org/2000/svg"><path d="m1 1.6 20 10-20 10z" fill="#fff" stroke="#000" stroke-miterlimit="10" stroke-width="2"/></svg>';
     container.appendChild(this.preview);
     prepareForStyleComputing(container, el);
 

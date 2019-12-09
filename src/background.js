@@ -11,7 +11,7 @@ import { blockFonts } from './scripts/background/block/block-fonts';
 import { blockImages } from './scripts/background/block/block-images';
 import { saveDataHeader } from './scripts/background/header/save-data';
 import { cssAnimation } from './scripts/background/css-animation';
-import { embedVideoParams } from './scripts/background/embed-video-params';
+import { blockEmbedVideo } from './scripts/background/block/block-embed-video';
 import { onMessageOEmbed } from './scripts/background/message/oembed';
 /* eslint-enable import/first, indent */
 
@@ -27,7 +27,7 @@ browser.runtime.onInstalled.addListener(details => {
     blockSocial();
     blockImages();
     // blockAds();
-    embedVideoParams();
+    blockEmbedVideo();
     cssAnimation();
   }, 100);
 });

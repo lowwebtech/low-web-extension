@@ -24,7 +24,7 @@ export default {
     id: 'vimeo',
     domains: ['vimeo.com'],
     embed_url: 'player.vimeo.com/video/',
-    video_url: 'https://vimeo.com/##ID##',
+    video_url: 'https://player.vimeo.com/video/##ID##',
     oembed: 'https://vimeo.com/api/oembed.json',
     image: '',
     player: '', // 'players/Vimeo.js',
