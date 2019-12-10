@@ -7,21 +7,25 @@ import avatarTxt from '../../../lists/avatar.txt';
 
 const blockGiphy = details => {
   let o = {};
-
   const exclude = ['giphy.com'];
   if (exclude.indexOf(store.state.hostname) === -1) {
-    const { url } = details;
+    const { url, parentFrameId, type } = details;
+
     // giphy image url
-    if (url.indexOf('.giphy.com/media') !== -1) {
+    if (parentFrameId === -1 && url.indexOf('.giphy.com/media') !== -1) {
       if (url.indexOf('lowweb=' + TOKEN) === -1) {
         o.cancel = true;
         // o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');
       }
     }
+
     // giphy embed iframe
-    if (url.indexOf('giphy.com/embed/') !== -1) {
-      o.cancel = true;
+    if (type === 'sub_frame' && url.indexOf('giphy.com/embed/') !== -1) {
+      if (url.indexOf('lowweb=' + TOKEN) === -1) {
+        o.cancel = true;
+      }
     }
+
     if (o.cancel === true) {
       console.warn('blocked', url);
     }
