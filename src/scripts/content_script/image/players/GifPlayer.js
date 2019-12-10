@@ -1,83 +1,102 @@
-// TODO detect animated gif
-// import isAnimated from 'animated-gif-detector'
-// import '../../../utils/animated-gif-detect'
-// blob
-// import { prepareForStyleComputing } from '../../utils/prepare-to-compute';
-
 export default class GifPlayer {
-  constructor(gif) {
-    this.gif = gif;
-    this.playing = false;
-    this.gif.classList.add('lowweb--hidden');
+  constructor(el) {
+    this.el = el;
+    this.image = el;
+    this.image.setAttribute('crossorigin', 'anonymous');
 
-    if (!this.gif.complete) {
-      this.gif.onload = () => {
+    this.originalSrc = this.el.src;
+    this.doPlay = true;
+    this.type = 'img';
+  }
+  start() {
+    if (!this.el.complete) {
+      this.buildHandler = () => {
         this.build();
       };
+      this.image.addEventListener('load', this.buildHandler);
     } else {
       this.build();
     }
   }
   build() {
-    if (this.isAnimated() && !this.isSmall()) {
-      this.canvas = document.createElement('canvas');
-      this.canvas.classList.add('lowweb__gif-player--preview');
-      this.context = this.canvas.getContext('2d');
-      this.gif.classList.remove('lowweb--hidden');
+    if (this.buildHandler) {
+      this.image.removeEventListener('load', this.buildHandler);
+    }
+    if (!this.isAnimated() || this.isSmall()) {
+      this.doPlay = true;
+    }
 
-      if (this.gif.width) {
-        this.canvas.width = this.gif.width;
-        this.canvas.height = this.gif.height;
-      }
+    this.canvas = document.createElement('canvas');
+    this.context = this.canvas.getContext('2d');
 
-      let container = document.createElement('div');
-      container.classList.add('lowweb__gif-player');
+    if (this.el.width) {
+      this.canvas.width = this.el.width;
+      this.canvas.height = this.el.height;
+    } else if (this.image.naturalWidth && this.image.naturalWidth !== 0) {
+      this.canvas.width = this.image.naturalWidth;
+      this.canvas.height = this.image.naturalHeight;
+    }
 
-      if (this.isSmall()) {
-        container.classList.add('lowweb__gif-player--small');
-      }
+    this.render();
 
-      // TODO compute style
-      // prepareForStyleComputing(container, this.gif);
-
-      container.innerHTML =
-        '<svg class="lowweb__gif-player__play" width="20" height="20" enable-background="new 0 0 20 20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="m0 0 20 10-20 10" fill="#fff"/></svg>';
-
-      this.gif.parentNode.insertBefore(container, this.gif);
-      container.appendChild(this.canvas);
-      container.appendChild(this.gif);
-      // gif.parentNode.insertBefore(this.canvas, gif.nextSibling);
-      this.gif.classList.add('lowweb__gif-player--anim');
-      this.container = container;
-      // console.log(container);
-      container.addEventListener('mouseenter', () => this.play());
-      container.addEventListener('mouseleave', () => this.stop());
-      this.draw();
+    if (this.doPlay) {
+      this.el.addEventListener('mouseenter', () => this.play());
+      this.el.addEventListener('mouseleave', () => this.stop());
     }
   }
-  // toggle() {
-  //   if (this.playing) this.stop()
-  //   else this.play()
-  // }
+  render() {
+    this.draw();
+    this.canvas.toBlob(blob => {
+      this.blobUrl = URL.createObjectURL(blob);
+      // TODO check memory leak
+      // this.el.onload = function() {
+      //   // no longer need to read the blob so it's revoked
+      //   URL.revokeObjectURL(url);
+      // };
+      this.el.src = this.blobUrl;
+    });
+  }
   play() {
     if (!this.playing) {
       this.playing = true;
-      this.container.classList.add('lowweb__gif-player--playing');
+      if (this.type === 'img') {
+        this.el.src = this.originalSrc;  
+      }else if(this.type === 'iframe'){
+        const imgStr = '<style type="text/css">body{margin:0;padding:0} img{width:100%;height:"auto";}</style><img src="' + this.originalSrc + '" />';
+        this.el.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(imgStr);
+      }
     }
   }
   stop() {
     if (this.playing) {
       this.playing = false;
-      this.container.classList.remove('lowweb__gif-player--playing');
+      this.el.src = this.blobUrl;
     }
   }
   draw() {
-    this.context.drawImage(this.gif, 0, 0, this.canvas.width, this.canvas.height);
+    this.context.drawImage(this.image, 0, 0, this.canvas.width, this.canvas.height);
+    if (this.doPlay) {
+      const scale = Math.max(300, Math.min(600, this.canvas.width)) / 300;
+      const width = scale * 20;
+
+      this.context.beginPath();
+      this.context.moveTo(10, 10);
+      this.context.lineTo(10 + width, 10 + width / 2);
+      this.context.lineTo(10, 10 + width);
+      this.context.closePath();
+
+      this.context.lineWidth = 8;
+      this.context.strokeStyle = '#000';
+      this.context.stroke();
+
+      this.context.fillStyle = '#FFF';
+      this.context.fill();
+    }
   }
   isAnimated() {
     // TODO detect animated gif
     // need blob
-    // window.animatedGifDetect.process(this.gif, () => {
+    // window.animatedGifDetect.process(this.el, () => {
     //   console.log('is animated')
     // }, () => {
     //   console.log('is not animated')
@@ -86,12 +105,23 @@ export default class GifPlayer {
   }
   isSmall() {
     // arbitrary rule, gif player is displayed when width and height are greater than 50 px
-    if (this.gif.width < 50 || this.gif.height < 50) {
+    if (this.el.width < 50 || this.el.height < 50) {
       return true;
-    } else if (this.gif.naturalWidth && (this.gif.naturalWidth < 50 || this.gif.naturalHeight < 50)) {
+    } else if (this.el.naturalWidth && (this.el.naturalWidth < 50 || this.el.naturalHeight < 50)) {
       return true;
     } else {
       return false;
     }
   }
 }
+
+// function supportWebp() {
+//   const info = browserInfo();
+//   switch (info.name.toLowerCase()) {
+//     case 'chrome':
+//     case 'firefox':
+//     case 'opera':
+//       return true;
+//   }
+//   return false;
+// }

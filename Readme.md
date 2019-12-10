@@ -29,7 +29,7 @@ First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrom
 More than 80% of the data transferred over the Internet are videos. This extension tries to limit their use and the quality of the videos: 
 
 - when possible, the extension chooses a low video quality. For example on Youtube.com, the video will be played in 240p, 360p or 480p (Youtube, Vimeo, Dailymotion)
-- embed video iframes are blocked and a light preview is displayed. The click on a preview opens the video on the original site. We use oEmbed to get informations about the videos (Youtube, Vimeo, Dailymotion, Facebook).
+- embed video iframes are blocked and a light preview is displayed. The click on a preview opens the video on the original site or in the iframe. We use oEmbed to get informations about the videos (Youtube, Vimeo, Dailymotion, Facebook).
 - remove autoplay and loop parameters for embed videos and native html &lt;video&gt;
 - optionnaly block all requests of type: video *(default:false)*
 
