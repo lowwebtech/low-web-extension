@@ -1,10 +1,12 @@
 export default class GifPlayer {
   constructor(image) {
     this.image = image;
+    this.image.setAttribute('crossorigin', 'anonymous');
 
     this.originalSrc = this.image.src;
-    this.doPlay = false;
-
+    this.doPlay = true;
+  }
+  start() {
     if (!this.image.complete) {
       this.buildHandler = () => {
         this.build();
@@ -18,7 +20,7 @@ export default class GifPlayer {
     if (this.buildHandler) {
       this.image.removeEventListener('load', this.buildHandler);
     }
-    if (this.isAnimated() && !this.isSmall()) {
+    if (!this.isAnimated() || this.isSmall()) {
       this.doPlay = true;
     }
 
@@ -53,10 +55,16 @@ export default class GifPlayer {
     });
   }
   play() {
-    this.image.src = this.originalSrc;
+    if (!this.playing) {
+      this.playing = true;
+      this.image.src = this.originalSrc;
+    }
   }
   stop() {
-    this.image.src = this.blobUrl;
+    if (this.playing) {
+      this.playing = false;
+      this.image.src = this.blobUrl;
+    }
   }
   draw() {
     this.context.drawImage(this.image, 0, 0, this.canvas.width, this.canvas.height);

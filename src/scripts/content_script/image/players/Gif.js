@@ -7,12 +7,15 @@ import GiphyPlayer from './GiphyPlayer';
   let gifs = [];
 
   let imgs = document.querySelectorAll('img');
+  let gif;
   imgs.forEach(img => {
     if (img.src.indexOf('.giphy.com/media') !== -1) {
       giphies.push(new GiphyPlayer(img));
     } else if (img.src.indexOf('.gif') !== -1) {
       // TODO add animated webp
-      gifs.push(new GifPlayer(img));
+      gif = new GifPlayer(img);
+      gif.start();
+      gifs.push(gif);
     }
   });
 
