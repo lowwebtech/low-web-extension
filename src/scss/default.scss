@@ -21,9 +21,8 @@ blockquote.twitter-tweet{
   border: 1px solid #e1e8ed;
   border-radius: 5px;
   max-width: 500px;
-  padding: 20px 20px 11.6px;
+  padding: 20px;
   text-align: left;
-  font-size: 16px;
   line-height: 1.4;
   a{
     color: #697882;
@@ -32,6 +31,10 @@ blockquote.twitter-tweet{
     color: #1c2022;
     margin-top: 0;
     padding-right: 30px;
+    font-size: 16px;
+    &:last-child{
+      margin-bottom: 0;
+    }
   }
   &:after{
     content: '';

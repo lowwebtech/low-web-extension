@@ -70,7 +70,7 @@
     "label": "block image avatar",
     "type": "bool",
     "value": 1,
-    "presets": [1,1,0],
+    "presets": [1,0,0],
     "info": "This option blocks avatar images like Gravatar, Twitter, Reddit..."
   },
   {

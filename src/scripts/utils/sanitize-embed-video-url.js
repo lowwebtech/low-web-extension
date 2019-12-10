@@ -1,8 +1,9 @@
 import store from '../store';
 import queryString from 'query-string';
 import videosToBlock from '../video-to-block';
+import { TOKEN } from '../constants';
 
-export default function(url, autoplay = false) {
+export default function(url, autoplay = false, token = false) {
   let u = new URL(url);
   let params = queryString.parse(u.search);
   let originalParams = Object.assign({}, params);
@@ -67,6 +68,10 @@ export default function(url, autoplay = false) {
       }
       break;
     }
+  }
+
+  if (token) {
+    params.lowweb = TOKEN;
   }
 
   if (JSON.stringify(params) !== JSON.stringify(originalParams)) {

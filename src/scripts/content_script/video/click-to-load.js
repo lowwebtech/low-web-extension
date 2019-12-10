@@ -10,6 +10,7 @@ export default function() {
 
     if (iframes.length > 0) {
       // TODO find a way to cache
+      // TODO split css by embed type
       fetch(browser.runtime.getURL('oembed/style.css'))
         .then(function(response) {
           return response.text();
@@ -96,7 +97,8 @@ function customIframes(style) {
                 }
                 if (videoUrl) {
                   if (videoUrl.indexOf(videoToBlock[type].embed_url) !== -1) {
-                    videoUrl = sanitizeEmbedUrl(videoUrl, true);
+                    videoUrl = sanitizeEmbedUrl(videoUrl, true, true);
+                    skin = skin.replace('_blank', '_self');
                   }
                   skin = skin.replace('##VIDEO_URL##', videoUrl);
                 }

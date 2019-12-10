@@ -1,12 +1,14 @@
 import Blocker from '../Blocker';
+import { TOKEN } from '../../constants';
 
 export function blockEmbedVideo() {
   const action = details => {
     let response = {};
-    // TODO block iframe until DOMContentLoaded
-    // -> 'click-to-load' function is only executed once after DOMContentLoaded
     if (details.type === 'sub_frame') {
-      response.cancel = true;
+      const { url } = details;
+      if (url.indexOf('lowweb=' + TOKEN) === -1) {
+        response.cancel = true;
+      }
     }
     return response;
   };
