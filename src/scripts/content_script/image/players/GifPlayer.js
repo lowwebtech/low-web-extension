@@ -1,4 +1,3 @@
-
 export default class GifPlayer {
   constructor(image) {
     this.image = image;
@@ -36,7 +35,7 @@ export default class GifPlayer {
 
     this.render();
 
-    if (this.doPlay){
+    if (this.doPlay) {
       this.image.addEventListener('mouseenter', () => this.play());
       this.image.addEventListener('mouseleave', () => this.stop());
     }
@@ -75,8 +74,8 @@ export default class GifPlayer {
       this.context.strokeStyle = '#000';
       this.context.stroke();
 
-      this.context.fillStyle = "#FFF";
-      this.context.fill(); 
+      this.context.fillStyle = '#FFF';
+      this.context.fill();
     }
   }
   isAnimated() {

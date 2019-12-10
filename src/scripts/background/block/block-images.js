@@ -14,8 +14,8 @@ const blockGiphy = details => {
     // giphy image url
     if (url.indexOf('.giphy.com/media') !== -1) {
       if (url.indexOf('lowweb=' + TOKEN) === -1) {
-        // o.cancel = true;
-        o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');
+        o.cancel = true;
+        // o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');
       }
     }
     // giphy embed iframe
