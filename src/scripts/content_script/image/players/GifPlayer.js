@@ -60,8 +60,8 @@ export default class GifPlayer {
     if (!this.playing) {
       this.playing = true;
       if (this.type === 'img') {
-        this.el.src = this.originalSrc;  
-      }else if(this.type === 'iframe'){
+        this.el.src = this.originalSrc;
+      } else if (this.type === 'iframe') {
         const imgStr = '<style type="text/css">body{margin:0;padding:0} img{width:100%;height:"auto";}</style><img src="' + this.originalSrc + '" />';
         this.el.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(imgStr);
       }
