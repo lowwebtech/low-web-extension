@@ -1,4 +1,5 @@
 import { TOKEN } from '../../../constants';
+import { getIdFromEmbed, getIdFromImage } from '../../../utils/giphy';
 import GifPlayer from './GifPlayer';
 // import browserInfo from 'browser-info';
 
@@ -8,11 +9,15 @@ export default class GiphyPlayer extends GifPlayer {
 
     const src = el.src;
     if (el.tagName === 'IFRAME') {
+      const img = document.createElement('img');
+      img.setAttribute('crossorigin', 'anonymous');
+      this.image = img;
       this.id = getIdFromEmbed(src);
     } else {
+      this.image = el;
       this.id = getIdFromImage(src);
     }
-    // this.webp = supportWebp();
+    this.type = el.tagName.toLowerCase();
   }
   setData(data) {
     // TODO find best size / mp4 / webp
@@ -27,35 +32,3 @@ export default class GiphyPlayer extends GifPlayer {
     this.image.src = previewUrl;
   }
 }
-function getIdFromEmbed(url) {
-  url = url.split('giphy.com/embed/');
-  if (url.length > 1) {
-    return url[1];
-  } else {
-    return false;
-  }
-}
-function getIdFromImage(url) {
-  // TODO regex
-  url = url.split('.giphy.com/media/');
-  if (url.length > 1) {
-    if (url[1].indexOf('/giphy.gif') !== -1) {
-      return url[1].replace('/giphy.gif', '');
-    } else if (url[1].indexOf('/giphy.webp') !== -1) {
-      return url[1].replace('/giphy.webp', '');
-    }
-  } else {
-    return false;
-  }
-}
-
-// function supportWebp() {
-//   const info = browserInfo();
-//   switch (info.name.toLowerCase()) {
-//     case 'chrome':
-//     case 'firefox':
-//     case 'opera':
-//       return true;
-//   }
-//   return false;
-// }

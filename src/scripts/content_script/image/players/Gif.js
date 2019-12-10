@@ -19,12 +19,12 @@ import GiphyPlayer from './GiphyPlayer';
     }
   });
 
-  // let iframes = document.querySelectorAll('iframe');
-  // iframes.forEach(iframe => {
-  //   if (iframe.src.indexOf('giphy.com/embed/') !== -1) {
-  //     giphies.push(new GiphyPlayer(iframe));
-  //   }
-  // });
+  let iframes = document.querySelectorAll('iframe');
+  iframes.forEach(iframe => {
+    if (iframe.src.indexOf('giphy.com/embed/') !== -1) {
+      giphies.push(new GiphyPlayer(iframe));
+    }
+  });
 
   if (giphies.length > 0) {
     let ids = [];

@@ -1,13 +1,15 @@
 export default class GifPlayer {
-  constructor(image) {
-    this.image = image;
+  constructor(el) {
+    this.el = el;
+    this.image = el;
     this.image.setAttribute('crossorigin', 'anonymous');
 
-    this.originalSrc = this.image.src;
+    this.originalSrc = this.el.src;
     this.doPlay = true;
+    this.type = 'img';
   }
   start() {
-    if (!this.image.complete) {
+    if (!this.el.complete) {
       this.buildHandler = () => {
         this.build();
       };
@@ -27,9 +29,9 @@ export default class GifPlayer {
     this.canvas = document.createElement('canvas');
     this.context = this.canvas.getContext('2d');
 
-    if (this.image.width) {
-      this.canvas.width = this.image.width;
-      this.canvas.height = this.image.height;
+    if (this.el.width) {
+      this.canvas.width = this.el.width;
+      this.canvas.height = this.el.height;
     } else if (this.image.naturalWidth && this.image.naturalWidth !== 0) {
       this.canvas.width = this.image.naturalWidth;
       this.canvas.height = this.image.naturalHeight;
@@ -38,8 +40,8 @@ export default class GifPlayer {
     this.render();
 
     if (this.doPlay) {
-      this.image.addEventListener('mouseenter', () => this.play());
-      this.image.addEventListener('mouseleave', () => this.stop());
+      this.el.addEventListener('mouseenter', () => this.play());
+      this.el.addEventListener('mouseleave', () => this.stop());
     }
   }
   render() {
@@ -47,23 +49,28 @@ export default class GifPlayer {
     this.canvas.toBlob(blob => {
       this.blobUrl = URL.createObjectURL(blob);
       // TODO check memory leak
-      // this.image.onload = function() {
+      // this.el.onload = function() {
       //   // no longer need to read the blob so it's revoked
       //   URL.revokeObjectURL(url);
       // };
-      this.image.src = this.blobUrl;
+      this.el.src = this.blobUrl;
     });
   }
   play() {
     if (!this.playing) {
       this.playing = true;
-      this.image.src = this.originalSrc;
+      if (this.type === 'img') {
+        this.el.src = this.originalSrc;  
+      }else if(this.type === 'iframe'){
+        const imgStr = '<style type="text/css">body{margin:0;padding:0} img{width:100%;height:"auto";}</style><img src="' + this.originalSrc + '" />';
+        this.el.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(imgStr);
+      }
     }
   }
   stop() {
     if (this.playing) {
       this.playing = false;
-      this.image.src = this.blobUrl;
+      this.el.src = this.blobUrl;
     }
   }
   draw() {
@@ -89,7 +96,7 @@ export default class GifPlayer {
   isAnimated() {
     // TODO detect animated gif
     // need blob
-    // window.animatedGifDetect.process(this.image, () => {
+    // window.animatedGifDetect.process(this.el, () => {
     //   console.log('is animated')
     // }, () => {
     //   console.log('is not animated')
@@ -98,12 +105,23 @@ export default class GifPlayer {
   }
   isSmall() {
     // arbitrary rule, gif player is displayed when width and height are greater than 50 px
-    if (this.image.width < 50 || this.image.height < 50) {
+    if (this.el.width < 50 || this.el.height < 50) {
       return true;
-    } else if (this.image.naturalWidth && (this.image.naturalWidth < 50 || this.image.naturalHeight < 50)) {
+    } else if (this.el.naturalWidth && (this.el.naturalWidth < 50 || this.el.naturalHeight < 50)) {
       return true;
     } else {
       return false;
     }
   }
 }
+
+// function supportWebp() {
+//   const info = browserInfo();
+//   switch (info.name.toLowerCase()) {
+//     case 'chrome':
+//     case 'firefox':
+//     case 'opera':
+//       return true;
+//   }
+//   return false;
+// }
