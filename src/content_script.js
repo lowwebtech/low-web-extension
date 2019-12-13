@@ -14,7 +14,7 @@ import gifPlayer from './scripts/content_script/image/gif-player';
 import customSocial from './scripts/content_script/iframe/social';
 import videoAttribute from './scripts/content_script/video/attributes';
 import clickToLoadVideo from './scripts/content_script/video/click-to-load';
-// import customPlayers from './scripts/content_script/video/custom-players';
+import customPlayers from './scripts/content_script/video/custom-players';
 /* eslint-enable import/first, indent */
 
 // TODO look to observe DOM change/mutations
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   clickToLoadVideo();
 
   // custom video player low quality
-  // customPlayers();
+  customPlayers();
 
   // custom social embeds
   customSocial();

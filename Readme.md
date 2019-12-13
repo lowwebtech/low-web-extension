@@ -2,6 +2,8 @@
 
 Reduce energy consumption and carbon footprint of your internet browsing.
 
+Firefox : [https://addons.mozilla.org/fr/firefox/addon/low-web-extension/](https://addons.mozilla.org/fr/firefox/addon/low-web-extension/)
+
 :green_heart::herb::deciduous_tree::evergreen_tree::earth_africa:
 
 
@@ -94,9 +96,11 @@ https://lowwebtech.github.io/low-web-extension/
 - oembed
 - message between background blocker and content_script for temporary white-list
 - write tests
+- lazyload optimized assets (gif/iframe)
 - extension icon
 - webassembly
 - block favicon
+- 
 - custom print styles (better font, small size, no image or b&w...)
 - images :
     + replace hi-res by low-res for image services
@@ -113,9 +117,10 @@ https://lowwebtech.github.io/low-web-extension/
         * pause/resume on enter/leave
     + emoji
 - videos
-    + stop autoplay youtube channel (and all)
+    + stop autoplay youtube (and all)
     + remove/hide HD/4K button from players
     + netflix
+        
 - smaller injected script and styles
 - inject script and styles only when needed
 - audit the extension to limit size and processes (reflow)

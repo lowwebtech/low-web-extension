@@ -1,4 +1,4 @@
-import RequestManager from './RequestManager';
+// import RequestManager from './RequestManager';
 // look at faster filter -> webassembly
 import * as ABPFilterParser from 'abp-filter-parser';
 
@@ -52,14 +52,14 @@ class Blocker {
 const blockUrls = function(details) {
   let cancel;
 
-  const { tabId, url, type } = details;
-  const tab = RequestManager.getTab(tabId);
-  if (tab) {
-    cancel = ABPFilterParser.matches(abpFilters, url, {
-      // domain: tab.domain,
-      // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
-    });
-  }
+  const { url, type } = details;
+  // const tab = RequestManager.getTab(tabId);
+  // if (tab) {
+  cancel = ABPFilterParser.matches(abpFilters, url, {
+    // domain: tab.domain,
+    // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
+  });
+  // }
 
   let o = {};
   if (cancel) {

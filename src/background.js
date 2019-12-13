@@ -2,7 +2,7 @@
 global.browser = require('webextension-polyfill');
 
 // import store from './scripts/store'
-import RequestManager from './scripts/background/RequestManager';
+// import RequestManager from './scripts/background/RequestManager';
 import Blocker from './scripts/background/Blocker';
 import { blockFiles } from './scripts/background/block/block-files';
 import { blockSocial } from './scripts/background/block/block-social';
@@ -17,7 +17,7 @@ import { onMessageOEmbed } from './scripts/background/message/oembed';
 
 browser.runtime.onInstalled.addListener(details => {
   setTimeout(() => {
-    RequestManager.init();
+    // RequestManager.init();
     Blocker.init();
 
     saveDataHeader();

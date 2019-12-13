@@ -1,6 +1,12 @@
 <template>
   <div class="popup">
 
+    <div class="input input--checkbox input--page">
+      <p class="input__label">Current page</p>
+      <input type="checkbox" v-model="current_page" name="current_page" id="current_page" />
+      <label for="current_page">Current page</label>
+    </div>
+
     <div class="input input--level">
       <p class="input__label">Presets</p>
       <label>
@@ -36,9 +42,19 @@ export default {
         this.$store.commit('level', value);
       }
     },
+    level: {
+      get () {
+        return this.$store.state.level;
+      },
+      set (value) {
+        this.$store.commit('level', value);
+      }
+    },
   },
   mounted() {
-    
+    console.log('mounted popup')
+    console.log(window.location.url)
+    console.log(window.location.url)
   },
   methods: {
     openOptions(){
@@ -53,6 +69,52 @@ export default {
   width: 200px; 
   .input__label{
     width: 80px;
+  }
+}
+
+.input{
+  &--checkbox{
+    input[type=checkbox]{
+      height: 0;
+      width: 0;
+      visibility: hidden;
+    }
+
+    label {
+      cursor: pointer;
+      text-indent: -9999px;
+      width: 30px;
+      height: 17px;
+      background: grey;
+      display: block;
+      border-radius: 17px;
+      position: relative;
+    }
+
+    label:after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 11px;
+      height: 11px;
+      background: #fff;
+      border-radius: 11px;
+      // transition: 0.3s;
+    }
+
+    input:checked + label {
+      background: #bada55;
+    }
+
+    input:checked + label:after {
+      left: calc(100% - 2px);
+      transform: translateX(-100%);
+    }
+
+    label:active:after {
+      width: 13px;
+    }
   }
 }
 </style>
