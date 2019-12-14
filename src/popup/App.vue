@@ -15,18 +15,17 @@
 
     <hr />
 
-    <a href="" @click.prevent="openOptions">all options</a>
-
     <div class="input input--level">
       <p class="input__label">Quick presets</p>
+      <br>
       <label>
-        <select v-model="level" name="level">
-          <option value="0">Hardcore</option>
-          <option value="1">Low</option>
-          <option value="2">Medium</option>
-        </select>
+        <button @click="clickPreset" value="0">Hardcore</button> 
+        <button @click="clickPreset" value="1">Low</button> 
+        <button @click="clickPreset" value="2">Medium</button> 
       </label>
     </div>
+
+    <a href="" @click.prevent="openOptions" class="right">more options</a>
 
     <div v-show="reloadNote">Some files may still be cached after reloading.</div>
 
@@ -84,6 +83,11 @@ export default {
         });
   },
   methods: {
+    clickPreset(e){
+      // console.log(parseInt(e.currentTarget.value));
+      this.$store.commit('level', parseInt(e.currentTarget.value));
+      // this.saved();
+    },
     openOptions(){
       browser.runtime.openOptionsPage(); // .then(onOpened, onError)
     },
@@ -119,6 +123,12 @@ export default {
   width: 200px; 
   .input__label{
     width: 100px;
+  }
+  button{
+    margin-top: 4px;
+  }
+  .right{
+    text-align: right;
   }
 }
 

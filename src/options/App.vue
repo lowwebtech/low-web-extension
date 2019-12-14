@@ -2,13 +2,12 @@
   <div :class="['options', {'options--active': active}]">
     
     <div class="input input--level">
-      <p class="input__label">Presets</p>
+      <p class="input__label">Quick presets</p>
+
       <label>
-        <select v-model="level" name="level">
-          <option value="0">Hardcore</option>
-          <option value="1">Low</option>
-          <option value="2">Medium</option>
-        </select>
+        <button @click="clickPreset" value="0">Hardcore</button> 
+        <button @click="clickPreset" value="1">Low</button> 
+        <button @click="clickPreset" value="2">Medium</button> 
       </label>
     </div>
 
@@ -71,6 +70,11 @@ export default {
     },
   },
   methods: {
+    clickPreset(e){
+      // console.log(parseInt(e.currentTarget.value));
+      this.$store.commit('level', parseInt(e.currentTarget.value));
+      this.saved();
+    },
     getModelId(id){
       console.log('getModelId', id);
       return id;
