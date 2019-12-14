@@ -11,7 +11,7 @@ export default function() {
     if (iframes.length > 0) {
       // TODO find a way to cache
       // TODO split css by embed type
-      fetch(browser.runtime.getURL('oembed/style.css'))
+      fetch(browser.runtime.getURL('oembed/style.css'), {cache: "force-cache"})
         .then(function(response) {
           return response.text();
         })

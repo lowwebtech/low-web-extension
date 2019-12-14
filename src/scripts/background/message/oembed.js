@@ -1,7 +1,8 @@
 export function onMessageOEmbed(port) {
   const handleOEmbedMessage = function(request, sender, sendResponse) {
     if (request.message === 'oembed') {
-      return fetch(request.options.oembedUrl)
+      // TODO cache oembed call
+      return fetch(request.options.oembedUrl, {cache: "force-cache"})
         .then(res => {
           return res.json();
         })
@@ -12,5 +13,8 @@ export function onMessageOEmbed(port) {
       return true;
     }
   };
-  browser.runtime.onMessage.addListener(handleOEmbedMessage);
+  console.log('addListener handleOEmbedMessage', browser.runtime.onMessage.hasListener(handleOEmbedMessage));
+  if (!browser.runtime.onMessage.hasListener(handleOEmbedMessage)) {
+    browser.runtime.onMessage.addListener(handleOEmbedMessage);
+  }
 }

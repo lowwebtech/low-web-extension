@@ -30,8 +30,10 @@ browser.runtime.onInstalled.addListener(details => {
     blockEmbedVideo();
     cssAnimation();
   }, 100);
-});
 
-browser.runtime.onConnect.addListener(port => {
-  onMessageOEmbed(port);
+  const addConnect = (port) => {
+    onMessageOEmbed(port);
+    browser.runtime.onConnect.removeListener(addConnect);
+  };
+  browser.runtime.onConnect.addListener(addConnect);
 });

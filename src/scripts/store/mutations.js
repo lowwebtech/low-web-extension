@@ -31,7 +31,8 @@ mutations.pauseWebsite = function(state, website) {
   const index = state.pausedWebsites.indexOf(website);
   if (index === -1) {
     state.pausedWebsites.push(website);
-    browser.tabs.reload({ bypassCache: true });
+    // browser.tabs.reload({ bypassCache: true });
+    browser.tabs.reload();
   }
 };
 mutations.resumeWebsite = function(state, website) {
@@ -45,7 +46,8 @@ mutations.pausePage = function(state, page) {
   const index = state.pausedPages.indexOf(page);
   if (index === -1) {
     state.pausedPages.push(page);
-    browser.tabs.reload({ bypassCache: true });
+    // browser.tabs.reload({ bypassCache: true });
+    browser.tabs.reload();
   }
 };
 mutations.resumePage = function(state, page) {
