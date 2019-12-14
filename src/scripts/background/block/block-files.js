@@ -1,12 +1,14 @@
 import store from '../../store';
 import { watchFilter } from '../../store/watch';
+import { dataImage, dataTextLink } from '../../utils/data-uri';
 
 export function blockFiles() {
   let action = function(details) {
     let cancel = 0;
+    let redirect = false;
     let response = {};
 
-    const { type } = details;
+    const { type, url } = details;
     switch (type) {
       case 'media':
         cancel = store.getters.block_medias;
@@ -16,14 +18,16 @@ export function blockFiles() {
         cancel = store.getters.block_objects;
         break;
       case 'sub_frame':
-        cancel = store.getters.block_subframes;
+        // cancel = store.getters.block_subframes;
+        redirect = dataTextLink(url);
         break;
       case 'font':
         cancel = store.getters.block_fonts;
         break;
       case 'image':
       case 'imageset':
-        cancel = store.getters.block_images;
+        // cancel = store.getters.block_images;
+        redirect = dataImage();
         break;
       case 'script':
         cancel = store.getters.block_scripts;
@@ -31,6 +35,9 @@ export function blockFiles() {
     }
     if (cancel === 1) {
       response.cancel = true;
+    }
+    if (redirect !== false) {
+      response.redirectUrl = redirect;
     }
     return response;
   };

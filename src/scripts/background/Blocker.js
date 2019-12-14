@@ -2,6 +2,7 @@ import RequestManager from './RequestManager';
 import store from '../store';
 // look at faster filter -> webassembly
 import * as ABPFilterParser from 'abp-filter-parser';
+import { dataImage } from '../utils/data-uri';
 
 let blockRequests = [];
 let lists = [];
@@ -61,10 +62,7 @@ const blockUrls = function(details) {
 
   if (cancel) {
     if (type === 'image') {
-      response.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');
-    } else if (type === 'sub_frame') {
-      // TODO return data:html with simple url
-      response.cancel = true;
+      response.redirectUrl = dataImage();
     } else {
       response.cancel = true;
     }
