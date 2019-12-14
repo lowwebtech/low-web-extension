@@ -3,8 +3,10 @@ import { watchFilter } from '../../store/watch';
 
 export function blockFiles() {
   let action = function(details) {
-    let cancel;
-    let { type } = details;
+    let cancel = 0;
+    let response = {};
+
+    const { type } = details;
     switch (type) {
       case 'media':
         cancel = store.getters.block_medias;
@@ -26,16 +28,11 @@ export function blockFiles() {
       case 'script':
         cancel = store.getters.block_scripts;
         break;
-      default:
-        cancel = 0;
-        break;
     }
-    if (cancel) {
-      // console.warn('blocked', url);
+    if (cancel === 1) {
+      response.cancel = true;
     }
-    return {
-      cancel: cancel === 1,
-    };
+    return response;
   };
 
   watchFilter('isBlockFile', action);

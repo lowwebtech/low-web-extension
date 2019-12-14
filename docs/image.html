@@ -17,7 +17,7 @@
         <b>Image with native srcset</b><br>
         Not working :( images are already loading when extension update srcset.
       </figcaption>
-      <img class="half" src="./images/image1.png" srcset="./images/image1.png 400w, ./images/image2.png 800w, ./images/image3.png 1600w" sizes="100vw" width="400" height="200" />
+      <img class="half" src="./images/image1.png" srcset="./images/image1.png 400w, ./images/image2.png 800w, ./images/image3.png 1600w" sizes="300vw" width="400" height="200" />
     </figure>
 
     <hr />
@@ -27,7 +27,7 @@
         <b>Lazy-loaded image with data-srcset</b><br>
         Should display 1 or 2 (not 3, image3.png should not be loaded).
       </figcaption>
-      <img class="half" data-src="./images/image1.png" data-srcset="./images/image1.png 400w, ./images/image2.png 800w, ./images/image3.png 1600w" sizes="100vw" width="400" height="200" />
+      <img class="half" data-src="./images/image1.png" data-srcset="./images/image1.png 400w, ./images/image2.png 800w, ./images/image3.png 1600w" sizes="300vw" width="400" height="200" />
     </figure>
 
     <hr />
@@ -48,7 +48,7 @@
       Not working yet. Should display 1 or 2 (not 3, image3.png should not be loaded).
     </p>
     <picture>
-      <source media="(min-width: 1024px)" srcset="./images/image1.png 400w, ./images/image2.png 800w, ./images/image3.png 1600w" sizes="100vw" />
+      <source media="(min-width: 1024px)" srcset="./images/image1.png 400w, ./images/image2.png 800w, ./images/image3.png 1600w" sizes="300vw" />
       <img src="./images/image1.png" alt="Bar" class="half" width="400" height="200" />
     </picture>
 

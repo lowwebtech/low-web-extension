@@ -1,4 +1,5 @@
-// import RequestManager from './RequestManager';
+import RequestManager from './RequestManager';
+import store from '../store';
 // look at faster filter -> webassembly
 import * as ABPFilterParser from 'abp-filter-parser';
 
@@ -10,13 +11,13 @@ class Blocker {
   init() {
     this.filterRequest(blockUrls);
   }
-  filterRequest(callback, filter = {}) {
+  filterRequest(callback, filter = {}, extraInfoSpec = ['blocking']) {
     filter = Object.assign({ urls: ['<all_urls>'] }, filter);
 
     const blockRequest = new BlockRequest(callback, filter);
     blockRequests.push(blockRequest);
 
-    browser.webRequest.onBeforeRequest.addListener(callback, filter, ['blocking']);
+    browser.webRequest.onBeforeRequest.addListener(blockRequest.callback, filter, extraInfoSpec);
 
     return blockRequest;
   }
@@ -45,37 +46,52 @@ class Blocker {
     for (let i = 0; i < lists.length; i++) {
       ABPFilterParser.parse(lists[i], abpFilters);
     }
-    console.log(abpFilters.filters.length);
   }
 }
 
 const blockUrls = function(details) {
   let cancel;
+  let response = {};
 
   const { url, type } = details;
-  // const tab = RequestManager.getTab(tabId);
-  // if (tab) {
   cancel = ABPFilterParser.matches(abpFilters, url, {
     // domain: tab.domain,
     // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
   });
-  // }
 
-  let o = {};
   if (cancel) {
-    // console.warn('blocked', details);
     if (type === 'image') {
-      o.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');
+      response.redirectUrl = browser.runtime.getURL('images/1x1-black.gif');
+    } else if (type === 'sub_frame') {
+      // TODO return data:html with simple url
+      response.cancel = true;
     } else {
-      o.cancel = true;
+      response.cancel = true;
     }
   }
-  return o;
+
+  return response;
 };
 
 class BlockRequest {
   constructor(callback, filter) {
-    this.callback = callback;
+    this.callback = details => {
+      const { tabId, url } = details;
+      if (tabId !== -1) {
+        // check if current page and website is active before filtering
+        const { pageUrl, domain } = RequestManager.getTab(tabId);
+        if (store.getters.isActive(pageUrl, domain)) {
+          const response = callback(details);
+          if (response.cancel) {
+            console.warn('request cancel :', url);
+          } else if (response.redirectUrl) {
+            console.warn('request redirect :', url);
+          }
+          return response;
+        }
+      }
+      return {};
+    };
     this.filter = filter;
   }
 }

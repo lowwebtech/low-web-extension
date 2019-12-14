@@ -45,12 +45,9 @@
 <script>
 import jsonOptions from '../scripts/store/options.json';
 import store from '../scripts/store';
-// import { mapFields } from 'vuex-map-fields';
 
 let fields = Object.keys(store.state);
 let jsonFields = jsonOptions.map(a => a.id);
-// console.log(jsonFields);
-// jsonFields.push('level');
 let timeout;
 
 export default {
@@ -72,8 +69,6 @@ export default {
         this.saved();
       }
     },
-    // TODO find why :v-model not working
-    // ...mapFields(jsonFields),
   },
   methods: {
     getModelId(id){
@@ -133,10 +128,7 @@ export default {
     },
   },
   mounted() {
-    // TODO find why state isn't init yet
-    // setTimeout(() => {
-    //   this.active = true;
-    // }, 300);
+    
   },
 };
 </script>

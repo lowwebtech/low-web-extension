@@ -19,16 +19,8 @@ getters.isPageActive = state => url => {
 getters.isWebsiteActive = state => hostname => {
   return state.pausedWebsites.indexOf(hostname) === -1;
 };
-getters.isActive = (state, getters) => {
-  // console.log('---------')
-  // console.log('url', state.url)
-  // console.log('global active', state.active)
-  // console.log('isPagePaused', getters.isPagePaused)
-  // console.log('pausedPages', state.pausedPages)
-  // console.log('isWebsitePaused', getters.isWebsitePaused)
-  // console.log('pausedWebsites', state.pausedWebsites)
-  // console.log('---------')
-  if (state.active && !getters.isPagePaused && !getters.isWebsitePaused) {
+getters.isActive = (state, getters) => (pageUrl, domain) => {
+  if (domain === undefined || (getters.isPageActive(pageUrl) && getters.isWebsiteActive(domain))) {
     return true;
   } else {
     return false;

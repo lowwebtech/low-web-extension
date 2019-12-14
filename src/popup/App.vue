@@ -3,20 +3,22 @@
 
     <div class="input input--checkbox input--page">
       <p class="input__label">Current page</p>
-      <input type="checkbox" :checked="current_page" @input="updateCurrentPage" name="current_page" id="current_page" />
-      <label for="current_page">Current page</label>
+      <input type="checkbox" :checked="currentPage" @input="updateCurrentPage" name="currentPage" id="currentPage" />
+      <label for="currentPage">Current page</label>
     </div>
 
     <div class="input input--checkbox input--website">
       <p class="input__label">Current website</p>
-      <input type="checkbox" :checked="current_website" @input="updateCurrentWebsite" name="current_website" id="current_website" />
-      <label for="current_website">Current website</label>
+      <input type="checkbox" :checked="currentWebsite" @input="updateCurrentWebsite" name="currentWebsite" id="currentWebsite" />
+      <label for="currentWebsite">Current website</label>
     </div>
 
     <hr />
 
+    <a href="" @click.prevent="openOptions">all options</a>
+
     <div class="input input--level">
-      <p class="input__label">Presets</p>
+      <p class="input__label">Quick presets</p>
       <label>
         <select v-model="level" name="level">
           <option value="0">Hardcore</option>
@@ -26,14 +28,14 @@
       </label>
     </div>
 
-    <a href="" @click.prevent="openOptions">more options</a>
+    <div v-show="reloadNote">Some files may still be cached after reloading.</div>
+
   </div>
 </template>
 <script>
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 import store from '../scripts/store';
-import RequestManager from '../scripts/background/RequestManager';
 /* eslint-enable import/first, indent */
 
 export default {
@@ -42,8 +44,7 @@ export default {
       active: this.$store.state.active,
       url: false,
       hostname: false,
-      // current_page: false,
-      // current_website: false,
+      reloadNote: false,
     };
   },
   computed: {
@@ -56,37 +57,14 @@ export default {
       }
     },
 
-    current_page(){
-      console.log('current_page',this.$store.state.pausedPages)
+    currentPage(){
+      console.log('currentPage',this.$store.state.pausedPages)
       return this.$store.getters.isPageActive(this.url);
     },
-    current_website(){
-      console.log('current_website', this.$store.state.pausedWebsites)
+    currentWebsite(){
+      console.log('currentWebsite', this.$store.state.pausedWebsites)
       return this.$store.getters.isWebsiteActive(this.hostname);
     },
-      // get () {
-        // return this.$store.getters.isPageActive(this.url);
-      // },
-      // set (value) {
-      //   if (value) {
-      //     this.$store.commit('resumePage', this.url);
-      //   }else{
-      //     this.$store.commit('pausePage', this.url);
-      //   }
-      // }
-    // },
-    // current_website: {
-    //   get () {
-    //     return true;// this.$store.state.level;
-    //   },
-    //   set (value) {
-    //     if (value) {
-    //       this.$store.commit('resumeWebsite', this.url);
-    //     }else{
-    //       this.$store.commit('pauseWebsite', this.url);
-    //     }
-    //   }
-    // },
   },
   mounted() {
     browser.tabs.query({ active: true, lastFocusedWindow: true })
@@ -101,13 +79,20 @@ export default {
         }).then((url)=>{
           this.url = url;
           this.hostname = new URL(url).hostname;
-          // this.current_page = this.$store.getters.isPageActive(url);
-          // this.current_website = this.$store.getters.isWebsiteActive(this.hostname);
+          // this.currentPage = this.$store.getters.isPageActive(url);
+          // this.currentWebsite = this.$store.getters.isWebsiteActive(this.hostname);
         });
   },
   methods: {
     openOptions(){
       browser.runtime.openOptionsPage(); // .then(onOpened, onError)
+    },
+    displayReloadNote(){
+      this.reloadNote = true;
+      if (this.timeout) clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        this.reloadNote = false;
+      }, 3000);
     },
     updateCurrentPage(e){
       if (e.target.checked) {
@@ -115,6 +100,7 @@ export default {
       }else{
         this.$store.commit('pausePage', this.url);
       }
+      this.displayReloadNote();
     },
     updateCurrentWebsite(e){
       if (e.target.checked) {
@@ -122,6 +108,7 @@ export default {
       }else{
         this.$store.commit('pauseWebsite', this.hostname);
       }
+      this.displayReloadNote();
     }
   },
 };
@@ -131,55 +118,54 @@ export default {
 .popup{
   width: 200px; 
   .input__label{
-  width: 100px;
-}
+    width: 100px;
+  }
 }
 
 .input{
   &--checkbox{
-  margin-bottom:2px;
+    margin-bottom:2px;
 
-  input[type=checkbox]{
-  height: 0;
-  width: 0;
-  visibility: hidden;
-}
+    input[type=checkbox]{
+      height: 0;
+      width: 0;
+      visibility: hidden;
+    }
 
-label {
-  cursor: pointer;
-  text-indent: -9999px;
-  width: 30px;
-  height: 17px;
-  background: grey;
-  display: inline-block;
-  border-radius: 17px;
-  position: relative;
-}
+    label {
+      cursor: pointer;
+      text-indent: -9999px;
+      width: 30px;
+      height: 17px;
+      background: grey;
+      display: inline-block;
+      border-radius: 17px;
+      position: relative;
+    }
 
-label:after {
-content: '';
-position: absolute;
-top: 3px;
-left: 3px;
-width: 11px;
-height: 11px;
-background: #fff;
-border-radius: 11px;
-      // transition: 0.3s;
+    label:after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 11px;
+      height: 11px;
+      background: #fff;
+      border-radius: 11px;
     }
 
     input:checked + label {
-    background: #bada55;
+      background: #bada55;
+    }
+
+    input:checked + label:after {
+      left: calc(100% - 2px);
+      transform: translateX(-100%);
+    }
+
+    label:active:after {
+      width: 13px;
+    }
   }
-
-  input:checked + label:after {
-  left: calc(100% - 2px);
-  transform: translateX(-100%);
-}
-
-label:active:after {
-width: 13px;
-}
-}
 }
 </style>

@@ -100,6 +100,7 @@ class RequestManager {
             if (this.tabStorage && this.tabStorage[t.id]) {
               const hostname = getHostname(t.url);
               if (hostname) {
+                this.tabStorage[t.id].pageUrl = t.url;
                 this.tabStorage[t.id].domain = hostname;
                 domainOk = true;
               }

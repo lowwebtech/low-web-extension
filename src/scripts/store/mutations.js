@@ -24,37 +24,41 @@ mutations.level = function(state, level) {
     store.commit(o.id, o.presets[parseInt(level)]);
   }
 };
-mutations.active = function(state, active) {
-  state.active = active;
-};
+// mutations.active = function(state, active) {
+//   state.active = active;
+// };
 mutations.pauseWebsite = function(state, website) {
   const index = state.pausedWebsites.indexOf(website);
   if (index === -1) {
     state.pausedWebsites.push(website);
+    browser.tabs.reload({ bypassCache: true });
   }
 };
 mutations.resumeWebsite = function(state, website) {
   const index = state.pausedWebsites.indexOf(website);
   if (index !== -1) {
     state.pausedWebsites.splice(index, 1);
+    browser.tabs.reload();
   }
 };
 mutations.pausePage = function(state, page) {
   const index = state.pausedPages.indexOf(page);
   if (index === -1) {
     state.pausedPages.push(page);
+    browser.tabs.reload({ bypassCache: true });
   }
 };
 mutations.resumePage = function(state, page) {
   const index = state.pausedPages.indexOf(page);
   if (index !== -1) {
     state.pausedPages.splice(index, 1);
+    browser.tabs.reload();
   }
 };
-mutations.resetActive = function(state) {
-  // state.pausedPages = [];
-  // state.pausedWebsites = [];
-  // state.active = true;
-};
+// mutations.resetActive = function(state) {
+//   state.pausedPages = [];
+//   state.pausedWebsites = [];
+//   state.active = true;
+// };
 
 export default mutations;

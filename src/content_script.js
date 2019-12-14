@@ -21,32 +21,38 @@ import customPlayers from './scripts/content_script/video/custom-players';
 document.addEventListener('DOMContentLoaded', () => {
   store.commit('url', window.location.href);
 
-  // clean srcset and remove biggest images
-  imageSrcset();
-  // lazyload();
+  setTimeout(() => {
+    let active = store.getters.isActive(window.location.href, window.location.hostname);
+    if (active) {
+      // clean srcset and remove biggest images
+      imageSrcset();
 
-  // disable marquee animation
-  marquee();
+      // lazyload();
 
-  // custom gif/play when over them
-  gifPlayer();
+      // disable marquee animation
+      marquee();
 
-  // custom video attribute
-  videoAttribute();
+      // custom gif/play when over them
+      gifPlayer();
 
-  // custom video embed click to play
-  clickToLoadVideo();
+      // custom video attribute
+      videoAttribute();
 
-  // custom video player low quality
-  customPlayers();
+      // custom video embed click to play
+      clickToLoadVideo();
 
-  // custom social embeds
-  customSocial();
+      // custom video player low quality
+      customPlayers();
 
-  // script to inject to get 'real' window and compute css styles
-  let script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.async = true;
-  script.src = browser.runtime.getURL('utils/compute-styles.js');
-  (document.head || document.documentElement).appendChild(script);
+      // custom social embeds
+      customSocial();
+
+      // script to inject to get 'real' window and compute css styles
+      let script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.async = true;
+      script.src = browser.runtime.getURL('utils/compute-styles.js');
+      (document.head || document.documentElement).appendChild(script);
+    }
+  });
 });
