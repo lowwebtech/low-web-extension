@@ -6,7 +6,7 @@ export function saveDataHeader() {
     details => {
       const { tabId } = details;
       const { pageUrl, domain } = RequestManager.getTab(tabId);
-      if (store.getters.isActive(pageUrl, domain)) {
+      if (pageUrl && store.getters.isActive(pageUrl, domain)) {
         if (store.getters.save_data) {
           var headers = details.requestHeaders;
           // Check if browser or another extension has already enabled the header

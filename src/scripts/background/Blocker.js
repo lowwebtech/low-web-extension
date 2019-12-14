@@ -78,7 +78,7 @@ class BlockRequest {
       if (tabId !== -1) {
         // check if current page and website is active before filtering
         const { pageUrl, domain } = RequestManager.getTab(tabId);
-        if (store.getters.isActive(pageUrl, domain)) {
+        if (pageUrl && store.getters.isActive(pageUrl, domain)) {
           const response = callback(details);
           if (response.cancel) {
             console.warn('request cancel :', url);
