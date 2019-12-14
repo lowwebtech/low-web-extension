@@ -34,6 +34,7 @@ for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
   // persistentVars.push(o.id)
 }
 let persistentVars = Object.keys(state);
+console.log(persistentVars);
 Vue.use(Vuex);
 export default new Vuex.Store({
   plugins: [

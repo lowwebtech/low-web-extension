@@ -13,16 +13,11 @@ getters.active = state => state.active;
 getters.level = state => state.level;
 getters.pausedWebsites = state => state.pausedWebsites;
 getters.pausedPages = state => state.pausedPages;
-getters.isPagePaused = state => {
-  // console.log('#######isPagePaused', state.url)
-  // console.log('#######isPagePaused', state.pausedPages)
-  return state.pausedPages.indexOf(state.url) !== -1;
+getters.isPageActive = state => url => {
+  return state.pausedPages.indexOf(url) === -1;
 };
-getters.isWebsitePaused = state => {
-  // console.log('state.hostname', state.hostname)
-  // console.log('state.pausedWebsites', state.pausedWebsites)
-  // console.log('isWebsitePaused', state.pausedWebsites.indexOf(state.url) !== -1)
-  return state.pausedWebsites.indexOf(state.hostname) !== -1;
+getters.isWebsiteActive = state => hostname => {
+  return state.pausedWebsites.indexOf(hostname) === -1;
 };
 getters.isActive = (state, getters) => {
   // console.log('---------')
