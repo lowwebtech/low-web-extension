@@ -16,6 +16,7 @@
     "storage"
   ],
   "browser_action": {
+    "browser_style": true,
     "default_icon": "icons/icon_32.png",
     "default_title": "low-web-extension",
     "default_popup": "popup/popup.html"

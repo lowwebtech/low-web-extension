@@ -20,16 +20,18 @@ class RequestManager {
         if (!this.tabStorage.hasOwnProperty(tabId)) {
           this.addTab(tabId);
         }
-        if (!this.tabStorage[tabId].domain) {
-          this.queryDomain(tabId);
-        }
+        if (this.tabStorage[tabId]) {
+          if (!this.tabStorage[tabId].domain) {
+            this.queryDomain(tabId);
+          }
 
-        this.tabStorage[tabId].requests[requestId] = {
-          requestId: requestId,
-          url: details.url,
-          startTime: details.timeStamp,
-          status: 'pending',
-        };
+          this.tabStorage[tabId].requests[requestId] = {
+            requestId: requestId,
+            url: details.url,
+            startTime: details.timeStamp,
+            status: 'pending',
+          };
+        }
         return {};
       },
       this.networkFilters,
@@ -68,19 +70,19 @@ class RequestManager {
 
     browser.tabs.onActivated.addListener(tab => {
       const tabId = tab ? tab.tabId : browser.tabs.TAB_ID_NONE;
+      this.currentTabId = tabId;
       this.addTab(tabId);
     });
 
-    browser.tabs.onRemoved.addListener(tab => {
-      const tabId = tab.tabId;
+    browser.tabs.onRemoved.addListener(tabId => {
       if (!this.tabStorage.hasOwnProperty(tabId)) {
         return;
       }
-      this.tabStorage[tabId] = null;
+      delete this.tabStorage[tabId];
     });
   }
   addTab(tabId) {
-    if (tabId && !this.tabStorage.hasOwnProperty(tabId)) {
+    if (tabId && !this.tabStorage.hasOwnProperty(tabId) && tabId !== -1) {
       this.tabStorage[tabId] = {
         id: tabId,
         requests: {},

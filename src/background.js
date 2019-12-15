@@ -3,6 +3,7 @@ global.browser = require('webextension-polyfill');
 
 // import store from './scripts/store'
 import RequestManager from './scripts/background/RequestManager';
+import Logger from './scripts/background/Logger';
 import Blocker from './scripts/background/Blocker';
 import { blockFiles } from './scripts/background/block/block-files';
 import { blockSocial } from './scripts/background/block/block-social';
@@ -17,6 +18,7 @@ import { onMessageOEmbed } from './scripts/background/message/oembed';
 
 browser.runtime.onInstalled.addListener(details => {
   setTimeout(() => {
+    Logger.init();
     RequestManager.init();
     Blocker.init();
 
@@ -31,7 +33,7 @@ browser.runtime.onInstalled.addListener(details => {
     cssAnimation();
   }, 100);
 
-  const addConnect = (port) => {
+  const addConnect = port => {
     onMessageOEmbed(port);
     browser.runtime.onConnect.removeListener(addConnect);
   };

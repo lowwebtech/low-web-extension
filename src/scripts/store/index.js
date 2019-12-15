@@ -10,30 +10,23 @@ import VuexWebExtensions from 'vuex-webextensions';
 // import { getField, updateField } from 'vuex-map-fields';
 
 let state = {
-  active: true,
   pausedWebsites: [],
   pausedPages: [],
-  url: undefined,
-  hostname: undefined,
   level: 0,
 };
-
-// chrome.storage.sync.set({testValue: 'hello'}, function() {
-//   console.log('testValue is set');
-// });
-
-// chrome.storage.sync.get(['testValue'], function(result) {
-//   console.log('testValue currently is ' + result.testValue);
-// });
-// getters.getField = getField;
-// mutations.updateField = updateField;
+let nonPersistentState = {
+  active: true,
+  url: undefined,
+  hostname: undefined,
+};
 
 for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
   let o = jsonOptions[i];
   state[o.id] = o.value;
-  // persistentVars.push(o.id)
 }
-let persistentVars = Object.keys(state);
+
+const persistentVars = Object.keys(state);
+state = Object.assign(nonPersistentState, state);
 
 Vue.use(Vuex);
 export default new Vuex.Store({

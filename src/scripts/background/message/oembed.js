@@ -2,7 +2,7 @@ export function onMessageOEmbed(port) {
   const handleOEmbedMessage = function(request, sender, sendResponse) {
     if (request.message === 'oembed') {
       // TODO cache oembed call
-      return fetch(request.options.oembedUrl, {cache: "force-cache"})
+      return fetch(request.options.oembedUrl, { cache: 'force-cache' })
         .then(res => {
           return res.json();
         })

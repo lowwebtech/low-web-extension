@@ -19,7 +19,7 @@ export function blockFiles() {
         break;
       case 'sub_frame':
         // cancel = store.getters.block_subframes;
-        if (store.getters.block_subframes) redirect = dataTextLink(url);
+        if (store.getters.block_subframes === 1) redirect = dataTextLink(url);
         break;
       case 'font':
         cancel = store.getters.block_fonts;
@@ -27,7 +27,7 @@ export function blockFiles() {
       case 'image':
       case 'imageset':
         // cancel = store.getters.block_images;
-        if (store.getters.block_images) redirect = dataImage();
+        if (store.getters.block_images === 1) redirect = dataImage();
         break;
       case 'script':
         cancel = store.getters.block_scripts;

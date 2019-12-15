@@ -32,7 +32,7 @@ import GiphyPlayer from './GiphyPlayer';
       ids.push(giphy.id);
     });
     // TODO cache this call
-    fetch('https://api.giphy.com/v1/gifs?api_key=' + GIPHY_TOKEN + '&ids=' + ids.toString(), {cache: "force-cache"})
+    fetch('https://api.giphy.com/v1/gifs?api_key=' + GIPHY_TOKEN + '&ids=' + ids.toString(), { cache: 'force-cache' })
       .then(function(response) {
         if (response.status !== 200) {
           console.warn('Looks like there was a problem. Status Code: ' + response.status);

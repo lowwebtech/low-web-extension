@@ -15,11 +15,13 @@
 
     <hr />
 
+    <div class="blocked" v-html="blocked"></div>
+
     <div class="input input--level">
       <p class="input__label">Quick presets</p>
       <br>
       <label>
-        <button @click="clickPreset" value="0">Hardcore</button> 
+        <button @click="clickPreset" value="0">Very low</button> 
         <button @click="clickPreset" value="1">Low</button> 
         <button @click="clickPreset" value="2">Medium</button> 
       </label>
@@ -47,6 +49,9 @@ export default {
     };
   },
   computed: {
+    blocked() {
+      return ;
+    },
     level: {
       get () {
         return this.$store.state.level;
@@ -165,7 +170,7 @@ export default {
     }
 
     input:checked + label {
-      background: #bada55;
+      background: #61d316;
     }
 
     input:checked + label:after {

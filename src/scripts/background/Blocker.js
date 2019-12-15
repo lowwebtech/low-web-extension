@@ -1,3 +1,4 @@
+import Logger from './Logger';
 import RequestManager from './RequestManager';
 import store from '../store';
 // look at faster filter -> webassembly
@@ -74,16 +75,14 @@ const blockUrls = function(details) {
 class BlockRequest {
   constructor(callback, filter) {
     this.callback = details => {
-      const { tabId, url } = details;
+      const { tabId } = details; // url, type
       if (tabId !== -1) {
         // check if current page and website is active before filtering
-        const { pageUrl, domain } = RequestManager.getTab(tabId);
-        if (pageUrl && store.getters.isActive(pageUrl, domain)) {
+        const tab = RequestManager.getTab(tabId);
+        if (tab && tab.pageUrl && store.getters.isActive(tab.pageUrl, tab.domain)) {
           const response = callback(details);
-          if (response.cancel) {
-            console.warn('request cancel :', url);
-          } else if (response.redirectUrl) {
-            console.warn('request redirect :', url);
+          if (response.cancel || response.redirectUrl) {
+            Logger.logRequest(details, response);
           }
           return response;
         }

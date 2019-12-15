@@ -5,8 +5,8 @@ export function saveDataHeader() {
   browser.webRequest.onBeforeSendHeaders.addListener(
     details => {
       const { tabId } = details;
-      const { pageUrl, domain } = RequestManager.getTab(tabId);
-      if (pageUrl && store.getters.isActive(pageUrl, domain)) {
+      const tab = RequestManager.getTab(tabId);
+      if (tab && tab.pageUrl && store.getters.isActive(tab.pageUrl, tab.domain)) {
         if (store.getters.save_data) {
           var headers = details.requestHeaders;
           // Check if browser or another extension has already enabled the header

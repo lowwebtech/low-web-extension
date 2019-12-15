@@ -1,5 +1,5 @@
 export function dataTextLink(url) {
-  const link = `<a href="${url}">${url}</a>`;
+  const link = `<a href="${url}" target="_blank">${url}</a>`;
   return 'data:text/html;charset=utf-8,<style>body{background:white;}</style>' + encodeURIComponent(link);
 }
 export function dataImage() {

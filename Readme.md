@@ -99,8 +99,6 @@ https://lowwebtech.github.io/low-web-extension/
 - lazyload optimized assets (gif/iframe)
 - extension icon
 - webassembly
-- block favicon
-- 
 - custom print styles (better font, small size, no image or b&w...)
 - images :
     + replace hi-res by low-res for image services
