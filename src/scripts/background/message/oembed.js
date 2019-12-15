@@ -13,7 +13,6 @@ export function onMessageOEmbed(port) {
       return true;
     }
   };
-  console.log('addListener handleOEmbedMessage', browser.runtime.onMessage.hasListener(handleOEmbedMessage));
   if (!browser.runtime.onMessage.hasListener(handleOEmbedMessage)) {
     browser.runtime.onMessage.addListener(handleOEmbedMessage);
   }

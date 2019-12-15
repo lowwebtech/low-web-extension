@@ -12,8 +12,8 @@ export default function() {
         const script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = browser.runtime.getURL('players/Gif.js');
-        (document.head || document.documentElement).appendChild(script); 
-      } 
+        (document.head || document.documentElement).appendChild(script);
+      }
     }
   }
 }

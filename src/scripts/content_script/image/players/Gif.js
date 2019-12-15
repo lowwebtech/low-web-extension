@@ -43,7 +43,7 @@ import GiphyPlayer from './GiphyPlayer';
           data.data.forEach((gifdata, index) => {
             giphies[index].setData(gifdata);
           });
-          window.lowComputeStyles();
+          // window.lowComputeStyles();
         });
       })
       .catch(function(err) {

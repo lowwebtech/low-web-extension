@@ -23,8 +23,7 @@ export default function() {
 }
 function customIframes(style) {
   let iframes = document.querySelectorAll('iframe');
-  console.log('customIframes', iframes);
-  
+
   iframes.forEach(iframe => {
     let src = iframe.src;
     if (!src || src === '') {

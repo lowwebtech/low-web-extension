@@ -3,13 +3,13 @@
     "id": "video_quality", 
     "label": "Video quality",
     "type": "select",
-    "info": "This option reduce quality of videos (ex Youtube : Lowest=144p, Low=240p, Medium=360p). Lower quality means less data and calculation",
+    "info": "This option reduce quality of videos (ex Youtube : Very low=144p, Low=240p, Medium=360p). Lower quality means less data and calculation",
     "value": 2,
     "presets": [1,2,3],
     "options":[
       {
         "value": 1,
-        "label": "Lowest"
+        "label": "Very low"
       },
       {
         "value": 2,

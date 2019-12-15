@@ -62,11 +62,9 @@ export default {
     },
 
     currentPage(){
-      console.log('currentPage',this.$store.state.pausedPages)
       return this.$store.getters.isPageActive(this.url);
     },
     currentWebsite(){
-      console.log('currentWebsite', this.$store.state.pausedWebsites)
       return this.$store.getters.isWebsiteActive(this.hostname);
     },
   },
@@ -83,13 +81,10 @@ export default {
         }).then((url)=>{
           this.url = url;
           this.hostname = new URL(url).hostname;
-          // this.currentPage = this.$store.getters.isPageActive(url);
-          // this.currentWebsite = this.$store.getters.isWebsiteActive(this.hostname);
         });
   },
   methods: {
     clickPreset(e){
-      // console.log(parseInt(e.currentTarget.value));
       this.$store.commit('level', parseInt(e.currentTarget.value));
       // this.saved();
     },

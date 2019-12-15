@@ -1,4 +1,3 @@
-import Blocker from '../Blocker';
 import { TOKEN } from '../../constants';
 import { dataTextLink } from '../../utils/data-uri';
 import { watchFilter } from '../../store/watch';

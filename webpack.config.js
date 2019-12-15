@@ -23,7 +23,7 @@ const config = {
     // 'players/Vimeo': './scripts/content_script/video/players/Vimeo.js',
     // 'players/Twitch': './scripts/content_script/video/players/Twitch.js',
     'players/Gif': './scripts/content_script/image/players/Gif.js',
-    'utils/compute-styles': './scripts/content_script/utils/compute-styles.js',
+    //'utils/compute-styles': './scripts/content_script/utils/compute-styles.js',
     'popup/popup': './popup/popup.js',
     'options/options': './options/options.js',
     // 'injected-style.css': './scss/injected-style.scss',
