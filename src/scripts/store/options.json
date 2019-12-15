@@ -54,7 +54,7 @@
     "label": "custom gif player",
     "type": "bool",
     "value": 1,
-    "presets": [1,1,0],
+    "presets": [1,1,1],
     "info": "With this option, you have to hover the gif for playing it, it avoid permanent rendering of the screen. For services like giphy, it only load optimized images when hovering."
   },
   {
@@ -62,7 +62,7 @@
     "label": "block image avatar",
     "type": "bool",
     "value": 1,
-    "presets": [1,0,0],
+    "presets": [1,1,0],
     "info": "This option blocks avatar images like Gravatar, Twitter, Reddit..."
   },
   {

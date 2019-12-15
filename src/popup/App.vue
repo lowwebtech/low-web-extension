@@ -2,15 +2,21 @@
   <div class="popup">
 
     <div class="input input--checkbox input--page">
-      <p class="input__label">Current page</p>
+      <p class="input__label">Page activated:</p>
       <input type="checkbox" :checked="currentPage" @input="updateCurrentPage" name="currentPage" id="currentPage" />
-      <label for="currentPage">Current page</label>
+      <label for="currentPage">
+        <span class="yes" v-if="currentPage">Yes</span>
+        <span class="no" v-if="!currentPage">No</span>
+      </label>
     </div>
 
     <div class="input input--checkbox input--website">
-      <p class="input__label">Current website</p>
+      <p class="input__label">Website activated:</p>
       <input type="checkbox" :checked="currentWebsite" @input="updateCurrentWebsite" name="currentWebsite" id="currentWebsite" />
-      <label for="currentWebsite">Current website</label>
+      <label for="currentWebsite">
+        <span class="yes" v-if="currentWebsite">Yes</span>
+        <span class="no" v-if="!currentWebsite">No</span>
+      </label>
     </div>
 
     <hr />
@@ -18,19 +24,22 @@
     <div class="blocked" v-html="blocked"></div>
 
     <div class="input input--level">
-      <p class="input__label">Quick presets</p>
-      <br>
+      <p class="input__label">Quick presets:</p>
       <label>
-        <button @click="clickPreset" value="0">Very low</button> 
-        <button @click="clickPreset" value="1">Low</button> 
-        <button @click="clickPreset" value="2">Medium</button> 
+        <button @click="clickPreset" value="0" title="Mostly all files will be blocked">Very low</button> 
+        <button @click="clickPreset" value="1" title="Unnecessary files will be blocked and some other content optimized (recommended)">Low</button> 
+        <button @click="clickPreset" value="2" title="Minimal optimization (just for vegans)">Medium</button> 
       </label>
     </div>
 
-    <a href="" @click.prevent="openOptions" class="right">more options</a>
-
-    <div v-show="reloadNote">Some files may still be cached after reloading.</div>
-
+    <div class="popup__more">
+      <p class="input__label"></p>
+      or <a href="" @click.prevent="openOptions" class="right">define your options</a>.
+    </div>
+    
+    <div v-show="reloadNote" class="popup__note">
+      <b>Some files may still be cached after reload.</b>
+    </div>
   </div>
 </template>
 <script>
@@ -86,8 +95,8 @@ export default {
   methods: {
     clickPreset(e){
       this.$store.commit('level', parseInt(e.currentTarget.value));
-      if (browser.tabs) browser.tabs.reload({ bypassCache: true });
-      // this.saved();
+      if (browser.tabs) browser.tabs.reload();
+      this.displayReloadNote();
     },
     openOptions(){
       browser.runtime.openOptionsPage(); // .then(onOpened, onError)
@@ -97,7 +106,7 @@ export default {
       if (this.timeout) clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         this.reloadNote = false;
-      }, 3000);
+      }, 4000);
     },
     updateCurrentPage(e){
       if (e.target.checked) {
@@ -121,9 +130,17 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/options.scss";
 .popup{
-  width: 200px; 
+  width: 270px; 
   .input__label{
-    width: 100px;
+    width: 105px;
+  }
+
+  &__more{
+    margin-top: 4px;
+  }
+  &__note{
+    text-align: center;
+    margin-top: 8px;
   }
   button{
     margin-top: 4px;
@@ -136,46 +153,50 @@ export default {
 .input{
   &--checkbox{
     margin-bottom:2px;
+    line-height: 21px;
 
     input[type=checkbox]{
       height: 0;
       width: 0;
       visibility: hidden;
+      margin: 0;
     }
 
     label {
       cursor: pointer;
-      text-indent: -9999px;
-      width: 30px;
-      height: 17px;
+      // text-indent: -9999px;
+      width: 46px;
+      height: 21px;
       background: grey;
       display: inline-block;
-      border-radius: 17px;
+      border-radius: 21px;
+      padding-left: 22px;
       position: relative;
     }
 
     label:after {
       content: '';
       position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 11px;
-      height: 11px;
+      top: 4px;
+      left: 4px;
+      width: 13px;
+      height: 13px;
       background: #fff;
       border-radius: 11px;
     }
 
     input:checked + label {
       background: #61d316;
+      padding-left: 6px;
     }
 
     input:checked + label:after {
-      left: calc(100% - 2px);
+      left: calc(100% - 4px);
       transform: translateX(-100%);
     }
 
     label:active:after {
-      width: 13px;
+      width: 15px;
     }
   }
 }
