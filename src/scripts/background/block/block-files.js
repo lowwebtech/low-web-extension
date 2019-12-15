@@ -26,8 +26,8 @@ export function blockFiles() {
         break;
       case 'image':
       case 'imageset':
-        // cancel = store.getters.block_images;
-        if (store.getters.block_images === 1) redirect = dataImage();
+        cancel = store.getters.block_images;
+        // if (store.getters.block_images === 1) redirect = dataImage();
         break;
       case 'script':
         cancel = store.getters.block_scripts;

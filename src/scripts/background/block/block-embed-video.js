@@ -1,6 +1,7 @@
 import Blocker from '../Blocker';
 import { TOKEN } from '../../constants';
 import { dataTextLink } from '../../utils/data-uri';
+import { watchFilter } from '../../store/watch';
 
 export function blockEmbedVideo() {
   const action = details => {
@@ -9,6 +10,7 @@ export function blockEmbedVideo() {
       const { url } = details;
       if (url.indexOf('lowweb=' + TOKEN) === -1) {
         response.redirectUrl = dataTextLink(url);
+        // response.cancel = true;
       }
     }
     return response;
@@ -18,5 +20,7 @@ export function blockEmbedVideo() {
     urls: ['*://*.youtube.com/embed/*', '*://player.vimeo.com/*', '*://*.dailymotion.com/embed/*', '*://*.facebook.com/plugins/video.php*'],
   };
   // TODO use a ABP list
-  Blocker.filterRequest(action, filter);
+  // Blocker.filterRequest(action, filter);
+
+  watchFilter('video_clicktoload', action, filter);
 }

@@ -23,9 +23,16 @@ class Logger {
         this.updateBadgeNumber(tabId);
       }
     };
+    const onCommittedNavigationHandler = (info) => {
+      // console.log('onCommitted', info.transitionType, info);
+      if (info.transitionType === 'reload') {
+        this.logs[info.tabId] = [];
+      }
+    };
     browser.tabs.onCreated.addListener(onCreatedHandler);
     browser.tabs.onUpdated.addListener(onTabUpdatedHandler);
     browser.tabs.onActivated.addListener(onTabActivatedHandler);
+    browser.webNavigation.onCommitted.addListener(onCommittedNavigationHandler);
   }
   logRequest(details, response) {
     const { type, url, tabId } = details; // frameId
@@ -56,7 +63,6 @@ class Logger {
   }
   updateBadgeNumber(tabId) {
     const lg = this.getNumberBlocked(tabId);
-    console.log('doUpdateBadge--->', lg, this.logs[tabId]);
     if (lg > 0) {
       browser.browserAction.setBadgeBackgroundColor({ color: '#61d316' });
       browser.browserAction.setBadgeText({ text: lg.toString() });

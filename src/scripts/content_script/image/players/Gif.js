@@ -31,7 +31,7 @@ import GiphyPlayer from './GiphyPlayer';
     giphies.forEach(giphy => {
       ids.push(giphy.id);
     });
-    // TODO cache this call
+
     fetch('https://api.giphy.com/v1/gifs?api_key=' + GIPHY_TOKEN + '&ids=' + ids.toString(), { cache: 'force-cache' })
       .then(function(response) {
         if (response.status !== 200) {

@@ -29,6 +29,7 @@ const blockGiphy = details => {
 };
 
 export function blockImages() {
-  watchFilter('block_giphy', blockGiphy, { urls: ['<all_urls>'] });
+  // preivous parameters : block_giphy
+  watchFilter('gif_player', blockGiphy, { urls: ['<all_urls>'] });
   watchList('block_avatar', avatarTxt);
 }

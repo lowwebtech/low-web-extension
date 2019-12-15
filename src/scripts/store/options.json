@@ -58,14 +58,6 @@
     "info": "With this option, you have to hover the gif for playing it, it avoid permanent rendering of the screen. For services like giphy, it only load optimized images when hovering."
   },
   {
-    "id": "block_giphy", 
-    "label": "low giphy",
-    "type": "bool",
-    "value": 1,
-    "presets": [1,1,1],
-    "info": "This option will load a static preview of gif from Giphy. Animated will be loaded when hovering."
-  },
-  {
     "id": "block_avatar", 
     "label": "block image avatar",
     "type": "bool",

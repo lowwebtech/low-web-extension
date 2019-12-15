@@ -9,7 +9,7 @@ export default function() {
     let iframes = document.querySelectorAll('iframe');
 
     if (iframes.length > 0) {
-      // TODO find a way to cache
+      // TODO find a way to cache, inline ?
       // TODO split css by embed type
       fetch(browser.runtime.getURL('oembed/style.css'), { cache: 'force-cache' })
         .then(function(response) {
@@ -23,7 +23,8 @@ export default function() {
 }
 function customIframes(style) {
   let iframes = document.querySelectorAll('iframe');
-
+  console.log('customIframes', iframes);
+  
   iframes.forEach(iframe => {
     let src = iframe.src;
     if (!src || src === '') {

@@ -20,23 +20,28 @@ import customPlayers from './scripts/content_script/video/custom-players';
 // TODO look to observe DOM change/mutations
 document.addEventListener('DOMContentLoaded', () => {
   store.commit('url', window.location.href);
+  
+  let active = store.getters.isActive(window.location.href, window.location.hostname);
+  if (active) {
+    // clean srcset and remove biggest images
+    imageSrcset();
 
-  setTimeout(() => {
-    let active = store.getters.isActive(window.location.href, window.location.hostname);
-    if (active) {
-      // clean srcset and remove biggest images
-      imageSrcset();
+    // lazyload();
 
-      // lazyload();
+    // custom video attribute
+    videoAttribute();
+  }
+});
 
+window.addEventListener('load', () => {
+  let active = store.getters.isActive(window.location.href, window.location.hostname);
+  if (active) {      
+    setTimeout(() => {
       // disable marquee animation
       marquee();
 
       // custom gif/play when over them
       gifPlayer();
-
-      // custom video attribute
-      videoAttribute();
 
       // custom video embed click to play
       clickToLoadVideo();
@@ -53,6 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
       script.async = true;
       script.src = browser.runtime.getURL('utils/compute-styles.js');
       (document.head || document.documentElement).appendChild(script);
-    }
-  });
+    });
+  }
 });
