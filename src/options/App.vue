@@ -137,5 +137,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../scss/options.scss";
+@import "../styles/options.scss";
 </style>

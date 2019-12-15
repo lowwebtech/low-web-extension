@@ -67,6 +67,7 @@ const blockUrls = function(details) {
     } else {
       response.cancel = true;
     }
+    // Logger.logRequest(details, response);
   }
 
   return response;

@@ -86,6 +86,7 @@ export default {
   methods: {
     clickPreset(e){
       this.$store.commit('level', parseInt(e.currentTarget.value));
+      if (browser.tabs) browser.tabs.reload({ bypassCache: true });
       // this.saved();
     },
     openOptions(){
@@ -118,7 +119,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../scss/options.scss";
+@import "../styles/options.scss";
 .popup{
   width: 200px; 
   .input__label{

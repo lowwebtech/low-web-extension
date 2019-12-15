@@ -5,16 +5,16 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
-import './scss/default.scss';
-import store from './scripts/store';
-import imageSrcset from './scripts/content_script/image/srcset';
-// import lazyload from './scripts/content_script/lazyload';
-import marquee from './scripts/content_script/marquee';
-import gifPlayer from './scripts/content_script/image/gif-player';
-import customSocial from './scripts/content_script/iframe/social';
-import videoAttribute from './scripts/content_script/video/attributes';
-import clickToLoadVideo from './scripts/content_script/video/click-to-load';
-import customPlayers from './scripts/content_script/video/custom-players';
+import '../../styles/default.scss';
+import store from '../store';
+import imageSrcset from './image/srcset';
+// import lazyload from './lazyload';
+import marquee from './marquee';
+import gifPlayer from './image/gif-player';
+import customSocial from './iframe/social';
+import videoAttribute from './video/attributes';
+import clickToLoadVideo from './video/click-to-load';
+import customPlayers from './video/custom-players';
 /* eslint-enable import/first, indent */
 
 // TODO look to observe DOM change/mutations

@@ -32,14 +32,14 @@ mutations.pauseWebsite = function(state, website) {
   if (index === -1) {
     state.pausedWebsites.push(website);
     // browser.tabs.reload({ bypassCache: true });
-    if (browser.tabs) browser.tabs.reload();
+    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
   }
 };
 mutations.resumeWebsite = function(state, website) {
   const index = state.pausedWebsites.indexOf(website);
   if (index !== -1) {
     state.pausedWebsites.splice(index, 1);
-    if (browser.tabs) browser.tabs.reload();
+    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
   }
 };
 mutations.pausePage = function(state, page) {
@@ -47,14 +47,14 @@ mutations.pausePage = function(state, page) {
   if (index === -1) {
     state.pausedPages.push(page);
     // browser.tabs.reload({ bypassCache: true });
-    if (browser.tabs) browser.tabs.reload();
+    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
   }
 };
 mutations.resumePage = function(state, page) {
   const index = state.pausedPages.indexOf(page);
   if (index !== -1) {
     state.pausedPages.splice(index, 1);
-    if (browser.tabs) browser.tabs.reload();
+    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
   }
 };
 // mutations.resetActive = function(state) {

@@ -1,11 +1,10 @@
-import RequestManager from './RequestManager';
+// import RequestManager from './RequestManager';
 
 class Logger {
   constructor() {
     this.logs = {};
   }
   init() {
-    console.log('init logger');
     this.currentTab = undefined;
     const onCreatedHandler = tab => {
       this.logs[tab.tabId] = [];
@@ -17,22 +16,27 @@ class Logger {
     const onTabUpdatedHandler = (tabId, changeInfo, tabInfo) => {
       if (changeInfo.url) {
         this.logs[tabId] = [];
+        this.updateBadgeNumber(tabId);
       }
       if (changeInfo.status === 'loading') {
       } else if (changeInfo.status === 'complete') {
-        this.updateBadgeNumber(tabId);
+        // this.updateBadgeNumber(tabId);
       }
     };
-    const onCommittedNavigationHandler = (info) => {
+    const onCommittedNavigationHandler = info => {
       // console.log('onCommitted', info.transitionType, info);
       if (info.transitionType === 'reload') {
         this.logs[info.tabId] = [];
+        this.updateBadgeNumber(info.tabId);
       }
     };
     browser.tabs.onCreated.addListener(onCreatedHandler);
     browser.tabs.onUpdated.addListener(onTabUpdatedHandler);
     browser.tabs.onActivated.addListener(onTabActivatedHandler);
     browser.webNavigation.onCommitted.addListener(onCommittedNavigationHandler);
+
+    // browser.browserAction.setBadgeTextColor({ color: '#000' });
+    browser.browserAction.setBadgeBackgroundColor({ color: '#0fa300' });
   }
   logRequest(details, response) {
     const { type, url, tabId } = details; // frameId
@@ -45,6 +49,7 @@ class Logger {
 
     if (this.logs[tabId] === undefined) {
       this.logs[tabId] = [];
+      this.logs[tabId].logs = [];
     }
     if (this.logs[tabId][type] === undefined) {
       this.logs[tabId][type] = [];
@@ -53,10 +58,18 @@ class Logger {
     const l = this.logs[tabId][type];
     if (l.indexOf(url) === -1) {
       l.push(url);
+      this.updateBadge(tabId);
     }
   }
+  // log(log) {
+  //   this.logs[tabId].logs.push(log);
+  //   console.log('LOOGGGSSS', this.logs[tabId].logs);
+  // }
   updateBadge(tabId, delay = 500) {
-    if (this.timeoutBadge) clearTimeout(this.timeoutBadge);
+    if (this.timeoutBadge) {
+      clearTimeout(this.timeoutBadge);
+    }
+
     this.timeoutBadge = setTimeout(() => {
       this.updateBadgeNumber(tabId);
     }, delay);
@@ -64,7 +77,6 @@ class Logger {
   updateBadgeNumber(tabId) {
     const lg = this.getNumberBlocked(tabId);
     if (lg > 0) {
-      browser.browserAction.setBadgeBackgroundColor({ color: '#61d316' });
       browser.browserAction.setBadgeText({ text: lg.toString() });
     } else {
       browser.browserAction.setBadgeText({ text: '' });

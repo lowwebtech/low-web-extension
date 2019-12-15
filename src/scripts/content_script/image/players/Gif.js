@@ -1,6 +1,7 @@
 import { GIPHY_TOKEN } from '../../../constants';
 import GifPlayer from './GifPlayer';
 import GiphyPlayer from './GiphyPlayer';
+// import Logger from '../../../background/Logger';
 
 (function() {
   let giphies = [];
@@ -26,6 +27,8 @@ import GiphyPlayer from './GiphyPlayer';
     }
   });
 
+  // Logger.log(giphies.length + ' Giphy optimized');
+
   if (giphies.length > 0) {
     let ids = [];
     giphies.forEach(giphy => {
@@ -35,10 +38,10 @@ import GiphyPlayer from './GiphyPlayer';
     fetch('https://api.giphy.com/v1/gifs?api_key=' + GIPHY_TOKEN + '&ids=' + ids.toString(), { cache: 'force-cache' })
       .then(function(response) {
         if (response.status !== 200) {
-          console.warn('Looks like there was a problem. Status Code: ' + response.status);
+          console.warn('Giphy error. Status Code: ' + response.status);
           return;
         }
-        // Examine the text in the response
+
         response.json().then(function(data) {
           data.data.forEach((gifdata, index) => {
             giphies[index].setData(gifdata);

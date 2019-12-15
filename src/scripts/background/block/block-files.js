@@ -1,6 +1,7 @@
 import store from '../../store';
 import { watchFilter } from '../../store/watch';
-import { dataImage, dataTextLink } from '../../utils/data-uri';
+import { dataTextLink } from '../../utils/data-uri';
+// import Logger from '../Logger';
 
 export function blockFiles() {
   let action = function(details) {
@@ -39,6 +40,7 @@ export function blockFiles() {
     if (redirect !== false) {
       response.redirectUrl = redirect;
     }
+    // Logger.logRequest(details, response);
     return response;
   };
 
