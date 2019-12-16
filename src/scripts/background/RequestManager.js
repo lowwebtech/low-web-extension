@@ -67,10 +67,11 @@ class RequestManager {
       if (info.frameId === 0) {
         const hostname = getHostname(info.url);
         if (hostname) {
-          if (this.tabStorage[info.tabId]) {
-            this.tabStorage[info.tabId].pageUrl = info.url;
-            this.tabStorage[info.tabId].domain = hostname;
+          if (!this.tabStorage[info.tabId]) {
+            this.addTab(info.tabId); 
           }
+          this.tabStorage[info.tabId].pageUrl = info.url;
+          this.tabStorage[info.tabId].domain = hostname;
         }
       }
     });

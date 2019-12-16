@@ -3,8 +3,6 @@ import store from '../../store';
 
 export default function() {
   if (store.getters.block_social === 1) {
-    // removeSocialIframes();
-    // removeSocialScripts();
     customSocial();
   }
 }
@@ -35,40 +33,7 @@ function customSocial() {
       }
     };
     browser.runtime.sendMessage(options).then(callback, e => {
-      console.error('error message social');
-      console.error(e);
+      console.error('error message social', e);
     });
   });
 }
-// function removeSocialIframes() {
-//   const iframes = document.querySelectorAll('iframe');
-//   iframes.forEach((iframe, index) => {
-//     let src = iframe.src;
-//     if (src && socialBlocked(src)) {
-//       iframe.parentNode.removeChild(iframe);
-//     }
-//   });
-// }
-// function removeSocialScripts() {
-//   let scripts = document.querySelectorAll('script');
-//   scripts.forEach((script, index) => {
-//     let src = script.src;
-//     if (src && socialBlocked(src)) {
-//       script.parentNode.removeChild(script);
-//     } else {
-//       for (let i = 0, lg = urlsToBlock.length; i < lg; i++) {
-//         if (script.innerText.indexOf(urlsToBlock[i]) !== -1) {
-//           script.parentNode.removeChild(script);
-//         }
-//       }
-//     }
-//   });
-// }
-// function socialBlocked(url) {
-//   for (let i = 0, lg = urlsToBlock.length; i < lg; i++) {
-//     if (window.location.hostname.indexOf(urlsToBlock[i][1]) === -1 && url.indexOf(urlsToBlock[i][0]) !== -1) {
-//       return true;
-//     }
-//   }
-//   return false;
-// }

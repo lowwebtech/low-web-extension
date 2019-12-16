@@ -64,10 +64,10 @@ Some results of optimisations from [various test pages](https://lowwebtech.githu
 
 |        | with extension      | without extension     |      |
 |--------|---------------------|-----------------------|------|
-| video  | 588Kb / 36 requests | 14.3Mb / 169 requests | ~96% |
-| image  | 2.8Mb / 26 requests | 10Mb / 12 requests    | ~72% |
-| social | 332Kb / 40 requests | 7.5Mb / 280 requests  | ~95% |
-| giphy  | 320Kb / 28 requests | 12.3Mb / 31 requests  | ~97% |
+| video  | 456Kb / 22 requests | 4Mb / 107 requests    | ~89% |
+| image  | 993Mb / 30 requests | 7.7Mb / 35 requests   | ~87% |
+| social | 898Kb / 78 requests | 9.3Mb / 330 requests  | ~90% |
+| giphy  | 213Kb / 31 requests | 12.3Mb / 34 requests  | ~98% |
 
 *note 1: these pages are particularly favorable for optimizations*
 
