@@ -71,12 +71,10 @@ export default {
   },
   methods: {
     clickPreset(e){
-      // console.log(parseInt(e.currentTarget.value));
       this.$store.commit('level', parseInt(e.currentTarget.value));
       this.saved();
     },
     getModelId(id){
-      console.log('getModelId', id);
       return id;
     },
     onFieldChange(){

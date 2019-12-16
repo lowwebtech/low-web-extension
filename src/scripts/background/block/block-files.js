@@ -38,6 +38,7 @@ export function blockFiles() {
       response.cancel = true;
     }
     if (redirect !== false) {
+      // response.cancel = true;
       response.redirectUrl = redirect;
     }
     // Logger.logRequest(details, response);

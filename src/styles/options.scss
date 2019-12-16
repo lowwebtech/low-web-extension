@@ -20,6 +20,20 @@
     visibility: visible;
   }
 }
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+hr{
+  border: 0;
+  border-top: 1px solid #BBB;
+}
 .inline {
   display: inline-block;
 }
@@ -74,4 +88,6 @@
 }
 button {
   margin-top: 10px;
+  padding-left: 4px;
+  padding-right: 3px;
 }

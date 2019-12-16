@@ -6,7 +6,7 @@ const mutations = {};
 for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
   let o = jsonOptions[i];
   mutations[o.id] = function(state, value) {
-    console.log('update', o.id, value);
+    // console.log('update', o.id, value);
     state[o.id] = value;
   };
 }
@@ -17,44 +17,38 @@ mutations.url = function(state, url) {
 };
 mutations.level = function(state, level) {
   state.level = level;
-
   let o;
   for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
     o = jsonOptions[i];
     store.commit(o.id, o.presets[parseInt(level)]);
   }
 };
-// mutations.active = function(state, active) {
-//   state.active = active;
-// };
 mutations.pauseWebsite = function(state, website) {
   const index = state.pausedWebsites.indexOf(website);
   if (index === -1) {
     state.pausedWebsites.push(website);
-    // browser.tabs.reload({ bypassCache: true });
-    if (browser.tabs) browser.tabs.reload();
+    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
   }
 };
 mutations.resumeWebsite = function(state, website) {
   const index = state.pausedWebsites.indexOf(website);
   if (index !== -1) {
     state.pausedWebsites.splice(index, 1);
-    if (browser.tabs) browser.tabs.reload();
+    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
   }
 };
 mutations.pausePage = function(state, page) {
   const index = state.pausedPages.indexOf(page);
   if (index === -1) {
     state.pausedPages.push(page);
-    // browser.tabs.reload({ bypassCache: true });
-    if (browser.tabs) browser.tabs.reload();
+    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
   }
 };
 mutations.resumePage = function(state, page) {
   const index = state.pausedPages.indexOf(page);
   if (index !== -1) {
     state.pausedPages.splice(index, 1);
-    if (browser.tabs) browser.tabs.reload();
+    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
   }
 };
 // mutations.resetActive = function(state) {

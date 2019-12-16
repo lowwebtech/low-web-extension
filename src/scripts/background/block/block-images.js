@@ -15,6 +15,7 @@ const blockGiphy = details => {
     if (type === 'image' && parentFrameId === -1 && url.indexOf('.giphy.com/media') !== -1) {
       if (url.indexOf('lowweb=' + TOKEN) === -1) {
         response.redirectUrl = dataImage();
+        // response.cancel = true;
       }
     }
 
@@ -22,6 +23,7 @@ const blockGiphy = details => {
     if (type === 'sub_frame' && url.indexOf('giphy.com/embed/') !== -1) {
       if (url.indexOf('lowweb=' + TOKEN) === -1) {
         response.redirectUrl = dataTextLink(url);
+        // response.cancel = true;
       }
     }
   }

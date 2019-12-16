@@ -15,8 +15,16 @@ import { cssAnimation } from './css-animation';
 import { blockEmbedVideo } from './block/block-embed-video';
 import { onMessageOEmbed } from './message/oembed';
 /* eslint-enable import/first, indent */
-
+browser.runtime.onStartup.addListener(details => {
+  // console.log('runtime.onStartup', details);
+  startLow();
+});
 browser.runtime.onInstalled.addListener(details => {
+  // console.log('runtime.onInstalled', details);
+  startLow(details);
+});
+
+function startLow(details) {
   setTimeout(() => {
     Logger.init();
     RequestManager.init();
@@ -31,11 +39,12 @@ browser.runtime.onInstalled.addListener(details => {
     // blockAds();
     blockEmbedVideo();
     cssAnimation();
-  }, 100);
+  }, 300);
 
   const addConnect = port => {
+    // console.log('runtime.onConnect');
     onMessageOEmbed(port);
     browser.runtime.onConnect.removeListener(addConnect);
   };
   browser.runtime.onConnect.addListener(addConnect);
-});
+}

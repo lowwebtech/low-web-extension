@@ -1,4 +1,5 @@
-// import RequestManager from './RequestManager';
+import RequestManager from './RequestManager';
+import store from '../store';
 
 class Logger {
   constructor() {
@@ -25,7 +26,14 @@ class Logger {
     };
     const onCommittedNavigationHandler = info => {
       // console.log('onCommitted', info.transitionType, info);
-      if (info.transitionType === 'reload') {
+      if (info.transitionType === 'reload' || info.transitionType === 'link') {
+        this.logs[info.tabId] = [];
+        this.updateBadgeNumber(info.tabId);
+      }
+    };
+    const onBeforeNavigationHandler = info => {
+      // console.log('onBeforeNavigate', info);
+      if (info.frameId === 0) {
         this.logs[info.tabId] = [];
         this.updateBadgeNumber(info.tabId);
       }
@@ -33,9 +41,11 @@ class Logger {
     browser.tabs.onCreated.addListener(onCreatedHandler);
     browser.tabs.onUpdated.addListener(onTabUpdatedHandler);
     browser.tabs.onActivated.addListener(onTabActivatedHandler);
+    // browser.history.onVisited.addListener(onVisitedHandler);
     browser.webNavigation.onCommitted.addListener(onCommittedNavigationHandler);
+    browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigationHandler);
 
-    // browser.browserAction.setBadgeTextColor({ color: '#000' });
+    if (browser.browserAction.setBadgeTextColor) browser.browserAction.setBadgeTextColor({ color: '#FFF' });
     browser.browserAction.setBadgeBackgroundColor({ color: '#0fa300' });
   }
   logRequest(details, response) {
@@ -61,10 +71,6 @@ class Logger {
       this.updateBadge(tabId);
     }
   }
-  // log(log) {
-  //   this.logs[tabId].logs.push(log);
-  //   console.log('LOOGGGSSS', this.logs[tabId].logs);
-  // }
   updateBadge(tabId, delay = 500) {
     if (this.timeoutBadge) {
       clearTimeout(this.timeoutBadge);
@@ -75,12 +81,22 @@ class Logger {
     }, delay);
   }
   updateBadgeNumber(tabId) {
+    const tab = RequestManager.getTab(tabId);
     const lg = this.getNumberBlocked(tabId);
-    if (lg > 0) {
-      browser.browserAction.setBadgeText({ text: lg.toString() });
+
+    let str = '';
+    let color;
+    if (!tab || store.getters.isActive(tab.pageUrl, tab.domain)) {
+      if (lg > 0) {
+        str = lg.toString();
+      }
+      color = '#0fa300';
     } else {
-      browser.browserAction.setBadgeText({ text: '' });
+      str = ' ';
+      color = '#fa593a';
     }
+    browser.browserAction.setBadgeText({ text: str });
+    browser.browserAction.setBadgeBackgroundColor({ color: color });
   }
   getNumberBlocked(tabId) {
     if (this.logs[tabId]) {

@@ -9,16 +9,13 @@ export function saveDataHeader() {
       if (tab && tab.pageUrl && store.getters.isActive(tab.pageUrl, tab.domain)) {
         if (store.getters.save_data) {
           var headers = details.requestHeaders;
-          // Check if browser or another extension has already enabled the header
           for (let i = 0, lg = headers.length; i < lg; ++i) {
             if ('name' in headers[i] && headers[i].name.toLowerCase().indexOf('save-data') >= 0) {
-              // Return the original headers
               return {
                 requestHeaders: details.requestHeaders,
               };
             }
           }
-          // Append the actual header
           headers.push({
             name: 'Save-Data',
             value: 'on',

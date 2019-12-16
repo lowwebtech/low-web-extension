@@ -37,7 +37,6 @@ export default function() {
       } else if (video.external_player && video.external_player !== '') {
         if (video.domains.indexOf(window.location.hostname) === -1) {
           // jsUrl = video.external_player
-          // console.log(jsUrl)
           // let script = document.createElement('script');
           // script.type = 'text/javascript';
           // script.src = browser.runtime.getURL(jsUrl);

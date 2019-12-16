@@ -2,6 +2,7 @@
   "name": "low-web-extension",
   "description": "Reduce energy consumption and carbon footprint of your internet browsing.",
   "version": null,
+  "short_name": "low.",
   "manifest_version": 2,
   "icons": {
     "48": "icons/icon_48.png",
@@ -9,12 +10,12 @@
     "128": "icons/icon_128.png"
   },
   "permissions": [
-    "<all_urls>",
+    "storage",
+    "tabs",
     "webNavigation",
     "webRequest",
     "webRequestBlocking",
-    "activeTab",
-    "storage"
+    "<all_urls>"
   ],
   "browser_action": {
     "browser_style": true,

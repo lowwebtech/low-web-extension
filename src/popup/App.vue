@@ -95,7 +95,7 @@ export default {
   methods: {
     clickPreset(e){
       this.$store.commit('level', parseInt(e.currentTarget.value));
-      if (browser.tabs) browser.tabs.reload();
+      if (browser.tabs) browser.tabs.reload({ bypassCache: true });
       this.displayReloadNote();
     },
     openOptions(){
@@ -129,8 +129,14 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../styles/options.scss";
+html, body {
+  background: white;
+  width: 320px;
+  padding: 10px;
+}
 .popup{
-  width: 270px; 
+  width: 300px; 
+  margin: 10px;
   .input__label{
     width: 105px;
   }

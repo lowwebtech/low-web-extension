@@ -1,14 +1,20 @@
 .lowdocs{
 
 }
+
+body{
+  // text-align: center;
+  background-color: #F0F0F0;
+}
 img{
   max-width: 100%;
   height: auto;
+  &.half{
+    width: 50%;
+    height: auto;
+  }
 }
-img.half{
-  width: 50%;
-  height: auto;
-}
+
 figure{
   margin: 0;
 }
@@ -20,9 +26,10 @@ p{
   margin: 0;
   max-width: 768px;
 }
-body{
-  // text-align: center;
-  background-color: #F0F0F0;
+hr{
+  color: #CCC;
+  border: 0;
+  border-top: 1px solid #CCC;
 }
 section{
   margin: 0 20px 40px;
