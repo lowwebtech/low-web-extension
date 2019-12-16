@@ -68,7 +68,7 @@ class RequestManager {
         const hostname = getHostname(info.url);
         if (hostname) {
           if (!this.tabStorage[info.tabId]) {
-            this.addTab(info.tabId); 
+            this.addTab(info.tabId);
           }
           this.tabStorage[info.tabId].pageUrl = info.url;
           this.tabStorage[info.tabId].domain = hostname;

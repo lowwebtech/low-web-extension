@@ -1,3 +1,7 @@
+## 0.0.4
+- fix when page is opened in new background tab
+- fix giphy iframe detection
+
 ## 0.0.3
 - new UI, badge icon, popup
 - pause/resume page or website
