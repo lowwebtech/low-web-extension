@@ -9,6 +9,8 @@ export default class GiphyPlayer extends GifPlayer {
 
     const src = el.src;
     if (el.tagName === 'IFRAME') {
+      el.marginWidth = 0;
+      el.marginHeight = 0;
       const img = document.createElement('img');
       img.setAttribute('crossorigin', 'anonymous');
       this.image = img;

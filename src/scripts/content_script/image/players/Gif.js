@@ -20,13 +20,9 @@ import GiphyPlayer from './GiphyPlayer';
     }
   });
 
-  let iframes = document.querySelectorAll('iframe');
+  let iframes = document.querySelectorAll('iframe[src*="giphy.com/embed/"]');
   iframes.forEach(iframe => {
-    iframe.marginWidth = 0;
-    iframe.marginHeight = 0;
-    if (iframe.src.indexOf('giphy.com/embed/') !== -1) {
-      giphies.push(new GiphyPlayer(iframe));
-    }
+    giphies.push(new GiphyPlayer(iframe));
   });
 
   // Logger.log(giphies.length + ' Giphy optimized');
