@@ -2,6 +2,7 @@
 
 Reduce energy consumption and carbon footprint of your internet browsing.
 
+Chromium : [https://chrome.google.com/webstore/detail/low-web-extension/jllfpicflcigpegdmejghjhaehdiabfj](https://chrome.google.com/webstore/detail/low-web-extension/jllfpicflcigpegdmejghjhaehdiabfj)
 Firefox : [https://addons.mozilla.org/fr/firefox/addon/low-web-extension/](https://addons.mozilla.org/fr/firefox/addon/low-web-extension/)
 
 :green_heart::herb::deciduous_tree::evergreen_tree::earth_africa:

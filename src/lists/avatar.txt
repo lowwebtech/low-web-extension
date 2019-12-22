@@ -33,5 +33,6 @@ i.etsystatic.com/iusa$image
 i.etsystatic.com/isla$image
 ak.picdn.net/contributors/*/avatars$image
 muscache.com/im/pictures/user/$image
-mozit.cloud/letter_avatar/
-mozit.cloud/user_avatar/
+mozit.cloud/letter_avatar/$image
+mozit.cloud/user_avatar/$image
+awwwards.com/awards/media/cache/thumb_user_$image

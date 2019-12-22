@@ -1,5 +1,3 @@
 use.typekit.net/$stylesheet,domain=typekit.com|fonts.adobe.com
 fonts.googleapis.com/css$domain=fonts.google.com
 fonts.gstatic.com$domain=fonts.google.com
-kit.fontawesome.com$domain=fontawesome.com
-use.fontawesome.com$domain=fontawesome.com
