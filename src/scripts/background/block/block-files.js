@@ -23,7 +23,10 @@ export function blockFiles() {
         if (store.getters.block_subframes === 1) redirect = dataTextLink(url);
         break;
       case 'font':
-        cancel = store.getters.block_fonts;
+        // exclude main font icons
+        if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('typicons') === -1) {
+          cancel = store.getters.block_fonts;
+        }
         break;
       case 'image':
       case 'imageset':
