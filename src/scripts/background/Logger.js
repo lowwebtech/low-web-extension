@@ -8,16 +8,22 @@ class Logger {
   init() {
     this.currentTab = undefined;
     const onCreatedHandler = tab => {
-      this.logs[tab.tabId] = [];
+      if (tab && tab.tabId) {
+        this.logs[tab.tabId] = {};
+      }
     };
     const onTabActivatedHandler = tab => {
-      this.currentTab = tab;
-      this.updateBadgeNumber(tab.tabId);
+      if (tab && tab.tabId) {
+        this.currentTab = tab;
+        this.updateBadgeNumber(tab.tabId);
+      }
     };
     const onTabUpdatedHandler = (tabId, changeInfo, tabInfo) => {
       if (changeInfo.url) {
-        this.logs[tabId] = [];
-        this.updateBadgeNumber(tabId);
+        if (tabId) {
+          this.logs[tabId] = {};
+          this.updateBadgeNumber(tabId);
+        }
       }
       if (changeInfo.status === 'loading') {
       } else if (changeInfo.status === 'complete') {
@@ -27,15 +33,19 @@ class Logger {
     const onCommittedNavigationHandler = info => {
       // console.log('onCommitted', info.transitionType, info);
       if (info.transitionType === 'reload' || info.transitionType === 'link') {
-        this.logs[info.tabId] = [];
-        this.updateBadgeNumber(info.tabId);
+        if (info.tabId) {
+          this.logs[info.tabId] = {};
+          this.updateBadgeNumber(info.tabId);
+        }
       }
     };
     const onBeforeNavigationHandler = info => {
       // console.log('onBeforeNavigate', info);
       if (info.frameId === 0) {
-        this.logs[info.tabId] = [];
-        this.updateBadgeNumber(info.tabId);
+        if (info.tabId) {
+          this.logs[info.tabId] = {};
+          this.updateBadgeNumber(info.tabId);
+        }
       }
     };
     browser.tabs.onCreated.addListener(onCreatedHandler);
@@ -45,30 +55,47 @@ class Logger {
     browser.webNavigation.onCommitted.addListener(onCommittedNavigationHandler);
     browser.webNavigation.onBeforeNavigate.addListener(onBeforeNavigationHandler);
 
+    // add handler for logging from content_script
+    const onMessageLogHandler = (request, sender, sendResponse) => {
+      // console.log('onMessageLogHandler', request, sender, sendResponse);
+      console.log('--- getStats', this.logs);
+      console.log('--', RequestManager.currentTabId);
+
+      if (request.message === 'getStats') {
+        if (this.logs[RequestManager.currentTabId]) {
+          const resp = {
+            logs: this.logs[RequestManager.currentTabId],
+            tabId: RequestManager.currentTabId,
+          };
+          sendResponse(resp);
+        }
+      }
+      return true;
+    };
+    if (!browser.runtime.onMessage.hasListener(onMessageLogHandler)) {
+      browser.runtime.onMessage.addListener(onMessageLogHandler);
+    }
+
     if (browser.browserAction.setBadgeTextColor) browser.browserAction.setBadgeTextColor({ color: '#FFF' });
     browser.browserAction.setBadgeBackgroundColor({ color: '#0fa300' });
   }
   logRequest(details, response) {
     const { type, url, tabId } = details; // frameId
 
-    // if (response.cancel) {
-    //   console.warn('request cancel :', url);
-    // } else if (response.redirectUrl) {
-    //   console.warn('request redirect :', url);
-    // }
+    if (tabId) {
+      if (this.logs[tabId] === undefined) {
+        this.logs[tabId] = {};
+        // this.logs[tabId].logs = [];
+      }
+      if (this.logs[tabId][type] === undefined) {
+        this.logs[tabId][type] = [];
+      }
 
-    if (this.logs[tabId] === undefined) {
-      this.logs[tabId] = [];
-      this.logs[tabId].logs = [];
-    }
-    if (this.logs[tabId][type] === undefined) {
-      this.logs[tabId][type] = [];
-    }
-
-    const l = this.logs[tabId][type];
-    if (l.indexOf(url) === -1) {
-      l.push(url);
-      this.updateBadge(tabId);
+      const l = this.logs[tabId][type];
+      if (l.indexOf(url.toString()) === -1) {
+        l.push(url);
+        this.updateBadge(tabId);
+      }
     }
   }
   updateBadge(tabId, delay = 500) {
@@ -81,22 +108,25 @@ class Logger {
     }, delay);
   }
   updateBadgeNumber(tabId) {
-    const tab = RequestManager.getTab(tabId);
-    const lg = this.getNumberBlocked(tabId);
+    if (tabId) {
+      const tab = RequestManager.getTab(tabId);
+      const lg = this.getNumberBlocked(tabId);
+      // console.log(this.logs, tabId, this.logs[tabId]);
 
-    let str = '';
-    let color;
-    if (!tab || store.getters.isActive(tab.pageUrl, tab.domain)) {
-      if (lg > 0) {
-        str = lg.toString();
+      let str = '';
+      let color;
+      if (!tab || store.getters.isActive(tab.pageUrl, tab.domain)) {
+        if (lg > 0) {
+          str = lg.toString();
+        }
+        color = '#00d000';
+      } else {
+        str = ' ';
+        color = '#fa593a';
       }
-      color = '#0fa300';
-    } else {
-      str = ' ';
-      color = '#fa593a';
+      browser.browserAction.setBadgeText({ text: str });
+      browser.browserAction.setBadgeBackgroundColor({ color: color });
     }
-    browser.browserAction.setBadgeText({ text: str });
-    browser.browserAction.setBadgeBackgroundColor({ color: color });
   }
   getNumberBlocked(tabId) {
     if (this.logs[tabId]) {

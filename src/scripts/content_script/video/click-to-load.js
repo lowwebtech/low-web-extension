@@ -14,7 +14,7 @@ export default function() {
       fetch(browser.runtime.getURL('oembed/style.css'), { cache: 'force-cache' })
         .then(function(response) {
           if (response.status === 200) {
-            return response.text();  
+            return response.text();
           }
           return true;
         })

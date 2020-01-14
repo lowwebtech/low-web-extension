@@ -47,6 +47,7 @@
 global.browser = require('webextension-polyfill');
 import store from '../scripts/store';
 /* eslint-enable import/first, indent */
+import Logger from '../scripts/background/Logger';
 
 export default {
   data() {
@@ -55,12 +56,10 @@ export default {
       url: false,
       hostname: false,
       reloadNote: false,
+      blocked: false,
     };
   },
   computed: {
-    blocked() {
-      return ;
-    },
     level: {
       get () {
         return this.$store.state.level;
@@ -89,10 +88,45 @@ export default {
           }
         }).then((url)=>{
           this.url = url;
-          this.hostname = new URL(url).hostname;
+          if(url){
+            const u = new URL(url)
+            this.hostname = u.hostname;  
+          }
         });
+
+    const statsHandler = stats => {
+      if(stats){
+        this.blocked = this.formatStats(stats);
+      }
+    };
+    let options = {
+      message: 'getStats',
+      options: {
+        url: "hello",
+      }
+    };
+    browser.runtime.sendMessage(options).then(statsHandler, e => {
+      console.error('error message stats', e);
+    });
   },
   methods: {
+    formatStats(stats){
+      this.stats = stats;
+      let str = '';
+      const logs = this.stats.logs;
+      const keys = Object.keys(logs);
+      if(keys.length > 0) {
+        let k;
+        str = 'Files blocked : ';
+        for (const key of keys) {
+          k = key;
+          if (logs[key].length > 1) k += 's';
+          str += logs[key].length + ' ' + k + ', '
+        }
+        str = str.substring(0, str.length - 2);
+      }
+      return str; 
+    },
     clickPreset(e){
       this.$store.commit('level', parseInt(e.currentTarget.value));
       if (browser.tabs) browser.tabs.reload({ bypassCache: true });

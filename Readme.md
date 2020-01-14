@@ -2,9 +2,8 @@
 
 Reduce energy consumption and carbon footprint of your internet browsing.
 
-Chromium : [https://chrome.google.com/webstore/detail/low-web-extension/jllfpicflcigpegdmejghjhaehdiabfj](https://chrome.google.com/webstore/detail/low-web-extension/jllfpicflcigpegdmejghjhaehdiabfj) 
-
-Firefox : [https://addons.mozilla.org/fr/firefox/addon/low-web-extension/](https://addons.mozilla.org/fr/firefox/addon/low-web-extension/)
+- Chromium : [https://chrome.google.com/webstore/detail/low-web-extension/jllfpicflcigpegdmejghjhaehdiabfj](https://chrome.google.com/webstore/detail/low-web-extension/jllfpicflcigpegdmejghjhaehdiabfj) 
+- Firefox : [https://addons.mozilla.org/fr/firefox/addon/low-web-extension/](https://addons.mozilla.org/fr/firefox/addon/low-web-extension/)
 
 :green_heart::herb::deciduous_tree::evergreen_tree::earth_africa:
 
@@ -123,10 +122,10 @@ https://lowwebtech.github.io/low-web-extension/
         
 - smaller injected script and styles
 - inject script and styles only when needed
-- audit the extension to limit size and processes (reflow)
+- audit the extension to limit size and processes (init, reflow...)
 - display advice/tips to reduce bandwidth for main websites
 - display time alerts
-- rewrite save-data header
+- try to block popin when mouse leaves the viewport 
 - block chatbot
 - CSP
 - try to debounce/throttle events like resize/scroll...

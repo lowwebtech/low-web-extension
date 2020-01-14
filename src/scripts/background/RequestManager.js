@@ -99,35 +99,6 @@ class RequestManager {
       };
     }
   }
-  // queryDomain(tabId) {
-  //   if (this.tabStorage[tabId].waitingDomain !== true) {
-  //     this.tabStorage[tabId].waitingDomain = true;
-  //     browser.tabs.query({ currentWindow: true, active: true, windowType:"normal" }).then(
-  //       tabs => {
-  //         let domainOk = false;
-  //         if (tabs.length > 0) {
-  //           let t = tabs[0];
-  //           if (this.tabStorage && this.tabStorage[t.id]) {
-  //             const hostname = getHostname(t.url);
-  //             if (hostname) {
-  //               this.tabStorage[t.id].pageUrl = t.url;
-  //               this.tabStorage[t.id].domain = hostname;
-  //               domainOk = true;
-  //             }
-  //           }
-  //         }
-  //         if (!domainOk) {
-  //           this.tabStorage[tabId].waitingDomain = false;
-  //         }
-  //       },
-  //       error => {
-  //         if (error) {
-  //           this.tabStorage[tabId].waitingDomain = false;
-  //         }
-  //       }
-  //     );
-  //   }
-  // }
 }
 
 let requestManager = new RequestManager();
