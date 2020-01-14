@@ -24,7 +24,7 @@ export function blockFiles() {
         break;
       case 'font':
         // exclude main font icons
-        if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('typicons') === -1) {
+        if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('icon') === -1) {
           cancel = store.getters.block_fonts;
         }
         break;

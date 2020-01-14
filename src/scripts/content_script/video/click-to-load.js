@@ -13,7 +13,10 @@ export default function() {
       // TODO split css by embed type
       fetch(browser.runtime.getURL('oembed/style.css'), { cache: 'force-cache' })
         .then(function(response) {
-          return response.text();
+          if (response.status === 200) {
+            return response.text();  
+          }
+          return true;
         })
         .then(function(css) {
           customIframes(css);

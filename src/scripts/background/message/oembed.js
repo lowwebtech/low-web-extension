@@ -4,7 +4,11 @@ export function onMessageOEmbed(port) {
       // TODO cache oembed call
       return fetch(request.options.oembedUrl, { cache: 'force-cache' })
         .then(res => {
-          return res.json();
+          console.log('oembed', res.status, res)
+          if (res.status === '200'){
+            return res.json();
+          }
+          return true;
         })
         .catch(function(error) {
           console.error('oembed error', error);
