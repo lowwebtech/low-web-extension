@@ -56,7 +56,7 @@ export default {
       url: false,
       hostname: false,
       reloadNote: false,
-      blocked: false,
+      blocked: '',
     };
   },
   computed: {

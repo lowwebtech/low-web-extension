@@ -35,7 +35,7 @@ import GiphyPlayer from './GiphyPlayer';
 
     fetch('https://api.giphy.com/v1/gifs?api_key=' + GIPHY_TOKEN + '&ids=' + ids.toString(), { cache: 'force-cache' })
       .then(function(response) {
-        if (response.status !== 200) {
+        if (!response || response.status !== 200) {
           console.warn('Giphy error. Status Code: ' + response.status);
           return;
         }
