@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import jsonOptions from './options.json';
 import getters from './getters';
-// import { watchPaused } from './watch';
 import mutations from './mutations';
 // import * as actions from './actions';
 import VuexWebExtensions from 'vuex-webextensions';
@@ -43,5 +42,3 @@ export default new Vuex.Store({
   mutations,
   // actions,
 });
-
-// watchPaused();

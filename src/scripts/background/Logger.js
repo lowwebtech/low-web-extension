@@ -57,17 +57,9 @@ class Logger {
 
     // add handler for logging from content_script
     const onMessageLogHandler = (request, sender, sendResponse) => {
-      // console.log('onMessageLogHandler', request, sender, sendResponse);
-      console.log('--- getStats', this.logs);
-      console.log('--', RequestManager.currentTabId);
-
-      if (request.message === 'getStats') {
+      if (request.message === 'getLogs') {
         if (this.logs[RequestManager.currentTabId]) {
-          const resp = {
-            logs: this.logs[RequestManager.currentTabId],
-            tabId: RequestManager.currentTabId,
-          };
-          sendResponse(resp);
+          sendResponse(this.logs[RequestManager.currentTabId]);
         }
       }
       return true;
@@ -126,6 +118,14 @@ class Logger {
       }
       browser.browserAction.setBadgeText({ text: str });
       browser.browserAction.setBadgeBackgroundColor({ color: color });
+
+      chrome.runtime.sendMessage({
+        message: "updateLogs",
+        data: {
+          logs: this.logs[RequestManager.currentTabId],
+          tabId: RequestManager.currentTabId,
+        }
+      });
     }
   }
   getNumberBlocked(tabId) {

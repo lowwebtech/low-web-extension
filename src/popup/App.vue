@@ -68,7 +68,6 @@ export default {
         this.$store.commit('level', value);
       }
     },
-
     currentPage(){
       return this.$store.getters.isPageActive(this.url);
     },
@@ -94,26 +93,33 @@ export default {
           }
         });
 
-    const statsHandler = stats => {
-      if(stats){
-        this.blocked = this.formatStats(stats);
+    chrome.runtime.onMessage.addListener(
+      (request, sender, sendResponse) => {
+        console.log('request', request.message);
+        if (request.message === "updateLogs") {
+          console.log('request', request.data);
+          if (request.data && request.data.logs){
+            this.blocked = this.formatLogs(request.data.logs);  
+          }
+        }
+      }
+    );
+
+    const logsHandler = logs => {
+      if(logs){
+        this.blocked = this.formatLogs(logs);
       }
     };
-    let options = {
-      message: 'getStats',
-      options: {
-        url: "hello",
-      }
-    };
-    browser.runtime.sendMessage(options).then(statsHandler, e => {
-      console.error('error message stats', e);
+    browser.runtime.sendMessage({
+      message: 'getLogs'
+    }).then(logsHandler, e => {
+      console.error('error message logs', e);
     });
+
   },
   methods: {
-    formatStats(stats){
-      this.stats = stats;
+    formatLogs(logs){
       let str = '';
-      const logs = this.stats.logs;
       const keys = Object.keys(logs);
       if(keys.length > 0) {
         let k;
