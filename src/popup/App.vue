@@ -93,15 +93,14 @@ export default {
           }
         });
 
-    chrome.runtime.onMessage.addListener(
+    browser.runtime.onMessage.addListener(
       (request, sender, sendResponse) => {
-        console.log('request', request.message);
         if (request.message === "updateLogs") {
-          console.log('request', request.data);
           if (request.data && request.data.logs){
             this.blocked = this.formatLogs(request.data.logs);  
           }
         }
+        return true;
       }
     );
 

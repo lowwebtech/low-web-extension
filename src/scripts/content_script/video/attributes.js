@@ -5,10 +5,11 @@ export default function() {
     // TODO add button play
     let videos = document.querySelectorAll('video');
     videos.forEach(item => {
-      // item.parentNode.removeChild(item)
       item.setAttribute('preload', 'none');
-      item.removeAttribute('autoplay');
-      item.removeAttribute('loop');
+      item.setAttribute('autoplay', false);
+      item.setAttribute('loop', false);
+      item.pause();
+      // TODO add event and/or timeout to pause
     });
   }
 }

@@ -4,28 +4,43 @@ import videoToBlock from '../../video-to-block';
 import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
 import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId } from '../../utils/get-video-id';
 
+let style;
 export default function() {
   if (store.getters.video_clicktoload === 1) {
     let iframes = document.querySelectorAll('iframe');
 
     if (iframes.length > 0) {
-      // TODO find a way to cache, inline ?
-      // TODO split css by embed type
-      fetch(browser.runtime.getURL('oembed/style.css'), { cache: 'force-cache' })
-        .then(function(response) {
-          console.log(response);
-          if (!response || response.status !== 200) {
-            return true;
-          }
-          return response.text();
-        })
-        .then(function(css) {
-          customIframes(css);
-        });
+      loadStyles();
     }
+
+    browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+      if (request.message === 'embedVideoBlocked') {
+        if (style){
+          customIframes();  
+        }else{
+          loadStyles();
+        }
+      }
+      return true;
+    });
   }
 }
-function customIframes(style) {
+function loadStyles(){
+  // TODO split css by embed type
+  fetch(browser.runtime.getURL('oembed/style.css'), { cache: 'force-cache' })
+    .then(function(response) {
+      if (!response || response.status !== 200) {
+        return true;
+      }
+      return response.text();
+    })
+    .then(css => {
+      style = css;
+      customIframes();
+    });
+}
+function customIframes() {
+  console.log('customIframes')
   let iframes = document.querySelectorAll('iframe');
 
   iframes.forEach(iframe => {
@@ -56,7 +71,7 @@ function customIframes(style) {
               },
             };
 
-            const callback = function(oembed) {
+            const callback = oembed => {
               if (oembed) {
                 // button
                 if (dataVideoBlock.skin) {

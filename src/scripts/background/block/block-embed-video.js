@@ -6,8 +6,19 @@ export function blockEmbedVideo() {
   const action = details => {
     let response = {};
     if (details.type === 'sub_frame') {
-      const { url } = details;
+      const { url, tabId } = details;
       if (url.indexOf('lowweb=' + TOKEN) === -1) {
+        browser.tabs
+          .sendMessage(tabId, {
+            message: 'embedVideoBlocked',
+            url: url,
+          })
+          .then(
+            () => {},
+            e => {
+              console.log('error message blockEmbedVideo', e);
+            }
+          );
         response.redirectUrl = dataTextLink(url);
         // response.cancel = true;
       }

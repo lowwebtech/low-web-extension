@@ -72,12 +72,11 @@ class Logger {
     browser.browserAction.setBadgeBackgroundColor({ color: '#0fa300' });
   }
   logRequest(details, response) {
-    const { type, url, tabId } = details; // frameId
+    const { type, url, tabId } = details;
 
     if (tabId) {
       if (this.logs[tabId] === undefined) {
         this.logs[tabId] = {};
-        // this.logs[tabId].logs = [];
       }
       if (this.logs[tabId][type] === undefined) {
         this.logs[tabId][type] = [];
@@ -119,13 +118,20 @@ class Logger {
       browser.browserAction.setBadgeText({ text: str });
       browser.browserAction.setBadgeBackgroundColor({ color: color });
 
-      chrome.runtime.sendMessage({
-        message: "updateLogs",
-        data: {
-          logs: this.logs[RequestManager.currentTabId],
-          tabId: RequestManager.currentTabId,
-        }
-      });
+      browser.runtime
+        .sendMessage({
+          message: 'updateLogs',
+          data: {
+            logs: this.logs[RequestManager.currentTabId],
+            tabId: RequestManager.currentTabId,
+          },
+        })
+        .then(
+          message => {},
+          error => {
+            console.log('error message updateLogs', error);
+          }
+        );
     }
   }
   getNumberBlocked(tabId) {
