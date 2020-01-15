@@ -24,7 +24,7 @@ export function watchList(name, listTxt) {
   store.watch(
     (state, getters) => getters[name],
     (newValue, oldValue) => {
-      console.log(`Updating list ${name} from ${oldValue} to ${newValue}`);
+      // console.log(`Updating list ${name} from ${oldValue} to ${newValue}`);
       if (newValue === 0) {
         Blocker.removeListToBlock(listTxt);
       } else if (newValue === 1) {

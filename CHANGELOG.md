@@ -1,3 +1,10 @@
+## 0.0.5
+- custom video embed on demand. Previously, video embed customisation was done one time after page loading (event 'load'). Now, a embed request blocked by background script triggers customisation in content_script
+- debug iframe customisation, previously iframe.src cause a new entry in history. Now, a new iframe is created and replace the blocked one
+- list files blocked in popup
+- test fetch response status 200
+- exclude icon fonts : 'fontawesome', 'fontello', 'icon'
+
 ## 0.0.4
 - fix when page is opened in new background tab
 - fix giphy iframe detection

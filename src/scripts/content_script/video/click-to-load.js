@@ -15,9 +15,9 @@ export default function() {
 
     browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
       if (request.message === 'embedVideoBlocked') {
-        if (style){
-          customIframes();  
-        }else{
+        if (style) {
+          customIframes();
+        } else {
           loadStyles();
         }
       }
@@ -25,7 +25,8 @@ export default function() {
     });
   }
 }
-function loadStyles(){
+
+function loadStyles() {
   // TODO split css by embed type
   fetch(browser.runtime.getURL('oembed/style.css'), { cache: 'force-cache' })
     .then(function(response) {
@@ -39,8 +40,8 @@ function loadStyles(){
       customIframes();
     });
 }
+
 function customIframes() {
-  console.log('customIframes')
   let iframes = document.querySelectorAll('iframe');
 
   iframes.forEach(iframe => {
