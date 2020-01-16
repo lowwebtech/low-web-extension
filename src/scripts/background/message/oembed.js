@@ -12,9 +12,8 @@ export function onMessageOEmbed(port) {
         .catch(function(error) {
           console.error('oembed error', error);
         });
-    } else {
-      return true;
     }
+    return true;
   };
   if (!browser.runtime.onMessage.hasListener(handleOEmbedMessage)) {
     browser.runtime.onMessage.addListener(handleOEmbedMessage);

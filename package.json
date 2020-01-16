@@ -63,6 +63,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^5.2.2",
     "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
     "husky": "^2.4.0",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.9.3",
@@ -75,6 +76,6 @@
     "web-ext-types": "^2.1.0",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
-    "webpack-extension-reloader": "^1.1.0"
+    "webpack-extension-reloader": "^1.1.4"
   }
 }

@@ -48,6 +48,7 @@ global.browser = require('webextension-polyfill');
 import store from '../scripts/store';
 /* eslint-enable import/first, indent */
 import Logger from '../scripts/background/Logger';
+import RequestManager from '../scripts/background/Logger';
 
 export default {
   data() {
@@ -87,32 +88,34 @@ export default {
           }
         }).then((url)=>{
           this.url = url;
-          if(url){
+          if(url && url !== -1){
             const u = new URL(url)
             this.hostname = u.hostname;  
           }
         });
 
-    browser.runtime.onMessage.addListener(
-      (request, sender, sendResponse) => {
-        if (request.message === "updateLogs") {
-          if (request.data && request.data.logs){
-            this.blocked = this.formatLogs(request.data.logs);  
-          }
+    const onUpdateLogs = (request, sender, sendResponse) => {
+      if (request.message === "updateLogs") {
+        if (request.data && request.data.logs){
+          this.blocked = this.formatLogs(request.data.logs);
+          return Promise.resolve({ message: 'logsUpdated', result: 'ok' })
         }
-        return true;
       }
-    );
+      return true;
+    };
+    if (!browser.runtime.onMessage.hasListener(onUpdateLogs)) {
+      browser.runtime.onMessage.addListener(onUpdateLogs);
+    }
 
-    const logsHandler = logs => {
-      if(logs){
-        this.blocked = this.formatLogs(logs);
+    const logsHandler = response => {
+      if(response && response.logs){
+        this.blocked = this.formatLogs(response.logs);
       }
     };
     browser.runtime.sendMessage({
       message: 'getLogs'
     }).then(logsHandler, e => {
-      console.error('error message logs', e);
+      console.log('error message logs', e);
     });
 
   },

@@ -13,7 +13,7 @@ export default function() {
       loadStyles();
     }
 
-    browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    const onEmbedVideoBlocked = (request, sender, sendResponse) => {
       if (request.message === 'embedVideoBlocked') {
         if (style) {
           customIframes();
@@ -21,8 +21,11 @@ export default function() {
           loadStyles();
         }
       }
-      return true;
-    });
+      return Promise.resolve({ message: 'embedVideoBlockedDone', result: 'ok' });
+    };
+    if (!browser.runtime.onMessage.hasListener(onEmbedVideoBlocked)) {
+      browser.runtime.onMessage.addListener(onEmbedVideoBlocked);
+    }
   }
 }
 

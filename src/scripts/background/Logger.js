@@ -59,7 +59,11 @@ class Logger {
     const onMessageLogHandler = (request, sender, sendResponse) => {
       if (request.message === 'getLogs') {
         if (this.logs[RequestManager.currentTabId]) {
-          sendResponse(this.logs[RequestManager.currentTabId]);
+          return Promise.resolve({
+            message: 'getLogsResponse',
+            logs: this.logs[RequestManager.currentTabId],
+            result: 'ok',
+          });
         }
       }
       return true;
@@ -118,20 +122,30 @@ class Logger {
       browser.browserAction.setBadgeText({ text: str });
       browser.browserAction.setBadgeBackgroundColor({ color: color });
 
-      browser.runtime
-        .sendMessage({
-          message: 'updateLogs',
-          data: {
-            logs: this.logs[RequestManager.currentTabId],
-            tabId: RequestManager.currentTabId,
-          },
-        })
-        .then(
-          message => {},
-          error => {
-            console.log('error message updateLogs', error);
-          }
-        );
+      if (RequestManager.currentTabId && this.logs[RequestManager.currentTabId]) {
+        // test if there's logs and popup is opened
+        const logsLg = Object.keys(this.logs[RequestManager.currentTabId]).length > 0;
+        const popupLg = browser.extension.getViews({ type: 'popup' }).length > 0;
+        if (logsLg > 0 && popupLg) {
+          browser.runtime
+            .sendMessage({
+              message: 'updateLogs',
+              data: {
+                logs: this.logs[RequestManager.currentTabId],
+                tabId: RequestManager.currentTabId,
+              },
+            })
+            .then(
+              message => {
+                // console.log('message updateLogs', message);
+              },
+              error => {
+                // TODO look at error
+                console.log('error updateLogs', error);
+              }
+            );
+        }
+      }
     }
   }
   getNumberBlocked(tabId) {
