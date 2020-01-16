@@ -112,3 +112,32 @@ function cleanSrcset(srcset, width) {
     return false;
   }
 }
+
+/*
+{
+  "id": "image_srcset", 
+  "label": "Image srcset",
+  "type": "select",
+  "value": 2,
+  "presets": [2,3,1],
+  "info": "Images may contain high-definition resolutions. This option remove biggest images (works only for lazy-loaded images).",
+  "options":[
+    {
+      "value": 3,
+      "label": "Smart (recommended)"
+    },
+    {
+      "value": 2,
+      "label": "Remove all except minus"
+    },
+    {
+      "value": 1,
+      "label": "Remove retina"
+    },
+    {
+      "value": 0,
+      "label": "Do nothing"
+    }
+  ]
+},
+*/
