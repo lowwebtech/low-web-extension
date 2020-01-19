@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Image test page</title>
+  <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body>
+
+  <h1>Avatar</h1>
+
+  <section>
+
+    <p>
+      Avatar images should be blocked, replaced by a 1x1 black gif (loaded from local)
+    </p>
+    <img src="https://www.gravatar.com/avatar/6365dbfa6be95764fa9edde1e233ae60" width="32" height="32" />
+    <img src="https://secure.gravatar.com/avatar/6365dbfa6be95764fa9edde1e233ae60" width="32" height="32" />
+    <img src="https://a.disquscdn.com/1568930115/images/noavatar92.png" width="32" height="32" />
+    <img src="https://c.disquscdn.com/uploads/users/29408/8062/avatar92.jpg" width="32" height="32" />
+    
+  </section>
+
+  <script type="text/javascript">
+    window.addEventListener("DOMContentLoaded", (event) => {
+      var images = document.querySelectorAll('img[data-src]')
+      for( var i = 0, lg = images.length; i<lg; i++ ){
+        images[i].srcset = images[i].dataset.srcset
+        images[i].src = images[i].dataset.src
+      }
+    });
+  </script>
+</body>
+</html>

@@ -4,6 +4,7 @@ import store from '../../store';
 export default function() {
   const IMAGE_SRCSET = store.getters.image_srcset;
   if (IMAGE_SRCSET > 0) {
+    // TODO clean picture sources
     filterImages('srcset');
     filterImages('lazy-srcset');
   }
@@ -114,30 +115,5 @@ function cleanSrcset(srcset, width) {
 }
 
 /*
-{
-  "id": "image_srcset", 
-  "label": "Image srcset",
-  "type": "select",
-  "value": 2,
-  "presets": [2,3,1],
-  "info": "Images may contain high-definition resolutions. This option remove biggest images (works only for lazy-loaded images).",
-  "options":[
-    {
-      "value": 3,
-      "label": "Smart (recommended)"
-    },
-    {
-      "value": 2,
-      "label": "Remove all except minus"
-    },
-    {
-      "value": 1,
-      "label": "Remove retina"
-    },
-    {
-      "value": 0,
-      "label": "Do nothing"
-    }
-  ]
-},
+
 */

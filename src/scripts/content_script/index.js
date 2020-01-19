@@ -7,7 +7,7 @@ global.browser = require('webextension-polyfill');
 
 import '../../styles/default.scss';
 import store from '../store';
-// import imageSrcset from './image/srcset';
+import imageSrcset from './image/srcset';
 // import lazyload from './lazyload';
 import marquee from './marquee';
 import gifPlayer from './image/gif-player';
@@ -17,6 +17,7 @@ import clickToLoadVideo from './video/click-to-load';
 import customPlayers from './video/custom-players';
 /* eslint-enable import/first, indent */
 
+imageSrcset();
 // TODO look to observe DOM change/mutations
 document.addEventListener('DOMContentLoaded', () => {
   store.commit('url', window.location.href);
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let active = store.getters.isActive(window.location.href, window.location.hostname);
   if (active) {
     // clean srcset and remove biggest images
-    // imageSrcset();
+    imageSrcset();
 
     // lazyload();
 
