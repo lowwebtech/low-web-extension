@@ -96,7 +96,7 @@ class Logger {
   }
   logOptimised(type, url, tabId = -1) {
     // const { type, url, tabId } = details;
-    if (tabId === -1){
+    if (tabId === -1) {
       tabId = RequestManager.currentTabId;
     }
 
