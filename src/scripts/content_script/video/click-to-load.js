@@ -58,7 +58,6 @@ function customIframes() {
       if (type !== false) {
         const dataVideoBlock = videoToBlock[type];
         const id = getId(src, type);
-
         let videoUrl, oembedUrl;
         if (dataVideoBlock.video_url !== '' && dataVideoBlock.oembed !== '' && id) {
           videoUrl = dataVideoBlock.video_url.replace('##ID##', id);
@@ -75,8 +74,9 @@ function customIframes() {
               },
             };
 
-            const callback = oembed => {
-              if (oembed) {
+            const callback = response => {
+              if (response.data) {
+                const oembed = response.data;
                 // button
                 if (dataVideoBlock.skin) {
                   let skin = dataVideoBlock.skin;
@@ -138,6 +138,15 @@ function customIframes() {
                   }
 
                   iframe.parentNode.replaceChild(newIframe, iframe);
+
+                  browser.runtime.sendMessage({
+                    message: 'logOptimised',
+                    data: {
+                      type: 'click-to-load',
+                      tabId: response.tabId,
+                      url: videoUrl,
+                    },
+                  });
                 }
               }
             };
@@ -163,19 +172,22 @@ function videoBlocked(url) {
 }
 
 function getId(url, type) {
+  const u = new URL(url);
+  const path = u.origin + u.pathname;
+
   let id;
   switch (type) {
     case 'youtube':
-      id = getYoutubeId(url);
+      id = getYoutubeId(path);
       break;
     case 'vimeo':
-      id = getVimeoId(url);
+      id = getVimeoId(path);
       break;
     case 'dailymotion':
-      id = getDailymotionId(url);
+      id = getDailymotionId(path);
       break;
     case 'twitch':
-      id = getTwitchId(url);
+      id = getTwitchId(path);
       break;
     case 'facebook':
       id = getFacebookId(url);

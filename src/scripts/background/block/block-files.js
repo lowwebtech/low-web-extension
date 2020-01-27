@@ -44,7 +44,7 @@ export function blockFiles() {
       // response.cancel = true;
       response.redirectUrl = redirect;
     }
-    // Logger.logRequest(details, response);
+    // Logger.logBlocked(details, response);
     return response;
   };
 

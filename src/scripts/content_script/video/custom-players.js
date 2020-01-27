@@ -32,6 +32,15 @@ export default function() {
             script.src = browser.runtime.getURL(jsUrl);
             containerScript.appendChild(script);
             i = lg;
+
+            browser.runtime.sendMessage({
+              message: 'logOptimised',
+              data: {
+                type: 'video_quality',
+                tabId: -1,
+                url: jsUrl,
+              },
+            });
           }
         }
       } else if (video.external_player && video.external_player !== '') {

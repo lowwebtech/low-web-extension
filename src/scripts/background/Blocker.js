@@ -82,7 +82,7 @@ class BlockRequest {
         if (tab && tab.pageUrl && store.getters.isActive(tab.pageUrl, tab.domain)) {
           const response = callback(details);
           if (response.cancel || response.redirectUrl) {
-            Logger.logRequest(details, response);
+            Logger.logBlocked(details);
           }
           return response;
         }

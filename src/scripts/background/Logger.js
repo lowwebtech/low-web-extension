@@ -3,13 +3,14 @@ import store from '../store';
 
 class Logger {
   constructor() {
-    this.logs = {};
+    this.logsBlocked = {};
+    this.logsOptimised = {};
   }
   init() {
     this.currentTab = undefined;
     const onCreatedHandler = tab => {
-      if (tab && tab.tabId) {
-        this.logs[tab.tabId] = {};
+      if (tab) {
+        this.resetLogs(tab.tabId);
       }
     };
     const onTabActivatedHandler = tab => {
@@ -20,32 +21,22 @@ class Logger {
     };
     const onTabUpdatedHandler = (tabId, changeInfo, tabInfo) => {
       if (changeInfo.url) {
-        if (tabId) {
-          this.logs[tabId] = {};
-          this.updateBadgeNumber(tabId);
-        }
+        this.resetLogs(tabId);
       }
       if (changeInfo.status === 'loading') {
       } else if (changeInfo.status === 'complete') {
-        // this.updateBadgeNumber(tabId);
       }
     };
     const onCommittedNavigationHandler = info => {
       // console.log('onCommitted', info.transitionType, info);
       if (info.transitionType === 'reload' || info.transitionType === 'link') {
-        if (info.tabId) {
-          this.logs[info.tabId] = {};
-          this.updateBadgeNumber(info.tabId);
-        }
+        this.resetLogs(info.tabId);
       }
     };
     const onBeforeNavigationHandler = info => {
       // console.log('onBeforeNavigate', info);
       if (info.frameId === 0) {
-        if (info.tabId) {
-          this.logs[info.tabId] = {};
-          this.updateBadgeNumber(info.tabId);
-        }
+        this.resetLogs(info.tabId);
       }
     };
     browser.tabs.onCreated.addListener(onCreatedHandler);
@@ -58,13 +49,16 @@ class Logger {
     // add handler for logging from content_script
     const onMessageLogHandler = (request, sender, sendResponse) => {
       if (request.message === 'getLogs') {
-        if (this.logs[RequestManager.currentTabId]) {
+        if (this.logsBlocked[RequestManager.currentTabId]) {
           return Promise.resolve({
             message: 'getLogsResponse',
-            logs: this.logs[RequestManager.currentTabId],
+            blocked: this.logsBlocked[RequestManager.currentTabId],
+            optimised: this.logsOptimised[RequestManager.currentTabId],
             result: 'ok',
           });
         }
+      } else if (request.message === 'logOptimised') {
+        this.logOptimised(request.data.type, request.data.url, request.data.tabId);
       }
       return true;
     };
@@ -75,18 +69,46 @@ class Logger {
     if (browser.browserAction.setBadgeTextColor) browser.browserAction.setBadgeTextColor({ color: '#FFF' });
     browser.browserAction.setBadgeBackgroundColor({ color: '#0fa300' });
   }
-  logRequest(details, response) {
+  resetLogs(tabId) {
+    if (tabId) {
+      this.logsBlocked[tabId] = {};
+      this.logsOptimised[tabId] = {};
+      this.updateBadgeNumber(tabId);
+    }
+  }
+  logBlocked(details) {
     const { type, url, tabId } = details;
 
     if (tabId) {
-      if (this.logs[tabId] === undefined) {
-        this.logs[tabId] = {};
+      if (this.logsBlocked[tabId] === undefined) {
+        this.logsBlocked[tabId] = {};
       }
-      if (this.logs[tabId][type] === undefined) {
-        this.logs[tabId][type] = [];
+      if (this.logsBlocked[tabId][type] === undefined) {
+        this.logsBlocked[tabId][type] = [];
       }
 
-      const l = this.logs[tabId][type];
+      const l = this.logsBlocked[tabId][type];
+      if (l.indexOf(url.toString()) === -1) {
+        l.push(url);
+        this.updateBadge(tabId);
+      }
+    }
+  }
+  logOptimised(type, url, tabId = -1) {
+    // const { type, url, tabId } = details;
+    if (tabId === -1){
+      tabId = RequestManager.currentTabId;
+    }
+
+    if (tabId) {
+      if (this.logsOptimised[tabId] === undefined) {
+        this.logsOptimised[tabId] = {};
+      }
+      if (this.logsOptimised[tabId][type] === undefined) {
+        this.logsOptimised[tabId][type] = [];
+      }
+
+      const l = this.logsOptimised[tabId][type];
       if (l.indexOf(url.toString()) === -1) {
         l.push(url);
         this.updateBadge(tabId);
@@ -106,7 +128,6 @@ class Logger {
     if (tabId) {
       const tab = RequestManager.getTab(tabId);
       const lg = this.getNumberBlocked(tabId);
-      // console.log(this.logs, tabId, this.logs[tabId]);
 
       let str = '';
       let color;
@@ -122,16 +143,17 @@ class Logger {
       browser.browserAction.setBadgeText({ text: str });
       browser.browserAction.setBadgeBackgroundColor({ color: color });
 
-      if (RequestManager.currentTabId && this.logs[RequestManager.currentTabId]) {
+      if (RequestManager.currentTabId && this.logsBlocked[RequestManager.currentTabId]) {
         // test if there's logs and popup is opened
-        const logsLg = Object.keys(this.logs[RequestManager.currentTabId]).length > 0;
+        const logsLg = Object.keys(this.logsBlocked[RequestManager.currentTabId]).length > 0;
         const popupLg = browser.extension.getViews({ type: 'popup' }).length > 0;
         if (logsLg > 0 && popupLg) {
           browser.runtime
             .sendMessage({
               message: 'updateLogs',
               data: {
-                logs: this.logs[RequestManager.currentTabId],
+                blocked: this.logsBlocked[RequestManager.currentTabId],
+                optimised: this.logsOptimised[RequestManager.currentTabId],
                 tabId: RequestManager.currentTabId,
               },
             })
@@ -149,8 +171,8 @@ class Logger {
     }
   }
   getNumberBlocked(tabId) {
-    if (this.logs[tabId]) {
-      let logs = this.logs[tabId];
+    if (this.logsBlocked[tabId]) {
+      let logs = this.logsBlocked[tabId];
       let nb = 0;
       const keys = Object.keys(logs);
       for (const key of keys) {

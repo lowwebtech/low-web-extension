@@ -24,9 +24,10 @@
     </div>
 
     <hr />
-
+<!-- 
     <div class="blocked" v-html="blocked"></div>
-
+    <div class="optimised" v-html="optimised"></div>
+ -->
     <div class="input input--level">
       <p class="input__label">Quick presets:</p>
       <label>
@@ -62,6 +63,7 @@ export default {
       hostname: false,
       reloadNote: false,
       blocked: '',
+      optimised: '',
     };
   },
   computed: {
@@ -98,23 +100,22 @@ export default {
           }
         });
 
-    const onUpdateLogs = (request, sender, sendResponse) => {
+    const onMessageUpdateLogs = (request, sender, sendResponse) => {
       if (request.message === "updateLogs") {
         if (request.data && request.data.logs){
-          this.blocked = this.formatLogs(request.data.logs);
+          this.blocked = 'Files blocked : ' + this.formatLogs(request.data.blocked);
+          this.optimised = 'Files optimised : ' + this.formatLogs(request.data.optimised);
           return Promise.resolve({ message: 'logsUpdated', result: 'ok' })
         }
       }
       return true;
     };
-    if (!browser.runtime.onMessage.hasListener(onUpdateLogs)) {
-      browser.runtime.onMessage.addListener(onUpdateLogs);
+    if (!browser.runtime.onMessage.hasListener(onMessageUpdateLogs)) {
+      browser.runtime.onMessage.addListener(onMessageUpdateLogs);
     }
 
     const logsHandler = response => {
-      if(response && response.logs){
-        this.blocked = this.formatLogs(response.logs);
-      }
+      this.formatResponse(response);
     };
     browser.runtime.sendMessage({
       message: 'getLogs'
@@ -124,12 +125,20 @@ export default {
 
   },
   methods: {
+    formatResponse(response){
+      if(response){
+        if (response.blocked) 
+          this.blocked = 'Blocked: ' + this.formatLogs(response.blocked);
+        if (response.optimised) 
+          this.optimised = 'Optimised: ' + this.formatLogs(response.optimised);
+      }
+    },
     formatLogs(logs){
       let str = '';
       const keys = Object.keys(logs);
       if(keys.length > 0) {
         let k;
-        str = 'Files blocked : ';
+        str = '';
         for (const key of keys) {
           k = key;
           if (logs[key].length > 1) k += 's';

@@ -7,7 +7,16 @@ export function onMessageOEmbed(port) {
           if (!response || response.status !== 200) {
             return true;
           }
-          return response.json();
+          const logDone = data => {
+            return {
+              data: data,
+              tabId: sender.tab.id,
+            };
+          };
+          const logFail = error => {
+            console.log('log error', error);
+          };
+          return response.json().then(logDone, logFail);
         })
         .catch(function(error) {
           console.error('oembed error', error);
