@@ -134,5 +134,44 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../styles/options.scss";
+@import "../styles/common.scss";
+
+.options{
+  width: 960px;
+  visibility: hidden;
+  
+  &--active{
+    visibility: visible;
+  }
+
+  .input {
+    white-space: nowrap;
+    padding: 16px 20px;
+    border-bottom: 1px solid #BBB;
+    font-size: 16px;
+    &__field {
+      width: 210px;
+      vertical-align: top;
+    }
+    &__text {
+      margin: 0;
+      display: inline-block;
+      width: calc(100% - 210px);
+      padding-right: 5%;
+      vertical-align: bottom;
+      white-space: normal;
+    }
+    &__info {
+      display: inline-block;
+      margin: 0;
+      position: relative;
+      font-size: 14px;
+    }
+    &__label{
+      margin: 0;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+  }
+}
 </style>

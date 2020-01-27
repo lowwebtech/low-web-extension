@@ -3,20 +3,24 @@
 
     <div class="input input--checkbox input--page">
       <p class="input__label">Page activated:</p>
-      <input type="checkbox" :checked="currentPage" @input="updateCurrentPage" name="currentPage" id="currentPage" />
-      <label for="currentPage">
-        <span class="yes" v-if="currentPage">Yes</span>
-        <span class="no" v-if="!currentPage">No</span>
-      </label>
+      <div class="input__value">
+        <input type="checkbox" :checked="currentPage" @input="updateCurrentPage" name="currentPage" id="currentPage" />
+        <label for="currentPage">
+          <span class="yes" v-if="currentPage">Yes</span>
+          <span class="no" v-if="!currentPage">No</span>
+        </label>
+      </div>
     </div>
 
     <div class="input input--checkbox input--website">
       <p class="input__label">Website activated:</p>
-      <input type="checkbox" :checked="currentWebsite" @input="updateCurrentWebsite" name="currentWebsite" id="currentWebsite" />
-      <label for="currentWebsite">
-        <span class="yes" v-if="currentWebsite">Yes</span>
-        <span class="no" v-if="!currentWebsite">No</span>
-      </label>
+      <div class="input__value">
+        <input type="checkbox" :checked="currentWebsite" @input="updateCurrentWebsite" name="currentWebsite" id="currentWebsite" />
+        <label for="currentWebsite">
+          <span class="yes" v-if="currentWebsite">Yes</span>
+          <span class="no" v-if="!currentWebsite">No</span>
+        </label>
+      </div>
     </div>
 
     <hr />
@@ -170,18 +174,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../styles/options.scss";
+@import "../styles/common.scss";
+
 html, body {
   background: white;
   width: 320px;
   padding: 10px;
+  font-size: 13px;
 }
+
 .popup{
   width: 300px; 
   margin: 10px;
-  .input__label{
-    width: 105px;
-  }
 
   &__more{
     margin-top: 4px;
@@ -196,55 +200,22 @@ html, body {
   .right{
     text-align: right;
   }
-}
 
-.input{
-  &--checkbox{
-    margin-bottom:2px;
-    line-height: 21px;
-
-    input[type=checkbox]{
-      height: 0;
-      width: 0;
-      visibility: hidden;
-      margin: 0;
-    }
-
-    label {
-      cursor: pointer;
-      // text-indent: -9999px;
-      width: 46px;
-      height: 21px;
-      background: grey;
+  .input{
+    white-space: nowrap;
+    font-size: 13px;
+    &__label{
+      width: 110px;
       display: inline-block;
-      border-radius: 21px;
-      padding-left: 22px;
+      margin: 0;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+    &__value {
+      display: inline-block;
+      margin: 0;
       position: relative;
-    }
-
-    label:after {
-      content: '';
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      width: 13px;
-      height: 13px;
-      background: #fff;
-      border-radius: 11px;
-    }
-
-    input:checked + label {
-      background: #61d316;
-      padding-left: 6px;
-    }
-
-    input:checked + label:after {
-      left: calc(100% - 4px);
-      transform: translateX(-100%);
-    }
-
-    label:active:after {
-      width: 15px;
+      margin-left: 10px;
     }
   }
 }
