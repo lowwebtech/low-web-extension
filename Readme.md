@@ -92,14 +92,18 @@ https://lowwebtech.github.io/low-web-extension/
 
 
 ### TODO
-- split content_script start/end/idle
 - listen dom change
-- oembed
+- split content_script start/end/idle
+- look at webrequest type to maybe block them : beacon, csp_report, ping, speculative, web_manifest, websocket, xbl, xml_dtd, xslt
+- videos
+    + stop autoplay youtube (and all)
+    + remove/hide HD/4K button from players
+    + netflix
+- add more oembed services https://oembed.com/
 - message between background blocker and content_script for temporary white-list
 - write tests
 - lazyload optimized assets (gif/iframe)
-- extension icon
-- webassembly
+- block chatbot
 - custom print styles (better font, small size, no image or b&w...)
 - images :
     + replace hi-res by low-res for image services
@@ -115,18 +119,14 @@ https://lowwebtech.github.io/low-web-extension/
         * detect if gif is animated
         * pause/resume on enter/leave
     + emoji
-- videos
-    + stop autoplay youtube (and all)
-    + remove/hide HD/4K button from players
-    + netflix
-        
+- webassembly
 - smaller injected script and styles
 - inject script and styles only when needed
 - audit the extension to limit size and processes (init, reflow...)
 - display advice/tips to reduce bandwidth for main websites
 - display time alerts
 - try to block popin when mouse leaves the viewport 
-- block chatbot
+
 - CSP
 - try to debounce/throttle events like resize/scroll...
 - no smooth scroll scroll-behavior: initial / scrollTo(), scrollBy(), scrollIntoView() / jQuery

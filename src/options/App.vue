@@ -11,14 +11,18 @@
       </label>
     </div>
 
-    <hr />
-
     <div v-for="input in json" :class="'input input--' + input.id" :key="`input-${input.id}`">
-      <p class="input__label">{{ input.label }}</p>
+
+      <div class="input__text">
+        <p class="input__label">{{ input.label }}</p>
+        <p class="input__info" v-if="input.info">{{ input.info }}</p>
+      </div>
+
       <div v-if="input.type === 'bool'" class="input__field inline">
         <label><input type="radio" :key="`${input.id}-1`" :name="input.id" value="1" :checked="$store.getters[input.id]==1?'checked':false" @input="onFieldChange" /> True</label>
         <label><input type="radio" :key="`${input.id}-0`" :name="input.id" value="0" :checked="$store.getters[input.id]==0?'checked':false" @input="onFieldChange" /> False</label>
       </div>
+
       <div v-if="input.type === 'select'" class="input__field inline">
         <label>
           <select :name="input.id" @input="onFieldChange">
@@ -28,12 +32,7 @@
           </select>
         </label>
       </div>
-      <div class="input__info" v-if="input.info">
-        <span>i</span>
-        <div class="input__info-text">
-          {{ input.info }}
-        </div>
-      </div>
+
     </div>
     <!-- <button id="save" @click="saveOptions">Save</button> -->
     <div class="status"><b>{{ status }}</b></div>

@@ -3,7 +3,7 @@
     "id": "video_quality", 
     "label": "Video quality",
     "type": "select",
-    "info": "This option reduce quality of videos (ex Youtube : Very low=144p, Low=240p, Medium=360p). Lower quality means less data and calculation",
+    "info": "When possible, lower video quality is displayed. Video is an heavy and energy-consuming content, reducing the quality, reduces the weight of a video and its energy consumption. Currently works on Youtube, Vimeo & Dailymotion (ex Youtube: Very low = 144p, Low = 240p, Medium = 360p).<br>Video quality is one of the most important parameters to reduce this data.",
     "value": 2,
     "presets": [1,2,3],
     "options":[
@@ -27,32 +27,28 @@
   },
   {
     "id": "video_clicktoload", 
-    "label": "Video click to load/play embed",
+    "label": "Click to load a video",
     "type": "bool",
     "value": 1,
     "presets": [1,1,1],
-    "info": "This option 'transform' iframe video embeds into 'low' preview of these videos. You have to click on it to load and play the iframe and the video. It avoid loading tons of script and files, if you're not watching the video."
+    "info": "When a Youtube, Facebook, Dailymotion, Vimeo video is displayed on a website in the form of an iframe, it contains many loaded scripts even if the video is not viewed. These iframes are replaced by a simple image, a title and a button. On click, the scripts will load and the video will play."
   },
   {
     "id": "video_attributes", 
-    "label": "Video custom attributes",
+    "label": "Custom attributes for html element <video>",
     "type": "bool",
     "value": 1,
     "presets": [1,1,1],
-    "info": "This option adds attributes to video elements : loop='false', autoplay='false' (possibly preload='none')"
+    "info": "The html5 <video> element allows us to define certain parameters limiting the use of video. The autoplay, loop and preload attributes are disabled. A site can choose to re-enable them, so it won't be effective."
   },
   {
     "id": "image_srcset", 
-    "label": "Image srcset",
+    "label": "Image quality",
     "type": "select",
     "value": 2,
     "presets": [2,3,1],
-    "info": "Images may contain high-definition resolutions. This option remove biggest images (works only for lazy-loaded images).",
+    "info": "An html <img> element can contain different image quality (srcset). The lowest quality is then chosen. Due to browser limitations, this option only works for 'lazy-loaded' images.",
     "options":[
-      {
-        "value": 3,
-        "label": "Smart (recommended)"
-      },
       {
         "value": 2,
         "label": "Remove all except minus"
@@ -68,44 +64,44 @@
     ]
   },
   {
-    "id": "save_data", 
-    "label": "Send save-data header",
-    "type": "bool",
-    "value": 1,
-    "presets": [1,1,1],
-    "info": "Add header 'Save-data:on'. Some websites may reduce the weight of a page if save-data is enabled."
-  },
-  {
     "id": "gif_player", 
-    "label": "custom gif player",
+    "label": "Hover over a GIF to read it",
     "type": "bool",
     "value": 1,
     "presets": [1,1,1],
-    "info": "With this option, you have to hover the gif for playing it, it avoid permanent rendering of the screen. For services like giphy, it only load optimized images when hovering."
+    "info": "This option stops looping gifs animation. The continuous animation of a gif forces browsers to refresh part of what it displays on the screen, it consumes energy. If possible only the 1st image is preloaded, the full animation will load and play the rollover (Giphy)."
   },
   {
     "id": "block_avatar", 
-    "label": "block image avatar",
+    "label": "Block avatar images",
     "type": "bool",
     "value": 1,
     "presets": [1,1,0],
-    "info": "This option blocks avatar images like Gravatar, Twitter, Reddit..."
+    "info": "Avatar images (like Gravatar, Twitter, Reddit...) are small, but there are often many, and they are not always necessary. When it is possible to identify them, they are blocked and therefore not loaded."
   },
   {
-    "id": "block_social", 
-    "label": "Block social widgets",
+    "id": "save_data", 
+    "label": "'Save-data' browser settings",
     "type": "bool",
     "value": 1,
     "presets": [1,1,1],
-    "info": "Block social widgets, like Share Button, Like Button etc..."
+    "info": "A 'save-data: on' parameter can be sent (header http) when browsing the internet. It tells the site you are visiting that you want to save data. Free to this site to reduce the loaded data."
+  },
+  {
+    "id": "block_social", 
+    "label": "Block social media sharing",
+    "type": "bool",
+    "value": 1,
+    "presets": [1,1,1],
+    "info": "When a content from social media (Facebook, Instagram, Twitter, etc.) is shared on a website, many scripts (often tracking) are loaded, just to display a text or an image. These scripts are blocked, the extension automatically applies a layout imitating the original content.<br>Unnecessary features like buttons Facebook Like or Share are blocked."
   },
   {
     "id": "css_animation", 
-    "label": "Disable css animation",
+    "label": "Disable CSS animation",
     "type": "bool",
     "value": 0,
-    "presets": [1,0,0],
-    "info": "Disable css transition and animation. Animations force browser to render and may cause reflow."
+    "presets": [1,1,0],
+    "info": "The CSS which makes it possible to layout the content, also makes it possible to animate it for example a button which change color gradually. This animation produces many screen refreshes which therefore requires more energy.<br>The transition-duration parameter is fixed at 0 seconds. The <marked> element is also stopped."
   },
   {
     "id": "marquee_animation", 
@@ -117,35 +113,35 @@
   },
   {
     "id": "block_images", 
-    "label": "block images",
+    "label": "Image: Images loaded by an <img> element",
     "type": "bool",
     "presets": [1,0,0],
     "value": 0
   },
   {
     "id": "block_medias", 
-    "label": "block medias (video/sound)",
+    "label": "Media: Resources loaded by an <video> or <audio> element.",
     "type": "bool",
     "presets": [1,0,0],
     "value": 0
   },
   {
     "id": "block_objects",
-    "label": "block objects (object/embed)",
+    "label": "Object: Resources loaded by an <object> or <embed> element.",
     "type": "bool",
     "presets": [1,0,0],
     "value": 0
   },
   {
     "id": "block_subframes", 
-    "label": "block subframes (iframe/frame)",
+    "label": "iframe: Documents loaded in an <iframe> or <frame> element.",
     "type": "bool",
     "presets": [1,0,0],
     "value": 0
   },
   {
     "id": "block_fonts", 
-    "label": "block fonts",
+    "label": "Font: Web fonts loaded for an @ font-face CSS rule.",
     "type": "bool",
     "presets": [1,1,0],
     "value": 0
