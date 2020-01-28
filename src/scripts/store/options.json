@@ -46,7 +46,7 @@
     "label": "Image quality",
     "type": "select",
     "value": 2,
-    "presets": [2,3,1],
+    "presets": [2,2,1],
     "description": "An html <img> element can contain different image quality (srcset). The lowest quality is then chosen. Due to browser limitations, this option only works for 'lazy-loaded' images.",
     "options":[
       {
@@ -76,14 +76,14 @@
     "label": "Block avatar images",
     "type": "bool",
     "value": 1,
-    "presets": [1,1,0],
+    "presets": [1,0,0],
     "description": "Avatar images (like Gravatar, Twitter, Reddit...) are small, but there are often many, and they are not always necessary. When it is possible to identify them, they are blocked and therefore not loaded."
   },
   {
     "id": "website_specific",
     "label": "Specific optimisation for most used websites",
     "description": "There are billions of websites and a few sites that have billions of visits. For these sites, it is sometimes possible to reduce the data or to hide unnecessary content to limit their use.<br>Supported sites: Youtube",
-    "type": "bool",
+    "type": "select",
     "presets": [2,1,0],
     "value": 1,
     "options":[
@@ -93,7 +93,7 @@
       },
       {
         "value": 1,
-        "label": "Remove data"
+        "label": "Reduce data"
       },
       {
         "value": 0,

@@ -4,7 +4,7 @@ import insertedCSS from '../datas/css-to-insert';
 export default function() {
   // TODO add css before onUpdated status == loading
   // TODO format insertedCSS for better parsing
-  if (store.state.website_specific > 1) {
+  if (store.getters.website_specific > 1) {
     const totalInserted = insertedCSS.length;
 
     browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
