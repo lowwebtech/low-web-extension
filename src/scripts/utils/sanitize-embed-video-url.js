@@ -1,7 +1,7 @@
 import store from '../store';
 import queryString from 'query-string';
-import videosToBlock from '../video-to-block';
-import { TOKEN } from '../constants';
+import videosToBlock from '../datas/video-to-block';
+import { TOKEN } from '../datas/constants';
 
 export default function(url, autoplay = false, token = false) {
   let u = new URL(url);

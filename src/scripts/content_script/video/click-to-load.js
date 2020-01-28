@@ -1,6 +1,6 @@
 import './click-to-load.scss';
 import store from '../../store';
-import videoToBlock from '../../video-to-block';
+import videoToBlock from '../../datas/video-to-block';
 import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
 import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId } from '../../utils/get-video-id';
 

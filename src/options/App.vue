@@ -15,7 +15,7 @@
 
       <div class="input__text">
         <p class="input__label">{{ input.label }}</p>
-        <p class="input__info" v-if="input.info">{{ input.info }}</p>
+        <p class="input__description" v-if="input.description">{{ input.description }}</p>
       </div>
 
       <div v-if="input.type === 'bool'" class="input__field inline">
@@ -161,7 +161,7 @@ export default {
       vertical-align: bottom;
       white-space: normal;
     }
-    &__info {
+    &__description {
       display: inline-block;
       margin: 0;
       position: relative;
