@@ -1,4 +1,4 @@
-import { TOKEN } from '../../../constants';
+import { TOKEN } from '../../../datas/constants';
 import { getIdFromEmbed, getIdFromImage } from '../../../utils/giphy';
 import GifPlayer from './GifPlayer';
 // import browserInfo from 'browser-info';

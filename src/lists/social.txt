@@ -13,3 +13,8 @@ open.spotify.com/follow/$domain=~spotify.com
 ! open.spotify.com/embed/$domain=~spotify.com
 embedr.flickr.com/assets/client-code.js$domain=~flickr.com
 embed.redditmedia.com/widgets/platform.js$domain=~reddit.com
+
+! move outside social.txt
+i.ytimg.com/*/mqdefault_6s.webp
+i.ytimg.com/*/mqdefault_6s_480x270.webp
+

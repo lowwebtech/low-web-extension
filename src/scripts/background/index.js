@@ -8,6 +8,9 @@ import Blocker from './Blocker';
 import { blockFiles } from './block/block-files';
 import { blockSocial } from './block/block-social';
 import { blockFonts } from './block/block-fonts';
+import youtube from './sites/youtube';
+import redirectKnownAssets from './redirect-known-assets';
+import hideUselessContent from './hide-useless-content';
 // import { blockAds } from './block/block-ads';
 import { blockImages } from './block/block-images';
 import { saveDataHeader } from './header/save-data';
@@ -31,6 +34,10 @@ function startLow(details) {
     Blocker.init();
 
     saveDataHeader();
+
+    youtube();
+    redirectKnownAssets();
+    hideUselessContent();
 
     blockFiles();
     blockFonts();

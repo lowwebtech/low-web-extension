@@ -1,4 +1,6 @@
 // TODO more and external
+// TODO look at these urls https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
+
 export default {
   youtube: {
     id: 'youtube',

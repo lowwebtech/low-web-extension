@@ -1,5 +1,5 @@
 import store from '../../store';
-import { TOKEN } from '../../constants';
+import { TOKEN } from '../../datas/constants';
 import { watchList, watchFilter } from '../../store/watch';
 import { dataTextLink, dataImage } from '../../utils/data-uri';
 

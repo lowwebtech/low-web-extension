@@ -21,6 +21,7 @@ export function cssAnimation() {
           }`;
           browser.tabs.insertCSS(tabId, {
             code: code,
+            runAt: 'document_start',
           });
         }
       }

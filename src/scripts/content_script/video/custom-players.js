@@ -1,5 +1,5 @@
 import store from '../../store';
-import videoToBlock from '../../video-to-block';
+import videoToBlock from '../../datas/video-to-block';
 
 export default function() {
   if (store.state.video_quality > 0) {

@@ -1,4 +1,4 @@
-import { TOKEN } from '../../constants';
+import { TOKEN } from '../../datas/constants';
 import { dataTextLink } from '../../utils/data-uri';
 import { watchFilter } from '../../store/watch';
 
