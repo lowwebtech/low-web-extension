@@ -2,7 +2,7 @@ import store from '../../store';
 import videoToBlock from '../../datas/video-to-block';
 
 export default function() {
-  if (store.state.video_quality > 0) {
+  if (store.getters.video_quality > 0) {
     const keys = Object.keys(videoToBlock);
     const containerScript = document.head || document.documentElement;
 
@@ -15,7 +15,7 @@ export default function() {
           if (window.location.hostname.indexOf(video.domains[i]) !== -1) {
             jsUrl = video.player;
             if (video.id === 'youtube') {
-              switch (store.state.video_quality) {
+              switch (store.getters.video_quality) {
                 case 1:
                   jsUrl = jsUrl.replace('.js', '-tiny.js');
                   break;

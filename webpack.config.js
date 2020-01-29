@@ -20,6 +20,7 @@ const config = {
     'players/Youtube-tiny': './scripts/content_script/video/players/Youtube-tiny.js',
     'players/Youtube-small': './scripts/content_script/video/players/Youtube-small.js',
     'players/Youtube-medium': './scripts/content_script/video/players/Youtube-medium.js',
+    'players/Youtube': './scripts/content_script/video/players/Youtube-medium.js',
     // 'players/Vimeo': './scripts/content_script/video/players/Vimeo.js',
     // 'players/Twitch': './scripts/content_script/video/players/Twitch.js',
     'players/Gif': './scripts/content_script/image/players/Gif.js',
