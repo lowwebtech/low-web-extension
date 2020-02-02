@@ -19,15 +19,42 @@ import { blockEmbedVideo } from './block/block-embed-video';
 import { onMessageOEmbed } from './message/oembed';
 /* eslint-enable import/first, indent */
 browser.runtime.onStartup.addListener(details => {
-  // console.log('runtime.onStartup', details);
-  startLow();
+  load(details);
 });
 browser.runtime.onInstalled.addListener(details => {
-  // console.log('runtime.onInstalled', details);
-  startLow(details);
+  load(details);
 });
 
-function startLow(details) {
+// TODO manifest load
+function load(details) {
+  // console.log('load', details);
+  const listsTxt = ['lists/avatar.txt', 'lists/social.txt', 'lists/fonts.txt'];
+
+  Promise.all(
+    listsTxt.map(url =>
+      fetch(url)
+        .then(checkStatus)
+        .then(parseTXT)
+        .catch(error => console.log('There was a problem!', error))
+    )
+  ).then(data => {
+    start(data);
+  });
+}
+
+function checkStatus(response) {
+  if (response.ok) {
+    return Promise.resolve(response);
+  } else {
+    return Promise.reject(new Error(response.statusText));
+  }
+}
+
+function parseTXT(response) {
+  return response.text();
+}
+
+function start(data) {
   setTimeout(() => {
     Logger.init();
     RequestManager.init();
@@ -40,10 +67,10 @@ function startLow(details) {
     hideUselessContent();
 
     blockFiles();
-    blockFonts();
-    blockSocial();
-    blockImages();
-    // blockAds();
+    blockImages(data[0]);
+    blockSocial(data[1]);
+    blockFonts(data[2]);
+
     blockEmbedVideo();
     cssAnimation();
   }, 300);

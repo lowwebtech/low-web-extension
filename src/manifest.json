@@ -47,7 +47,8 @@
     "players/*",
     "utils/*",
     "images/*",
-    "oembed/*"
+    "oembed/*",
+    "lists/*"
   ],
   "options_ui": {
     "page": "options/options.html"

@@ -1,6 +1,6 @@
-import socialListTxt from '../../../lists/social.txt';
+// import socialTxt from '../../../lists/social.txt';
 import { watchList } from '../../store/watch';
 
-export function blockSocial() {
-  watchList('block_social', socialListTxt);
+export function blockSocial(socialTxt) {
+  if (socialTxt) watchList('block_social', socialTxt);
 }
