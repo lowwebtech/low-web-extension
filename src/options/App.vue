@@ -14,7 +14,7 @@
     <div v-for="input in json" :class="'input input--' + input.id" :key="`input-${input.id}`">
 
       <div class="input__text">
-        <p class="input__label">{{ input.label }}</p>
+        <p class="input__label" :id="input.id">{{ input.label }}</p>
         <p class="input__description" v-if="input.description">{{ input.description }}</p>
       </div>
 

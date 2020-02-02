@@ -44,14 +44,15 @@ window.addEventListener('load', () => {
       // custom gif/play when over them
       gifPlayer();
 
-      // custom video embed click to play
+      // custom video embeds click to play
       clickToLoadVideo();
-
-      // custom video player low quality
-      customPlayers();
 
       // custom social embeds
       customSocial();
+
+      // custom video player low quality
+      // TODO import only for video-to-block
+      customPlayers();
 
       // script to inject to get 'real' window and compute css styles
       // let script = document.createElement('script');

@@ -77,7 +77,6 @@ export default function() {
       if (pageUrl === 'https://www.youtube.com/' || pageUrl === 'https://youtube.com/') {
         cancel = true;
       }
-      
       const response = {};
       if (cancel) {
         response.cancel = true;

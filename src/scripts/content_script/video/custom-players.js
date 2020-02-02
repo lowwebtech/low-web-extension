@@ -43,9 +43,9 @@ export default function() {
             });
           }
         }
-      } else if (video.external_player && video.external_player !== '') {
+      } else if (video.api_player && video.api_player !== '') {
         if (video.domains.indexOf(window.location.hostname) === -1) {
-          // jsUrl = video.external_player
+          // jsUrl = video.api_player
           // let script = document.createElement('script');
           // script.type = 'text/javascript';
           // script.src = browser.runtime.getURL(jsUrl);

@@ -7,6 +7,7 @@ import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId 
 let style;
 export default function() {
   if (store.getters.video_clicktoload === 1) {
+    // TODO select only blocked iframe
     let iframes = document.querySelectorAll('iframe');
 
     if (iframes.length > 0) {

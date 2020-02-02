@@ -89,13 +89,51 @@ Some results of optimisations from [various test pages](https://lowwebtech.githu
 Pages for tests : 
 https://lowwebtech.github.io/low-web-extension/
 
+## Details
+
+Some detailed explanations about functionalities of Low extension.
+
+### Low quality video
+
+#### Youtube
+
+The video quality of Youtube can only be changed automatically on the official website not in embed. A script is injected by the extension on youtube.com to adjust the quality according to the Video Quality parameter available in options repectively 240p, 320px, 480p for Very Low, Low, Medium. ([Youtube-tiny.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/video/players/Youtube-tiny.js), [Youtube-small.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/video/players/Youtube-small.js), [Youtube-medium.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/video/players/Youtube-medium.js))
+
+#### Vimeo
+
+The extension changes the quality of Vimeo videos when they are embedded. A 'quality' parameter can be added to the url of a vimeo iframe (eg: https://player.vimeo.com/video/156045670?quality=360p).
+This parameter is defined at 240p, 360p, 540p depending on the "Video Quality" option, respectively for Very Low, Low, Medium. 
+We are looking for a solution to automatically change the quality on vimeo.com.
+
+#### Dailymotion
+
+Disabled for the moment.
 
 
-### TODO
+
+### Click to load a video
+
+Embed videos iframe from Youtube, Vimeo, Dailymotion and Facebook are blocked and replaced by the preview image of the video, its title and a Play button imitating the official players.
+A click on these preview plays the video either on the official website, or in the iframe depending on the "Video Quality" parameter. Sometimes it is necessary to double click to launch the video.
+
+Ex for original Youtube iframe:
+- no cache ~ 550 / 600KB / 16 requests / load ~ 800ms
+- cache ~ 20Ko / 16 requests / load ~ 650ms
+
+Youtube iframe optimized:
+- no cache ~ 20KB / 5 requests / load ~ 220ms
+- cache ~ 7KB / 5 requests / load ~ 200ms
+
+Technically, original iframe is [blocked](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/background/block/block-embed-video.js) by extension, then an [script](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/video/click-to-load.js) is injected for customising blocked iframe. It loads [oEmbed datas](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/background/message/oembed.js) to get image and title of the video, then a new simple html (with image, title, button) is created and injected (data:text/html) into the new iframe.
+More technical info soon...
+
+
+## TODO
 - listen dom change
 - split content_script start/end/idle
 - look at webrequest type to maybe block them : beacon, csp_report, ping, speculative, web_manifest, websocket, xbl, xml_dtd, xslt
 - videos
+    + look at https://stackoverflow.com/questions/31697212/youtube-api-cannot-change-video-quality
     + stop autoplay youtube (and all)
     + remove/hide HD/4K button from players
     + netflix
