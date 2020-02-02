@@ -129,7 +129,7 @@ https://lowwebtech.github.io/low-web-extension/
 
 - CSP
 - try to debounce/throttle events like resize/scroll...
-- no smooth scroll scroll-behavior: initial / scrollTo(), scrollBy(), scrollIntoView() / jQuery
+- no smooth scroll scroll-behavior: initial / scrollTo(), scrollBy(), scrollIntoView() / jQuery / smooth-scrool libs
 - look at cache-control and expire for header and response requests
 - disable unoptimised hide/show/scroll jQuery, gsap etc...
 - publish external list for blockers : avatar, font services, chatbot

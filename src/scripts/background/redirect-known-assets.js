@@ -1,31 +1,46 @@
 import store from '../store';
-import knownReplaces from '../datas/known-to-replace';
+import knownRedirects from '../datas/known-to-redirect';
 
 export default function() {
   if (store.getters.website_specific > 0) {
-    for (let i = 0, lg = knownReplaces.length; i < lg; i++) {
-      let replaceElement = knownReplaces[i];
+
+    for (const knownRedirect of knownRedirects) {
 
       browser.webRequest.onBeforeRequest.addListener(
         details => {
           const { url } = details;
-          let newUrl = url;
-
-          const find = replaceElement.find;
-          for (let j = 0, lgj = find.length; j < lgj; j++) {
-            if (newUrl.indexOf(find[j]) !== -1) {
-              newUrl = newUrl.replace(find[j], replaceElement.to);
-              break;
-            }
-          }
-
           const response = {};
-          if (url !== newUrl) response.redirectUrl = newUrl;
+          
+          // eslint-disable-next-line
+          // dance:
+
+          // for (const redirect of knownRedirect.files) {
+          //   for (const redirectUrl of redirect) {
+          //     if (url.indexOf(redirectUrl) !== -1) {
+          //       response.redirectUrl = url.replace(redirectUrl, redirect.to);
+          //       break dance;
+          //     }
+          //   }
+          // }
+
+          for (let i = 0, lg = knownRedirect.files.length; i < lg; i++) {
+            const redirect = knownRedirect.files[i];
+            for (let j = 0, lgj = redirect.from.length; j < lgj; j++) {
+              const redirectUrl = redirect.from[j];
+              if (url.indexOf(redirectUrl) !== -1) {
+                response.redirectUrl = url.replace(redirectUrl, redirect.to);
+                j = lgj;
+                i = lg;
+              }
+            }
+          } 
+
           return response;
         },
-        replaceElement.filters,
+        knownRedirect.filters,
         ['blocking']
       );
+
     }
   }
 }

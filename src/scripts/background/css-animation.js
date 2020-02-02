@@ -7,18 +7,15 @@ export function cssAnimation() {
     if (store.getters.css_animation) {
       if (changeInfo.status === 'loading') {
         if (isWebpage(tab.url)) {
-          let code = `*, *:before, *:after {
-            -o-transition: none !important;
-            -moz-transition: none !important;
-            -ms-transition: none !important;
-            -webkit-transition: none !important;
+          let code = `
+          *, *:before, *:after {
             transition: none !important;
-            -webkit-animation: none !important;
-            -moz-animation: none !important;
-            -o-animation: none !important;
-            -ms-animation: none !important;
             animation: none !important;
-          }`;
+          }
+          * {
+            scroll-behaviour: auto!important;
+          }
+          `;
           browser.tabs.insertCSS(tabId, {
             code: code,
             runAt: 'document_start',

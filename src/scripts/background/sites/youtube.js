@@ -77,7 +77,7 @@ export default function() {
       if (pageUrl === 'https://www.youtube.com/' || pageUrl === 'https://youtube.com/') {
         cancel = true;
       }
-      console.log(pageUrl, cancel);
+      
       const response = {};
       if (cancel) {
         response.cancel = true;
