@@ -34,12 +34,12 @@
     "description": "When a Youtube, Facebook, Dailymotion, Vimeo video is displayed on a website in the form of an iframe, it contains many loaded scripts even if the video is not viewed. These iframes are replaced by a simple image, a title and a button. On click, the scripts will load and the video will play."
   },
   {
-    "id": "video_attributes", 
-    "label": "Custom attributes for html element <video>",
+    "id": "media_attributes", 
+    "label": "Custom attributes for html element <video> and <sound>",
     "type": "bool",
     "value": 1,
     "presets": [1,1,1],
-    "description": "The html5 <video> element allows us to define certain parameters limiting the use of video. The autoplay, loop and preload attributes are disabled. A site can choose to re-enable them, so it won't be effective."
+    "description": "The html5 media element <video> and <sound> allows us to define certain parameters limiting the use of video and sound. The autoplay, loop and preload attributes are disabled. A site can choose to re-enable them, so it won't be effective."
   },
   {
     "id": "image_srcset", 

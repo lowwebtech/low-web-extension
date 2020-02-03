@@ -12,7 +12,7 @@ import imageSrcset from './image/srcset';
 import marquee from './marquee';
 import gifPlayer from './image/gif-player';
 import customSocial from './iframe/social';
-import videoAttribute from './video/attributes';
+import mediaAttribute from './media/attributes';
 import clickToLoadVideo from './video/click-to-load';
 import customPlayers from './video/custom-players';
 /* eslint-enable import/first, indent */
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // lazyload();
 
     // custom video attribute
-    videoAttribute();
+    mediaAttribute();
   }
 });
 
