@@ -1,5 +1,3 @@
-// TODO more and external
-// TODO lang_country //connect.facebook.net/en_US/sdk.js
 export default [
   ['facebook.com/plugins/page.php', 'facebook.com'],
   ['facebook.com/plugins/like.php', 'facebook.com'],

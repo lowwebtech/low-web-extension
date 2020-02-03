@@ -5,11 +5,18 @@ import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
 import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId } from '../../utils/get-video-id';
 
 let style;
+let selectorString = '';
+const keys = Object.keys(videoToBlock);
+for (const key of keys) {
+  selectorString += 'iframe[src*="' + videoToBlock[key].embed_url + '"],';
+}
+if (selectorString !== '') {
+  selectorString = selectorString.slice(0, -1);
+}
+
 export default function() {
   if (store.getters.video_clicktoload === 1) {
-    // TODO select only blocked iframe
-    let iframes = document.querySelectorAll('iframe');
-
+    let iframes = document.querySelectorAll(selectorString);
     if (iframes.length > 0) {
       loadStyles();
     }
@@ -24,6 +31,7 @@ export default function() {
       }
       return Promise.resolve({ message: 'embedVideoBlockedDone', result: 'ok' });
     };
+
     if (!browser.runtime.onMessage.hasListener(onEmbedVideoBlocked)) {
       browser.runtime.onMessage.addListener(onEmbedVideoBlocked);
     }
@@ -60,6 +68,7 @@ function customIframes() {
         const dataVideoBlock = videoToBlock[type];
         const id = getId(src, type);
         let videoUrl, oembedUrl;
+
         if (dataVideoBlock.video_url !== '' && dataVideoBlock.oembed !== '' && id) {
           videoUrl = dataVideoBlock.video_url.replace('##ID##', id);
 
@@ -76,20 +85,11 @@ function customIframes() {
             };
 
             const callback = response => {
-              if (response.data) {
+              if (response && response.data) {
                 const oembed = response.data;
                 // button
                 if (dataVideoBlock.skin) {
                   let skin = dataVideoBlock.skin;
-
-                  let thumb = oembed.thumbnail_url;
-                  if (type === 'youtube') {
-                    thumb = thumb.replace('hqdefault', 'mqdefault');
-                  }
-                  // some oembed doesn't provide thumbnail_url
-                  if (!thumb && dataVideoBlock.image !== '') {
-                    thumb = dataVideoBlock.image.replace('##ID##', id);
-                  }
 
                   let title;
                   if (oembed.title) {
@@ -114,6 +114,14 @@ function customIframes() {
                     skin = skin.replace('##AUTHOR##', oembed.author_name);
                   }
 
+                  let thumb = oembed.thumbnail_url;
+                  if (type === 'youtube') {
+                    thumb = thumb.replace('hqdefault', 'mqdefault');
+                  }
+                  // some oembed doesn't provide thumbnail_url
+                  if (!thumb && dataVideoBlock.image !== '') {
+                    thumb = dataVideoBlock.image.replace('##ID##', id);
+                  }
                   if (thumb) {
                     skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" />');
                   }

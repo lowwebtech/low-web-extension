@@ -58,7 +58,6 @@
     let cs;
     let style;
 
-    // TODO find a better way to get/set computed style
     for (let i = 0, lg = computeFroms.length; i < lg; i++) {
       compFromEl = computeFroms[i];
       computeid = compFromEl.dataset.computeid;

@@ -59,15 +59,18 @@ class RequestManager {
       this.addTab(tabId);
     };
 
-    const cbNavigationCommitted = info => {
-      this.updateTabUrl(info);
-    };
+    // const cbNavigationCommitted = info => {
+    //   console.log('onCommitted')
+    //   this.updateTabUrl(info);
+    // };
 
     const cbNavigationHistoryUpdated = info => {
+      // console.log('onHistoryStateUpdated', info);
       this.updateTabUrl(info);
     };
 
     const cbNavigationBeforeNavigate = info => {
+      // console.log('onBeforeNavigate')
       this.updateTabUrl(info);
     };
 
@@ -88,8 +91,7 @@ class RequestManager {
     browser.webRequest.onCompleted.addListener(cbRequestCompleted, this.networkFilters);
     browser.webRequest.onErrorOccurred.addListener(cbRequestErrorOccured, this.networkFilters);
 
-    // TODO look to add filters
-    browser.webNavigation.onCommitted.addListener(cbNavigationCommitted);
+    // browser.webNavigation.onCommitted.addListener(cbNavigationCommitted);
     browser.webNavigation.onHistoryStateUpdated.addListener(cbNavigationHistoryUpdated);
     browser.webNavigation.onBeforeNavigate.addListener(cbNavigationBeforeNavigate);
 
@@ -98,6 +100,7 @@ class RequestManager {
     browser.tabs.onRemoved.addListener(cbTabRemoved);
   }
   updateTabUrl(info) {
+    // console.log('updateTabUrl', info)
     if (info.frameId === 0) {
       const hostname = getHostname(info.url);
       if (hostname) {

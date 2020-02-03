@@ -48,7 +48,7 @@ export default class GifPlayer {
     this.draw();
     this.canvas.toBlob(blob => {
       this.blobUrl = URL.createObjectURL(blob);
-      // TODO check memory leak
+      // TODO check memory
       // this.el.onload = function() {
       //   // no longer need to read the blob so it's revoked
       //   URL.revokeObjectURL(url);
