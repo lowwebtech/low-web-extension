@@ -54,7 +54,7 @@ function loadStyles() {
 }
 
 function customIframes() {
-  let iframes = document.querySelectorAll('iframe');
+  let iframes = document.querySelectorAll(selectorString);
 
   iframes.forEach(iframe => {
     let src = iframe.src;
