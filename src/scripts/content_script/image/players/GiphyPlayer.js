@@ -1,7 +1,6 @@
 import { TOKEN } from '../../../datas/constants';
 import { getIdFromEmbed, getIdFromImage } from '../../../utils/giphy';
 import GifPlayer from './GifPlayer';
-// import browserInfo from 'browser-info';
 
 export default class GiphyPlayer extends GifPlayer {
   constructor(el) {
