@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Before / after</title>
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <style type="text/css">
+    /*
+    // find better way to fake
+    */
+    blockquote.twitter-tweet-fake {
+  position: relative;
+  box-sizing: border-box;
+  font-family: Helvetica,Roboto,"Segoe UI",Calibri,sans-serif;
+  color: #697882;
+  background-color: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 5px;
+  max-width: 500px;
+  padding: 20px;
+  text-align: left;
+  line-height: 1.4; }
+  blockquote.twitter-tweet-fake a {
+    color: #697882; }
+  blockquote.twitter-tweet-fake p {
+    color: #1c2022;
+    margin-top: 0;
+    padding-right: 30px;
+    font-size: 16px; }
+    blockquote.twitter-tweet-fake p:last-child {
+      margin-bottom: 0; }
+  blockquote.twitter-tweet-fake:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 20px;
+    height: 20px;
+    top: 20px;
+    right: 20px;
+    background-image: url(data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2072%2072%22%3E%3Cpath%20fill%3D%22none%22%20d%3D%22M0%200h72v72H0z%22%2F%3E%3Cpath%20class%3D%22icon%22%20fill%3D%22%231da1f2%22%20d%3D%22M68.812%2015.14c-2.348%201.04-4.87%201.744-7.52%202.06%202.704-1.62%204.78-4.186%205.757-7.243-2.53%201.5-5.33%202.592-8.314%203.176C56.35%2010.59%2052.948%209%2049.182%209c-7.23%200-13.092%205.86-13.092%2013.093%200%201.026.118%202.02.338%202.98C25.543%2024.527%2015.9%2019.318%209.44%2011.396c-1.125%201.936-1.77%204.184-1.77%206.58%200%204.543%202.312%208.552%205.824%2010.9-2.146-.07-4.165-.658-5.93-1.64-.002.056-.002.11-.002.163%200%206.345%204.513%2011.638%2010.504%2012.84-1.1.298-2.256.457-3.45.457-.845%200-1.666-.078-2.464-.23%201.667%205.2%206.5%208.985%2012.23%209.09-4.482%203.51-10.13%205.605-16.26%205.605-1.055%200-2.096-.06-3.122-.184%205.794%203.717%2012.676%205.882%2020.067%205.882%2024.083%200%2037.25-19.95%2037.25-37.25%200-.565-.013-1.133-.038-1.693%202.558-1.847%204.778-4.15%206.532-6.774z%22%2F%3E%3C%2Fsvg%3E); }
+
+blockquote.reddit-card-fake {
+  position: relative;
+  box-sizing: border-box;
+  text-align: left;
+  border: 1px solid #E1E2E6;
+  max-width: 600px;
+  min-width: 200px;
+  padding: 15px 15px 22px 60px;
+  font-family: Helvetica, Oxygen,Arial,"Helvetica Neue",sans-serif;
+  font-size: 16px; }
+  blockquote.reddit-card-fake:after {
+    content: '';
+    bottom: 15px;
+    left: 15px;
+    position: absolute;
+    display: block;
+    width: 32px;
+    height: 32px;
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmlld0JveD0iMCAwIDQyMyA0MjEuNSI+PGNpcmNsZSBjeD0iMjExLjgiIGN5PSIyMTEuNSIgcj0iMjEwIiBmaWxsPSIjRkY0NTAwIiAvPjxwYXRoIGQ9Ik0zNTIuNSwyMTEuNWMwLTE3LjktMTQuNC0zMi40LTMyLjEtMzIuNGMtOCwwLTE1LjMsMy0yMSw3LjljLTIxLjgtMTQuMy01MC0yMi42LTgwLjItMjMuOGwxNC4xLTY3bDQyLjYsOS45YzAuOCwxMS42LDEwLjUsMjAuOCwyMi4zLDIwLjhjMTIuMywwLDIyLjMtMTAsMjIuMy0yMi4zcy0xMC0yMi4zLTIyLjMtMjIuM2MtOS4zLDAtMTcuMyw1LjctMjAuNiwxMy44TDIzMSw4NS4yYy0yLjYtMC42LTUuMiwwLjktNS45LDMuNWwtMTYuMyw3NC40Yy0zMS44LDAuNS02MS43LDktODQuNiwyMy45Yy01LjYtNC45LTEzLTcuOS0yMS03LjljLTE3LjcsMC0zMi4xLDE0LjUtMzIuMSwzMi40YzAsMTEuNyw2LjIsMjIsMTUuNSwyNy43Yy0wLjUsMy0wLjcsNi4xLTAuNyw5LjJjMCwyMy4yLDEzLjQsNDQuOSwzNy43LDYxLjFjMjMuNywxNS43LDU1LDI0LjQsODguMywyNC40YzMzLjMsMCw2NC42LTguNyw4OC4zLTI0LjRjMjQuMy0xNi4yLDM3LjctMzcuOSwzNy43LTYxLjFjMC0zLjEtMC4yLTYuMi0wLjctOS4yQzM0Ni4zLDIzMy42LDM1Mi41LDIyMy4zLDM1Mi41LDIxMS41eiIgZmlsbD0iI0ZGRkZGRiIvPjxnPjxwYXRoCmQ9Ik0yNTguNiwyODIuOWMtMTEuNiw5LjUtMjYuMSwxMy44LTQ2LjgsMTMuOGMtMjAuNywwLTM1LjItNC4zLTQ2LjgtMTMuOGMtMi44LTIuMy02LjgtMS45LTkuMSwwLjljLTIuMywyLjgtMS45LDYuOCwwLjksOS4xYzEzLjksMTEuNCwzMS40LDE2LjcsNTUsMTYuN2MyMy42LDAsNDEuMS01LjMsNTUtMTYuN2MyLjgtMi4zLDMuMi02LjMsMC45LTkuMUMyNjUuNCwyODEsMjYxLjQsMjgwLjYsMjU4LjYsMjgyLjl6IiAgZmlsbD0iI0ZGNDcwMCIvPjxwYXRoIGQ9Ik0xODYuMSwyMzQuN2MwLTEyLjQtMTAuMS0yMi41LTIyLjUtMjIuNWMtMTIuNCwwLTIyLjUsMTAuMS0yMi41LDIyLjVjMCwxMi40LDEwLjEsMjIuNSwyMi41LDIyLjVDMTc2LjEsMjU3LjIsMTg2LjEsMjQ3LjEsMTg2LjEsMjM0Ljd6IiAgZmlsbD0iI0ZGNDcwMCIvPjxwYXRoIGQ9Ik0yNTkuOCwyMTJjLTEyLjUsMC0yMi43LDEwLjItMjIuNywyMi43YzAsMTIuNSwxMC4yLDIyLjcsMjIuNywyMi43YzEyLjUsMCwyMi43LTEwLjIsMjIuNy0yMi43QzI4Mi41LDIyMi4yLDI3Mi40LDIxMiwyNTkuOCwyMTJ6IiAgZmlsbD0iI0ZGNDcwMCIvPjwvZz48L3N2Zz4="); }
+  blockquote.reddit-card-fake a {
+    display: inline-block;
+    color: black;
+    text-decoration: none; }
+    blockquote.reddit-card-fake a:first-child {
+      font-size: 22px;
+      margin-bottom: 20px;
+      margin-left: -45px; }
+  </style>
+</head>
+<body>
+  <section>
+    <h1>Before / after</h1>
+    <p>This page simulates with or without the Low extension.</p>
+    <p>If you use Low extension, disable it to see the differences.</p>
+  </section>
+
+  <section>
+    <h2>Embed</h2>
+    <div class="row">
+      <div class="col--mid">
+        <iframe title="youtube" width="560" height="315" src="https://www.youtube.com/embed/XO4q9oVrWWw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="test"></iframe>
+      </div>
+      <div class="col--mid">
+        <iframe src="data:text/html;charset=utf-8,%3Cstyle%20type%3D%22text%2Fcss%22%3Ebody%20%7B%0A%20%20margin%3A%200%3B%0A%20%20padding%3A%200%3B%0A%20%20overflow%3A%20hidden%3B%20%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%3B%20%7D%0A%0Aimg%20%7B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20object-fit%3A%20cover%3B%20%7D%0A%0Asvg%20%7B%0A%20%20display%3A%20block%3B%0A%20%20position%3A%20absolute%3B%0A%20%20z-index%3A%20100%3B%20%7D%0A%0A.lowweb--youtube%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2050%25%3B%0A%20%20width%3A%2068px%3B%0A%20%20height%3A%2048px%3B%0A%20%20margin-top%3A%20-34px%3B%0A%20%20margin-left%3A%20-24px%3B%20%7D%0A%0A.lowweb--youtube%3Ahover%20svg%20path%3Afirst-child%20%7B%0A%20%20fill-opacity%3A%201%3B%0A%20%20fill%3A%20red%3B%20%7D%0A%0A.lowweb--youtube%20.lowweb__title%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20top%3A%200%3B%0A%20%20left%3A%200%3B%0A%20%20color%3A%20%23eee%3B%0A%20%20font-size%3A%2018px%3B%0A%20%20font-family%3A%20%22YouTube%20Noto%22%2CRoboto%2CArial%2CHelvetica%2Csans-serif%3B%0A%20%20white-space%3A%20nowrap%3B%0A%20%20overflow%3A%20hidden%3B%0A%20%20text-overflow%3A%20ellipsis%3B%0A%20%20width%3A%2070%25%3B%0A%20%20margin-top%3A%2021px%3B%0A%20%20margin-left%3A%2024px%3B%0A%20%20text-shadow%3A%200%200%202px%20rgba(0%2C%200%2C%200%2C%200.5)%3B%0A%20%20text-align%3A%20left%3B%20%7D%0A%0A.lowweb--dailymotion%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2045px%3B%0A%20%20width%3A%2080px%3B%0A%20%20height%3A%2080px%3B%0A%20%20margin-top%3A%20-40px%3B%20%7D%0A%0A.lowweb--dailymotion%20a%3Abefore%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20content%3A%20''%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20top%3A%200%3B%0A%20%20left%3A%200%3B%0A%20%20background-color%3A%20black%3B%0A%20%20opacity%3A%200.5%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20left%3A%20170px%3B%0A%20%20top%3A%2050%25%3B%0A%20%20transform%3A%20translateY(-50%25)%3B%0A%20%20color%3A%20white%3B%0A%20%20font-family%3A%20Retina%2C%20sans-serif%3B%0A%20%20width%3A%20320px%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__title%20%7B%0A%20%20font-size%3A%2024px%3B%0A%20%20line-height%3A%201.2%3B%0A%20%20max-height%3A%2057.6px%3B%0A%20%20text-overflow%3A%20ellipsis%3B%0A%20%20overflow%3A%20hidden%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__description%20%7B%0A%20%20font-size%3A%2014px%3B%20%7D%0A%0A.lowweb--vimeo%20svg%20%7B%0A%20%20left%3A%2010px%3B%0A%20%20bottom%3A%2010px%3B%0A%20%20width%3A%2065px%3B%0A%20%20height%3A%2040px%3B%20%7D%0A%0A.lowweb--vimeo%3Ahover%20svg%20path%3Afirst-child%20%7B%0A%20%20fill%3A%20%2300ADEF%3B%0A%20%20fill-opacity%3A%201%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20top%3A%200%3B%0A%20%20margin%3A%201em%3B%0A%20%20font-family%3A%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%20!important%3B%0A%20%20color%3A%20%2300adef%20!important%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__title%20%7B%0A%20%20display%3A%20inline-block%3B%0A%20%20font-size%3A%2020px%3B%0A%20%20padding%3A%20.1em%20.2em%3B%0A%20%20font-weight%3A%20700%3B%0A%20%20background-color%3A%20rgba(23%2C%2035%2C%2034%2C%200.75)%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__author%20%7B%0A%20%20display%3A%20inline-block%3B%0A%20%20margin-top%3A%202px%3B%0A%20%20font-size%3A%2012px%3B%0A%20%20font-weight%3A%20700%3B%0A%20%20padding%3A%20.2em%20.5em%3B%0A%20%20background-color%3A%20rgba(23%2C%2035%2C%2034%2C%200.75)%3B%20%7D%0A%20%20.lowweb--vimeo%20.lowweb__author%20span%20%7B%0A%20%20%20%20color%3A%20white%3B%0A%20%20%20%20font-weight%3A%20400%3B%20%7D%0A%0A.lowweb--facebook%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2050%25%3B%0A%20%20margin-top%3A%20-40px%3B%0A%20%20margin-left%3A%20-40px%3B%20%7D%0A%0A.lowweb--facebook%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20color%3A%20white%3B%0A%20%20font-size%3A%2014px%3B%0A%20%20line-height%3A%2018px%3B%0A%20%20font-family%3A%20'helvetica%20neue'%2C%20helvetica%2C%20arial%2C%20sans-serif%3B%0A%20%20bottom%3A%200%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%2058px%3B%0A%20%20padding%3A%2016px%200%3B%0A%20%20background%3A%20linear-gradient(to%20bottom%2C%20rgba(20%2C%2022%2C%2026%2C%200.7)%2C%20rgba(20%2C%2022%2C%2026%2C%200))%3B%20%7D%0A%20%20.lowweb--facebook%20.lowweb__container%20p%20%7B%0A%20%20%20%20margin-left%3A%2016px%3B%20%7D%0A%0A%3C%2Fstyle%3E%3Cdiv%20class%3D%22lowweb--youtube%22%3E%3Ca%20href%3D%22https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DXO4q9oVrWWw%22%20target%3D%22_blank%22%3E%3Cimg%20src%3D%22https%3A%2F%2Fi.ytimg.com%2Fvi%2FXO4q9oVrWWw%2Fmqdefault.jpg%22%20%2F%3E%3Csvg%20enable-background%3D%22new%200%200%2068%2048%22%20viewBox%3D%220%200%2068%2048%22%20height%3D%2268%22%20width%3D%2248%22%20%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22m66.6%207.5c-.8-2.9-3.1-5.3-6-6.1-5.4-1.4-26.6-1.4-26.6-1.4s-21.2%200-26.6%201.5c-2.9.8-5.3%203.1-6%206.1-1.4%205.3-1.4%2016.4-1.4%2016.4s0%2011.1%201.5%2016.5c.8%202.9%203.1%205.3%206%206%205.3%201.5%2026.5%201.5%2026.5%201.5s21.2%200%2026.6-1.4c2.9-.8%205.3-3.1%206-6%201.4-5.5%201.4-16.6%201.4-16.6s0-11.1-1.4-16.5z%22%20fill%3D%22%23212121%22%20fill-opacity%3D%220.8%22%20%2F%3E%3Cpath%20d%3D%22m27%2034.1%2017.8-10.1-17.8-10.1z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E%3Cdiv%20class%3D%22lowweb__title%22%3EQuand%20la%20Science%20appelle%20%C3%A0%20l'aide%20pour%20l'humanit%C3%A9%20%3F%20Aur%C3%A9lien%20Barrau%2C%20Astrophysicien%20%5BEN%20DIRECT%5D%3C%2Fdiv%3E%3C%2Fa%3E%3C%2Fdiv%3E" title="youtube" width="560" height="315" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="test"></iframe>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col--mid">
+        <iframe src="https://player.vimeo.com/video/156045670" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+      </div>
+      <div class="col--mid">
+        <iframe src="data:text/html;charset=utf-8,%3Cstyle%20type%3D%22text%2Fcss%22%3Ebody%20%7B%0A%20%20margin%3A%200%3B%0A%20%20padding%3A%200%3B%0A%20%20overflow%3A%20hidden%3B%20%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%3B%20%7D%0A%0Aimg%20%7B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20object-fit%3A%20cover%3B%20%7D%0A%0Asvg%20%7B%0A%20%20display%3A%20block%3B%0A%20%20position%3A%20absolute%3B%0A%20%20z-index%3A%20100%3B%20%7D%0A%0A.lowweb--youtube%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2050%25%3B%0A%20%20width%3A%2068px%3B%0A%20%20height%3A%2048px%3B%0A%20%20margin-top%3A%20-34px%3B%0A%20%20margin-left%3A%20-24px%3B%20%7D%0A%0A.lowweb--youtube%3Ahover%20svg%20path%3Afirst-child%20%7B%0A%20%20fill-opacity%3A%201%3B%0A%20%20fill%3A%20red%3B%20%7D%0A%0A.lowweb--youtube%20.lowweb__title%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20top%3A%200%3B%0A%20%20left%3A%200%3B%0A%20%20color%3A%20%23eee%3B%0A%20%20font-size%3A%2018px%3B%0A%20%20font-family%3A%20%22YouTube%20Noto%22%2CRoboto%2CArial%2CHelvetica%2Csans-serif%3B%0A%20%20white-space%3A%20nowrap%3B%0A%20%20overflow%3A%20hidden%3B%0A%20%20text-overflow%3A%20ellipsis%3B%0A%20%20width%3A%2070%25%3B%0A%20%20margin-top%3A%2021px%3B%0A%20%20margin-left%3A%2024px%3B%0A%20%20text-shadow%3A%200%200%202px%20rgba(0%2C%200%2C%200%2C%200.5)%3B%0A%20%20text-align%3A%20left%3B%20%7D%0A%0A.lowweb--dailymotion%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2045px%3B%0A%20%20width%3A%2080px%3B%0A%20%20height%3A%2080px%3B%0A%20%20margin-top%3A%20-40px%3B%20%7D%0A%0A.lowweb--dailymotion%20a%3Abefore%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20content%3A%20''%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20top%3A%200%3B%0A%20%20left%3A%200%3B%0A%20%20background-color%3A%20black%3B%0A%20%20opacity%3A%200.5%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20left%3A%20170px%3B%0A%20%20top%3A%2050%25%3B%0A%20%20transform%3A%20translateY(-50%25)%3B%0A%20%20color%3A%20white%3B%0A%20%20font-family%3A%20Retina%2C%20sans-serif%3B%0A%20%20width%3A%20320px%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__title%20%7B%0A%20%20font-size%3A%2024px%3B%0A%20%20line-height%3A%201.2%3B%0A%20%20max-height%3A%2057.6px%3B%0A%20%20text-overflow%3A%20ellipsis%3B%0A%20%20overflow%3A%20hidden%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__description%20%7B%0A%20%20font-size%3A%2014px%3B%20%7D%0A%0A.lowweb--vimeo%20svg%20%7B%0A%20%20left%3A%2010px%3B%0A%20%20bottom%3A%2010px%3B%0A%20%20width%3A%2065px%3B%0A%20%20height%3A%2040px%3B%20%7D%0A%0A.lowweb--vimeo%3Ahover%20svg%20path%3Afirst-child%20%7B%0A%20%20fill%3A%20%2300ADEF%3B%0A%20%20fill-opacity%3A%201%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20top%3A%200%3B%0A%20%20margin%3A%201em%3B%0A%20%20font-family%3A%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%20!important%3B%0A%20%20color%3A%20%2300adef%20!important%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__title%20%7B%0A%20%20display%3A%20inline-block%3B%0A%20%20font-size%3A%2020px%3B%0A%20%20padding%3A%20.1em%20.2em%3B%0A%20%20font-weight%3A%20700%3B%0A%20%20background-color%3A%20rgba(23%2C%2035%2C%2034%2C%200.75)%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__author%20%7B%0A%20%20display%3A%20inline-block%3B%0A%20%20margin-top%3A%202px%3B%0A%20%20font-size%3A%2012px%3B%0A%20%20font-weight%3A%20700%3B%0A%20%20padding%3A%20.2em%20.5em%3B%0A%20%20background-color%3A%20rgba(23%2C%2035%2C%2034%2C%200.75)%3B%20%7D%0A%20%20.lowweb--vimeo%20.lowweb__author%20span%20%7B%0A%20%20%20%20color%3A%20white%3B%0A%20%20%20%20font-weight%3A%20400%3B%20%7D%0A%0A.lowweb--facebook%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2050%25%3B%0A%20%20margin-top%3A%20-40px%3B%0A%20%20margin-left%3A%20-40px%3B%20%7D%0A%0A.lowweb--facebook%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20color%3A%20white%3B%0A%20%20font-size%3A%2014px%3B%0A%20%20line-height%3A%2018px%3B%0A%20%20font-family%3A%20'helvetica%20neue'%2C%20helvetica%2C%20arial%2C%20sans-serif%3B%0A%20%20bottom%3A%200%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%2058px%3B%0A%20%20padding%3A%2016px%200%3B%0A%20%20background%3A%20linear-gradient(to%20bottom%2C%20rgba(20%2C%2022%2C%2026%2C%200.7)%2C%20rgba(20%2C%2022%2C%2026%2C%200))%3B%20%7D%0A%20%20.lowweb--facebook%20.lowweb__container%20p%20%7B%0A%20%20%20%20margin-left%3A%2016px%3B%20%7D%0A%0A%3C%2Fstyle%3E%3Cdiv%20class%3D%22lowweb--vimeo%22%3E%3Ca%20href%3D%22https%3A%2F%2Fplayer.vimeo.com%2Fvideo%2F156045670%3Fautoplay%3Dtrue%26loop%3Dfalse%26lowweb%3DAxkdIEKx%26quality%3D360p%22%20target%3D%22_self%22%3E%3Cimg%20src%3D%22https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F556958815_295x166.jpg%22%20%2F%3E%3Csvg%20enable-background%3D%22new%200%200%2065%2040%22%20height%3D%2265%22%20width%3D%2240%22%20viewBox%3D%220%200%2065%2040%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22m60%2040h-55c-2.8%200-5-2.2-5-5v-30c0-2.8%202.2-5%205-5h55c2.8%200%205%202.2%205%205v30c0%202.8-2.2%205-5%205z%22%20fill-opacity%3D%220.75%22%20%2F%3E%3Cpath%20d%3D%22m26%209.4%2019.8%2010.6-19.8%2010.6%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E%3Cdiv%20class%3D%22lowweb__container%22%3E%3Cdiv%20class%3D%22lowweb__title%22%3EBonjour%20Paris%20%7C%20A%20Hyperlapse%20Film%20-%20In%204K%3C%2Fdiv%3E%3Cbr%3E%3Cdiv%20class%3D%22lowweb__author%22%3E%3Cspan%3Eby%3C%2Fspan%3E%20Tyler%20Fairbank%3C%2Fdiv%3E%3C%2Fdiv%3E%3C%2Fa%3E%3C%2Fdiv%3E" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col--mid">
+        <iframe frameborder="0" width="480" height="270" src="https://www.dailymotion.com/embed/video/x78ibyg" allowfullscreen="" allow="autoplay"></iframe>
+      </div>
+      <div class="col--mid">
+        <iframe src="data:text/html;charset=utf-8,%3Cstyle%20type%3D%22text%2Fcss%22%3Ebody%20%7B%0A%20%20margin%3A%200%3B%0A%20%20padding%3A%200%3B%0A%20%20overflow%3A%20hidden%3B%20%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%3B%20%7D%0A%0Aimg%20%7B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20object-fit%3A%20cover%3B%20%7D%0A%0Asvg%20%7B%0A%20%20display%3A%20block%3B%0A%20%20position%3A%20absolute%3B%0A%20%20z-index%3A%20100%3B%20%7D%0A%0A.lowweb--youtube%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2050%25%3B%0A%20%20width%3A%2068px%3B%0A%20%20height%3A%2048px%3B%0A%20%20margin-top%3A%20-34px%3B%0A%20%20margin-left%3A%20-24px%3B%20%7D%0A%0A.lowweb--youtube%3Ahover%20svg%20path%3Afirst-child%20%7B%0A%20%20fill-opacity%3A%201%3B%0A%20%20fill%3A%20red%3B%20%7D%0A%0A.lowweb--youtube%20.lowweb__title%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20top%3A%200%3B%0A%20%20left%3A%200%3B%0A%20%20color%3A%20%23eee%3B%0A%20%20font-size%3A%2018px%3B%0A%20%20font-family%3A%20%22YouTube%20Noto%22%2CRoboto%2CArial%2CHelvetica%2Csans-serif%3B%0A%20%20white-space%3A%20nowrap%3B%0A%20%20overflow%3A%20hidden%3B%0A%20%20text-overflow%3A%20ellipsis%3B%0A%20%20width%3A%2070%25%3B%0A%20%20margin-top%3A%2021px%3B%0A%20%20margin-left%3A%2024px%3B%0A%20%20text-shadow%3A%200%200%202px%20rgba(0%2C%200%2C%200%2C%200.5)%3B%0A%20%20text-align%3A%20left%3B%20%7D%0A%0A.lowweb--dailymotion%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2045px%3B%0A%20%20width%3A%2080px%3B%0A%20%20height%3A%2080px%3B%0A%20%20margin-top%3A%20-40px%3B%20%7D%0A%0A.lowweb--dailymotion%20a%3Abefore%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20content%3A%20''%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20top%3A%200%3B%0A%20%20left%3A%200%3B%0A%20%20background-color%3A%20black%3B%0A%20%20opacity%3A%200.5%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20left%3A%20170px%3B%0A%20%20top%3A%2050%25%3B%0A%20%20transform%3A%20translateY(-50%25)%3B%0A%20%20color%3A%20white%3B%0A%20%20font-family%3A%20Retina%2C%20sans-serif%3B%0A%20%20width%3A%20320px%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__title%20%7B%0A%20%20font-size%3A%2024px%3B%0A%20%20line-height%3A%201.2%3B%0A%20%20max-height%3A%2057.6px%3B%0A%20%20text-overflow%3A%20ellipsis%3B%0A%20%20overflow%3A%20hidden%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__description%20%7B%0A%20%20font-size%3A%2014px%3B%20%7D%0A%0A.lowweb--vimeo%20svg%20%7B%0A%20%20left%3A%2010px%3B%0A%20%20bottom%3A%2010px%3B%0A%20%20width%3A%2065px%3B%0A%20%20height%3A%2040px%3B%20%7D%0A%0A.lowweb--vimeo%3Ahover%20svg%20path%3Afirst-child%20%7B%0A%20%20fill%3A%20%2300ADEF%3B%0A%20%20fill-opacity%3A%201%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20top%3A%200%3B%0A%20%20margin%3A%201em%3B%0A%20%20font-family%3A%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%20!important%3B%0A%20%20color%3A%20%2300adef%20!important%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__title%20%7B%0A%20%20display%3A%20inline-block%3B%0A%20%20font-size%3A%2020px%3B%0A%20%20padding%3A%20.1em%20.2em%3B%0A%20%20font-weight%3A%20700%3B%0A%20%20background-color%3A%20rgba(23%2C%2035%2C%2034%2C%200.75)%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__author%20%7B%0A%20%20display%3A%20inline-block%3B%0A%20%20margin-top%3A%202px%3B%0A%20%20font-size%3A%2012px%3B%0A%20%20font-weight%3A%20700%3B%0A%20%20padding%3A%20.2em%20.5em%3B%0A%20%20background-color%3A%20rgba(23%2C%2035%2C%2034%2C%200.75)%3B%20%7D%0A%20%20.lowweb--vimeo%20.lowweb__author%20span%20%7B%0A%20%20%20%20color%3A%20white%3B%0A%20%20%20%20font-weight%3A%20400%3B%20%7D%0A%0A.lowweb--facebook%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2050%25%3B%0A%20%20margin-top%3A%20-40px%3B%0A%20%20margin-left%3A%20-40px%3B%20%7D%0A%0A.lowweb--facebook%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20color%3A%20white%3B%0A%20%20font-size%3A%2014px%3B%0A%20%20line-height%3A%2018px%3B%0A%20%20font-family%3A%20'helvetica%20neue'%2C%20helvetica%2C%20arial%2C%20sans-serif%3B%0A%20%20bottom%3A%200%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%2058px%3B%0A%20%20padding%3A%2016px%200%3B%0A%20%20background%3A%20linear-gradient(to%20bottom%2C%20rgba(20%2C%2022%2C%2026%2C%200.7)%2C%20rgba(20%2C%2022%2C%2026%2C%200))%3B%20%7D%0A%20%20.lowweb--facebook%20.lowweb__container%20p%20%7B%0A%20%20%20%20margin-left%3A%2016px%3B%20%7D%0A%0A%3C%2Fstyle%3E%3Cdiv%20class%3D%22lowweb--dailymotion%22%3E%3Ca%20href%3D%22https%3A%2F%2Fwww.dailymotion.com%2Fvideo%2Fx78ibyg%22%20target%3D%22_blank%22%3E%3Cimg%20src%3D%22https%3A%2F%2Fs2.dmcdn.net%2Fv%2FQ59481UCdmNYfUFMW%2Fx240%22%20%2F%3E%3Csvg%20enable-background%3D%22new%200%200%2080%2080%22%20height%3D%2280%22%20width%3D%2280%22%20viewBox%3D%220%200%2080%2080%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22%23fff%22%3E%3Cpath%20d%3D%22m40.1%2080c-21.8%200-40.3-18.5-40.1-40.3.3-21.4%2017.7-39.2%2038.8-39.7%2022.2-.4%2040.6%2017%2041.1%2039.1.5%2021.9-17.9%2040.8-39.8%2040.9%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22m30.8%2040.3c0-4.4%200-8.8%200-13.2%200-1%20.4-1.6%201.3-1.6.3%200%20.6.1%201%20.3%207.4%204.1%2014.8%208.3%2022.2%2012.6.3.2.7.4%201.1.6.5.3.9.7.9%201.3s-.4%201-.9%201.3c-3.7%202.1-7.3%204.1-11%206.3-4.1%202.3-8.1%204.6-12.2%206.9%200%200-.2.1-.2.1-1.2.6-2.2%200-2.2-1.3%200-2.2%200-4.4%200-6.6z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E%3Cdiv%20class%3D%22lowweb__container%22%3E%3Cdiv%20class%3D%22lowweb__author%22%3ESnowboarder%3C%2Fdiv%3E%3Cdiv%20class%3D%22lowweb__title%22%3EFour%20Burton%20Snowboards%202019%20Product%20Reviews%20%7C%20TransWorld%20SNOWboarding%3C%2Fdiv%3E%3C%2Fdiv%3E%3C%2Fa%3E%3C%2Fdiv%3E" frameborder="0" width="480" height="270" allowfullscreen="" allow="autoplay"></iframe>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col--mid">
+        <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FThalassaOff%2Fvideos%2F1320142364777513%2F&width=500&show_text=true&appId=855770274521224&height=500" width="500" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
+      </div>
+      <div class="col--mid">
+        <iframe src="data:text/html;charset=utf-8,%3Cstyle%20type%3D%22text%2Fcss%22%3Ebody%20%7B%0A%20%20margin%3A%200%3B%0A%20%20padding%3A%200%3B%0A%20%20overflow%3A%20hidden%3B%20%7D%0A%0Ap%20%7B%0A%20%20margin%3A%200%3B%20%7D%0A%0Aimg%20%7B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20object-fit%3A%20cover%3B%20%7D%0A%0Asvg%20%7B%0A%20%20display%3A%20block%3B%0A%20%20position%3A%20absolute%3B%0A%20%20z-index%3A%20100%3B%20%7D%0A%0A.lowweb--youtube%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2050%25%3B%0A%20%20width%3A%2068px%3B%0A%20%20height%3A%2048px%3B%0A%20%20margin-top%3A%20-34px%3B%0A%20%20margin-left%3A%20-24px%3B%20%7D%0A%0A.lowweb--youtube%3Ahover%20svg%20path%3Afirst-child%20%7B%0A%20%20fill-opacity%3A%201%3B%0A%20%20fill%3A%20red%3B%20%7D%0A%0A.lowweb--youtube%20.lowweb__title%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20top%3A%200%3B%0A%20%20left%3A%200%3B%0A%20%20color%3A%20%23eee%3B%0A%20%20font-size%3A%2018px%3B%0A%20%20font-family%3A%20%22YouTube%20Noto%22%2CRoboto%2CArial%2CHelvetica%2Csans-serif%3B%0A%20%20white-space%3A%20nowrap%3B%0A%20%20overflow%3A%20hidden%3B%0A%20%20text-overflow%3A%20ellipsis%3B%0A%20%20width%3A%2070%25%3B%0A%20%20margin-top%3A%2021px%3B%0A%20%20margin-left%3A%2024px%3B%0A%20%20text-shadow%3A%200%200%202px%20rgba(0%2C%200%2C%200%2C%200.5)%3B%0A%20%20text-align%3A%20left%3B%20%7D%0A%0A.lowweb--dailymotion%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2045px%3B%0A%20%20width%3A%2080px%3B%0A%20%20height%3A%2080px%3B%0A%20%20margin-top%3A%20-40px%3B%20%7D%0A%0A.lowweb--dailymotion%20a%3Abefore%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20content%3A%20''%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%20100%25%3B%0A%20%20top%3A%200%3B%0A%20%20left%3A%200%3B%0A%20%20background-color%3A%20black%3B%0A%20%20opacity%3A%200.5%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20left%3A%20170px%3B%0A%20%20top%3A%2050%25%3B%0A%20%20transform%3A%20translateY(-50%25)%3B%0A%20%20color%3A%20white%3B%0A%20%20font-family%3A%20Retina%2C%20sans-serif%3B%0A%20%20width%3A%20320px%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__title%20%7B%0A%20%20font-size%3A%2024px%3B%0A%20%20line-height%3A%201.2%3B%0A%20%20max-height%3A%2057.6px%3B%0A%20%20text-overflow%3A%20ellipsis%3B%0A%20%20overflow%3A%20hidden%3B%20%7D%0A%0A.lowweb--dailymotion%20.lowweb__description%20%7B%0A%20%20font-size%3A%2014px%3B%20%7D%0A%0A.lowweb--vimeo%20svg%20%7B%0A%20%20left%3A%2010px%3B%0A%20%20bottom%3A%2010px%3B%0A%20%20width%3A%2065px%3B%0A%20%20height%3A%2040px%3B%20%7D%0A%0A.lowweb--vimeo%3Ahover%20svg%20path%3Afirst-child%20%7B%0A%20%20fill%3A%20%2300ADEF%3B%0A%20%20fill-opacity%3A%201%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20top%3A%200%3B%0A%20%20margin%3A%201em%3B%0A%20%20font-family%3A%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%20!important%3B%0A%20%20color%3A%20%2300adef%20!important%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__title%20%7B%0A%20%20display%3A%20inline-block%3B%0A%20%20font-size%3A%2020px%3B%0A%20%20padding%3A%20.1em%20.2em%3B%0A%20%20font-weight%3A%20700%3B%0A%20%20background-color%3A%20rgba(23%2C%2035%2C%2034%2C%200.75)%3B%20%7D%0A%0A.lowweb--vimeo%20.lowweb__author%20%7B%0A%20%20display%3A%20inline-block%3B%0A%20%20margin-top%3A%202px%3B%0A%20%20font-size%3A%2012px%3B%0A%20%20font-weight%3A%20700%3B%0A%20%20padding%3A%20.2em%20.5em%3B%0A%20%20background-color%3A%20rgba(23%2C%2035%2C%2034%2C%200.75)%3B%20%7D%0A%20%20.lowweb--vimeo%20.lowweb__author%20span%20%7B%0A%20%20%20%20color%3A%20white%3B%0A%20%20%20%20font-weight%3A%20400%3B%20%7D%0A%0A.lowweb--facebook%20svg%20%7B%0A%20%20top%3A%2050%25%3B%0A%20%20left%3A%2050%25%3B%0A%20%20margin-top%3A%20-40px%3B%0A%20%20margin-left%3A%20-40px%3B%20%7D%0A%0A.lowweb--facebook%20.lowweb__container%20%7B%0A%20%20position%3A%20absolute%3B%0A%20%20color%3A%20white%3B%0A%20%20font-size%3A%2014px%3B%0A%20%20line-height%3A%2018px%3B%0A%20%20font-family%3A%20'helvetica%20neue'%2C%20helvetica%2C%20arial%2C%20sans-serif%3B%0A%20%20bottom%3A%200%3B%0A%20%20width%3A%20100%25%3B%0A%20%20height%3A%2058px%3B%0A%20%20padding%3A%2016px%200%3B%0A%20%20background%3A%20linear-gradient(to%20bottom%2C%20rgba(20%2C%2022%2C%2026%2C%200.7)%2C%20rgba(20%2C%2022%2C%2026%2C%200))%3B%20%7D%0A%20%20.lowweb--facebook%20.lowweb__container%20p%20%7B%0A%20%20%20%20margin-left%3A%2016px%3B%20%7D%0A%0A%3C%2Fstyle%3E%3Cdiv%20class%3D%22lowweb--facebook%22%3E%3Ca%20href%3D%22https%3A%2F%2Fwww.facebook.com%2Fvideo.php%3Fv%3D1320142364777513%22%20target%3D%22_blank%22%3E%3Cimg%20src%3D%22https%3A%2F%2Fgraph.facebook.com%2F1320142364777513%2Fpicture%22%20%2F%3E%3Csvg%20enable-background%3D%22new%200%200%2080%2080%22%20viewBox%3D%220%200%2080%2080%22%20width%3D%2280%22%20height%3D%2280%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22m40.1%2078c-20.7%200-38.3-17.6-38.1-38.3.3-20.3%2016.8-37.2%2036.9-37.7%2021.1-.4%2038.6%2016.2%2039.1%2037.1s-17%2038.8-37.9%2038.9%22%20opacity%3D%22.5%22%2F%3E%3Cg%20fill%3D%22%23fff%22%3E%3Cpath%20d%3D%22m40.1%2080c-10.5%200-20.8-4.4-28.4-12.1s-11.8-17.7-11.7-28.2c.3-21.4%2017.7-39.2%2038.9-39.7%2022.1-.4%2040.6%2017.1%2041.1%2039.1.2%2010.4-4%2020.9-11.5%2028.6-7.6%207.8-17.9%2012.3-28.4%2012.3zm-.5-77.1c-.2%200-.5%200-.7%200-19.6.5-35.7%2017-36%2036.8-.1%209.7%203.8%2019%2010.9%2026.2%207.1%207.1%2016.7%2011.2%2026.4%2011.2s19.3-4.2%2026.3-11.4%2010.9-16.9%2010.7-26.5c-.6-20.2-17.3-36.3-37.6-36.3z%22%2F%3E%3Cpath%20d%3D%22m30.8%2040.3c0-4.7%200-9.5%200-14.2%200-1%20.4-1.7%201.3-1.7.3%200%20.6.1%201%20.3%207.3%204.4%2014.7%208.9%2022%2013.5.3.2.7.4%201.1.7.5.3.9.7.9%201.4s-.4%201-.9%201.4c-3.7%202.2-7.2%204.4-10.9%206.8-4.1%202.5-8.1%204.9-12.1%207.4l-.3.1c-1.2.7-2.2%200-2.2-1.4%200-2.4%200-4.7%200-7.1z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E%3Cdiv%20class%3D%22lowweb__container%22%3E%3Cp%20class%3D%22lowweb__title%22%3E%3Cb%3EGuillaume%20N%C3%A9ry%2C%20%C3%A0%20plein%20souffle%20-%20Mag%20Thalassa%3C%2Fb%3E%3C%2Fp%3E%3Cp%20class%3D%22lowweb__author%22%3Epublished%20by%20%3Cb%3EThalassa%3C%2Fb%3E%3C%2Fp%3E%3C%2Fdiv%3E%3C%2Fa%3E%3C%2Fdiv%3E" width="500" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowtransparency="true" allow="encrypted-media" allowfullscreen="true"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Gif / Giphy</h2>
+
+  </section>
+
+  <section>
+    <h2>Social</h2>
+
+    <div class="row">
+      <div class="col--mid">
+        <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&width=450&layout=standard&action=like&size=small&show_faces=true&share=true&height=80&appId=855770274521224" width="450" height="80" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+        <br>
+        <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%
+        2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button_count&size=small&appId=855770274521224&width=105&height=20" width="105" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+        <br>
+        <iframe src="https://open.spotify.com/follow/1/?uri=spotify:artist:6sFIWsNpZYqfjUpaCgueju&size=detail&theme=light" width="300" height="56" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
+      </div>
+      <div class="col--mid">
+        All Blocked.
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col--mid">
+        <a href="https://twitter.com/intent/tweet?button_hashtag=Lowtech&ref_src=twsrc%5Etfw" class="twitter-hashtag-button" data-show-count="false">Tweet #Lowtech</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+      <div class="col--mid">
+        <a href="https://twitter.com/intent/tweet?button_hashtag=Lowtech&amp;ref_src=twsrc%5Etfw">Tweet #Lowtech</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col--mid">
+        <blockquote class="twitter-tweet"><p lang="fr" dir="ltr">Vous aussi vous devez régler vos cotisations MDA des trimestres 3 et 4 avant le 15 octobre?</p>&mdash; (ro)RomainB(lafrite) (@rorolafrite) <a href="https://twitter.com/rorolafrite/status/1179332237935992832?ref_src=twsrc%5Etfw">October 2, 2019</a></blockquote><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </div>
+      <div class="col--mid">
+        <blockquote class="twitter-tweet-fake"><p lang="fr" dir="ltr">Vous aussi vous devez régler vos cotisations MDA des trimestres 3 et 4 avant le 15 octobre?</p>— (ro)RomainB(lafrite) (@rorolafrite) <a href="https://twitter.com/rorolafrite/status/1179332237935992832?ref_src=twsrc%5Etfw">October 2, 2019</a></blockquote>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col--mid">
+        <blockquote class="reddit-card" data-card-created="1575631281"><a href="https://www.reddit.com/r/AskReddit/comments/e6oh3e/how_do_you_feel_about_a_law_stating_that_tickets/">How do you feel about a law stating that tickets (speeding, driving under influence etc.) should be a percentage of the perpetrators annual wage, instead of fixed rates?</a> from <a href="http://www.reddit.com/r/AskReddit">r/AskReddit</a></blockquote>
+        <script async src="//embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script>
+      </div>
+      <div class="col--mid">
+        <blockquote class="reddit-card-fake" data-card-created="1575631281"><a href="https://www.reddit.com/r/AskReddit/comments/e6oh3e/how_do_you_feel_about_a_law_stating_that_tickets/">How do you feel about a law stating that tickets (speeding, driving under influence etc.) should be a percentage of the perpetrators annual wage, instead of fixed rates?</a> from <a href="http://www.reddit.com/r/AskReddit">r/AskReddit</a></blockquote>
+      </div>
+    </div>
+    
+  </section>
+
+  <section>
+    <h2>Avatar</h2>
+
+    <div class="row">
+      <div class="col--mid">
+        <img src="https://www.gravatar.com/avatar/6365dbfa6be95764fa9edde1e233ae60" width="32" height="32" />
+        <img src="https://c.disquscdn.com/uploads/users/29408/8062/avatar92.jpg" width="32" height="32" />
+      </div>
+      <div class="col--mid">
+        <img src="" width="32" height="32" />
+        <img src="" width="32" height="32" />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Fonts</h2>
+
+    <div class="row">
+      <div class="col--mid">
+        <p class="font--google">Font Croissant One from Google fonts</p>
+      </div>
+      <div class="col--mid">
+        <p>Font Croissant One from Google fonts</p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

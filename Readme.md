@@ -41,9 +41,9 @@ More than 80% of the data transferred over the Internet are videos. This extensi
 
 Several optimizations are made on the images, some are blocked and some displayed in smaller sizes.
 
-- block avatar images of many services including Gravatar, Discus, Twitter, Linkedin, Github, Pinterest, Reddit and [more...](https://github.com/lowwebtech/low-web-extension/blob/master/src/lists/avatar.txt)
 - stop animated GIF and play them when hovering. An animated GIF force browser to re-render part of the screen, it consumes CPU/GPU processes.
 - custom embeds for Giphy images. Original animated images are blocked and replaced by static images. Animated image is loaded and played when hovering.
+- block avatar images of many services including Gravatar, Discus, Twitter, Linkedin, Github, Pinterest, Reddit and [more...](https://github.com/lowwebtech/low-web-extension/blob/master/src/lists/avatar.txt)
 - ~~remove biggest or hidpi images from srcset. This prevents the browser from loading images that are too big. *(only works with lazy-loaded images eg. data-srcset, data-lazysrcset. None lazyloaded images are loading already when the extension starts and it is not possible to stop loading them)*~~
 - ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions, images are loading when extension start and it's not possible to stop them)*
 - optionnaly block all requests of type: image *(default:false)*
@@ -77,9 +77,7 @@ Some results of optimisations from [various test pages](https://lowwebtech.githu
 *note 3: extension adds requests to local files, it increased the number of requests especially for image*
 
 
-## Installation
-
-### Development
+## Development
 
 - load repository
 - `npm install`
@@ -88,6 +86,7 @@ Some results of optimisations from [various test pages](https://lowwebtech.githu
 
 Pages for tests : 
 https://lowwebtech.github.io/low-web-extension/
+
 
 ## Details
 
@@ -109,6 +108,9 @@ We are looking for a solution to automatically change the quality on vimeo.com.
 
 Disabled for the moment.
 
+#### Facebook
+
+We didn't find a way to reduce automatically quality for Facebook videos. But you can set quality to standard and disable autplay in Facebook settings page : https://www.facebook.com/settings?tab=videos
 
 
 ### Click to load a video
@@ -126,6 +128,42 @@ Youtube iframe optimized:
 
 Technically, original iframe is [blocked](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/background/block/block-embed-video.js) by extension, then an [script](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/video/click-to-load.js) is injected for customising blocked iframe. It loads [oEmbed datas](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/background/message/oembed.js) to get image and title of the video, then a new simple html (with image, title, button) is created and injected (data:text/html) into the new iframe.
 More technical info soon...
+
+
+### Video and sound native attributes
+
+The native html5 elements &lt;video&gt; and &lt;sound&gt; are [modified](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/media/attributes.js) to consume less data. These media are paused and the following attributes are changed:
+- autoplay = false
+- loop = false
+- preload = none
+Websites may still force autoplay of the videos.
+
+
+### Stop GIF animation, hover over it to play
+
+The animation of a GIF requires the browser to permanently refresh the rendering of the GIF area (when visible in the screen), this requires a lot of CPU / GPU resources.
+Open a page with an animated GIF and Activity Monitor on Mac or Resource Monitor on Window, you will notice that the use of the CPU or GPU is more important.
+It is still possible to see the animation of the GIF by hovering over it. A Play button (white triangle with black border) indicates that the image can be animated.
+The extension does not yet detect if the GIF image is animated, it can sometimes indicate that the image is animated when it is a static GIF.
+
+More technical informations soon.
+
+
+### Load Giphy GIF on hover
+
+Giphy offers an API to access different image formats. Giphy's animated GIFs are replaced by much lighter static images. When hovering over this image, the animated GIF is loaded in medium resolution (see [GiphyPlayer.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/image/players/GiphyPlayer.js)).
+The content of Giphy iframes (containing a GIF and many scripts) is replaced by a simple static image. The animation is loaded on hover.
+
+
+### Block social media embed
+
+
+### Block avatar images
+
+Avatar images are generally light but often very numerous.
+The urls of blocked images are in this [avatar.txt list](https://github.com/lowwebtech/low-web-extension/blob/master/src/lists/avatar.txt), the syntax is the same as Ad Block Plus Filters.
+
+Feel free to PR or send me an email (vico @@@ lowweb.tech) to add more avatar urls.
 
 
 ## TODO
