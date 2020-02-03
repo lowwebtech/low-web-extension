@@ -3,7 +3,7 @@
   function setQuality() {
     let player = document.getElementById('movie_player') || document.querySelector('.ytp-embed');
     if (player && typeof player.setPlaybackQualityRange === 'function') {
-      player.setPlaybackQualityRange('tiny');
+      player.setPlaybackQualityRange('small');
     }
   }
   document.body.addEventListener('yt-navigate-finish', event => {

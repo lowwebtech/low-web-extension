@@ -17,10 +17,10 @@ const config = {
     'oembed/style': './styles/embed.js',
 
     'players/Youtube': './scripts/content_script/video/players/Youtube-medium.js',
-    'players/Youtube-tiny': './scripts/content_script/video/players/Youtube-tiny.js',
     'players/Youtube-small': './scripts/content_script/video/players/Youtube-small.js',
     'players/Youtube-medium': './scripts/content_script/video/players/Youtube-medium.js',
-    
+    'players/Youtube-large': './scripts/content_script/video/players/Youtube-large.js',
+
     // 'players/Dailymotion': './scripts/content_script/video/players/Dailymotion.js',
     // 'players/Youporn': './scripts/content_script/video/players/Youporn.js',
     // 'players/Vimeo': './scripts/content_script/video/players/Vimeo.js',
