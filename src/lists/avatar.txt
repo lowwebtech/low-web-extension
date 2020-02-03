@@ -36,3 +36,4 @@ muscache.com/im/pictures/user/$image
 mozit.cloud/letter_avatar/$image
 mozit.cloud/user_avatar/$image
 awwwards.com/awards/media/cache/thumb_user_$image
+ph-avatars.imgix.net/*/original$image
