@@ -8,7 +8,7 @@ import GiphyPlayer from './GiphyPlayer';
   let gifs = [];
 
   // select img .gif, or img and iframe from giphy.com
-  let gifEls = document.querySelectorAll('img[src*=".gif"], img[src*=".giphy.com/media"], iframe[src*=".giphy.com/embed"]');
+  let gifEls = document.querySelectorAll('img[src*=".gif"], img[src*=".giphy.com/media"], iframe[src*="giphy.com/embed"]');
 
   gifEls.forEach(img => {
     if (img.src.indexOf('giphy.com') !== -1) {
