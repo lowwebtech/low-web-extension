@@ -32,6 +32,7 @@ export default function() {
       },
       {
         urls: ['*://*.googleusercontent.com/*'],
+        types: ['image'],
       },
       ['blocking']
     );

@@ -1,14 +1,13 @@
 import store from '../../store';
 import { watchFilter } from '../../store/watch';
 import { dataTextLink } from '../../utils/data-uri';
-// import Logger from '../Logger';
 
 export function blockFiles() {
   let action = function(details) {
     let cancel = 0;
     let redirect = false;
     let response = {};
-
+    
     const { type, url } = details;
     switch (type) {
       case 'media':
@@ -33,9 +32,9 @@ export function blockFiles() {
         cancel = store.getters.block_images;
         // if (store.getters.block_images === 1) redirect = dataImage();
         break;
-      case 'script':
-        cancel = store.getters.block_scripts;
-        break;
+      // case 'script':
+      //   cancel = store.getters.block_scripts;
+      //   break;
     }
     if (cancel === 1) {
       response.cancel = true;
@@ -48,7 +47,9 @@ export function blockFiles() {
     return response;
   };
 
-  watchFilter('isBlockFile', action);
+  const filterTypes = ['media', 'object', 'sub_frame', 'font', 'image']; 
+  // imageset, object_subrequest
+  watchFilter('isBlockFile', action, { types: filterTypes });
 }
 
 // TODO look at those types

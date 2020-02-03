@@ -5,6 +5,7 @@ class RequestManager {
     this.tabStorage = {};
     this.networkFilters = {
       urls: ['<all_urls>'],
+      types: ['main_frame'],
     };
   }
   getTab(tabId) {
@@ -19,41 +20,41 @@ class RequestManager {
       if (!this.tabStorage.hasOwnProperty(tabId)) {
         this.addTab(tabId);
       }
-      if (this.tabStorage[tabId.toString()]) {
-        this.tabStorage[tabId.toString()].requests[requestId] = {
-          requestId: requestId,
-          url: details.url,
-          startTime: details.timeStamp,
-          status: 'pending',
-        };
-      }
+      // if (this.tabStorage[tabId.toString()]) {
+      //   this.tabStorage[tabId.toString()].requests[requestId] = {
+      //     requestId: requestId,
+      //     url: details.url,
+      //     startTime: details.timeStamp,
+      //     status: 'pending',
+      //   };
+      // }
       return {};
     };
 
-    const cbRequestCompleted = details => {
-      const { tabId, requestId } = details;
-      if (!this.tabStorage.hasOwnProperty(tabId.toString()) || !this.tabStorage[tabId.toString()].requests.hasOwnProperty(requestId)) {
-        return;
-      }
-      const request = this.tabStorage[tabId.toString()].requests[requestId];
-      Object.assign(request, {
-        endTime: details.timeStamp,
-        requestDuration: details.timeStamp - request.startTime,
-        status: 'complete',
-      });
-    };
+    // const cbRequestCompleted = details => {
+    //   const { tabId, requestId } = details;
+    //   if (!this.tabStorage.hasOwnProperty(tabId.toString()) || !this.tabStorage[tabId.toString()].requests.hasOwnProperty(requestId)) {
+    //     return;
+    //   }
+    //   const request = this.tabStorage[tabId.toString()].requests[requestId];
+    //   Object.assign(request, {
+    //     endTime: details.timeStamp,
+    //     requestDuration: details.timeStamp - request.startTime,
+    //     status: 'complete',
+    //   });
+    // };
 
-    const cbRequestErrorOccured = details => {
-      const { tabId, requestId } = details;
-      if (!this.tabStorage.hasOwnProperty(tabId.toString()) || !this.tabStorage[tabId.toString()].requests.hasOwnProperty(requestId)) {
-        return;
-      }
-      const request = this.tabStorage[tabId.toString()].requests[requestId];
-      Object.assign(request, {
-        endTime: details.timeStamp,
-        status: 'error',
-      });
-    };
+    // const cbRequestErrorOccured = details => {
+    //   const { tabId, requestId } = details;
+    //   if (!this.tabStorage.hasOwnProperty(tabId.toString()) || !this.tabStorage[tabId.toString()].requests.hasOwnProperty(requestId)) {
+    //     return;
+    //   }
+    //   const request = this.tabStorage[tabId.toString()].requests[requestId];
+    //   Object.assign(request, {
+    //     endTime: details.timeStamp,
+    //     status: 'error',
+    //   });
+    // };
 
     const cbTabUpdated = tabId => {
       this.addTab(tabId);
@@ -88,8 +89,8 @@ class RequestManager {
     };
 
     browser.webRequest.onBeforeRequest.addListener(cbRequestOnBefore, this.networkFilters);
-    browser.webRequest.onCompleted.addListener(cbRequestCompleted, this.networkFilters);
-    browser.webRequest.onErrorOccurred.addListener(cbRequestErrorOccured, this.networkFilters);
+    // browser.webRequest.onCompleted.addListener(cbRequestCompleted, this.networkFilters);
+    // browser.webRequest.onErrorOccurred.addListener(cbRequestErrorOccured, this.networkFilters);
 
     // browser.webNavigation.onCommitted.addListener(cbNavigationCommitted);
     browser.webNavigation.onHistoryStateUpdated.addListener(cbNavigationHistoryUpdated);

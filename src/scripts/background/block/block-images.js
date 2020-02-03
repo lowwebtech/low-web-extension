@@ -30,5 +30,5 @@ const blockGiphy = details => {
 
 export function blockImages(avatarTxt) {
   if (avatarTxt) watchList('block_avatar', avatarTxt);
-  watchFilter('gif_player', blockGiphy, { urls: ['<all_urls>'] });
+  watchFilter('gif_player', blockGiphy, { urls: ['<all_urls>'], types: ['image', 'sub_frame'] });
 }
