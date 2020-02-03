@@ -41,9 +41,10 @@ export default {
     domains: ['dailymotion.com'],
     embed_url: 'dailymotion.com/embed/video',
     embed_url_filter: '*://*.dailymotion.com/embed/*',
-    video_url: 'https://www.dailymotion.com/video/##ID##',
+    video_url: 'https://www.dailymotion.com/embed/video/##ID##',
+    // video_url: 'https://www.dailymotion.com/video/##ID##',
     oembed: 'https://www.dailymotion.com/services/oembed',
-    player: '', // 'players/Dailymotion.js',
+    // player: '', // 'players/Dailymotion.js',
     api_player: 'players/Dailymotion.js',
     // image: '',
     skin:

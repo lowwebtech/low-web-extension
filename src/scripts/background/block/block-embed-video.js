@@ -10,7 +10,7 @@ export function blockEmbedVideo() {
 
     const { url, tabId } = details;
 
-    // test if url is whitelisted by lowweb TOKEN
+    // test if url is not whitelisted by lowweb TOKEN
     if (url.indexOf('lowweb=' + TOKEN) === -1) {
       // find video blocked
       for (const key of keys) {

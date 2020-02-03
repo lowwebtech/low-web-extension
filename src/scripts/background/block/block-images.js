@@ -3,8 +3,6 @@ import { TOKEN } from '../../datas/constants';
 import { watchList, watchFilter } from '../../store/watch';
 import { dataTextLink, dataImage } from '../../utils/data-uri';
 
-// import avatarTxt from '../../../lists/avatar.txt';
-
 const blockGiphy = details => {
   let response = {};
   const exclude = ['giphy.com'];

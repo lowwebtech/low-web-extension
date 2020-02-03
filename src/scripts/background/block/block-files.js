@@ -2,12 +2,16 @@ import store from '../../store';
 import { watchFilter } from '../../store/watch';
 import { dataTextLink } from '../../utils/data-uri';
 
+/*
+block-files.js blocks request by type
+types supported : 'media', 'object', 'sub_frame', 'font', 'image'
+*/
 export function blockFiles() {
   let action = function(details) {
     let cancel = 0;
     let redirect = false;
     let response = {};
-    
+
     const { type, url } = details;
     switch (type) {
       case 'media':
@@ -47,7 +51,7 @@ export function blockFiles() {
     return response;
   };
 
-  const filterTypes = ['media', 'object', 'sub_frame', 'font', 'image']; 
+  const filterTypes = ['media', 'object', 'sub_frame', 'font', 'image'];
   // imageset, object_subrequest
   watchFilter('isBlockFile', action, { types: filterTypes });
 }

@@ -16,7 +16,7 @@ class RequestManager {
   }
   init() {
     const cbRequestOnBefore = details => {
-      const { tabId, requestId } = details;
+      const { tabId } = details; // requestId
       if (!this.tabStorage.hasOwnProperty(tabId)) {
         this.addTab(tabId);
       }

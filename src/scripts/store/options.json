@@ -65,7 +65,7 @@
   },
   {
     "id": "gif_player", 
-    "label": "Hover over a GIF to read it",
+    "label": "Hover over a GIF to play it",
     "type": "bool",
     "value": 1,
     "presets": [1,1,1],
@@ -111,7 +111,7 @@
   },
   {
     "id": "block_social", 
-    "label": "Block social media sharing",
+    "label": "Block social media embeds",
     "type": "bool",
     "value": 1,
     "presets": [1,1,1],

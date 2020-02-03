@@ -2,10 +2,11 @@ export default class GifPlayer {
   constructor(el) {
     this.el = el;
     this.image = el;
+    // needed for modifying origin of image, will be a canvas blob
     this.image.setAttribute('crossorigin', 'anonymous');
 
     this.originalSrc = this.el.src;
-    this.doPlay = true;
+    // this.doPlay = true;
     this.type = 'img';
   }
   start() {
@@ -23,7 +24,7 @@ export default class GifPlayer {
       this.image.removeEventListener('load', this.buildHandler);
     }
     if (!this.isAnimated() || this.isSmall()) {
-      this.doPlay = true;
+      return;
     }
 
     this.canvas = document.createElement('canvas');
@@ -39,10 +40,10 @@ export default class GifPlayer {
 
     this.render();
 
-    if (this.doPlay) {
-      this.el.addEventListener('mouseenter', () => this.play());
-      this.el.addEventListener('mouseleave', () => this.stop());
-    }
+    // if (this.doPlay) {
+    this.el.addEventListener('mouseenter', () => this.play());
+    this.el.addEventListener('mouseleave', () => this.stop());
+    // }
   }
   render() {
     this.draw();
@@ -58,6 +59,7 @@ export default class GifPlayer {
   }
   play() {
     if (!this.playing) {
+      // TODO hide play button
       this.playing = true;
       if (this.type === 'img') {
         this.el.src = this.originalSrc;
@@ -75,23 +77,23 @@ export default class GifPlayer {
   }
   draw() {
     this.context.drawImage(this.image, 0, 0, this.canvas.width, this.canvas.height);
-    if (this.doPlay) {
-      const scale = Math.max(300, Math.min(600, this.canvas.width)) / 300;
-      const width = scale * 20;
+    // if (this.doPlay) {
+    const scale = Math.max(300, Math.min(600, this.canvas.width)) / 300;
+    const width = scale * 20;
 
-      this.context.beginPath();
-      this.context.moveTo(10, 10);
-      this.context.lineTo(10 + width, 10 + width / 2);
-      this.context.lineTo(10, 10 + width);
-      this.context.closePath();
+    this.context.beginPath();
+    this.context.moveTo(10, 10);
+    this.context.lineTo(10 + width, 10 + width / 2);
+    this.context.lineTo(10, 10 + width);
+    this.context.closePath();
 
-      this.context.lineWidth = 8;
-      this.context.strokeStyle = '#000';
-      this.context.stroke();
+    this.context.lineWidth = 8;
+    this.context.strokeStyle = '#000';
+    this.context.stroke();
 
-      this.context.fillStyle = '#FFF';
-      this.context.fill();
-    }
+    this.context.fillStyle = '#FFF';
+    this.context.fill();
+    // }
   }
   isAnimated() {
     // TODO detect animated gif

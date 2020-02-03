@@ -9,6 +9,7 @@ export default function() {
 
 function customSocial() {
   const instagramEmbeds = document.querySelectorAll('blockquote.instagram-media');
+
   instagramEmbeds.forEach(embed => {
     const url = new URL(embed.querySelector('a').href);
     const embedUrl = url.origin + url.pathname;
@@ -22,11 +23,11 @@ function customSocial() {
       },
     };
     const callback = function(res) {
-      if (res && res.thumbnail_url) {
+      if (res && res.data.thumbnail_url) {
         const img = document.createElement('img');
         img.style.width = '100%';
         img.style.height = 'auto';
-        img.src = res.thumbnail_url;
+        img.src = res.data.thumbnail_url;
         const container = embed.querySelector('a');
         container.textContent = '';
         container.appendChild(img);
