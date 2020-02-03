@@ -83,8 +83,8 @@ export default function(url, autoplay = false, token = false) {
 }
 
 function setEmbedParam(params, name, value) {
-  if (typeof params[name] !== 'undefined' && params[name] !== value) {
-    params[name] = value;
-  }
+  // if (typeof params[name] !== 'undefined' && params[name] !== value) {
+  params[name] = value;
+  // }
   return params;
 }

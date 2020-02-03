@@ -1,29 +1,54 @@
 import { TOKEN } from '../../datas/constants';
 import { dataTextLink } from '../../utils/data-uri';
 import { watchFilter } from '../../store/watch';
+import videoToBlock from '../../datas/video-to-block';
+import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
 
 export function blockEmbedVideo() {
   const action = details => {
     let response = {};
-    if (details.type === 'sub_frame') {
-      const { url, tabId } = details;
-      if (url.indexOf('lowweb=' + TOKEN) === -1) {
-        browser.tabs.sendMessage(tabId, {
-          message: 'embedVideoBlocked',
-          url: url,
-        });
-        response.redirectUrl = dataTextLink(url);
-        // response.cancel = true;
+
+    const { url, tabId } = details;
+
+    // test if url is whitelisted by lowweb TOKEN
+    if (url.indexOf('lowweb=' + TOKEN) === -1) {
+      // find video blocked
+      for (const key of keys) {
+        if (url.indexOf(videoToBlock[key].embed_url) !== -1) {
+          if (videoToBlock[key].oembed) {
+            // send a message to content_script form embed customisation
+            browser.tabs.sendMessage(tabId, {
+              message: 'embedVideoBlocked',
+              url: url,
+            });
+            // redirect to simple fallback just a link to original embed url
+            response.redirectUrl = dataTextLink(url);
+          } else {
+            const sanitizedUrl = sanitizeEmbedUrl(url, false, true);
+            console.log(sanitizedUrl);
+
+            if (sanitizedUrl !== url) {
+              response.redirectUrl = sanitizedUrl;
+            }
+          }
+        }
       }
     }
+
     return response;
   };
 
+  const embedUrls = [];
+  const keys = Object.keys(videoToBlock);
+  for (const key of keys) {
+    if (videoToBlock[key].embed_url_filter) {
+      embedUrls.push(videoToBlock[key].embed_url_filter);
+    }
+  }
   const filter = {
-    urls: ['*://*.youtube.com/embed/*', '*://player.vimeo.com/*', '*://*.dailymotion.com/embed/*', '*://*.facebook.com/plugins/video.php*'],
+    urls: embedUrls,
+    types: ['sub_frame'],
   };
-  // TODO use a ABP list
-  // Blocker.filterRequest(action, filter);
 
   watchFilter('video_clicktoload', action, filter);
 }
