@@ -5,9 +5,11 @@ global.browser = require('webextension-polyfill');
 import RequestManager from './RequestManager';
 import Logger from './Logger';
 import Blocker from './Blocker';
+
 import { blockFiles } from './block/block-files';
 import { blockSocial } from './block/block-social';
 import { blockFonts } from './block/block-fonts';
+import { blockWebsiteSpecific } from './block/block-website-specific';
 import youtube from './sites/youtube';
 import redirectKnownAssets from './redirect-known-assets';
 import hideUselessContent from './hide-useless-content';
@@ -18,6 +20,7 @@ import { cssAnimation } from './css-animation';
 import { blockEmbedVideo } from './block/block-embed-video';
 import { onMessageOEmbed } from './message/oembed';
 /* eslint-enable import/first, indent */
+
 browser.runtime.onStartup.addListener(details => {
   load(details);
 });
@@ -25,23 +28,39 @@ browser.runtime.onInstalled.addListener(details => {
   load(details);
 });
 
-// TODO manifest load
-function load(details) {
-  // console.log('load', details);
-  const listsTxt = ['lists/avatar.txt', 'lists/social.txt', 'lists/fonts.txt'];
+const assets = {};
+const assetsManifest = [
+  {
+    name: 'avatarTXT',
+    url: 'lists/avatar.txt',
+  },
+  {
+    name: 'socialTXT',
+    url: 'lists/social.txt',
+  },
+  {
+    name: 'fontsTXT',
+    url: 'lists/fonts.txt',
+  },
+  {
+    name: 'website_specificTXT',
+    url: 'lists/website-specific.txt',
+  },
+];
 
+function load(details) {
   Promise.all(
-    listsTxt.map(url =>
-      fetch(url)
+    assetsManifest.map(asset =>
+      fetch(asset.url)
         .then(checkStatus)
         .then(parseTXT)
+        .then(data => setAsset(data, asset))
         .catch(error => console.log('There was a problem!', error))
     )
   ).then(data => {
     start(data);
   });
 }
-
 function checkStatus(response) {
   if (response.ok) {
     return Promise.resolve(response);
@@ -49,7 +68,11 @@ function checkStatus(response) {
     return Promise.reject(new Error(response.statusText));
   }
 }
-
+function setAsset(data, asset) {
+  asset.data = data;
+  assets[asset.name] = asset;
+  return data;
+}
 function parseTXT(response) {
   return response.text();
 }
@@ -67,9 +90,10 @@ function start(data) {
     hideUselessContent();
 
     blockFiles();
-    blockImages(data[0]);
-    blockSocial(data[1]);
-    blockFonts(data[2]);
+    blockImages(assets.avatarTXT.data);
+    blockSocial(assets.socialTXT.data);
+    blockFonts(assets.fontsTXT.data);
+    blockWebsiteSpecific(assets.website_specificTXT.data);
 
     blockEmbedVideo();
     cssAnimation();
