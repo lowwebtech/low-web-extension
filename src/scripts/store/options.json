@@ -134,36 +134,41 @@
     "description": "Disable old marquee animations. Animations may cause render and reflow"
   },
   {
+    "id": "block_fonts", 
+    "label": "Block Fonts",
+    "description": "Block web fonts loaded for an @font-face CSS rule. Some icon webfont like fontawesome are whitelisted.",
+    "type": "bool",
+    "presets": [1,0,0],
+    "value": 0
+  },
+  {
     "id": "block_images", 
-    "label": "Image: Images loaded by an <img> element",
+    "label": "Block Images",
+    "description": "Block images loaded by an <img> element",
     "type": "bool",
     "presets": [1,0,0],
     "value": 0
   },
   {
     "id": "block_medias", 
-    "label": "Media: Resources loaded by an <video> or <audio> element.",
+    "label": "Block Medias",
+    "description": "Block resources loaded by an <video> or <audio> element.",
     "type": "bool",
     "presets": [1,0,0],
     "value": 0
   },
   {
     "id": "block_objects",
-    "label": "Object: Resources loaded by an <object> or <embed> element.",
+    "label": "Block Objects",
+    "description": "Block resources loaded by an <object> or <embed> element.",
     "type": "bool",
     "presets": [1,0,0],
     "value": 0
   },
   {
     "id": "block_subframes", 
-    "label": "iframe: Documents loaded in an <iframe> or <frame> element.",
-    "type": "bool",
-    "presets": [1,0,0],
-    "value": 0
-  },
-  {
-    "id": "block_fonts", 
-    "label": "Font: Web fonts loaded for an @ font-face CSS rule.",
+    "label": "Block Iframes",
+    "description": "Block documents loaded in an <iframe> or <frame> element.",
     "type": "bool",
     "presets": [1,0,0],
     "value": 0
