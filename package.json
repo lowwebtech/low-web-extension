@@ -19,6 +19,11 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
+  "browserslist": [
+    "last 2 Chrome versions",
+    "last 2 Firefox versions",
+    "last 2 Edge versions"
+  ],
   "dependencies": {
     "@vimeo/player": "^2.10.0",
     "abp-filter-parser": "^0.2.0",
