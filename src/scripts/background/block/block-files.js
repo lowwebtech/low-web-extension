@@ -52,7 +52,7 @@ export function blockFiles() {
     return response;
   };
 
-  const filterTypes = ['media', 'object', 'sub_frame', 'font', 'image'];
+  const filterTypes = ['media', 'object', 'object_subrequest', 'sub_frame', 'font', 'image', 'imageset'];
   // imageset, object_subrequest
   watchFilter('isBlockFile', action, { types: filterTypes });
 }
