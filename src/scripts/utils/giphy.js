@@ -1,4 +1,4 @@
-export function getIdFromEmbed(url) {
+export function getIdFromGiphyEmbed(url) {
   url = url.split('giphy.com/embed/');
   if (url.length > 1) {
     return url[1];
@@ -6,8 +6,7 @@ export function getIdFromEmbed(url) {
     return false;
   }
 }
-export function getIdFromImage(url) {
-  // TODO regex
+export function getIdFromGiphyUrl(url) {
   url = url.split('.giphy.com/media/');
   if (url.length > 1) {
     if (url[1].indexOf('/giphy.gif') !== -1) {

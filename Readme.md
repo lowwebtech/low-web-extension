@@ -4,19 +4,16 @@ Reduce energy consumption and carbon footprint of your internet browsing.
 
 - Chromium : [https://chrome.google.com/webstore/detail/low-web-extension/jllfpicflcigpegdmejghjhaehdiabfj](https://chrome.google.com/webstore/detail/low-web-extension/jllfpicflcigpegdmejghjhaehdiabfj) 
 - Firefox : [https://addons.mozilla.org/fr/firefox/addon/low-web-extension/](https://addons.mozilla.org/fr/firefox/addon/low-web-extension/)
- 
- 
-:green_heart::herb::deciduous_tree::evergreen_tree::earth_africa:
 
 
 
-## Why ?
+## Why ? :green_heart::herb::deciduous_tree::evergreen_tree::earth_africa:
 
 The Internet consumes about 8% of the electricity produced worldwide and emits 3 to 4% of total greenhouse gas emissions. Every request, every resource, every calculation, is small amounts of electricity consumed ... and we visit billions of pages, make billions of computer operations, load billions of terabytes... needing to run millions of servers, millions of antennas, millions of miles of fiber and especially devices like telephones always more powerful and ever more obsolete.
 
 This extension aims to reduce our data and limit the energy consumption of our Internet browsing.
 
-This extension affects electricity consumption when browsing the Internet but not during manufacturing. Manufacturing is the most energy consuming and polluting stage. So let's keep our phones and computers as long as possible !
+**This extension affects electricity consumption when browsing the Internet but not during manufacturing. Manufacturing is the most energy consuming and polluting stage. So let's keep our phones and computers as long as possible !**
 
 
 
@@ -25,12 +22,13 @@ This extension affects electricity consumption when browsing the Internet but no
 
 A browser extension allows you to block resources and modify the content of a page. So we can optimize some content, block what is not necessary and thus limit the number of requests, weight and computer operations.
 
-First, you need a good blocker for ad/malware/tracker like uBlock Origin ([Chrome](https://chrome.google.com/webstore/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm), [Firefox](https://addons.mozilla.org/fr/firefox/addon/ublock-origin/)) or a browser like [Brave](https://brave.com/). 
+First, you need a good blocker for ad/malware/tracker like [uBlock Origin](https://github.com/gorhill/uBlock), [Ghostery](https://www.ghostery.com/)... or a browser like [Firefox](https://www.mozilla.org/firefox/) or [Brave](https://brave.com/). 
+Reducing advertising and tracking is surely what will save you the most data. We made the choice in the extension not to deal with advertising, many extensions do it very well.
 
 
 ### Video
 
-More than 80% of the data transferred over the Internet are videos. This extension tries to limit their use and the quality of the videos: 
+More than **80% of the data transferred over the Internet are videos**. This extension tries to limit their use and the quality of the videos: 
 
 - when possible, the extension chooses a low video quality. For example on Youtube.com, the video will be played in 240p, 360p or 480p (Youtube, Vimeo, Dailymotion)
 - embed video iframes are blocked and a light preview is displayed. The click on a preview opens the video on the original site or in the iframe. We use oEmbed to get informations about the videos (Youtube, Vimeo, Dailymotion, Facebook).
@@ -216,6 +214,9 @@ You can test this functionality on this page: [avatar.html](https://lowwebtech.g
 Feel free to PR or send me an email (vico @@@ lowweb.tech) to add more avatar urls into [avatar.txt](https://github.com/lowwebtech/low-web-extension/blob/master/src/lists/avatar.txt)
 
 
+### Disable CSS animation & transition
+
+
 ## Development
 
 - load repository
@@ -231,6 +232,8 @@ https://lowwebtech.github.io/low-web-extension/
 
 ## TODO
 - listen dom change
+- onboard, upboard and offboard
+- display advice/tips/notificatio to settings for well-known websites
 - split into modules content_script, append at different time start/end/idle...
 - videos
     + look at https://stackoverflow.com/questions/31697212/youtube-api-cannot-change-video-quality
@@ -240,6 +243,7 @@ https://lowwebtech.github.io/low-web-extension/
 - add more oembed services https://oembed.com/
 - look at webrequest type to maybe block them : beacon, csp_report, ping, speculative, web_manifest, websocket, xbl, xml_dtd, xslt
 - message between background blocker and content_script for temporary white-list
+- context menu : 'Unblock content'...
 - write tests
 - lazyload optimized assets (gif/iframe)
 - block chatbot
@@ -262,7 +266,6 @@ https://lowwebtech.github.io/low-web-extension/
 - smaller injected script and styles
 - inject script and styles only when needed
 - audit the extension to limit size and processes (init, reflow...)
-- display advice/tips to reduce bandwidth for main websites
 - display time alerts
 - try to block popin when mouse leaves the viewport 
 
@@ -299,3 +302,8 @@ https://lowwebtech.github.io/low-web-extension/
 - soundcloud
 - medium
 - and more https://oembed.com/#section7
+
+
+## Licence
+
+Code released under the [GNU GPLv3 License](LICENSE).
