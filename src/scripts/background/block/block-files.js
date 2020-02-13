@@ -52,8 +52,15 @@ export function blockFiles() {
     return response;
   };
 
-  const filterTypes = ['media', 'object', 'object_subrequest', 'sub_frame', 'font', 'image', 'imageset'];
-  // imageset, object_subrequest
+  const filterTypes = ['media', 'object', 'sub_frame', 'font', 'image', 'imageset', 'object_subrequest'];
+  // test if filterTypes are available
+  // types : imageset, object_subrequest work only on Firefox
+  for (let i = filterTypes.length - 1; i >= 0; i--) {
+    if (browser.webRequest.ResourceType[filterTypes[i].toUpperCase()] === undefined) {
+      filterTypes.splice(i, 1);
+    }
+  }
+
   watchFilter('isBlockFile', action, { types: filterTypes });
 }
 

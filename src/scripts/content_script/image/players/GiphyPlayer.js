@@ -16,7 +16,7 @@ export default class GiphyPlayer extends GifPlayer {
       const img = document.createElement('img');
       img.setAttribute('crossorigin', 'anonymous');
       this.image = img;
-      this.id = getIdFromEmbed(src);
+      this.id = getIdFromGiphyEmbed(src);
     } else if (el.tagName === 'IMG') {
       // or img
       this.image = el;
