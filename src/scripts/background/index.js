@@ -6,6 +6,8 @@ import RequestManager from './RequestManager';
 import Logger from './Logger';
 import Blocker from './Blocker';
 
+import csp from './header/csp';
+
 import { blockFiles } from './block/block-files';
 import { blockSocial } from './block/block-social';
 import { blockFonts } from './block/block-fonts';
@@ -83,6 +85,7 @@ function start(data) {
     RequestManager.init();
     Blocker.init();
 
+    csp();
     saveDataHeader();
 
     youtube();
