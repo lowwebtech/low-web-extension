@@ -128,66 +128,66 @@
         }
       }
     }
-    &--facebook {
-      svg{
-        top: 50%;
-        left: 50%;
-        margin-top: -40px;
-        margin-left: -40px;
-      }
-      .lowweb__container{
-        position: absolute;
-        color: white;
-        font-size: 14px;
-        line-height: 18px;
-        font-family: 'helvetica neue', helvetica, arial, sans-serif;
-        bottom: 0;
-        width: 100%;
-        height: 58px;
-        padding: 16px 0;
-        background: linear-gradient(to bottom, rgba(20, 22, 26, .7), rgba(20, 22, 26, 0));
-        p{
-          margin-left: 16px;
-        }
-      }
-    }
-    &--twitch{
-      svg{
-        top: 50%;
-        left: 50%;
-        margin-top: -60px;
-        margin-left: -60px;
-      }
-      &:before{
-        position: absolute;
-        content: '';
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-color: black;
-        opacity: 0.5;
-      }
-      &:hover path{
-        fill: #a970ff;
-      }
-      .lowweb__container{
-        position: relative;
-        color: white;
-        margin-top: 15px;
-        margin-left: 15px;
-        font-family: 'Roobert','Helvetica Neue',Arial,sans-serif;
-        .lowweb__author{
-          font-weight: 700;
-          font-size: 20px;
-          line-height: 1.4;
-        }
-        .lowweb__title{
-          font-size: 14px;
-          line-height: 1.1;
-        }
-      }
-    } 
+    // &--facebook {
+    //   svg{
+    //     top: 50%;
+    //     left: 50%;
+    //     margin-top: -40px;
+    //     margin-left: -40px;
+    //   }
+    //   .lowweb__container{
+    //     position: absolute;
+    //     color: white;
+    //     font-size: 14px;
+    //     line-height: 18px;
+    //     font-family: 'helvetica neue', helvetica, arial, sans-serif;
+    //     bottom: 0;
+    //     width: 100%;
+    //     height: 58px;
+    //     padding: 16px 0;
+    //     background: linear-gradient(to bottom, rgba(20, 22, 26, .7), rgba(20, 22, 26, 0));
+    //     p{
+    //       margin-left: 16px;
+    //     }
+    //   }
+    // }
+    // &--twitch{
+    //   svg{
+    //     top: 50%;
+    //     left: 50%;
+    //     margin-top: -60px;
+    //     margin-left: -60px;
+    //   }
+    //   &:before{
+    //     position: absolute;
+    //     content: '';
+    //     width: 100%;
+    //     height: 100%;
+    //     top: 0;
+    //     left: 0;
+    //     background-color: black;
+    //     opacity: 0.5;
+    //   }
+    //   &:hover path{
+    //     fill: #a970ff;
+    //   }
+    //   .lowweb__container{
+    //     position: relative;
+    //     color: white;
+    //     margin-top: 15px;
+    //     margin-left: 15px;
+    //     font-family: 'Roobert','Helvetica Neue',Arial,sans-serif;
+    //     .lowweb__author{
+    //       font-weight: 700;
+    //       font-size: 20px;
+    //       line-height: 1.4;
+    //     }
+    //     .lowweb__title{
+    //       font-size: 14px;
+    //       line-height: 1.1;
+    //     }
+    //   }
+    // } 
     &--clicked iframe{
       visibility: visible;
       pointer-events: auto;

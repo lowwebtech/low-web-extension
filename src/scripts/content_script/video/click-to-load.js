@@ -1,4 +1,4 @@
-import './click-to-load.scss';
+// import './click-to-load.scss';
 import store from '../../store';
 import videoToBlock from '../../datas/video-to-block';
 import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
@@ -136,7 +136,7 @@ function customIframes() {
                       skin = skin.replace('##VIDEO_URL##', videoUrl);
                     }
 
-                    skin = '<style type="text/css">' + style + '</style><div class="lowweb--' + type + '">' + skin + '</div>';
+                    skin = '<style type="text/css">' + style + '</style><div class="lowweb--' + type + '"><div>' + skin + '</div></div>';
 
                     let newIframe = document.createElement('iframe');
                     newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin);
