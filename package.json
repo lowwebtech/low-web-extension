@@ -27,7 +27,6 @@
   "dependencies": {
     "@vimeo/player": "^2.10.0",
     "abp-filter-parser": "^0.2.0",
-    "content-security-policy-parser": "^0.3.0",
     "path": "^0.12.7",
     "query-string": "^6.10.1",
     "srcset": "^2.0.1",
