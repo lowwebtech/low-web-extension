@@ -38,27 +38,29 @@ export default function() {
     );
   }
 
+  // website_specific > 1 means settings 'Specific optimisation for most used websites' is set to 'Reduce data and Display'
   if (store.getters.website_specific > 1) {
     // block video bytes from video on channel page
     browser.webRequest.onBeforeRequest.addListener(
       requestDetails => {
-        const tab = RequestManager.getTab(requestDetails.tabId);
-        const pageUrl = tab.pageUrl;
-
         let cancel = false;
-        if (pageUrl) {
-          if (pageUrl.indexOf('youtube.com/channel/') !== -1) {
-            cancel = true;
+        const response = {};
+        const tab = RequestManager.getTab(requestDetails.tabId);
+
+        if (tab) {
+          const pageUrl = tab.pageUrl;
+
+          if (pageUrl) {
+            if (pageUrl.indexOf('youtube.com/channel/') !== -1) {
+              cancel = true;
+            }
           }
         }
 
         if (cancel) {
-          return {
-            cancel: true,
-          };
-        } else {
-          return {};
+          response.cancel = true;
         }
+        return response;
       },
       {
         urls: ['*://*.googlevideo.com/*'],
@@ -66,19 +68,20 @@ export default function() {
       },
       ['blocking']
     );
-  }
 
-  if (store.getters.website_specific > 1) {
     // block images on homepage & video page
     const blockAllImages = function(requestDetails) {
-      const tab = RequestManager.getTab(requestDetails.tabId);
-      const pageUrl = tab.pageUrl;
       let cancel = false;
-
-      if (pageUrl === 'https://www.youtube.com/' || pageUrl === 'https://youtube.com/') {
-        cancel = true;
-      }
       const response = {};
+      const tab = RequestManager.getTab(requestDetails.tabId);
+
+      if (tab) {
+        const pageUrl = tab.pageUrl;
+        if (pageUrl === 'https://www.youtube.com/' || pageUrl === 'https://youtube.com/') {
+          cancel = true;
+        }
+      }
+
       if (cancel) {
         response.cancel = true;
       }

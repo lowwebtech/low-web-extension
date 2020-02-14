@@ -2,8 +2,9 @@ export default class GifPlayer {
   constructor(el) {
     this.el = el;
     this.image = el;
-    // needed for modifying origin of image, will be a canvas blob
-    this.image.setAttribute('crossorigin', 'anonymous');
+
+    // needed for modifying origin of image, will be a canvas blob:
+    this.image.crossOrigin = 'Anonymous';
 
     this.originalSrc = this.el.src;
     // this.doPlay = true;
@@ -28,6 +29,7 @@ export default class GifPlayer {
     }
 
     this.canvas = document.createElement('canvas');
+    this.canvas.crossOrigin = 'Anonymous';
     this.context = this.canvas.getContext('2d');
 
     if (this.el.width) {
@@ -47,15 +49,21 @@ export default class GifPlayer {
   }
   render() {
     this.draw();
-    this.canvas.toBlob(blob => {
-      this.blobUrl = URL.createObjectURL(blob);
-      // TODO check memory
-      // this.el.onload = function() {
-      //   // no longer need to read the blob so it's revoked
-      //   URL.revokeObjectURL(url);
-      // };
-      this.el.src = this.blobUrl;
-    });
+    console.log(this.canvas);
+    console.log(this.image.complete);
+    try {
+      this.canvas.toBlob(blob => {
+        this.blobUrl = URL.createObjectURL(blob);
+        // TODO check memory
+        // this.el.onload = function() {
+        //   // no longer need to read the blob so it's revoked
+        //   URL.revokeObjectURL(url);
+        // };
+        this.el.src = this.blobUrl;
+      });
+    } catch (e) {
+        console.warn('low—web gif crossorigin issue : '+this.image.src);
+    }
   }
   play() {
     if (!this.playing) {
