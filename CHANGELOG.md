@@ -1,3 +1,10 @@
+## 0.0.7
+- CSP whitelist https://github.com/lowwebtech/low-web-extension/commit/0fe09acd815aa43d675e1575393c9b743ded1748
+- block specific asset urls, ex: i.ytimg.com/*/mqdefault_6s.webp https://github.com/lowwebtech/low-web-extension/commit/0e075cae52d84a3badbda4c41739fc232a948fdc
+- add details to README https://github.com/lowwebtech/low-web-extension/commit/fa1b145fccaf869d51add841fa04a79cac18bb59 https://github.com/lowwebtech/low-web-extension/commit/f77c96f577ed836c135006e348e5bcc02cb26b69
+- fix Youtube video size https://github.com/lowwebtech/low-web-extension/commit/15ff98f40e3b638ac391dc93a52a7d96f3fdca34
+
+
 ## 0.0.6
 - update LICENSE to GNU GPL v3 https://github.com/lowwebtech/low-web-extension/commit/764822f2e264754697c3729972ff93549afd4979
 - add specific website optimisation https://github.com/lowwebtech/low-web-extension/commit/764822f2e264754697c3729972ff93549afd4979

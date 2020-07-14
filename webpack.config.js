@@ -15,7 +15,7 @@ const config = {
     'content_script': './scripts/content_script/index.js',
     '../docs/style': './styles/docs.js',
     'oembed/style': './styles/embed.js',
-    '../docs/style': './styles/embed.js',
+    // '../docs/embed': './styles/embed.js',
 
     'players/Youtube': './scripts/content_script/video/players/Youtube-medium.js',
     'players/Youtube-small': './scripts/content_script/video/players/Youtube-small.js',
