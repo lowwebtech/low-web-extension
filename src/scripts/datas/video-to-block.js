@@ -55,8 +55,8 @@ export default {
     embed_url: 'facebook.com/plugins/video.php',
     embed_url_filter: '*://*.facebook.com/plugins/video.php*',
     video_url: 'https://www.facebook.com/video.php?v=##ID##',
-    oembed: 'https://www.facebook.com/plugins/video/oembed.json',
-    image: 'https://graph.facebook.com/##ID##/picture',
+    // oembed: 'https://www.facebook.com/plugins/video/oembed.json',
+    // image: 'https://graph.facebook.com/##ID##/picture',
     skin:
       '<a href="##VIDEO_URL##" target="_blank">##IMAGE##<svg enable-background="new 0 0 80 80" viewBox="0 0 80 80" width="80" height="80" xmlns="http://www.w3.org/2000/svg"><path d="m40.1 78c-20.7 0-38.3-17.6-38.1-38.3.3-20.3 16.8-37.2 36.9-37.7 21.1-.4 38.6 16.2 39.1 37.1s-17 38.8-37.9 38.9" opacity=".5"/><g fill="#fff"><path d="m40.1 80c-10.5 0-20.8-4.4-28.4-12.1s-11.8-17.7-11.7-28.2c.3-21.4 17.7-39.2 38.9-39.7 22.1-.4 40.6 17.1 41.1 39.1.2 10.4-4 20.9-11.5 28.6-7.6 7.8-17.9 12.3-28.4 12.3zm-.5-77.1c-.2 0-.5 0-.7 0-19.6.5-35.7 17-36 36.8-.1 9.7 3.8 19 10.9 26.2 7.1 7.1 16.7 11.2 26.4 11.2s19.3-4.2 26.3-11.4 10.9-16.9 10.7-26.5c-.6-20.2-17.3-36.3-37.6-36.3z"/><path d="m30.8 40.3c0-4.7 0-9.5 0-14.2 0-1 .4-1.7 1.3-1.7.3 0 .6.1 1 .3 7.3 4.4 14.7 8.9 22 13.5.3.2.7.4 1.1.7.5.3.9.7.9 1.4s-.4 1-.9 1.4c-3.7 2.2-7.2 4.4-10.9 6.8-4.1 2.5-8.1 4.9-12.1 7.4l-.3.1c-1.2.7-2.2 0-2.2-1.4 0-2.4 0-4.7 0-7.1z"/></g></svg><div class="lowweb__container"><p class="lowweb__title"><b>##TITLE##</b></p><p class="lowweb__author">published by <b>##AUTHOR##</b></p></div></a>',
   },

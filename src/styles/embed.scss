@@ -9,7 +9,7 @@ p{
 img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 svg{
   display: block;
@@ -26,6 +26,9 @@ svg{
       height: 48px;
       margin-top: -34px;
       margin-left: -24px;
+    }
+    img{
+      object-fit: cover;
     }
     &:hover svg path:first-child{
       fill-opacity: 1;
@@ -46,6 +49,8 @@ svg{
       margin-left: 24px;
       text-shadow: 0 0 2px rgba(0,0,0,.5);
       text-align: left;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
     }
   }
   &--dailymotion{
@@ -90,8 +95,34 @@ svg{
     .lowweb__description{
       font-size: 14px;
     }
+    @media only screen and (max-width: 480px){
+      .lowweb__title{
+        font-size: 14px;
+      }
+      .lowweb__container{
+        left: 100px;
+      }
+      svg{
+        width: 50px;
+        height: 50px;
+        margin-top: -25px;
+        left: 25px;
+      }
+    }
   }
   &--vimeo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    > div{
+      max-width: calc(177.778vh);
+      height: calc(56.25vw);
+      position: relative;
+      width: 100%;
+    }
+
     svg{
       left: 10px;
       bottom: 10px;

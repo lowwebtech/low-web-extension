@@ -1,8 +1,8 @@
 {
-  "name": "low-web-extension",
+  "name": "low—web",
   "description": "Reduce energy consumption and carbon footprint of your internet browsing.",
   "version": null,
-  "short_name": "low.",
+  "short_name": "low—web",
   "manifest_version": 2,
   "icons": {
     "48": "icons/icon_48.png",
@@ -20,7 +20,7 @@
   "browser_action": {
     "browser_style": true,
     "default_icon": "icons/icon_32.png",
-    "default_title": "low-web-extension",
+    "default_title": "low—web",
     "default_popup": "popup/popup.html"
   },
   "background": {
@@ -51,6 +51,7 @@
     "lists/*"
   ],
   "options_ui": {
-    "page": "options/options.html"
+    "page": "options/options.html",
+    "open_in_tab": true
   }
 }

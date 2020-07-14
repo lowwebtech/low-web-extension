@@ -15,21 +15,22 @@ const config = {
     'content_script': './scripts/content_script/index.js',
     '../docs/style': './styles/docs.js',
     'oembed/style': './styles/embed.js',
+    // '../docs/embed': './styles/embed.js',
 
     'players/Youtube': './scripts/content_script/video/players/Youtube-medium.js',
-    'players/Youtube-tiny': './scripts/content_script/video/players/Youtube-tiny.js',
     'players/Youtube-small': './scripts/content_script/video/players/Youtube-small.js',
     'players/Youtube-medium': './scripts/content_script/video/players/Youtube-medium.js',
-    
+    'players/Youtube-large': './scripts/content_script/video/players/Youtube-large.js',
+
+    'players/Gif': './scripts/content_script/image/players/Gif.js',
+    'popup/popup': './popup/popup.js',
+    'options/options': './options/options.js',
+
     // 'players/Dailymotion': './scripts/content_script/video/players/Dailymotion.js',
     // 'players/Youporn': './scripts/content_script/video/players/Youporn.js',
     // 'players/Vimeo': './scripts/content_script/video/players/Vimeo.js',
     // 'players/Twitch': './scripts/content_script/video/players/Twitch.js',
-    
-    'players/Gif': './scripts/content_script/image/players/Gif.js',
-    'popup/popup': './popup/popup.js',
-    'options/options': './options/options.js',
-    
+        
     // 'injected-style.css': './scss/injected-style.scss',
     // './scss/injected-style.scss': './scss/injected-style.scss',
     //'utils/compute-styles': './scripts/content_script/utils/compute-styles.js',
@@ -48,11 +49,11 @@ const config = {
         test: /\.vue$/,
         loaders: 'vue-loader',
       },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-      },
+      // {
+      //   test: /\.js$/,
+      //   loader: 'babel-loader',
+      //   exclude: /node_modules/,
+      // },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -107,10 +108,10 @@ const config = {
       filename: '[name].css',
     }),
     new CopyWebpackPlugin([
-      { from: 'icons', to: 'icons', ignore: ['icon.xcf'] },
-      { from: 'images', to: 'images' },
-      { from: 'oembed', to: 'oembed' },
-      { from: 'lists', to: 'lists' },
+      { from: 'icons', to: 'icons', ignore: ['icon.xcf', '.DS_Store'] },
+      { from: 'images', to: 'images', ignore: ['.DS_Store'] },
+      { from: 'oembed', to: 'oembed', ignore: ['.DS_Store'] },
+      { from: 'lists', to: 'lists', ignore: ['.DS_Store'] },
       // { from: 'scripts/content_script/players', to: 'players' },
       { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
       { from: 'options/options.html', to: 'options/options.html', transform: transformHtml },

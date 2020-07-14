@@ -1,3 +1,6 @@
+// inpired by extension 'Save-data: on' by Daniel Aleksandersen
+// https://www.daniel.priv.no/web-extensions/save-data.html
+
 import store from '../../store';
 import RequestManager from '../RequestManager';
 

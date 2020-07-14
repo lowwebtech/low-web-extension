@@ -17,13 +17,13 @@ export default function() {
             if (video.id === 'youtube') {
               switch (store.getters.video_quality) {
                 case 1:
-                  jsUrl = jsUrl.replace('.js', '-tiny.js');
-                  break;
-                case 2:
                   jsUrl = jsUrl.replace('.js', '-small.js');
                   break;
-                case 3:
+                case 2:
                   jsUrl = jsUrl.replace('.js', '-medium.js');
+                  break;
+                case 3:
+                  jsUrl = jsUrl.replace('.js', '-large.js');
                   break;
               }
             }

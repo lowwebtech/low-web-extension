@@ -1,4 +1,4 @@
-import './click-to-load.scss';
+// import './click-to-load.scss';
 import store from '../../store';
 import videoToBlock from '../../datas/video-to-block';
 import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
@@ -87,75 +87,77 @@ function customIframes() {
             const callback = response => {
               if (response && response.data) {
                 const oembed = response.data;
-                // button
                 if (dataVideoBlock.skin) {
-                  let skin = dataVideoBlock.skin;
+                  // test parentNode, iframe may be removed from the dom
+                  if (iframe && iframe.parentNode) {
+                    let skin = dataVideoBlock.skin;
 
-                  let title;
-                  if (oembed.title) {
-                    title = oembed.title;
-                  } else if (type === 'facebook') {
-                    let parser = new DOMParser();
-                    let html = parser.parseFromString(oembed.html, 'text/html');
-                    let t = html.querySelector('blockquote > a');
-                    if (t) {
-                      title = t.textContent;
+                    let title;
+                    if (oembed.title) {
+                      title = oembed.title;
+                    } else if (type === 'facebook') {
+                      let parser = new DOMParser();
+                      let html = parser.parseFromString(oembed.html, 'text/html');
+                      let t = html.querySelector('blockquote > a');
+                      if (t) {
+                        title = t.textContent;
+                      }
                     }
-                  }
-                  if (title) {
-                    skin = skin.replace('##TITLE##', title);
-                  }
-
-                  if (oembed.description) {
-                    skin = skin.replace('##DESCRIPTION##', oembed.description);
-                  }
-
-                  if (oembed.author_name) {
-                    skin = skin.replace('##AUTHOR##', oembed.author_name);
-                  }
-
-                  let thumb = oembed.thumbnail_url;
-                  if (type === 'youtube') {
-                    thumb = thumb.replace('hqdefault', 'mqdefault');
-                  }
-                  // some oembed doesn't provide thumbnail_url
-                  if (!thumb && dataVideoBlock.image !== '') {
-                    thumb = dataVideoBlock.image.replace('##ID##', id);
-                  }
-                  if (thumb) {
-                    skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" />');
-                  }
-
-                  if (videoUrl) {
-                    if (videoUrl.indexOf(dataVideoBlock.embed_url) !== -1) {
-                      videoUrl = sanitizeEmbedUrl(videoUrl, true, true);
-                      skin = skin.replace('_blank', '_self');
+                    if (title) {
+                      skin = skin.replace('##TITLE##', title);
                     }
-                    skin = skin.replace('##VIDEO_URL##', videoUrl);
-                  }
 
-                  skin = '<style type="text/css">' + style + '</style><div class="lowweb--' + type + '">' + skin + '</div>';
-
-                  let newIframe = document.createElement('iframe');
-                  newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin);
-
-                  for (let i = 0; i < iframe.attributes.length; i++) {
-                    let a = iframe.attributes[i];
-                    if (a.name !== 'src') {
-                      newIframe.setAttribute(a.name, a.value);
+                    if (oembed.description) {
+                      skin = skin.replace('##DESCRIPTION##', oembed.description);
                     }
+
+                    if (oembed.author_name) {
+                      skin = skin.replace('##AUTHOR##', oembed.author_name);
+                    }
+
+                    let thumb = oembed.thumbnail_url;
+                    if (type === 'youtube') {
+                      thumb = thumb.replace('hqdefault', 'mqdefault');
+                    }
+                    // some oembed doesn't provide thumbnail_url
+                    if (!thumb && dataVideoBlock.image !== '') {
+                      thumb = dataVideoBlock.image.replace('##ID##', id);
+                    }
+                    if (thumb) {
+                      skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" />');
+                    }
+
+                    if (videoUrl) {
+                      if (videoUrl.indexOf(dataVideoBlock.embed_url) !== -1) {
+                        videoUrl = sanitizeEmbedUrl(videoUrl, true, true);
+                        skin = skin.replace('_blank', '_self');
+                      }
+                      skin = skin.replace('##VIDEO_URL##', videoUrl);
+                    }
+
+                    skin = '<style type="text/css">' + style + '</style><div class="lowweb--' + type + '"><div>' + skin + '</div></div>';
+
+                    let newIframe = document.createElement('iframe');
+                    newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin);
+
+                    for (let i = 0; i < iframe.attributes.length; i++) {
+                      let a = iframe.attributes[i];
+                      if (a.name !== 'src') {
+                        newIframe.setAttribute(a.name, a.value);
+                      }
+                    }
+
+                    iframe.parentNode.replaceChild(newIframe, iframe);
+
+                    browser.runtime.sendMessage({
+                      message: 'logOptimised',
+                      data: {
+                        type: 'click-to-load',
+                        tabId: response.tabId,
+                        url: videoUrl,
+                      },
+                    });
                   }
-
-                  iframe.parentNode.replaceChild(newIframe, iframe);
-
-                  browser.runtime.sendMessage({
-                    message: 'logOptimised',
-                    data: {
-                      type: 'click-to-load',
-                      tabId: response.tabId,
-                      url: videoUrl,
-                    },
-                  });
                 }
               }
             };

@@ -43,10 +43,3 @@ export function getFacebookId(url) {
     return null;
   }
 }
-// export default {
-//   getYoutubeId,
-//   getVimeoId,
-//   getDailymotionId,
-//   getFacebookId,
-//   getTwitchId
-// }

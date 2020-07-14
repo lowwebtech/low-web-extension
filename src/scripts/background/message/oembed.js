@@ -14,12 +14,12 @@ export function onMessageOEmbed(port) {
             };
           };
           const logFail = error => {
-            console.log('log error', error);
+            console.warn('oembed error', error);
           };
           return response.json().then(logDone, logFail);
         })
         .catch(function(error) {
-          console.error('oembed error', error);
+          console.warn('oembed error', error);
         });
     }
     return true;

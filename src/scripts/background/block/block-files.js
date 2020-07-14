@@ -27,6 +27,7 @@ export function blockFiles() {
         break;
       case 'font':
         // exclude main font icons
+        // TODO external whitelist-icon-font
         if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('icon') === -1) {
           cancel = store.getters.block_fonts;
         }
@@ -51,8 +52,15 @@ export function blockFiles() {
     return response;
   };
 
-  const filterTypes = ['media', 'object', 'sub_frame', 'font', 'image'];
-  // imageset, object_subrequest
+  const filterTypes = ['media', 'object', 'sub_frame', 'font', 'image', 'imageset', 'object_subrequest'];
+  // test if filterTypes are available
+  // types : imageset, object_subrequest work only on Firefox
+  for (let i = filterTypes.length - 1; i >= 0; i--) {
+    if (browser.webRequest.ResourceType[filterTypes[i].toUpperCase()] === undefined) {
+      filterTypes.splice(i, 1);
+    }
+  }
+
   watchFilter('isBlockFile', action, { types: filterTypes });
 }
 

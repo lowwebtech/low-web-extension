@@ -1,6 +1,6 @@
 import Logger from './Logger';
 import RequestManager from './RequestManager';
-import store from '../store';
+// import store from '../store';
 // look at faster filter -> webassembly
 import * as ABPFilterParser from 'abp-filter-parser';
 import { dataImage } from '../utils/data-uri';
@@ -78,8 +78,7 @@ class BlockRequest {
       const { tabId } = details; // url, type
       if (tabId !== -1) {
         // check if current page and website is active before filtering
-        const tab = RequestManager.getTab(tabId);
-        if (tab && tab.pageUrl && store.getters.isActive(tab.pageUrl, tab.domain)) {
+        if (RequestManager.isTabActive(tabId)) {
           const response = callback(details);
           if (response.cancel || response.redirectUrl) {
             Logger.logBlocked(details);
