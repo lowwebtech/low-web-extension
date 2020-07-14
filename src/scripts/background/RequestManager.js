@@ -1,4 +1,5 @@
 import getHostname from '../utils/get-hostname';
+import store from '../store';
 
 class RequestManager {
   constructor() {
@@ -13,6 +14,10 @@ class RequestManager {
   }
   getCurrentTab() {
     return this.tabStorage[browser.tabs.getCurrent()];
+  }
+  isTabActive(tabId) {
+    const tab = this.getTab(tabId);
+    return tab && tab.pageUrl && store.getters.isActive(tab.pageUrl, tab.domain);
   }
   init() {
     const cbRequestOnBefore = details => {

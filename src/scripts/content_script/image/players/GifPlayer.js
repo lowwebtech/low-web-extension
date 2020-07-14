@@ -49,8 +49,7 @@ export default class GifPlayer {
   }
   render() {
     this.draw();
-    console.log(this.canvas);
-    console.log(this.image.complete);
+    // TODO avoid try catch
     try {
       this.canvas.toBlob(blob => {
         this.blobUrl = URL.createObjectURL(blob);
@@ -62,7 +61,7 @@ export default class GifPlayer {
         this.el.src = this.blobUrl;
       });
     } catch (e) {
-        console.warn('low—web gif crossorigin issue : '+this.image.src);
+      console.warn('low—web gif crossorigin issue : ' + this.image.src);
     }
   }
   play() {

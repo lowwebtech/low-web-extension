@@ -12,6 +12,7 @@ blockquote.twitter-tweet{
   text-align: left;
   line-height: 1.4;
   letter-spacing: 0;
+  margin: 10px 0;
   a{
     color: #697882;
   }
@@ -47,6 +48,7 @@ blockquote.reddit-card{
   font-family: Helvetica, Oxygen,Arial,"Helvetica Neue",sans-serif;
   font-size: 16px;
   letter-spacing: 0;
+  margin: 10px 0;
   &:after{
     content: '';
     bottom: 15px;

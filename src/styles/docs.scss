@@ -15,6 +15,11 @@ img{
   }
 }
 
+video{
+  max-width: 100%;
+  height: auto;
+}
+
 figure{
   margin: 0;
 }
@@ -173,6 +178,9 @@ button:hover{
   background-color: black;
   color: white;
 }
+.no-animation{
+  transition-duration: 0s;
+}
 
 .circle{
   width: 100px;
@@ -189,11 +197,15 @@ button:hover{
 .transition--reflow:hover .circle{
   margin-left: 400px;
 }
+
 .animation--3d .circle{ 
   animation: animtransform 5s linear alternate infinite;
 }
 .animation--reflow .circle{
   animation: animmargin 5s linear alternate infinite;
+}
+.animation--no .circle{
+  transition-duration: 0;
 }
 
 @font-face {
@@ -203,10 +215,10 @@ button:hover{
   src: url(https://fonts.gstatic.com/s/croissantone/v7/3y9n6bU9bTPg4m8NDy3Kq24UA3NgnrUeN--VHQ.woff2) format('woff2');
 }
 .font--typekit{
-  font-family: "gilbert",sans-serif;
+  font-family: "gilbert";
 }
 .font--google{
-  font-family: "Croissant One",sans-serif;
+  font-family: "Croissant One";
 }
 
 @keyframes animmargin {
@@ -214,7 +226,7 @@ button:hover{
     margin-left: 0px;
   }
   100% {
-    margin-left: 400px;
+    margin-left: 300px;
   }
 }
 @keyframes animtransform {
@@ -222,6 +234,6 @@ button:hover{
     transform: translate3d(0px,0,0);
   }
   100% {
-    transform: translate3d(400px,0,0);
+    transform: translate3d(300px,0,0);
   }
 }

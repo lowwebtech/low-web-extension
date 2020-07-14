@@ -7,11 +7,11 @@ export default [
     files: [
       {
         from: ['maxresdefault', 'hq720', 'sddefault', 'hqdefault'],
-        to: 'mqdefault', // smaller -> 'default'
+        to: 'mqdefault',
       },
       {
         from: ['maxresdefault_live', 'hq720_live', 'sddefault_live', 'hqdefault_live'],
-        to: 'mqdefault_live', // smaller -> 'default_live'
+        to: 'mqdefault_live',
       },
     ],
   },

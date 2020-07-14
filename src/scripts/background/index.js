@@ -23,13 +23,6 @@ import { blockEmbedVideo } from './block/block-embed-video';
 import { onMessageOEmbed } from './message/oembed';
 /* eslint-enable import/first, indent */
 
-browser.runtime.onStartup.addListener(details => {
-  load(details);
-});
-browser.runtime.onInstalled.addListener(details => {
-  load(details);
-});
-
 const assets = {};
 const assetsManifest = [
   {
@@ -49,6 +42,26 @@ const assetsManifest = [
     url: 'lists/website-specific.txt',
   },
 ];
+
+browser.runtime.onStartup.addListener(details => {
+  load(details);
+});
+browser.runtime.onInstalled.addListener(async details => {
+  load(details);
+});
+browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
+  console.log('Promise onInstalled', reason, temporary);
+  if (temporary) return; // skip during development
+  switch (reason) {
+    case 'install':
+      // {
+      const url = browser.runtime.getURL('views/installed.html');
+      await browser.tabs.create({ url });
+      // or: await browser.windows.create({ url, type: 'popup', height: 600, width: 600, });
+      // }
+      break;
+  }
+});
 
 function load(details) {
   Promise.all(

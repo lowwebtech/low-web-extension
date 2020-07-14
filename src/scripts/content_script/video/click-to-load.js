@@ -87,7 +87,6 @@ function customIframes() {
             const callback = response => {
               if (response && response.data) {
                 const oembed = response.data;
-                // button
                 if (dataVideoBlock.skin) {
                   // test parentNode, iframe may be removed from the dom
                   if (iframe && iframe.parentNode) {
