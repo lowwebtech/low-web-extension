@@ -14,7 +14,7 @@ let state = {
   pausedWebsites: [],
   pausedPages: [],
 };
-let nonPersistentState = {
+const nonPersistentState = {
   active: true,
   url: undefined,
   hostname: undefined,
@@ -22,7 +22,7 @@ let nonPersistentState = {
 };
 
 for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
-  let o = jsonOptions[i];
+  const o = jsonOptions[i];
   state[o.id] = o.value;
 }
 

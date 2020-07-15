@@ -4,10 +4,18 @@ import RequestManager from './RequestManager';
 
 // TODO find solution for events transitionend / animationend
 export function cssAnimation() {
-  browser.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    if (store.getters.css_animation === 1 && changeInfo.status === 'loading' && RequestManager.isTabActive(tabId)) {
+  browser.tabs.onCreated.addListener(insertCSS);
+  browser.tabs.onUpdated.addListener(function (tabId, info, tab) {
+    if (info.status === 'complete') insertCSS(tab);
+  });
+}
+// TODO add/remove listener based on css_animation
+
+function insertCSS(tab) {
+  if (store.getters.css_animation === 1) {
+    if (RequestManager.isTabActive(tab.id)) {
       if (isWebpage(tab.url)) {
-        let code = `
+        const code = `
         *, *:before, *:after {
           transition: none !important;
           animation: none !important;
@@ -16,11 +24,11 @@ export function cssAnimation() {
           scroll-behaviour: auto!important;
         }
         `;
-        browser.tabs.insertCSS(tabId, {
+        browser.tabs.insertCSS(tab.id, {
           code: code,
           runAt: 'document_start',
         });
       }
     }
-  });
+  }
 }

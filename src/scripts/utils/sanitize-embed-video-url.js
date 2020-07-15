@@ -3,10 +3,10 @@ import queryString from 'query-string';
 import videosToBlock from '../datas/video-to-block';
 import { TOKEN } from '../datas/constants';
 
-export default function(url, autoplay = false, token = false) {
-  let u = new URL(url);
+export default function (url, autoplay = false, token = false) {
+  const u = new URL(url);
   let params = queryString.parse(u.search);
-  let originalParams = Object.assign({}, params);
+  const originalParams = Object.assign({}, params);
 
   let video;
   const keys = Object.keys(videosToBlock);
@@ -75,7 +75,7 @@ export default function(url, autoplay = false, token = false) {
   }
 
   if (JSON.stringify(params) !== JSON.stringify(originalParams)) {
-    let newSearch = queryString.stringify(params);
+    const newSearch = queryString.stringify(params);
     u.search = newSearch;
     return u.href;
   }

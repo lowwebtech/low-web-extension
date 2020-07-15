@@ -9,19 +9,24 @@ class RequestManager {
       types: ['main_frame'],
     };
   }
+
   getTab(tabId) {
     return this.tabStorage[tabId.toString()];
   }
+
   getCurrentTab() {
     return this.tabStorage[browser.tabs.getCurrent()];
   }
+
   isTabActive(tabId) {
     const tab = this.getTab(tabId);
     return tab && tab.pageUrl && store.getters.isActive(tab.pageUrl, tab.domain);
   }
+
   init() {
-    const cbRequestOnBefore = details => {
+    const cbRequestOnBefore = (details) => {
       const { tabId } = details; // requestId
+      // eslint-disable-next-line no-prototype-builtins
       if (!this.tabStorage.hasOwnProperty(tabId)) {
         this.addTab(tabId);
       }
@@ -61,7 +66,7 @@ class RequestManager {
     //   });
     // };
 
-    const cbTabUpdated = tabId => {
+    const cbTabUpdated = (tabId) => {
       this.addTab(tabId);
     };
 
@@ -70,23 +75,24 @@ class RequestManager {
     //   this.updateTabUrl(info);
     // };
 
-    const cbNavigationHistoryUpdated = info => {
+    const cbNavigationHistoryUpdated = (info) => {
       // console.log('onHistoryStateUpdated', info);
       this.updateTabUrl(info);
     };
 
-    const cbNavigationBeforeNavigate = info => {
+    const cbNavigationBeforeNavigate = (info) => {
       // console.log('onBeforeNavigate')
       this.updateTabUrl(info);
     };
 
-    const cbTabActivated = tab => {
+    const cbTabActivated = (tab) => {
       const tabId = tab ? tab.tabId : browser.tabs.TAB_ID_NONE;
       this.currentTabId = tabId;
       this.addTab(tabId);
     };
 
-    const cbTabRemoved = tabId => {
+    const cbTabRemoved = (tabId) => {
+      // eslint-disable-next-line no-prototype-builtins
       if (!this.tabStorage.hasOwnProperty(tabId)) {
         return;
       }
@@ -105,6 +111,7 @@ class RequestManager {
     browser.tabs.onActivated.addListener(cbTabActivated);
     browser.tabs.onRemoved.addListener(cbTabRemoved);
   }
+
   updateTabUrl(info) {
     // console.log('updateTabUrl', info)
     if (info.frameId === 0) {
@@ -118,7 +125,9 @@ class RequestManager {
       }
     }
   }
+
   addTab(tabId) {
+    // eslint-disable-next-line no-prototype-builtins
     if (tabId && !this.tabStorage.hasOwnProperty(tabId) && tabId !== -1) {
       this.tabStorage[tabId] = {
         id: tabId,
@@ -130,5 +139,5 @@ class RequestManager {
   }
 }
 
-let requestManager = new RequestManager();
+const requestManager = new RequestManager();
 export default requestManager;

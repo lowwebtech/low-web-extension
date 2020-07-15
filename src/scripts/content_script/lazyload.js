@@ -11,7 +11,7 @@ if ('loading' in HTMLImageElement.prototype) {
 
 // !! DOESN'T WORK !!
 // browser already starts loading images
-export default function() {
+export default function () {
   const IMAGE_LAZYLOAD = store.getters.image_lazyload;
   const IFRAME_LAZYLOAD = store.getters.iframe_lazyload;
   if (lazyloadSupported) {

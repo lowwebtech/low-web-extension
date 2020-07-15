@@ -3,8 +3,8 @@ import { TOKEN } from '../../datas/constants';
 import { watchList, watchFilter } from '../../store/watch';
 import { dataTextLink, dataImage } from '../../utils/data-uri';
 
-const blockGiphy = details => {
-  let response = {};
+const blockGiphy = (details) => {
+  const response = {};
   const exclude = ['giphy.com'];
   if (exclude.indexOf(store.state.hostname) === -1) {
     const { url, parentFrameId, type } = details;

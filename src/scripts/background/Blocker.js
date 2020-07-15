@@ -5,14 +5,15 @@ import RequestManager from './RequestManager';
 import * as ABPFilterParser from 'abp-filter-parser';
 import { dataImage } from '../utils/data-uri';
 
-let blockRequests = [];
-let lists = [];
+const blockRequests = [];
+const lists = [];
 let abpFilters = {};
 
 class Blocker {
   init() {
     this.filterRequest(blockUrls);
   }
+
   filterRequest(callback, filter = {}, extraInfoSpec = ['blocking']) {
     filter = Object.assign({ urls: ['<all_urls>'] }, filter);
 
@@ -23,6 +24,7 @@ class Blocker {
 
     return blockRequest;
   }
+
   unfilterRequest(blockRequest) {
     if (blockRequests.indexOf(blockRequest) !== -1) {
       blockRequests.splice(blockRequests.indexOf(blockRequest), 1);
@@ -31,18 +33,21 @@ class Blocker {
       }
     }
   }
+
   addListToBlock(list) {
     if (lists.indexOf(list) === -1) {
       lists.push(list);
       ABPFilterParser.parse(list, abpFilters);
     }
   }
+
   removeListToBlock(list) {
     if (lists.indexOf(list) !== -1) {
       lists.splice(lists.indexOf(list), 1);
       this.recreateListToBlock();
     }
   }
+
   recreateListToBlock() {
     abpFilters = {};
     for (let i = 0; i < lists.length; i++) {
@@ -51,12 +56,10 @@ class Blocker {
   }
 }
 
-const blockUrls = function(details) {
-  let cancel;
-  let response = {};
-
+const blockUrls = function (details) {
+  const response = {};
   const { url, type } = details;
-  cancel = ABPFilterParser.matches(abpFilters, url, {
+  const cancel = ABPFilterParser.matches(abpFilters, url, {
     // domain: tab.domain,
     // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
   });
@@ -74,7 +77,7 @@ const blockUrls = function(details) {
 
 class BlockRequest {
   constructor(callback, filter) {
-    this.callback = details => {
+    this.callback = (details) => {
       const { tabId } = details; // url, type
       if (tabId !== -1) {
         // check if current page and website is active before filtering
@@ -92,5 +95,5 @@ class BlockRequest {
   }
 }
 
-let blocker = new Blocker();
+const blocker = new Blocker();
 export default blocker;

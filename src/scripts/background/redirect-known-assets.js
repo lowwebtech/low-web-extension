@@ -1,11 +1,11 @@
 import store from '../store';
 import knownRedirects from '../datas/known-to-redirect';
 
-export default function() {
+export default function () {
   if (store.getters.website_specific > 0) {
     for (const knownRedirect of knownRedirects) {
       browser.webRequest.onBeforeRequest.addListener(
-        details => {
+        (details) => {
           const { url } = details;
           const response = {};
           // eslint-disable-next-line

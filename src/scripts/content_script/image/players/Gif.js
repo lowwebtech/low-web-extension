@@ -3,14 +3,14 @@ import GifPlayer from './GifPlayer';
 import GiphyPlayer from './GiphyPlayer';
 // import Logger from '../../../background/Logger';
 
-(function() {
-  let giphies = [];
-  let gifs = [];
+(function () {
+  const giphies = [];
+  const gifs = [];
 
   // select img .gif, or img and iframe from giphy.com
-  let gifEls = document.querySelectorAll('img[src*=".gif"], img[src*=".giphy.com/media"], iframe[src*="giphy.com/embed"]');
+  const gifEls = document.querySelectorAll('img[src*=".gif"], img[src*=".giphy.com/media"], iframe[src*="giphy.com/embed"]');
 
-  gifEls.forEach(img => {
+  gifEls.forEach((img) => {
     if (img.src.indexOf('giphy.com') !== -1) {
       // create GiphyPlayer (extends GifPlayer)
       // will call Giphy API to load static image
@@ -25,28 +25,28 @@ import GiphyPlayer from './GiphyPlayer';
   // Logger.log(giphies.length + ' Giphy optimized');
 
   if (giphies.length > 0) {
-    let ids = [];
+    const ids = [];
     // batch giphy ids
-    giphies.forEach(giphy => {
+    giphies.forEach((giphy) => {
       ids.push(giphy.id);
     });
 
     // fetch giphy API with ids to retrieve images data
     fetch('https://api.giphy.com/v1/gifs?api_key=' + GIPHY_TOKEN + '&ids=' + ids.toString(), { cache: 'force-cache' })
-      .then(function(response) {
+      .then(function (response) {
         if (!response || response.status !== 200) {
           console.warn('Giphy error. Status Code: ' + response.status);
           return;
         }
 
-        response.json().then(function(data) {
+        response.json().then(function (data) {
           data.data.forEach((gifdata, index) => {
             // set data for Giphy players
             giphies[index].setData(gifdata);
           });
         });
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.warn('Fetch Error :-S', err);
       });
   }
