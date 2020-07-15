@@ -1,7 +1,7 @@
 import store from '../../store';
 // import urlsToBlock from '../../social-to-block';
 
-export default function() {
+export default function () {
   if (store.getters.block_social === 1) {
     customSocial();
   }
@@ -10,7 +10,7 @@ export default function() {
 function customSocial() {
   const instagramEmbeds = document.querySelectorAll('blockquote.instagram-media');
 
-  instagramEmbeds.forEach(embed => {
+  instagramEmbeds.forEach((embed) => {
     const url = new URL(embed.querySelector('a').href);
     const embedUrl = url.origin + url.pathname;
     const oembedUrl = 'https://api.instagram.com/oembed?format=json&url=' + encodeURIComponent(embedUrl);
@@ -22,7 +22,7 @@ function customSocial() {
         oembedUrl: oembedUrl,
       },
     };
-    const callback = function(res) {
+    const callback = function (res) {
       if (res && res.data.thumbnail_url) {
         const img = document.createElement('img');
         img.style.width = '100%';
@@ -33,7 +33,7 @@ function customSocial() {
         container.appendChild(img);
       }
     };
-    browser.runtime.sendMessage(options).then(callback, e => {
+    browser.runtime.sendMessage(options).then(callback, (e) => {
       console.error('error message social', e);
     });
   });

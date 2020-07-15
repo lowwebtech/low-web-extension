@@ -7,10 +7,10 @@ block-files.js blocks request by type
 types supported : 'media', 'object', 'sub_frame', 'font', 'image'
 */
 export function blockFiles() {
-  let action = function(details) {
+  const action = function (details) {
     let cancel = 0;
     let redirect = false;
-    let response = {};
+    const response = {};
 
     const { type, url } = details;
     switch (type) {

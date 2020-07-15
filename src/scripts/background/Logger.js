@@ -6,14 +6,15 @@ class Logger {
     this.logsBlocked = {};
     this.logsOptimised = {};
   }
+
   init() {
     this.currentTab = undefined;
-    const onCreatedHandler = tab => {
+    const onCreatedHandler = (tab) => {
       if (tab) {
         this.resetLogs(tab.tabId);
       }
     };
-    const onTabActivatedHandler = tab => {
+    const onTabActivatedHandler = (tab) => {
       if (tab && tab.tabId) {
         this.currentTab = tab;
         this.updateBadgeNumber(tab.tabId);
@@ -27,13 +28,13 @@ class Logger {
       } else if (changeInfo.status === 'complete') {
       }
     };
-    const onCommittedNavigationHandler = info => {
+    const onCommittedNavigationHandler = (info) => {
       // console.log('onCommitted', info.transitionType, info);
       if (info.transitionType === 'reload' || info.transitionType === 'link') {
         this.resetLogs(info.tabId);
       }
     };
-    const onBeforeNavigationHandler = info => {
+    const onBeforeNavigationHandler = (info) => {
       // console.log('onBeforeNavigate', info);
       if (info.frameId === 0) {
         this.resetLogs(info.tabId);
@@ -69,6 +70,7 @@ class Logger {
     if (browser.browserAction.setBadgeTextColor) browser.browserAction.setBadgeTextColor({ color: '#FFF' });
     browser.browserAction.setBadgeBackgroundColor({ color: '#0fa300' });
   }
+
   resetLogs(tabId) {
     if (tabId) {
       this.logsBlocked[tabId] = {};
@@ -76,6 +78,7 @@ class Logger {
       this.updateBadgeNumber(tabId);
     }
   }
+
   logBlocked(details) {
     const { type, url, tabId } = details;
 
@@ -94,6 +97,7 @@ class Logger {
       }
     }
   }
+
   logOptimised(type, url, tabId = -1) {
     // const { type, url, tabId } = details;
     if (tabId === -1) {
@@ -115,6 +119,7 @@ class Logger {
       }
     }
   }
+
   updateBadge(tabId, delay = 500) {
     if (this.timeoutBadge) {
       clearTimeout(this.timeoutBadge);
@@ -124,6 +129,7 @@ class Logger {
       this.updateBadgeNumber(tabId);
     }, delay);
   }
+
   updateBadgeNumber(tabId) {
     if (tabId) {
       const tab = RequestManager.getTab(tabId);
@@ -158,10 +164,10 @@ class Logger {
               },
             })
             .then(
-              message => {
+              (message) => {
                 // console.log('message updateLogs', message);
               },
-              error => {
+              (error) => {
                 // TODO look at error
                 console.log('error updateLogs', error);
               }
@@ -170,9 +176,10 @@ class Logger {
       }
     }
   }
+
   getNumberBlocked(tabId) {
     if (this.logsBlocked[tabId]) {
-      let logs = this.logsBlocked[tabId];
+      const logs = this.logsBlocked[tabId];
       let nb = 0;
       const keys = Object.keys(logs);
       for (const key of keys) {
@@ -184,5 +191,5 @@ class Logger {
   }
 }
 
-let logger = new Logger();
+const logger = new Logger();
 export default logger;

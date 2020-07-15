@@ -24,6 +24,7 @@ export default class GiphyPlayer extends GifPlayer {
     }
     this.type = el.tagName.toLowerCase();
   }
+
   setData(data) {
     const previewUrl = data.images.downsized_still.url + '&lowweb=' + TOKEN;
     this.originalSrc = data.images.downsized.url + '&lowweb=' + TOKEN;

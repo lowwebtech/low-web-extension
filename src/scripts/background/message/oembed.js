@@ -1,24 +1,24 @@
 export function onMessageOEmbed(port) {
-  const handleOEmbedMessage = function(request, sender, sendResponse) {
+  const handleOEmbedMessage = function (request, sender, sendResponse) {
     if (request.message === 'oembed') {
       // TODO cache oembed call
       return fetch(request.options.oembedUrl, { cache: 'force-cache' })
-        .then(response => {
+        .then((response) => {
           if (!response || response.status !== 200) {
             return true;
           }
-          const logDone = data => {
+          const logDone = (data) => {
             return {
               data: data,
               tabId: sender.tab.id,
             };
           };
-          const logFail = error => {
+          const logFail = (error) => {
             console.warn('oembed error', error);
           };
           return response.json().then(logDone, logFail);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.warn('oembed error', error);
         });
     }

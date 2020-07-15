@@ -22,7 +22,7 @@ imageSrcset();
 document.addEventListener('DOMContentLoaded', () => {
   store.commit('url', window.location.href);
 
-  let active = store.getters.isActive(window.location.href, window.location.hostname);
+  const active = store.getters.isActive(window.location.href, window.location.hostname);
   if (active) {
     // clean srcset and remove biggest images
     imageSrcset();
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', () => {
-  let active = store.getters.isActive(window.location.href, window.location.hostname);
+  const active = store.getters.isActive(window.location.href, window.location.hostname);
   if (active) {
     setTimeout(() => {
       // disable marquee animation
@@ -53,13 +53,6 @@ window.addEventListener('load', () => {
       // custom video player low quality
       // TODO import only for video-to-block
       customPlayers();
-
-      // script to inject to get 'real' window and compute css styles
-      // let script = document.createElement('script');
-      // script.type = 'text/javascript';
-      // script.async = true;
-      // script.src = browser.runtime.getURL('utils/compute-styles.js');
-      // (document.head || document.documentElement).appendChild(script);
     });
   }
 });
