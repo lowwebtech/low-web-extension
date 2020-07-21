@@ -1,3 +1,12 @@
+## 0.0.8
+- update npm packages to latest
+- remove old files from extension : 
+    + oembed\embed.css
+    + oembed\embed.js
+    + players\Dailymotion.js
+    + players\Youtube-tiny.js
+    + utils\compute-styles.js
+
 ## 0.0.7
 - CSP whitelist https://github.com/lowwebtech/low-web-extension/commit/0fe09acd815aa43d675e1575393c9b743ded1748
 - block specific asset urls, ex: i.ytimg.com/*/mqdefault_6s.webp https://github.com/lowwebtech/low-web-extension/commit/0e075cae52d84a3badbda4c41739fc232a948fdc
