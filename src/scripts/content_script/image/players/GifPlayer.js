@@ -10,6 +10,7 @@ export default class GifPlayer {
     // this.doPlay = true;
     this.type = 'img';
   }
+
   start() {
     if (!this.el.complete) {
       this.buildHandler = () => {
@@ -20,6 +21,7 @@ export default class GifPlayer {
       this.build();
     }
   }
+
   build() {
     if (this.buildHandler) {
       this.image.removeEventListener('load', this.buildHandler);
@@ -47,11 +49,12 @@ export default class GifPlayer {
     this.el.addEventListener('mouseleave', () => this.stop());
     // }
   }
+
   render() {
     this.draw();
     // TODO avoid try catch
     try {
-      this.canvas.toBlob(blob => {
+      this.canvas.toBlob((blob) => {
         this.blobUrl = URL.createObjectURL(blob);
         // TODO check memory
         // this.el.onload = function() {
@@ -64,6 +67,7 @@ export default class GifPlayer {
       console.warn('low—web gif crossorigin issue : ' + this.image.src);
     }
   }
+
   play() {
     if (!this.playing) {
       // TODO hide play button
@@ -76,12 +80,14 @@ export default class GifPlayer {
       }
     }
   }
+
   stop() {
     if (this.playing) {
       this.playing = false;
       this.el.src = this.blobUrl;
     }
   }
+
   draw() {
     this.context.drawImage(this.image, 0, 0, this.canvas.width, this.canvas.height);
     // if (this.doPlay) {
@@ -102,6 +108,7 @@ export default class GifPlayer {
     this.context.fill();
     // }
   }
+
   isAnimated() {
     // TODO detect animated gif
     // need blob
@@ -112,6 +119,7 @@ export default class GifPlayer {
     // })
     return true;
   }
+
   isSmall() {
     // arbitrary rule, gif player is displayed when width and height are greater than 50 px
     if (this.el.width < 50 || this.el.height < 50) {

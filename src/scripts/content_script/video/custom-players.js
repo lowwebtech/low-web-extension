@@ -1,13 +1,13 @@
 import store from '../../store';
 import videoToBlock from '../../datas/video-to-block';
 
-export default function() {
+export default function () {
   if (store.getters.video_quality > 0) {
     const keys = Object.keys(videoToBlock);
     const containerScript = document.head || document.documentElement;
 
     for (const key of keys) {
-      let video = videoToBlock[key];
+      const video = videoToBlock[key];
       let jsUrl;
 
       if (video.player && video.player !== '') {
@@ -27,7 +27,7 @@ export default function() {
                   break;
               }
             }
-            let script = document.createElement('script');
+            const script = document.createElement('script');
             script.type = 'text/javascript';
             script.src = browser.runtime.getURL(jsUrl);
             containerScript.appendChild(script);

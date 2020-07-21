@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 
 function matchRegexID(str, regex) {
-  let result = str.match(regex);
+  const result = str.match(regex);
   if (result && result.length > 1) {
     return result[1];
   } else {
@@ -22,7 +22,7 @@ export function getDailymotionId(url) {
 }
 export function getTwitchId(url) {
   // TODO twitch regex
-  let u = new URL(url);
+  const u = new URL(url);
   const params = queryString.parse(u.search);
 
   if (params.video) {
@@ -36,7 +36,7 @@ export function getFacebookId(url) {
   const u = new URL(decodeURIComponent(url));
   const params = queryString.parse(u.search);
   const regex = params.href.match(/(videos|story_fbid)(\/|=)(\d+)(\/|&)?/);
-  let id = regex[3];
+  const id = regex[3];
   if (id) {
     return id;
   } else {

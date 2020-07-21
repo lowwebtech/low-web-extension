@@ -1,7 +1,7 @@
 import './gif.scss';
 import store from '../../store';
 
-export default function() {
+export default function () {
   if (store.getters.gif_player === 1 && store.getters.block_images === 0) {
     const exclude = ['giphy.com'];
     if (exclude.indexOf(store.state.hostname) === -1) {

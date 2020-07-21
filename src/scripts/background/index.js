@@ -43,10 +43,10 @@ const assetsManifest = [
   },
 ];
 
-browser.runtime.onStartup.addListener(details => {
+browser.runtime.onStartup.addListener((details) => {
   load(details);
 });
-browser.runtime.onInstalled.addListener(async details => {
+browser.runtime.onInstalled.addListener(async (details) => {
   load(details);
 });
 browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
@@ -54,25 +54,22 @@ browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
   if (temporary) return; // skip during development
   switch (reason) {
     case 'install':
-      // {
-      const url = browser.runtime.getURL('views/installed.html');
-      await browser.tabs.create({ url });
-      // or: await browser.windows.create({ url, type: 'popup', height: 600, width: 600, });
-      // }
+      // const url = browser.runtime.getURL('views/installed.html');
+      // await browser.tabs.create({ url });
       break;
   }
 });
 
 function load(details) {
   Promise.all(
-    assetsManifest.map(asset =>
+    assetsManifest.map((asset) =>
       fetch(asset.url)
         .then(checkStatus)
         .then(parseTXT)
-        .then(data => setAsset(data, asset))
-        .catch(error => console.log('There was a problem!', error))
+        .then((data) => setAsset(data, asset))
+        .catch((error) => console.log('There was a problem!', error))
     )
-  ).then(data => {
+  ).then((data) => {
     start(data);
   });
 }
@@ -115,7 +112,7 @@ function start(data) {
     cssAnimation();
   }, 300);
 
-  const addConnect = port => {
+  const addConnect = (port) => {
     // console.log('runtime.onConnect');
     onMessageOEmbed(port);
     browser.runtime.onConnect.removeListener(addConnect);

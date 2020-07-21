@@ -1,7 +1,7 @@
 import srcsetUtil from 'srcset';
 import store from '../../store';
 
-export default function() {
+export default function () {
   const IMAGE_SRCSET = store.getters.image_srcset;
   if (IMAGE_SRCSET > 0) {
     // TODO clean picture sources
@@ -49,7 +49,7 @@ function smart(srcset, width) {
   let newSrcset;
   // TEMP
   if (srcset.length > 1) {
-    let lg = Math.round(srcset.length / 2);
+    const lg = Math.round(srcset.length / 2);
     newSrcset = srcset.slice(0, lg);
   } else {
     newSrcset = srcset;
@@ -73,9 +73,9 @@ function smallest(srcset, width) {
   let mini;
   let miniWidth = width;
   srcset = noRetina(srcset);
-  srcset.forEach(o => {
+  srcset.forEach((o) => {
     if (mini) {
-      let w = o.width;
+      const w = o.width;
       if (w && w < miniWidth) {
         mini = o;
       }

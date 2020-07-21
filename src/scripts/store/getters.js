@@ -2,21 +2,21 @@ import jsonOptions from './options.json';
 
 const getters = {};
 for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
-  let o = jsonOptions[i];
+  const o = jsonOptions[i];
 
-  getters[o.id] = state => {
+  getters[o.id] = (state) => {
     return parseInt(state[o.id]);
   };
 }
 
-getters.active = state => state.active;
-getters.level = state => state.level;
-getters.pausedWebsites = state => state.pausedWebsites;
-getters.pausedPages = state => state.pausedPages;
-getters.isPageActive = state => url => {
+getters.active = (state) => state.active;
+getters.level = (state) => state.level;
+getters.pausedWebsites = (state) => state.pausedWebsites;
+getters.pausedPages = (state) => state.pausedPages;
+getters.isPageActive = (state) => (url) => {
   return state.pausedPages.indexOf(url) === -1;
 };
-getters.isWebsiteActive = state => hostname => {
+getters.isWebsiteActive = (state) => (hostname) => {
   return state.pausedWebsites.indexOf(hostname) === -1;
 };
 getters.isActive = (state, getters) => (pageUrl, domain) => {

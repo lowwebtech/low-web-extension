@@ -1,11 +1,11 @@
 import store from '../../store';
 import RequestManager from '../RequestManager';
 
-export default function() {
+export default function () {
   if (store.getters.website_specific > 0) {
     // smaller GCP images
     browser.webRequest.onBeforeRequest.addListener(
-      requestDetails => {
+      (requestDetails) => {
         const { url } = requestDetails;
         let newUrl = url;
 
@@ -15,8 +15,8 @@ export default function() {
         */
 
         if (newUrl.indexOf('-c-fcrop') !== -1) {
-          let splitUrl = newUrl.split('-c-fcrop');
-          let splitSize = splitUrl[0].split('=s');
+          const splitUrl = newUrl.split('-c-fcrop');
+          const splitSize = splitUrl[0].split('=s');
           if (splitSize.length === 2) {
             if (parseInt(splitSize[1]) > 256) {
               newUrl = splitSize[0] + '=s256-c-fcrop' + splitUrl[1];
@@ -42,7 +42,7 @@ export default function() {
   if (store.getters.website_specific > 1) {
     // block video bytes from video on channel page
     browser.webRequest.onBeforeRequest.addListener(
-      requestDetails => {
+      (requestDetails) => {
         let cancel = false;
         const response = {};
         const tab = RequestManager.getTab(requestDetails.tabId);
@@ -70,7 +70,7 @@ export default function() {
     );
 
     // block images on homepage & video page
-    const blockAllImages = function(requestDetails) {
+    const blockAllImages = function (requestDetails) {
       let cancel = false;
       const response = {};
       const tab = RequestManager.getTab(requestDetails.tabId);

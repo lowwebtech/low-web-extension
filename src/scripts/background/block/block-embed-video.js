@@ -5,8 +5,8 @@ import videoToBlock from '../../datas/video-to-block';
 import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
 
 export function blockEmbedVideo() {
-  const action = details => {
-    let response = {};
+  const action = (details) => {
+    const response = {};
 
     const { url, tabId } = details;
 

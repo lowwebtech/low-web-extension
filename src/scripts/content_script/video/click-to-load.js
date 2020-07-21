@@ -14,9 +14,9 @@ if (selectorString !== '') {
   selectorString = selectorString.slice(0, -1);
 }
 
-export default function() {
+export default function () {
   if (store.getters.video_clicktoload === 1) {
-    let iframes = document.querySelectorAll(selectorString);
+    const iframes = document.querySelectorAll(selectorString);
     if (iframes.length > 0) {
       loadStyles();
     }
@@ -41,22 +41,22 @@ export default function() {
 function loadStyles() {
   // TODO split css by embed type
   fetch(browser.runtime.getURL('oembed/style.css'), { cache: 'force-cache' })
-    .then(function(response) {
+    .then(function (response) {
       if (!response || response.status !== 200) {
         return true;
       }
       return response.text();
     })
-    .then(css => {
+    .then((css) => {
       style = css;
       customIframes();
     });
 }
 
 function customIframes() {
-  let iframes = document.querySelectorAll(selectorString);
+  const iframes = document.querySelectorAll(selectorString);
 
-  iframes.forEach(iframe => {
+  iframes.forEach((iframe) => {
     let src = iframe.src;
     if (!src || src === '') {
       src = iframe.dataset.src;
@@ -84,7 +84,7 @@ function customIframes() {
               },
             };
 
-            const callback = response => {
+            const callback = (response) => {
               if (response && response.data) {
                 const oembed = response.data;
                 if (dataVideoBlock.skin) {
@@ -96,9 +96,9 @@ function customIframes() {
                     if (oembed.title) {
                       title = oembed.title;
                     } else if (type === 'facebook') {
-                      let parser = new DOMParser();
-                      let html = parser.parseFromString(oembed.html, 'text/html');
-                      let t = html.querySelector('blockquote > a');
+                      const parser = new DOMParser();
+                      const html = parser.parseFromString(oembed.html, 'text/html');
+                      const t = html.querySelector('blockquote > a');
                       if (t) {
                         title = t.textContent;
                       }
@@ -137,11 +137,11 @@ function customIframes() {
 
                     skin = '<style type="text/css">' + style + '</style><div class="lowweb--' + type + '"><div>' + skin + '</div></div>';
 
-                    let newIframe = document.createElement('iframe');
+                    const newIframe = document.createElement('iframe');
                     newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin);
 
                     for (let i = 0; i < iframe.attributes.length; i++) {
-                      let a = iframe.attributes[i];
+                      const a = iframe.attributes[i];
                       if (a.name !== 'src') {
                         newIframe.setAttribute(a.name, a.value);
                       }
@@ -162,7 +162,7 @@ function customIframes() {
               }
             };
 
-            browser.runtime.sendMessage(options).then(callback, e => {
+            browser.runtime.sendMessage(options).then(callback, (e) => {
               console.error('error message click-to-load', e);
             });
           }

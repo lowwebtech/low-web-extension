@@ -6,7 +6,7 @@ import RequestManager from '../RequestManager';
 
 export function saveDataHeader() {
   browser.webRequest.onBeforeSendHeaders.addListener(
-    details => {
+    (details) => {
       const { tabId } = details;
       const tab = RequestManager.getTab(tabId);
       if (tab && tab.pageUrl && store.getters.isActive(tab.pageUrl, tab.domain)) {
