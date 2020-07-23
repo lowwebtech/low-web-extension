@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import store from '../../store';
 // import urlsToBlock from '../../social-to-block';
 
@@ -22,6 +23,7 @@ function customSocial() {
         oembedUrl: oembedUrl,
       },
     };
+
     const callback = function (res) {
       if (res && res.data.thumbnail_url) {
         const img = document.createElement('img');
@@ -29,8 +31,9 @@ function customSocial() {
         img.style.height = 'auto';
         img.src = res.data.thumbnail_url;
         const container = embed.querySelector('a');
-        container.textContent = '';
-        container.appendChild(img);
+        // container.textContent = '';
+        // container.appendChild(img);
+        container.innerHTML = DOMPurify.sanitize(img);
       }
     };
     browser.runtime.sendMessage(options).then(callback, (e) => {
