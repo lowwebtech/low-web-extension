@@ -193,14 +193,7 @@ class CustomIframe {
             skin = skin.replace('##VIDEO_URL##', this.videoUrl);
           }
 
-          skin = `
-            <style type="text/css">${DOMPurify.sanitize(style)}</style>
-            <div class="lowweb--${DOMPurify.sanitize(this.type)}'">
-              <div>
-              ${DOMPurify.sanitize(skin)}
-              </div>
-            </div>
-            `;
+          skin = '<style type="text/css">'+DOMPurify.sanitize(style)+'</style><div class="lowweb--'+DOMPurify.sanitize(this.type)+'"><div>'+DOMPurify.sanitize(skin)+'</div></div>';
 
           const newIframe = document.createElement('iframe');
           newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin);
