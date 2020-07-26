@@ -1,3 +1,5 @@
+import DOMPurify from 'dompurify';
+
 export default class GifPlayer {
   constructor(el) {
     this.el = el;
@@ -70,12 +72,13 @@ export default class GifPlayer {
 
   play() {
     if (!this.playing) {
+      const imgSrc = DOMPurify.sanitize(this.originalSrc);
       // TODO hide play button
       this.playing = true;
       if (this.type === 'img') {
-        this.el.src = this.originalSrc;
+        this.el.src = imgSrc;
       } else if (this.type === 'iframe') {
-        const imgStr = '<style type="text/css">body{margin:0;padding:0} img{width:100%;height:"auto";}</style><img src="' + this.originalSrc + '" />';
+        const imgStr = '<style type="text/css">body{margin:0;padding:0} img{width:100%;height:"auto";}</style><img src="' + imgSrc + '" />';
         this.el.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(imgStr);
       }
     }

@@ -1,3 +1,9 @@
+## 0.0.9
+- security fix XSS issues on :
+    + social embed
+    + click-to-load video embed
+    + custom Gif player
+
 ## 0.0.8
 - update npm packages to latest
 - remove old files from extension : 

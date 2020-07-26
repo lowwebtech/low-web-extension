@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 // import './click-to-load.scss';
 import store from '../../store';
 import videoToBlock from '../../datas/video-to-block';
@@ -24,7 +25,7 @@ export default function () {
     const onEmbedVideoBlocked = (request, sender, sendResponse) => {
       if (request.message === 'embedVideoBlocked') {
         if (style) {
-          customIframes();
+          customizeIframes();
         } else {
           loadStyles();
         }
@@ -49,126 +50,16 @@ function loadStyles() {
     })
     .then((css) => {
       style = css;
-      customIframes();
+      customizeIframes();
     });
 }
 
-function customIframes() {
+function customizeIframes() {
   const iframes = document.querySelectorAll(selectorString);
-
+  const customIframes = [];
   iframes.forEach((iframe) => {
-    let src = iframe.src;
-    if (!src || src === '') {
-      src = iframe.dataset.src;
-    }
-
-    if (src) {
-      const type = videoBlocked(src);
-      if (type !== false) {
-        const dataVideoBlock = videoToBlock[type];
-        const id = getId(src, type);
-        let videoUrl, oembedUrl;
-
-        if (dataVideoBlock.video_url !== '' && dataVideoBlock.oembed !== '' && id) {
-          videoUrl = dataVideoBlock.video_url.replace('##ID##', id);
-
-          if (videoUrl) {
-            oembedUrl = dataVideoBlock.oembed + '?format=json&url=' + encodeURIComponent(videoUrl);
-
-            const options = {
-              message: 'oembed',
-              options: {
-                type: type,
-                videoUrl: videoUrl,
-                oembedUrl: oembedUrl,
-              },
-            };
-
-            const callback = (response) => {
-              if (response && response.data) {
-                const oembed = response.data;
-                if (dataVideoBlock.skin) {
-                  // test parentNode, iframe may be removed from the dom
-                  if (iframe && iframe.parentNode) {
-                    let skin = dataVideoBlock.skin;
-
-                    let title;
-                    if (oembed.title) {
-                      title = oembed.title;
-                    } else if (type === 'facebook') {
-                      const parser = new DOMParser();
-                      const html = parser.parseFromString(oembed.html, 'text/html');
-                      const t = html.querySelector('blockquote > a');
-                      if (t) {
-                        title = t.textContent;
-                      }
-                    }
-                    if (title) {
-                      skin = skin.replace('##TITLE##', title);
-                    }
-
-                    if (oembed.description) {
-                      skin = skin.replace('##DESCRIPTION##', oembed.description);
-                    }
-
-                    if (oembed.author_name) {
-                      skin = skin.replace('##AUTHOR##', oembed.author_name);
-                    }
-
-                    let thumb = oembed.thumbnail_url;
-                    if (type === 'youtube') {
-                      thumb = thumb.replace('hqdefault', 'mqdefault');
-                    }
-                    // some oembed doesn't provide thumbnail_url
-                    if (!thumb && dataVideoBlock.image !== '') {
-                      thumb = dataVideoBlock.image.replace('##ID##', id);
-                    }
-                    if (thumb) {
-                      skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" />');
-                    }
-
-                    if (videoUrl) {
-                      if (videoUrl.indexOf(dataVideoBlock.embed_url) !== -1) {
-                        videoUrl = sanitizeEmbedUrl(videoUrl, true, true);
-                        skin = skin.replace('_blank', '_self');
-                      }
-                      skin = skin.replace('##VIDEO_URL##', videoUrl);
-                    }
-
-                    skin = '<style type="text/css">' + style + '</style><div class="lowweb--' + type + '"><div>' + skin + '</div></div>';
-
-                    const newIframe = document.createElement('iframe');
-                    newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin);
-
-                    for (let i = 0; i < iframe.attributes.length; i++) {
-                      const a = iframe.attributes[i];
-                      if (a.name !== 'src') {
-                        newIframe.setAttribute(a.name, a.value);
-                      }
-                    }
-
-                    iframe.parentNode.replaceChild(newIframe, iframe);
-
-                    browser.runtime.sendMessage({
-                      message: 'logOptimised',
-                      data: {
-                        type: 'click-to-load',
-                        tabId: response.tabId,
-                        url: videoUrl,
-                      },
-                    });
-                  }
-                }
-              }
-            };
-
-            browser.runtime.sendMessage(options).then(callback, (e) => {
-              console.error('error message click-to-load', e);
-            });
-          }
-        }
-      }
-    }
+    const customIframe = new CustomIframe(iframe);
+    customIframes.push(customIframe);
   });
 }
 
@@ -205,4 +96,134 @@ function getId(url, type) {
       break;
   }
   return id;
+}
+
+class CustomIframe {
+  constructor(el) {
+    this.el = el;
+
+    let src = el.src;
+    if (!src || src === '') {
+      src = el.dataset.src;
+    }
+
+    if (src) {
+      this.type = videoBlocked(src);
+      if (this.type !== false) {
+        this.dataVideoBlock = videoToBlock[this.type];
+        const id = getId(src, this.type);
+
+        if (this.dataVideoBlock.video_url !== '' && this.dataVideoBlock.oembed !== '' && id) {
+          this.videoUrl = this.dataVideoBlock.video_url.replace('##ID##', id);
+
+          if (this.videoUrl) {
+            const oembedUrl = this.dataVideoBlock.oembed + '?format=json&url=' + encodeURIComponent(this.videoUrl);
+
+            const options = {
+              message: 'oembed',
+              options: {
+                type: this.type,
+                videoUrl: this.videoUrl,
+                oembedUrl: oembedUrl,
+              },
+            };
+
+            browser.runtime.sendMessage(options).then(
+              (e) => this.onOEmbed(e),
+              (e) => {
+                console.error('error message click-to-load', e);
+              }
+            );
+          }
+        }
+      }
+    }
+  }
+
+  onOEmbed(response) {
+    if (response && response.data) {
+      if (this.dataVideoBlock.skin) {
+        // test parentNode, iframe may be removed from the dom
+        if (this.el && this.el.parentNode) {
+          const oembedData = response.data;
+          const id = getId(this.el.src, this.type);
+
+          let skin = this.dataVideoBlock.skin;
+
+          let title;
+          if (oembedData.title) {
+            title = oembedData.title;
+          } else if (this.type === 'facebook') {
+            const parser = new DOMParser();
+            const html = parser.parseFromString(oembedData.html, 'text/html');
+            const t = html.querySelector('blockquote > a');
+            if (t) {
+              title = t.textContent;
+            }
+          }
+          if (title) {
+            skin = skin.replace('##TITLE##', title);
+          }
+
+          if (oembedData.description) {
+            skin = skin.replace('##DESCRIPTION##', oembedData.description);
+          }
+
+          if (oembedData.author_name) {
+            skin = skin.replace('##AUTHOR##', oembedData.author_name);
+          }
+
+          let thumb = oembedData.thumbnail_url;
+          if (this.type === 'youtube') {
+            thumb = thumb.replace('hqdefault', 'mqdefault');
+          }
+          // some oembed doesn't provide thumbnail_url
+          if (!thumb && this.dataVideoBlock.image !== '') {
+            thumb = this.dataVideoBlock.image.replace('##ID##', id);
+          }
+          if (thumb) {
+            skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" />');
+          }
+
+          if (this.videoUrl) {
+            if (this.videoUrl.indexOf(this.dataVideoBlock.embed_url) !== -1) {
+              this.videoUrl = sanitizeEmbedUrl(this.videoUrl, true, true);
+              skin = skin.replace('_blank', '_self');
+            }
+            skin = skin.replace('##VIDEO_URL##', this.videoUrl);
+          }
+
+          skin =
+            '<style type="text/css">' +
+            DOMPurify.sanitize(style) +
+            '</style><div class="lowweb--' +
+            DOMPurify.sanitize(this.type) +
+            '"><div>' +
+            DOMPurify.sanitize(skin) +
+            '</div></div>';
+
+          const newIframe = document.createElement('iframe');
+          newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin);
+
+          for (let i = 0; i < this.el.attributes.length; i++) {
+            const a = this.el.attributes[i];
+            if (a.name !== 'src') {
+              newIframe.setAttribute(a.name, a.value);
+            }
+          }
+
+          this.el.parentNode.replaceChild(newIframe, this.el);
+
+          browser.runtime.sendMessage({
+            message: 'logOptimised',
+            data: {
+              type: 'click-to-load',
+              tabId: response.tabId,
+              url: this.videoUrl,
+            },
+          });
+        }
+      }
+    }
+  }
 }
