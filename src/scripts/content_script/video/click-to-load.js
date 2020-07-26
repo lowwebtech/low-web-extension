@@ -56,8 +56,10 @@ function loadStyles() {
 
 function customizeIframes() {
   const iframes = document.querySelectorAll(selectorString);
+  const customIframes = [];
   iframes.forEach((iframe) => {
-    new CustomIframe(iframe)
+    const customIframe = new CustomIframe(iframe);
+    customIframes.push(customIframe);
   });
 }
 
@@ -96,9 +98,9 @@ function getId(url, type) {
   return id;
 }
 
-class CustomIframe{
-  constructor(el){
-    this.el = el
+class CustomIframe {
+  constructor(el) {
+    this.el = el;
 
     let src = el.src;
     if (!src || src === '') {
@@ -126,22 +128,25 @@ class CustomIframe{
               },
             };
 
-            browser.runtime.sendMessage(options).then((e) => this.onOEmbed(e), (e) => {
-              console.error('error message click-to-load', e);
-            });
+            browser.runtime.sendMessage(options).then(
+              (e) => this.onOEmbed(e),
+              (e) => {
+                console.error('error message click-to-load', e);
+              }
+            );
           }
         }
       }
     }
   }
 
-  onOEmbed(response){
-    console.log()
+  onOEmbed(response) {
     if (response && response.data) {
       if (this.dataVideoBlock.skin) {
         // test parentNode, iframe may be removed from the dom
         if (this.el && this.el.parentNode) {
           const oembedData = response.data;
+          const id = getId(this.el.src, this.type);
 
           let skin = this.dataVideoBlock.skin;
 
@@ -188,7 +193,14 @@ class CustomIframe{
             skin = skin.replace('##VIDEO_URL##', this.videoUrl);
           }
 
-          skin = '<style type="text/css">' + style + '</style><div class="lowweb--' + this.type + '"><div>' + skin + '</div></div>';
+          skin = `
+            <style type="text/css">${DOMPurify.sanitize(style)}</style>
+            <div class="lowweb--${DOMPurify.sanitize(this.type)}'">
+              <div>
+              ${DOMPurify.sanitize(skin)}
+              </div>
+            </div>
+            `;
 
           const newIframe = document.createElement('iframe');
           newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin);
@@ -199,9 +211,6 @@ class CustomIframe{
               newIframe.setAttribute(a.name, a.value);
             }
           }
-
-          // console.log(newIframe);
-          // console.log(DOMPurify.sanitize(newIframe));
 
           this.el.parentNode.replaceChild(newIframe, this.el);
 
