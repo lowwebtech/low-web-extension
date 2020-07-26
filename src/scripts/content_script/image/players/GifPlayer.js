@@ -1,4 +1,5 @@
 import DOMPurify from 'dompurify';
+
 export default class GifPlayer {
   constructor(el) {
     this.el = el;
