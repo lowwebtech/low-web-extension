@@ -1,7 +1,7 @@
 import Logger from './Logger';
 import RequestManager from './RequestManager';
-// import store from '../store';
-// look at faster filter -> webassembly
+
+// TODO look at faster filter -> webassembly
 import * as ABPFilterParser from 'abp-filter-parser';
 import { dataImage } from '../utils/data-uri';
 
@@ -9,11 +9,21 @@ const blockRequests = [];
 const lists = [];
 let abpFilters = {};
 
+/**
+ * Blocker class blocks webrequests based on filters' lists
+ */
 class Blocker {
   init() {
     this.filterRequest(blockUrls);
   }
 
+  /**
+   * Create BlockRequest filter and listen new webRequests to block
+   * @param  {Function} callback      webRequestBlocking action
+   * @param  {Object}   filter        webRequestBlocking filter
+   * @param  {Array}    extraInfoSpec webRequestBlocking extra
+   * @return {BlockRequest}
+   */
   filterRequest(callback, filter = {}, extraInfoSpec = ['blocking']) {
     filter = Object.assign({ urls: ['<all_urls>'] }, filter);
 
@@ -25,6 +35,12 @@ class Blocker {
     return blockRequest;
   }
 
+  /**
+   * Remove BlockRequest and listener
+   * @param  {[type]} blockRequest [description]
+   * @return {[type]}              [description]
+   * TODO: currently not used by Blocker
+   */
   unfilterRequest(blockRequest) {
     if (blockRequests.indexOf(blockRequest) !== -1) {
       blockRequests.splice(blockRequests.indexOf(blockRequest), 1);
@@ -34,13 +50,24 @@ class Blocker {
     }
   }
 
+  /**
+   * Add list of blocked ressources and regenerate ABPFilters
+   * @param {string} list TXT file of ABP Filter
+   * @return
+   */
   addListToBlock(list) {
+    console.log('typeof list', typeof list);
     if (lists.indexOf(list) === -1) {
       lists.push(list);
       ABPFilterParser.parse(list, abpFilters);
     }
   }
 
+  /**
+   * Remove list of blocked ressources and regenerate ABPFilters
+   * @param {string} list TXT file of ABP Filter
+   * @return
+   */
   removeListToBlock(list) {
     if (lists.indexOf(list) !== -1) {
       lists.splice(lists.indexOf(list), 1);
@@ -48,6 +75,10 @@ class Blocker {
     }
   }
 
+  /**
+   * Create abpFilters based on list of TXT files
+   * @return
+   */
   recreateListToBlock() {
     abpFilters = {};
     for (let i = 0; i < lists.length; i++) {
@@ -56,6 +87,11 @@ class Blocker {
   }
 }
 
+/**
+ * function called to filter webRequest based abpFilters
+ * @param  {object} details webRequest details
+ * @return {object}         webRequest response
+ */
 const blockUrls = function (details) {
   const response = {};
   const { url, type } = details;
@@ -78,7 +114,7 @@ const blockUrls = function (details) {
 class BlockRequest {
   constructor(callback, filter) {
     this.callback = (details) => {
-      const { tabId } = details; // url, type
+      const { tabId } = details;
       if (tabId !== -1) {
         // check if current page and website is active before filtering
         if (RequestManager.isTabActive(tabId)) {

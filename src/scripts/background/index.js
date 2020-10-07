@@ -1,7 +1,6 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
-// import store from './scripts/store'
 import RequestManager from './RequestManager';
 import Logger from './Logger';
 import Blocker from './Blocker';
@@ -12,6 +11,7 @@ import { blockFiles } from './block/block-files';
 import { blockSocial } from './block/block-social';
 import { blockFonts } from './block/block-fonts';
 import { blockWebsiteSpecific } from './block/block-website-specific';
+
 import youtube from './sites/youtube';
 import redirectKnownAssets from './redirect-known-assets';
 import hideUselessContent from './hide-useless-content';
@@ -49,17 +49,12 @@ browser.runtime.onStartup.addListener((details) => {
 browser.runtime.onInstalled.addListener(async (details) => {
   load(details);
 });
-browser.runtime.onInstalled.addListener(async ({ reason, temporary }) => {
-  console.log('Promise onInstalled', reason, temporary);
-  if (temporary) return; // skip during development
-  switch (reason) {
-    case 'install':
-      // const url = browser.runtime.getURL('views/installed.html');
-      // await browser.tabs.create({ url });
-      break;
-  }
-});
 
+/**
+ * Load assets (txt files for ABPFiltering), then start extension
+ * @param  {[type]} details [description]
+ * @return {[type]}         [description]
+ */
 function load(details) {
   Promise.all(
     assetsManifest.map((asset) =>
@@ -69,9 +64,69 @@ function load(details) {
         .then((data) => setAsset(data, asset))
         .catch((error) => console.log('There was a problem!', error))
     )
-  ).then((data) => {
-    start(data);
-  });
+  )
+    .then(() => installedPage(details))
+    .then((data) => {
+      start(data);
+    });
+}
+
+/**
+ * Start extension, init background functions and listeners
+ * @param  {[type]} data [description]
+ * @return {[type]}      [description]
+ */
+function start(data) {
+  // TODO: check why setTimeout is used
+  setTimeout(() => {
+    Logger.init();
+    RequestManager.init();
+    Blocker.init();
+
+    // update CSP if necessary
+    csp();
+
+    // add Save-Data: on header
+    saveDataHeader();
+
+    // disable css animations
+    cssAnimation();
+
+    // filter and block webRequest
+    blockFiles();
+    blockImages(assets.avatarTXT.data);
+    blockSocial(assets.socialTXT.data);
+    blockFonts(assets.fontsTXT.data);
+    blockEmbedVideo();
+
+    // filters, blocks or redirects from specific websites (Youtube for now)
+    youtube();
+    blockWebsiteSpecific(assets.website_specificTXT.data);
+    redirectKnownAssets();
+    hideUselessContent();
+  }, 300);
+
+  // wait for event 'runtime.connect' then add onMessage handler to communicate between (background_script and content_script)
+  const addConnect = (port) => {
+    onMessageOEmbed(port);
+    browser.runtime.onConnect.removeListener(addConnect);
+  };
+  browser.runtime.onConnect.addListener(addConnect);
+}
+
+/**
+ * Displayed welcome page if reason: install and not temporary install (local dev)
+ * @param  {string}   options.reason    Runtime event type
+ * @param  {boolean}  options.temporary Runtime temporary mode (local)
+ * @return
+ */
+function installedPage({ reason, temporary }) {
+  console.log('installedPage', reason, temporary);
+  if (!temporary && reason === 'install') {
+    // TODO create welcome page
+    // const url = browser.runtime.getURL('views/installed.html');
+    // await browser.tabs.create({ url });
+  }
 }
 function checkStatus(response) {
   if (response.ok) {
@@ -87,35 +142,4 @@ function setAsset(data, asset) {
 }
 function parseTXT(response) {
   return response.text();
-}
-
-function start(data) {
-  setTimeout(() => {
-    Logger.init();
-    RequestManager.init();
-    Blocker.init();
-
-    csp();
-    saveDataHeader();
-
-    youtube();
-    redirectKnownAssets();
-    hideUselessContent();
-
-    blockFiles();
-    blockImages(assets.avatarTXT.data);
-    blockSocial(assets.socialTXT.data);
-    blockFonts(assets.fontsTXT.data);
-    blockWebsiteSpecific(assets.website_specificTXT.data);
-
-    blockEmbedVideo();
-    cssAnimation();
-  }, 300);
-
-  const addConnect = (port) => {
-    // console.log('runtime.onConnect');
-    onMessageOEmbed(port);
-    browser.runtime.onConnect.removeListener(addConnect);
-  };
-  browser.runtime.onConnect.addListener(addConnect);
 }

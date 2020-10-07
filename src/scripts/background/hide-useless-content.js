@@ -1,6 +1,10 @@
 import store from '../store';
 import insertedCSS from '../datas/css-to-insert';
 
+/**
+ * Insert css to hide useless contents and dark-patterns
+ * @return
+ */
 export default function () {
   // TODO add css before onUpdated status == loading
   // TODO format insertedCSS for better parsing

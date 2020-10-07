@@ -24,6 +24,7 @@ const config = {
     'players/Youtube-large': './scripts/content_script/video/players/Youtube-large.js',
 
     'players/Gif': './scripts/content_script/image/players/Gif.js',
+    
     'popup/popup': './popup/popup.js',
     'options/options': './options/options.js',
 

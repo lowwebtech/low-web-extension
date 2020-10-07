@@ -1,6 +1,7 @@
-// const stringifyObject = require('stringify-object');
-// import parse from 'content-security-policy-parser';
-
+/**
+ * Some CSPs (Content Security Policy) can prevent the extension from working properly,
+ * for example prohibiting inserting an image or modifying an iframe
+ */
 export default () => {
   browser.webRequest.onHeadersReceived.addListener(
     function (details) {
@@ -9,37 +10,32 @@ export default () => {
           // let csp = details.responseHeaders[i].value;
           const cspArray = parse(details.responseHeaders[i].value);
 
-          // img
+          // Allows the insertion of images
+          // used to insert images for Video Player (Youtube, Vimeo, Dailymotion) or Gif Player (Giphy)
           if (cspArray['img-src'] !== undefined) {
             cspArray['img-src'].push('https://i.ytimg.com', 'https://i.vimeocdn.com', 'https://*.dmcdn.net', 'https://*.giphy.com');
-            // csp = csp.replace('img-src', 'img-src i.ytimg.com i.vimeocdn.com *.dmcdn.net');
           } else if (cspArray['default-src']) {
-            // TODO merge default-src replace
             cspArray['default-src'].push('https://i.ytimg.com', 'https://i.vimeocdn.com', 'https://*.dmcdn.net', 'https://*.giphy.com');
-            // csp = csp.replace('default-src', 'default-src i.ytimg.com i.vimeocdn.com *.dmcdn.net');
           }
 
-          // script injected like Gif.js
-          // -> github.com
+          // Allows the insertion of javascript code
+          // used to customize Gif player (Gif.js)
           if (cspArray['script-src'] !== undefined) {
             cspArray['script-src'].push("'unsafe-eval'");
-            // csp = csp.replace('script-src', "script-src 'unsafe-eval'");
           } else if (cspArray['default-src']) {
             if (cspArray['default-src'].indexOf('unsafe-eval') === -1) {
               cspArray['default-src'].push("'unsafe-eval'");
             }
-            // csp = csp.replace('default-src', "default-src 'unsafe-eval'");
           }
 
-          // iframe
+          // Allows the use of iframe with Data-URI format (data:)
+          // used to customize video iframes, youtube, vimeo...
           if (cspArray['frame-src'] !== undefined) {
             cspArray['frame-src'].push('data:');
-            // csp = csp.replace('frame-src', 'frame-src data:');
           } else if (cspArray['default-src']) {
             if (cspArray['default-src'].indexOf('data:') === -1) {
               cspArray['default-src'].push('data:');
             }
-            // csp = csp.replace('default-src', 'default-src data:');
           }
 
           details.responseHeaders[i].value = stringify(cspArray);
@@ -73,7 +69,6 @@ function parse(policy) {
   }, {});
 }
 function stringify(policy) {
-  // policy.map()
   let str = '';
   Object.keys(policy).map(function (key, index) {
     str += key + ' ' + policy[key].join(' ') + '; ';

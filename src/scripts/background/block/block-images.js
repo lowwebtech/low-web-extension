@@ -3,6 +3,21 @@ import { TOKEN } from '../../datas/constants';
 import { watchList, watchFilter } from '../../store/watch';
 import { dataTextLink, dataImage } from '../../utils/data-uri';
 
+/**
+ * Block image files :
+ *   - avatar images from avatarTxt list
+ *   - redirect images from Giphy to low quality
+ * @param  {string} avatarTxt [description]
+ * @return
+ */
+export function blockImages(avatarTxt) {
+  // blocks avatars
+  if (avatarTxt) watchList('block_avatar', avatarTxt);
+
+  // blocks giphy embeds (image or iframe)
+  watchFilter('gif_player', blockGiphy, { urls: ['*://*.giphy.com/*'], types: ['image', 'sub_frame'] });
+}
+
 const blockGiphy = (details) => {
   const response = {};
   const exclude = ['giphy.com'];
@@ -25,8 +40,3 @@ const blockGiphy = (details) => {
   }
   return response;
 };
-
-export function blockImages(avatarTxt) {
-  if (avatarTxt) watchList('block_avatar', avatarTxt);
-  watchFilter('gif_player', blockGiphy, { urls: ['*://*.giphy.com/*'], types: ['image', 'sub_frame'] }); // '<all_urls>'
-}

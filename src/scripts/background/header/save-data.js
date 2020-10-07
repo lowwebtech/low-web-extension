@@ -1,9 +1,14 @@
-// inpired by extension 'Save-data: on' by Daniel Aleksandersen
-// https://www.daniel.priv.no/web-extensions/save-data.html
-
 import store from '../../store';
 import RequestManager from '../RequestManager';
 
+/**
+ * Add 'Save-Data: on' to webRequest headers
+ *
+ * inpired by extension 'Save-data: on' by Daniel Aleksandersen
+ * https://www.daniel.priv.no/web-extensions/save-data.html
+ *
+ * @return
+ */
 export function saveDataHeader() {
   browser.webRequest.onBeforeSendHeaders.addListener(
     (details) => {

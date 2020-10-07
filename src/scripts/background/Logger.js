@@ -1,3 +1,8 @@
+/**
+ * Logger tracks requests, assets or various events
+ * It is mainly used to display a "badge" icon with the number of resources blocked
+ */
+
 import RequestManager from './RequestManager';
 import store from '../store';
 

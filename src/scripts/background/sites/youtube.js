@@ -1,6 +1,13 @@
 import store from '../../store';
 import RequestManager from '../RequestManager';
 
+/**
+ * Specific rules for youtube
+ *   - smaller image files
+ *   - blocks videos on channel pages
+ *   - blocks images on homepage and single video page
+ * @return
+ */
 export default function () {
   if (store.getters.website_specific > 0) {
     // smaller GCP images

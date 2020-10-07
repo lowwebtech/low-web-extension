@@ -2,10 +2,10 @@ import store from '../../store';
 import { watchFilter } from '../../store/watch';
 import { dataTextLink } from '../../utils/data-uri';
 
-/*
-block-files.js blocks request by type
-types supported : 'media', 'object', 'sub_frame', 'font', 'image'
-*/
+/**
+ * Filters and blocks requests by filetype
+ * @return {object} webRequest response
+ */
 export function blockFiles() {
   const action = function (details) {
     let cancel = 0;
@@ -41,20 +41,20 @@ export function blockFiles() {
       //   cancel = store.getters.block_scripts;
       //   break;
     }
+
     if (cancel === 1) {
       response.cancel = true;
     }
     if (redirect !== false) {
-      // response.cancel = true;
       response.redirectUrl = redirect;
     }
     // Logger.logBlocked(details, response);
     return response;
   };
 
-  const filterTypes = ['media', 'object', 'sub_frame', 'font', 'image', 'imageset', 'object_subrequest'];
-  // test if filterTypes are available
+  // test if filetype filters are available
   // types : imageset, object_subrequest work only on Firefox
+  const filterTypes = ['media', 'object', 'sub_frame', 'font', 'image', 'imageset', 'object_subrequest'];
   for (let i = filterTypes.length - 1; i >= 0; i--) {
     if (browser.webRequest.ResourceType[filterTypes[i].toUpperCase()] === undefined) {
       filterTypes.splice(i, 1);

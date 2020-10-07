@@ -3,13 +3,19 @@ import isWebpage from '../utils/is-webpage';
 import RequestManager from './RequestManager';
 
 // TODO find solution for events transitionend / animationend
+// TODO add/remove listener based on css_animation
+// ISSUE transitionEnd and animationEnd not dispatched
+
+/**
+ * Disable css animation, transition and scroll-behaviour
+ * @return {[type]} [description]
+ */
 export function cssAnimation() {
   browser.tabs.onCreated.addListener(insertCSS);
   browser.tabs.onUpdated.addListener(function (tabId, info, tab) {
     if (info.status === 'complete') insertCSS(tab);
   });
 }
-// TODO add/remove listener based on css_animation
 
 function insertCSS(tab) {
   if (store.getters.css_animation === 1) {
