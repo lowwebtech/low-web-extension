@@ -35,11 +35,11 @@
   },
   {
     "id": "media_attributes", 
-    "label": "Custom attributes for html element &lt;video&gt; and &lt;sound&gt;",
+    "label": "Custom attributes for html element &lt;video&gt; and &lt;audio&gt;",
     "type": "bool",
     "value": 1,
     "presets": [1,1,1],
-    "description": "The html5 media element &lt;video&gt; and &lt;sound&gt; allows us to define certain parameters limiting the use of video and sound. The autoplay, loop and preload attributes are disabled. A site can choose to re-enable them, so it won't be effective."
+    "description": "The html5 media element &lt;video&gt; and &lt;audio&gt; allows us to define certain parameters limiting the use of video and audio. The autoplay, loop and preload attributes are disabled. A site can choose to re-enable them, so it won't be effective."
   },
   {
     "id": "image_srcset", 

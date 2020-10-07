@@ -120,15 +120,15 @@ You can test this functionality on this page: [embed-video.html](https://lowwebt
 More technical info soon...
 
 
-### Video and sound native attributes
+### Video and audio native attributes
 
-The native html5 elements &lt;video&gt; and &lt;sound&gt; are [modified](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/media/attributes.js) to consume less data. These media are paused and the following attributes are changed:
+The native html5 elements &lt;video&gt; and &lt;audio&gt; are [modified](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/media/attributes.js) to consume less data. These media are paused and the following attributes are changed:
 - autoplay = false
 - loop = false
 - preload = none
 Websites may still force autoplay of the videos.
 
-You can test this functionality on this page: [media.html](https://lowwebtech.github.io/low-web-extension/media.html) with option "Custom attributes for html element &lt;video&gt; and &lt;sound&gt;" activated.
+You can test this functionality on this page: [media.html](https://lowwebtech.github.io/low-web-extension/media.html) with option "Custom attributes for html element &lt;video&gt; and &lt;audio&gt;" activated.
 
 ### Stop GIF animation, hover over it to play
 
