@@ -1,14 +1,10 @@
-// chrome.storage.sync.get(['testValue'], function(result) {
-//   console.log('testValue currently is ' + result.testValue);
-// });
-
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
 import '../../styles/default.scss';
 import store from '../store';
 import imageSrcset from './image/srcset';
-// import lazyload from './lazyload';
+import lazyload from './lazyload';
 import marquee from './marquee';
 import gifPlayer from './image/gif-player';
 import customSocial from './iframe/social';
@@ -17,7 +13,11 @@ import clickToLoadVideo from './video/click-to-load';
 import customPlayers from './video/custom-players';
 /* eslint-enable import/first, indent */
 
+// TODO check srcset and lazyload
+// not working properly, images can already be loaded or loading
 imageSrcset();
+lazyload();
+
 // TODO look to observe DOM change/mutations
 document.addEventListener('DOMContentLoaded', () => {
   store.commit('url', window.location.href);
@@ -26,8 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (active) {
     // clean srcset and remove biggest images
     imageSrcset();
-
-    // lazyload();
+    lazyload();
 
     // custom video attribute
     mediaAttribute();
