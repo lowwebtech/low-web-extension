@@ -1,5 +1,5 @@
 import store from '../../store';
-import RequestManager from '../RequestManager';
+import RequestManager from '../controllers/RequestManager';
 
 /**
  * Specific rules for youtube

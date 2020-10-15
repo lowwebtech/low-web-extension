@@ -3,7 +3,7 @@ global.browser = require('webextension-polyfill');
 
 import Vue from 'vue';
 import App from './App';
-import store from '../scripts/store';
+import store from '../store';
 /* eslint-enable import/first, indent */
 
 Vue.prototype.$browser = global.browser;

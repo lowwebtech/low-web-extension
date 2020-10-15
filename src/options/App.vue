@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import options from '../scripts/datas/options.js';
-import store from '../scripts/store';
+import options from '../datas/options.js';
+import store from '../store';
 
 let fields = Object.keys(store.state);
 let jsonFields = options.map(a => a.id);

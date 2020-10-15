@@ -11,27 +11,27 @@ const config = {
   mode: process.env.NODE_ENV,
   context: __dirname + '/src',
   entry: {
-    'background': './scripts/background/index.js',
-    'content_script': './scripts/content_script/index.js',
+    'background': './background_script/index.js',
+    'content_script': './content_script/index.js',
     '../docs/docs': './styles/docs.js',
     'oembed/oembed': './styles/oembed.js',
     // '../docs/embed': './styles/embed.js',
 
-    'players/Youtube': './scripts/content_script/video/players/Youtube-medium.js',
-    // 'players/Youtube-tiny': './scripts/content_script/video/players/Youtube-tiny.js',
-    'players/Youtube-small': './scripts/content_script/video/players/Youtube-small.js',
-    'players/Youtube-medium': './scripts/content_script/video/players/Youtube-medium.js',
-    'players/Youtube-large': './scripts/content_script/video/players/Youtube-large.js',
+    'players/Youtube': './content_script/video/players/Youtube-medium.js',
+    // 'players/Youtube-tiny': './content_script/video/players/Youtube-tiny.js',
+    'players/Youtube-small': './content_script/video/players/Youtube-small.js',
+    'players/Youtube-medium': './content_script/video/players/Youtube-medium.js',
+    'players/Youtube-large': './content_script/video/players/Youtube-large.js',
 
-    'players/Gif': './scripts/content_script/image/players/Gif.js',
+    'players/Gif': './content_script/image/players/Gif.js',
     
     'popup/popup': './popup/popup.js',
     'options/options': './options/options.js',
 
-    // 'players/Dailymotion': './scripts/content_script/video/players/Dailymotion.js',
-    // 'players/Youporn': './scripts/content_script/video/players/Youporn.js',
-    // 'players/Vimeo': './scripts/content_script/video/players/Vimeo.js',
-    // 'players/Twitch': './scripts/content_script/video/players/Twitch.js',
+    // 'players/Dailymotion': './content_script/video/players/Dailymotion.js',
+    // 'players/Youporn': './content_script/video/players/Youporn.js',
+    // 'players/Vimeo': './content_script/video/players/Vimeo.js',
+    // 'players/Twitch': './content_script/video/players/Twitch.js',
     
   },
   output: {
@@ -112,7 +112,7 @@ const config = {
         { from: 'images', to: 'images', globOptions: { ignore: ['.DS_Store'] } },
         { from: 'oembed', to: 'oembed', globOptions: { ignore: ['.DS_Store'] } },
         { from: 'lists', to: 'lists', globOptions: { ignore: ['.DS_Store'] } },
-        // { from: 'scripts/content_script/players', to: 'players' },
+        // { from: 'content_script/players', to: 'players' },
         { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
         { from: 'options/options.html', to: 'options/options.html', transform: transformHtml },
         {

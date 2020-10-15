@@ -4,7 +4,7 @@
  */
 
 import RequestManager from './RequestManager';
-import store from '../store';
+import store from '../../store';
 
 class Logger {
   constructor() {
@@ -45,6 +45,8 @@ class Logger {
         this.resetLogs(info.tabId);
       }
     };
+
+    // TODO look if all these events are necessary
     browser.tabs.onCreated.addListener(onCreatedHandler);
     browser.tabs.onUpdated.addListener(onTabUpdatedHandler);
     browser.tabs.onActivated.addListener(onTabActivatedHandler);

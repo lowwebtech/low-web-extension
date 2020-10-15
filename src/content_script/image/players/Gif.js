@@ -1,7 +1,7 @@
 import { GIPHY_TOKEN } from '../../../datas/constants';
 import GifPlayer from './GifPlayer';
 import GiphyPlayer from './GiphyPlayer';
-// import Logger from '../../../background/Logger';
+// import Logger from '../../../background_script/controllers/Logger';
 
 (function () {
   const giphies = [];

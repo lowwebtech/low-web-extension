@@ -45,7 +45,6 @@
   "web_accessible_resources": [
     "options.js",
     "players/*",
-    "utils/*",
     "images/*",
     "oembed/*",
     "lists/*"

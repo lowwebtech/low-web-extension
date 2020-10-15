@@ -1,6 +1,6 @@
 import store from '../store';
 import isWebpage from '../utils/is-webpage';
-import RequestManager from './RequestManager';
+import RequestManager from './controllers/RequestManager';
 
 // TODO find solution for events transitionend / animationend
 // TODO add/remove listener based on css_animation

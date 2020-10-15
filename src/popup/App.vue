@@ -50,10 +50,10 @@
 <script>
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
-import store from '../scripts/store';
+import store from '../store';
 /* eslint-enable import/first, indent */
-import Logger from '../scripts/background/Logger';
-import RequestManager from '../scripts/background/Logger';
+import Logger from '../background_script/controllers/Logger';
+import RequestManager from '../background_script/controllers/Logger';
 
 export default {
   data() {

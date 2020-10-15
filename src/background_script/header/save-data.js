@@ -1,5 +1,5 @@
 import store from '../../store';
-import RequestManager from '../RequestManager';
+import RequestManager from '../controllers/RequestManager';
 
 /**
  * Add 'Save-Data: on' to webRequest headers

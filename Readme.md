@@ -83,7 +83,7 @@ Some detailed explanations about functionalities of low—web extension.
 
 #### Youtube
 
-The video quality of Youtube can only be changed automatically on the official website not in embed. A script is injected by the extension on youtube.com to adjust the quality according to the Video Quality parameter available in options repectively 240p, 320px, 480p for Very Low, Low, Medium. ([Youtube-small.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/video/players/Youtube-small.js), [Youtube-medium.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/video/players/Youtube-medium.js), [Youtube-large.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/video/players/Youtube-large.js))
+The video quality of Youtube can only be changed automatically on the official website not in embed. A script is injected by the extension on youtube.com to adjust the quality according to the Video Quality parameter available in options repectively 240p, 320px, 480p for Very Low, Low, Medium. ([Youtube-small.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-small.js), [Youtube-medium.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-medium.js), [Youtube-large.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-large.js))
 
 #### Vimeo
 
@@ -113,7 +113,7 @@ Youtube iframe optimized:
 - no cache ~ 20KB / 5 requests / load ~ 220ms
 - cache ~ 7KB / 5 requests / load ~ 200ms
 
-Technically, original iframe is [blocked](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/background/block/block-embed-video.js) by extension, then an [script](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/video/click-to-load.js) is injected for customising blocked iframe. It loads [oEmbed datas](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/background/message/oembed.js) to get image and title of the video, then a new simple html (with image, title, button) is created and injected (data:text/html) into the new iframe.
+Technically, original iframe is [blocked](https://github.com/lowwebtech/low-web-extension/blob/master/src/background_script/block/block-embed-video.js) by extension, then an [script](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/click-to-load.js) is injected for customising blocked iframe. It loads [oEmbed datas](https://github.com/lowwebtech/low-web-extension/blob/master/src/background_script/message/oembed.js) to get image and title of the video, then a new simple html (with image, title, button) is created and injected (data:text/html) into the new iframe.
 
 You can test this functionality on this page: [embed-video.html](https://lowwebtech.github.io/low-web-extension/embed-video.html) with option "Click to load a video" activated.
 
@@ -122,7 +122,7 @@ More technical info soon...
 
 ### Video and audio native attributes
 
-The native html5 elements &lt;video&gt; and &lt;audio&gt; are [modified](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/media/attributes.js) to consume less data. These media are paused and the following attributes are changed:
+The native html5 elements &lt;video&gt; and &lt;audio&gt; are [modified](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/media/attributes.js) to consume less data. These media are paused and the following attributes are changed:
 - autoplay = false
 - loop = false
 - preload = none
@@ -144,7 +144,7 @@ More technical informations soon.
 
 ### Load Giphy GIF on hover
 
-Giphy offers an API to access different image formats. Giphy's animated GIFs are replaced by much lighter static images. When hovering over this image, the animated GIF is loaded in medium resolution (see [GiphyPlayer.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/image/players/GiphyPlayer.js)).
+Giphy offers an API to access different image formats. Giphy's animated GIFs are replaced by much lighter static images. When hovering over this image, the animated GIF is loaded in medium resolution (see [GiphyPlayer.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/image/players/GiphyPlayer.js)).
 The content of Giphy iframes (containing a GIF and many scripts) is replaced by a simple static image. The animation is loaded on hover.
 
 You can test this functionality on this page: [giphy.html](https://lowwebtech.github.io/low-web-extension/giphy.html) with option "Hover over a GIF to play it" activated.
@@ -170,7 +170,7 @@ We strongly recommend the [Minimal extension](https://minimal.aupya.org/#install
 ### Smallest image (srcset)
 
 An image in html can be defined in different sizes via the parameters srcset and sizes. The browser will load the image most suitable for your screen. In general, he will choose a larger image.
-The extension [removes urls from larger images](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/content_script/image/srcset.js). The browser will therefore load the smallest of the images.
+The extension [removes urls from larger images](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/image/srcset.js). The browser will therefore load the smallest of the images.
 
 You can test this functionality on this page: [srcset.html](https://lowwebtech.github.io/low-web-extension/srcset.html) with option "Image quality" activated.
 
@@ -180,7 +180,7 @@ You can test this functionality on this page: [srcset.html](https://lowwebtech.g
 ### Header 'Save-data: on'
 
 When requesting a file on the Internet some info is sent: headers. There is a header that says you want to save data: "Save-data: on". The site you are visiting can then adapt the content to reduce the data, by not loading, for example, images or a video. For the moment, few sites take this header into account.
-The extension [adds this header for each request](https://github.com/lowwebtech/low-web-extension/blob/master/src/scripts/background/header/save-data.js).
+The extension [adds this header for each request](https://github.com/lowwebtech/low-web-extension/blob/master/src/background_script/header/save-data.js).
 
 
 ### Block fonts

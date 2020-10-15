@@ -1,7 +1,7 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
-import '../../styles/default.scss';
+import '../styles/default.scss';
 import store from '../store';
 import imageSrcset from './image/srcset';
 import lazyload from './lazyload';

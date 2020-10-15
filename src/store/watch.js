@@ -1,4 +1,4 @@
-import Blocker from '../background/Blocker';
+import Blocker from '../background_script/controllers/Blocker';
 import store from './index';
 
 /**

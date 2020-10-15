@@ -1,9 +1,9 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
-import RequestManager from './RequestManager';
-import Logger from './Logger';
-import Blocker from './Blocker';
+import RequestManager from './controllers/RequestManager';
+import Logger from './controllers/Logger';
+import Blocker from './controllers/Blocker';
 
 import csp from './header/csp';
 

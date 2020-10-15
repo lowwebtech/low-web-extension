@@ -2,8 +2,8 @@
  * RequestManager tracks requests of tabs
  */
 
-import getHostname from '../utils/get-hostname';
-import store from '../store';
+import getHostname from '../../utils/get-hostname';
+import store from '../../store';
 
 class RequestManager {
   constructor() {

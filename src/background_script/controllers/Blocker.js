@@ -3,7 +3,7 @@ import RequestManager from './RequestManager';
 
 // TODO look at faster filter -> webassembly
 import * as ABPFilterParser from 'abp-filter-parser';
-import { dataImage } from '../utils/data-uri';
+import { dataImage } from '../../utils/data-uri';
 
 const blockRequests = [];
 const lists = [];
