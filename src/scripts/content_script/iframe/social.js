@@ -2,13 +2,22 @@ import DOMPurify from 'dompurify';
 import store from '../../store';
 // import urlsToBlock from '../../social-to-block';
 
+/**
+ * Used to load datas from oEmbed APis and customize social embeds
+ */
 export default function () {
   if (store.getters.block_social === 1) {
-    customSocial();
+    customInstagram();
   }
 }
 
-function customSocial() {
+/**
+ * This function is used to retrieve the url of an image from an Instagram embed.
+ * A call to the background_script (message) made to retrieve the image url from the Instagram API.
+ *
+ * The original Instagram embed loads a script to retrieve this image url and also loads a whole bunch of tracker...
+ */
+function customInstagram() {
   const instagramEmbeds = document.querySelectorAll('blockquote.instagram-media');
 
   instagramEmbeds.forEach((embed) => {

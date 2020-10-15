@@ -13,8 +13,8 @@ const config = {
   entry: {
     'background': './scripts/background/index.js',
     'content_script': './scripts/content_script/index.js',
-    '../docs/style': './styles/docs.js',
-    'oembed/style': './styles/embed.js',
+    '../docs/docs': './styles/docs.js',
+    'oembed/oembed': './styles/oembed.js',
     // '../docs/embed': './styles/embed.js',
 
     'players/Youtube': './scripts/content_script/video/players/Youtube-medium.js',

@@ -1,8 +1,8 @@
-import jsonOptions from './options.json';
+import options from '../datas/options.js';
 
 const getters = {};
-for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
-  const o = jsonOptions[i];
+for (let i = 0, lg = options.length; i < lg; i++) {
+  const o = options[i];
 
   getters[o.id] = (state) => {
     return parseInt(state[o.id]);

@@ -5,10 +5,10 @@ if ('loading' in HTMLImageElement.prototype) {
   lazyloadSupported = true;
 }
 
-// !! DOESN'T WORK !!
-// browser already starts loading images
+// !! DOESN'T WORK !! browser already starts loading images
 // TODO: test if loading="lazy" defer the load of assets (not already loaded or currently loading)
-
+// TODO add loading lazy to audio elements
+//
 /**
  * Lazy load image and iframe medias
  * @return

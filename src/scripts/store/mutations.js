@@ -1,10 +1,10 @@
-import jsonOptions from './options.json';
+import options from '../datas/options.js';
 import getHostname from '../utils/get-hostname';
 import store from './index';
 
 const mutations = {};
-for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
-  const o = jsonOptions[i];
+for (let i = 0, lg = options.length; i < lg; i++) {
+  const o = options[i];
   mutations[o.id] = function (state, value) {
     // console.log('update', o.id, value);
     state[o.id] = value;
@@ -18,8 +18,8 @@ mutations.url = function (state, url) {
 mutations.level = function (state, level) {
   state.level = level;
   let o;
-  for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
-    o = jsonOptions[i];
+  for (let i = 0, lg = options.length; i < lg; i++) {
+    o = options[i];
     store.commit(o.id, o.presets[parseInt(level)]);
   }
 };

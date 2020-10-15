@@ -138,6 +138,7 @@ function checkStatus(response) {
 function setAsset(data, asset) {
   asset.data = data;
   assets[asset.name] = asset;
+
   return data;
 }
 function parseTXT(response) {

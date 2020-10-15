@@ -11,7 +11,7 @@
       </label>
     </div>
 
-    <div v-for="input in json" :class="'input input--' + input.id" :key="`input-${input.id}`">
+    <div v-for="input in options" :class="'input input--' + input.id" :key="`input-${input.id}`">
 
       <div class="input__text">
         <p class="input__label" :id="input.id" v-html="input.label"></p>
@@ -41,11 +41,11 @@
 </template>
 
 <script>
-import jsonOptions from '../scripts/store/options.json';
+import options from '../scripts/datas/options.js';
 import store from '../scripts/store';
 
 let fields = Object.keys(store.state);
-let jsonFields = jsonOptions.map(a => a.id);
+let jsonFields = options.map(a => a.id);
 let timeout;
 
 export default {
@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       status: '',
-      json: jsonOptions,
+      options,
       active: true,
     };
   },
@@ -80,8 +80,8 @@ export default {
       this.saveOptions();
     },
     saveOptions() {
-      for (let i = 0, lg = this.json.length; i < lg; i++) {
-        let o = jsonOptions[i];
+      for (let i = 0, lg = options.length; i < lg; i++) {
+        const o = options[i];
         let val;
         switch (o.type) {
           case 'bool':

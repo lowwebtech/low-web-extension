@@ -1,3 +1,9 @@
+/**
+ * Message / communication between content_script and background_script
+ * used to get content from oEmbed APIs
+ * (cf: click-to-load.js, social.js)
+ * @param {runtime.Port} port
+ */
 export function onMessageOEmbed(port) {
   const handleOEmbedMessage = function (request, sender, sendResponse) {
     if (request.message === 'oembed') {

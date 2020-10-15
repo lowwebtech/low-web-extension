@@ -45,36 +45,28 @@ export default function () {
     );
   }
 
-  // website_specific > 1 means settings 'Specific optimisation for most used websites' is set to 'Reduce data and Display'
   if (store.getters.website_specific > 1) {
     // block video bytes from video on channel page
-    browser.webRequest.onBeforeRequest.addListener(
-      (requestDetails) => {
-        let cancel = false;
-        const response = {};
-        const tab = RequestManager.getTab(requestDetails.tabId);
+    const blockVideoChannelPage = function (requestDetails) {
+      let cancel = false;
+      const response = {};
+      const tab = RequestManager.getTab(requestDetails.tabId);
 
-        if (tab) {
-          const pageUrl = tab.pageUrl;
+      if (tab) {
+        const pageUrl = tab.pageUrl;
 
-          if (pageUrl) {
-            if (pageUrl.indexOf('youtube.com/channel/') !== -1) {
-              cancel = true;
-            }
+        if (pageUrl) {
+          if (pageUrl.indexOf('youtube.com/channel/') !== -1) {
+            cancel = true;
           }
         }
+      }
 
-        if (cancel) {
-          response.cancel = true;
-        }
-        return response;
-      },
-      {
-        urls: ['*://*.googlevideo.com/*'],
-        types: ['xmlhttprequest'],
-      },
-      ['blocking']
-    );
+      if (cancel) {
+        response.cancel = true;
+      }
+      return response;
+    };
 
     // block images on homepage & video page
     const blockAllImages = function (requestDetails) {
@@ -94,6 +86,15 @@ export default function () {
       }
       return response;
     };
+
+    browser.webRequest.onBeforeRequest.addListener(
+      blockVideoChannelPage,
+      {
+        urls: ['*://*.googlevideo.com/*'],
+        types: ['xmlhttprequest'],
+      },
+      ['blocking']
+    );
 
     browser.webRequest.onBeforeRequest.addListener(
       blockAllImages,

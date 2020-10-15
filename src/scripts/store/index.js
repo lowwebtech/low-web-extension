@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import jsonOptions from './options.json';
+import options from '../datas/options.js';
 import getters from './getters';
 import mutations from './mutations';
 // import * as actions from './actions';
@@ -21,8 +21,8 @@ const nonPersistentState = {
   level: 0,
 };
 
-for (let i = 0, lg = jsonOptions.length; i < lg; i++) {
-  const o = jsonOptions[i];
+for (let i = 0, lg = options.length; i < lg; i++) {
+  const o = options[i];
   state[o.id] = o.value;
 }
 

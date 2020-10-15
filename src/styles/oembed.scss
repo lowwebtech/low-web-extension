@@ -1,3 +1,7 @@
+/*
+  used to style custom click-to-load video iframe (cf click-to-load.js)
+  Youtube, Dailymotion, Vimeo, Facebook
+*/
 body{
   margin: 0;
   padding: 0;
@@ -183,41 +187,4 @@ svg{
       }
     }
   }
-  // &--twitch{
-  //   svg{
-  //     top: 50%;
-  //     left: 50%;
-  //     margin-top: -60px;
-  //     margin-left: -60px;
-  //   }
-  //   &:before{
-  //     position: absolute;
-  //     content: '';
-  //     width: 100%;
-  //     height: 100%;
-  //     top: 0;
-  //     left: 0;
-  //     background-color: black;
-  //     opacity: 0.5;
-  //   }
-  //   &:hover path{
-  //     fill: #a970ff;
-  //   }
-  //   .lowweb__container{
-  //     position: relative;
-  //     color: white;
-  //     margin-top: 15px;
-  //     margin-left: 15px;
-  //     font-family: 'Roobert','Helvetica Neue',Arial,sans-serif;
-  //     .lowweb__author{
-  //       font-weight: 700;
-  //       font-size: 20px;
-  //       line-height: 1.4;
-  //     }
-  //     .lowweb__title{
-  //       font-size: 14px;
-  //       line-height: 1.1;
-  //     }
-  //   }
-  // }
 }
