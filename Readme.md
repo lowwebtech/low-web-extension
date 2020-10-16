@@ -214,7 +214,13 @@ You can test this functionality on this page: [avatar.html](https://lowwebtech.g
 Feel free to PR or send me an email (vico @@@ lowweb.tech) to add more avatar urls into [avatar.txt](https://github.com/lowwebtech/low-web-extension/blob/master/src/lists/avatar.txt)
 
 
-### Disable CSS animation & transition
+### Optimised CSS
+
+Some CSS properties can affect rendering performance of a page (and therefore increases its energy consumption).
+[Injected CSS](https://github.com/lowwebtech/low-web-extension/blob/master/src/background_script/css-optimization.js) can : 
+    - disable animation and transition (option: Disable CSS animation)
+    - optimize font rendering (option: Optimize font rendering)
+    - optimize image rendering (through content-visibility:auto)
 
 
 ## Development

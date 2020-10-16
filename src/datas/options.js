@@ -137,10 +137,10 @@ export default [
   },
   {
     id: 'css_font_rendering',
-    label: 'Change to optimised font rendering',
+    label: 'Optimize font rendering (disable antialias)',
     type: 'bool',
     value: 0,
-    presets: [1, 1, 0],
+    presets: [1, 0, 0],
     description:
       'Rendering of fonts is already optimised by browser but we could optimise it a bit more by disabling antialiasing (-webkit-font-smoothing: none) and advanced fonts features like ligature (text-rendering: optimizeSpeed)',
   },
