@@ -1,8 +1,12 @@
+// TODO
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
-import '../styles/default.scss';
+import '../styles/social.scss';
+
 import store from '../store';
+
+// TODO load on demand
 import imageSrcset from './image/srcset';
 import lazyload from './lazyload';
 import marquee from './marquee';

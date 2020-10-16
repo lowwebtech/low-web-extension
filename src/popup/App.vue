@@ -191,7 +191,7 @@ html, body {
   padding: 10px;
   font-size: 13px;
   text-rendering: optimizeSpeed !important;
-  -webkit-font-smoothing: none !important;
+  -webkit-font-smoothing: antialiased;
 }
 
 .popup{

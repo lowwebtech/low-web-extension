@@ -36,21 +36,32 @@ export function watchFilter(optionName, action, filter = {}) {
  * @return
  */
 export function watchList(optionName, listTxt) {
-  // watch future options change
-  store.watch(
-    (state, getters) => getters[optionName],
-    (newValue, oldValue) => {
-      // console.log(`Updating list ${optionName} from ${oldValue} to ${newValue}`);
-      if (newValue === 0) {
-        Blocker.removeListToBlock(listTxt);
-      } else if (newValue === 1) {
-        Blocker.addListToBlock(listTxt);
-      }
+  watch(optionName, (newValue, oldValue) => {
+    // console.log(`Updating list ${optionName} from ${oldValue} to ${newValue}`);
+    if (newValue === 0) {
+      Blocker.removeListToBlock(listTxt);
+    } else if (newValue === 1) {
+      Blocker.addListToBlock(listTxt);
     }
-  );
+  });
 
   // add list at init if optionName is enabled
   if (store.getters[optionName] === 1) {
     Blocker.addListToBlock(listTxt);
   }
+}
+
+export function watchBool(optionName, enableCallback, disableCallback) {
+  watch(optionName, (newValue, oldValue) => {
+    if (newValue === 0) {
+      enableCallback();
+    } else if (newValue === 1) {
+      disableCallback();
+    }
+  });
+}
+
+export function watch(optionName, callback) {
+  // watch future options change
+  store.watch((state, getters) => getters[optionName], callback);
 }

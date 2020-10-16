@@ -1,3 +1,5 @@
+import { HTTP_URLS } from '../../datas/constants';
+
 /**
  * Some CSPs (Content Security Policy) can prevent the extension from working properly,
  * for example prohibiting inserting an image or modifying an iframe
@@ -47,7 +49,7 @@ export default () => {
       };
     },
     {
-      urls: ['<all_urls>'],
+      urls: [HTTP_URLS],
       types: ['main_frame', 'script', 'xmlhttprequest'],
     },
     ['blocking', 'responseHeaders']

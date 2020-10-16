@@ -13,27 +13,28 @@ import RequestManager from './controllers/RequestManager';
  * @return {[type]} [description]
  */
 export function cssOptimization() {
-  // TODO check if both are necessary
-  browser.tabs.onCreated.addListener(insertCSS);
+  // we can't insert css before status complete :/
+  // browser.tabs.onCreated.addListener(insertCSS);
   browser.tabs.onUpdated.addListener(function (tabId, info, tab) {
-    if (info.status === 'complete') insertCSS(tab);
+    insertCSS(tab);
   });
 }
 
 function insertCSS(tab) {
   if (RequestManager.isTabActive(tab.id)) {
     if (isWebpage(tab.url)) {
-      let code = `
-        img {
+      let code = '';
+
+      code += `img {
           content-visibility: auto !important;
-        }
-        * {
+        }`;
+
+      code += `html, body {
           scroll-behaviour: auto!important;
-        }
-      `;
+        }`;
 
       if (store.getters.css_font_rendering === 1) {
-        code += `* {
+        code += `html, body {
           text-rendering: optimizeSpeed !important;
           -webkit-font-smoothing: none !important;
         }`;
@@ -46,10 +47,29 @@ function insertCSS(tab) {
         }`;
       }
 
-      browser.tabs.insertCSS(tab.id, {
+      // TODO optimize
+      // WARNING inserting css cause rendering
+      // some properties may cause rendering
+      const optimizedCSS = browser.tabs.insertCSS(tab.id, {
         code: code,
+        cssOrigin: 'user',
         runAt: 'document_start',
       });
+      optimizedCSS.then(null, onError);
+
+      /*
+      // TODO look at contentScripts.register
+      const cssObject = {
+        css: [{ code }],
+        matches: ['*://* /*'], // remove space
+        runAt: 'document_start',
+      };
+      const css = await browser.contentScripts.register(cssObject);
+      */
     }
   }
+}
+
+function onError(error) {
+  console.log(`Error: ${error}`);
 }

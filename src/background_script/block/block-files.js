@@ -6,6 +6,7 @@ import { dataTextLink } from '../../utils/data-uri';
  * Filters and blocks requests by filetype
  * @return {object} webRequest response
  */
+// TODO used Request Filetype filters
 export function blockFiles() {
   const action = function (details) {
     let cancel = 0;
@@ -13,6 +14,7 @@ export function blockFiles() {
     const response = {};
 
     const { type, url } = details;
+    console.log(type);
     switch (type) {
       case 'media':
         cancel = store.getters.block_medias;
@@ -26,9 +28,9 @@ export function blockFiles() {
         if (store.getters.block_subframes === 1) redirect = dataTextLink(url);
         break;
       case 'font':
-        // exclude main font icons
+        // exclude main fonts used for icons
         // TODO external whitelist-icon-font
-        if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('icon') === -1) {
+        if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('ico') === -1) {
           cancel = store.getters.block_fonts;
         }
         break;
