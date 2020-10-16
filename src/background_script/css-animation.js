@@ -22,6 +22,13 @@ function insertCSS(tab) {
     if (RequestManager.isTabActive(tab.id)) {
       if (isWebpage(tab.url)) {
         const code = `
+        body {
+          text-rendering: optimizeSpeed !important;
+          -webkit-font-smoothing: none !important;
+        }
+        img {
+          content-visibility: auto !important;
+        }
         *, *:before, *:after {
           transition: none !important;
           animation: none !important;
