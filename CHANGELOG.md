@@ -1,3 +1,10 @@
+## 0.0.10
+- NEW : optimize font rendering (through `text-rendering: optimizeSpeed` and `-webkit-font-smoothing: none`
+- fix `<audio />` element (previously named `<sound />` :/ )
+- lazyload native only `loading="lazy"`
+- code documentation, clean and refacto
+- update npm packages
+
 ## 0.0.9
 - security fix XSS issues on :
     + social embed
