@@ -18,7 +18,7 @@ import hideUselessContent from './hide-useless-content';
 // import { blockAds } from './block/block-ads';
 import { blockImages } from './block/block-images';
 import { saveDataHeader } from './header/save-data';
-import { cssAnimation } from './css-animation';
+import { cssOptimization } from './css-optimization';
 import { blockEmbedVideo } from './block/block-embed-video';
 import { onMessageOEmbed } from './message/oembed';
 /* eslint-enable import/first, indent */
@@ -89,8 +89,8 @@ function start(data) {
     // add Save-Data: on header
     saveDataHeader();
 
-    // disable css animations
-    cssAnimation();
+    // insert css (with various optimisations) into all pages
+    cssOptimization();
 
     // filter and block webRequest
     blockFiles();

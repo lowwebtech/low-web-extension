@@ -136,6 +136,15 @@ export default [
       'The CSS which makes it possible to layout the content, also makes it possible to animate it for example a button which change color gradually. This animation produces many screen refreshes which therefore requires more energy.<br>The transition-duration parameter is fixed at 0 seconds. The &lt;marquee&gt; element is also stopped.',
   },
   {
+    id: 'css_font_rendering',
+    label: 'Change to optimised font rendering',
+    type: 'bool',
+    value: 0,
+    presets: [1, 1, 0],
+    description:
+      'Rendering of fonts is already optimised by browser but we could optimise it a bit more by disabling antialiasing (-webkit-font-smoothing: none) and advanced fonts features like ligature (text-rendering: optimizeSpeed)',
+  },
+  {
     id: 'marquee_animation',
     label: 'Disable marquee animation',
     type: 'bool',
