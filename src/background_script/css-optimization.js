@@ -7,10 +7,13 @@ import RequestManager from './controllers/RequestManager';
 // ISSUE transitionEnd and animationEnd not dispatched
 
 /**
+ * Insert CSS code inside webpage to optimize rendering.
  * Disable css animation, transition and scroll-behaviour
+ * Change font rendering quality
  * @return {[type]} [description]
  */
-export function cssAnimation() {
+export function cssOptimization() {
+  // TODO check if both are necessary
   browser.tabs.onCreated.addListener(insertCSS);
   browser.tabs.onUpdated.addListener(function (tabId, info, tab) {
     if (info.status === 'complete') insertCSS(tab);
@@ -18,30 +21,35 @@ export function cssAnimation() {
 }
 
 function insertCSS(tab) {
-  if (store.getters.css_animation === 1) {
-    if (RequestManager.isTabActive(tab.id)) {
-      if (isWebpage(tab.url)) {
-        const code = `
-        body {
-          text-rendering: optimizeSpeed !important;
-          -webkit-font-smoothing: none !important;
-        }
+  if (RequestManager.isTabActive(tab.id)) {
+    if (isWebpage(tab.url)) {
+      let code = `
         img {
           content-visibility: auto !important;
-        }
-        *, *:before, *:after {
-          transition: none !important;
-          animation: none !important;
         }
         * {
           scroll-behaviour: auto!important;
         }
-        `;
-        browser.tabs.insertCSS(tab.id, {
-          code: code,
-          runAt: 'document_start',
-        });
+      `;
+
+      if (store.getters.css_font_rendering === 1) {
+        code += `* {
+          text-rendering: optimizeSpeed !important;
+          -webkit-font-smoothing: none !important;
+        }`;
       }
+
+      if (store.getters.css_animation === 1) {
+        code += `*, *:before, *:after {
+          transition: none !important;
+          animation: none !important;
+        }`;
+      }
+
+      browser.tabs.insertCSS(tab.id, {
+        code: code,
+        runAt: 'document_start',
+      });
     }
   }
 }
