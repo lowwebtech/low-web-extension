@@ -1,6 +1,6 @@
 import Vuex from 'vuex'
 import { shallowMount, mount, createLocalVue } from "@vue/test-utils";
-import Options from "./../src/options/App.vue";
+import Options from "./../options/App.vue";
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -11,7 +11,7 @@ const store = new Vuex.Store({
   }
 })
 
-describe('Options', () => 
+describe('Options', () => {
   
   describe('initial state', () => {
     let wrapper;
