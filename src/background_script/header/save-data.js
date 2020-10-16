@@ -1,6 +1,6 @@
 import store from '../../store';
 import RequestManager from '../controllers/RequestManager';
-
+import { HTTP_URLS } from '../../datas/constants';
 /**
  * Add 'Save-Data: on' to webRequest headers
  *
@@ -35,7 +35,7 @@ export function saveDataHeader() {
       };
     },
     {
-      urls: ['<all_urls>'],
+      urls: [HTTP_URLS],
     },
     ['blocking', 'requestHeaders']
   );

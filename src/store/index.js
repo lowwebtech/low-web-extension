@@ -5,10 +5,6 @@ import getters from './getters';
 import mutations from './mutations';
 // import * as actions from './actions';
 import VuexWebExtensions from 'vuex-webextensions';
-// Import the `getField` getter and the `updateField`
-// mutation function from the `vuex-map-fields` module.
-// import { getField, updateField } from 'vuex-map-fields';
-// import watchtest from './watchtest';
 
 let state = {
   pausedWebsites: [],

@@ -1,5 +1,6 @@
 import Logger from './Logger';
 import RequestManager from './RequestManager';
+import { HTTP_URLS } from '../../datas/constants';
 
 // TODO look at faster filter -> webassembly
 import * as ABPFilterParser from 'abp-filter-parser';
@@ -25,7 +26,7 @@ class Blocker {
    * @return {BlockRequest}
    */
   filterRequest(callback, filter = {}, extraInfoSpec = ['blocking']) {
-    filter = Object.assign({ urls: ['<all_urls>'] }, filter);
+    filter = Object.assign({ urls: [HTTP_URLS] }, filter);
 
     const blockRequest = new BlockRequest(callback, filter);
     blockRequests.push(blockRequest);

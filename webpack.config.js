@@ -14,6 +14,7 @@ const config = {
     'background': './background_script/index.js',
     'content_script': './content_script/index.js',
     '../docs/docs': './styles/docs.js',
+    'styles/social': './styles/social.js',
     'oembed/oembed': './styles/oembed.js',
     // '../docs/embed': './styles/embed.js',
 
@@ -24,7 +25,7 @@ const config = {
     'players/Youtube-large': './content_script/video/players/Youtube-large.js',
 
     'players/Gif': './content_script/image/players/Gif.js',
-    
+
     'popup/popup': './popup/popup.js',
     'options/options': './options/options.js',
 

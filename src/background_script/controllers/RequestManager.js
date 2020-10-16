@@ -4,12 +4,13 @@
 
 import getHostname from '../../utils/get-hostname';
 import store from '../../store';
+import { HTTP_URLS } from '../../datas/constants';
 
 class RequestManager {
   constructor() {
     this.tabStorage = {};
     this.networkFilters = {
-      urls: ['<all_urls>'],
+      urls: [HTTP_URLS],
       types: ['main_frame'],
     };
   }
