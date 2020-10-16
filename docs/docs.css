@@ -1,4 +1,6 @@
 body {
+  text-rendering: optimizeSpeed !important;
+  -webkit-font-smoothing: none !important;
   background-color: #F0F0F0; }
 
 img {
