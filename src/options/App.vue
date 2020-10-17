@@ -1,18 +1,16 @@
 <template>
   <div :class="['options', {'options--active': active}]">
-    
     <div class="input input--level">
       <p class="input__label">Quick presets</p>
 
       <label>
-        <button @click="clickPreset" value="0">Very low</button> 
-        <button @click="clickPreset" value="1">Low</button> 
-        <button @click="clickPreset" value="2">Medium</button> 
+        <button @click="clickPreset" value="0">Very low</button>
+        <button @click="clickPreset" value="1">Low</button>
+        <button @click="clickPreset" value="2">Medium</button>
       </label>
     </div>
 
     <div v-for="input in options" :class="'input input--' + input.id" :key="`input-${input.id}`">
-
       <div class="input__text">
         <p class="input__label" :id="input.id" v-html="input.label"></p>
         <p class="input__description" v-if="input.description" v-html="input.description"></p>
@@ -26,13 +24,12 @@
       <div v-if="input.type === 'select'" class="input__field inline">
         <label>
           <select :name="input.id" @input="onFieldChange">
-            <option v-for="option in input.options" :value="option.value" :key="`option-${option.value}`" :selected="$store.getters[input.id]==option.value?'selected':false">
+            <option v-for="option in input.options" :value="option.value" :key="`option-${option.value}`" :selected="$store.getters[input.id] === option.value?'selected':false">
               {{ option.label }}
             </option>
           </select>
         </label>
       </div>
-
     </div>
     <!-- <button id="save" @click="saveOptions">Save</button> -->
     <div class="status"><b>{{ status }}</b></div>
@@ -136,11 +133,11 @@ export default {
 <style lang="scss" scoped>
 @import "../styles/common.scss";
 
-.options{
+.options {
   width: 960px;
   visibility: hidden;
-  
-  &--active{
+
+  &--active {
     visibility: visible;
   }
 
@@ -167,7 +164,7 @@ export default {
       position: relative;
       font-size: 14px;
     }
-    &__label{
+    &__label {
       margin: 0;
       margin-bottom: 4px;
       font-weight: bold;

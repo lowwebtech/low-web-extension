@@ -50,7 +50,7 @@ button {
       // text-indent: -9999px;
       width: 46px;
       height: 21px;
-      background: grey;
+      background-color: grey;
       display: inline-block;
       border-radius: 21px;
       padding-left: 22px;
@@ -64,12 +64,12 @@ button {
       left: 4px;
       width: 13px;
       height: 13px;
-      background: #fff;
+      background-color: #fff;
       border-radius: 11px;
     }
 
     input:checked + label {
-      background: #61d316;
+      background-color: #61d316;
       padding-left: 6px;
     }
 
