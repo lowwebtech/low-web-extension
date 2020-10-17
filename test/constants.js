@@ -1,0 +1,3 @@
+export const SCROLLBAR_WIDTH = 16;
+export const VIEWPORT_WIDTH = 1440 + SCROLLBAR_WIDTH;
+export const VIEWPORT_HEIGHT = 800;

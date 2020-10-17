@@ -5,3 +5,7 @@ workflows:
   node-tests:
     jobs:
       - node/test
+docker:
+  - image: circleci/node:12 # Use your desired version
+    environment:
+      NODE_ENV: development # Only needed if puppeteer is in `devDependencies`

@@ -1,7 +1,8 @@
 const fs = require('fs');
 const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
-const screenDir = './test/screenshots';
+const screenDir = './test/__screenshots';
+const { VIEWPORT_WIDTH, VIEWPORT_HEIGHT } = require('./constants');
 
 class ScreenShoter {
     constructor() {
@@ -10,7 +11,7 @@ class ScreenShoter {
 
     setPage(page){
         this.page = page;
-        this.setViewport();
+        this.setViewport( VIEWPORT_WIDTH, VIEWPORT_HEIGHT );
     }
 
     async takeAndCompare(page, fileName) {
@@ -21,7 +22,7 @@ class ScreenShoter {
     async compare(fileName) {
         return new Promise((resolve, reject) => {
             const img1 = fs.createReadStream(`${screenDir}/new/${fileName}.png`).pipe(new PNG()).on('parsed', doneReading);
-            const img2 = fs.createReadStream(`${screenDir}/original/${fileName}.png`).pipe(new PNG()).on('parsed', doneReading);
+            const img2 = fs.createReadStream(`${screenDir}/../__original/${fileName}.png`).pipe(new PNG()).on('parsed', doneReading);
       
             let filesRead = 0;
             function doneReading() {
