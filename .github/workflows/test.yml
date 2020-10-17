@@ -5,7 +5,7 @@ on:
   - push
 
 env:
-  EXTENSION_INSTALLED: "true"
+  EXTENSION_INSTALLED: "false"
 
 jobs:
   test:
