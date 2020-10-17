@@ -6,4 +6,4 @@
 *.map
 .DS_Store
 *.code-workspace
-test/screenshots/new/*
+test/screenshots

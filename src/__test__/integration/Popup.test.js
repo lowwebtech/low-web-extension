@@ -1,29 +1,16 @@
 /* eslint-disable no-undef */
+import { screenShoter } from '../screenShoter';
 const fs = require('fs');
-const PNG = require('pngjs').PNG;
+// const PNG = require('pngjs').PNG;
 const puppeteer = require('puppeteer');
 const path = require('path');
-// const { startServers } = require('polyserve');
-const pixelmatch = require('pixelmatch');
-const pathToExtension = require('path').join(path.join(__dirname, '..', '..', '..', 'dist'));
 
+const pathToExtension = require('path').join(path.join(__dirname, '..', '..', '..', 'dist'));
 const puppeteerArgs = [`--disable-extensions-except=${pathToExtension}`, `--load-extension=${pathToExtension}`, '--show-component-extension-options'];
-const testDir = './test/screenshots';
 
 let page, browser;
 describe('Popup page', () => {
-  // This is ran when the suite starts up.
-  // before(async () => {
-  // });
-
-  if (!fs.existsSync(testDir)) fs.mkdirSync(testDir);
-  if (!fs.existsSync(`${testDir}/original`)) fs.mkdirSync(`${testDir}/original`);
-  if (!fs.existsSync(`${testDir}/new`)) fs.mkdirSync(`${testDir}/new`);
-
   beforeAll(async () => {
-    // This is where you would substitute your python or Express server or whatever.
-    // polyserve = await startServers({ port: 4000 });
-
     browser = await puppeteer.launch({
       headless: false,
       slowMo: 250,
@@ -32,14 +19,11 @@ describe('Popup page', () => {
     });
 
     page = await browser.newPage();
-    await gotoPopupPage();
-    await page.reload();
-    await page.setViewport({ width: 800, height: 600 });
-  });
+    screenShoter.setPage(page);
 
-  // beforeAll(async () => {
-    
-  // });
+    await goToPopupPage();
+    // await goToWeb('https://kuroneko.io/en/');
+  });
 
   afterAll(async () => {
     // await polyserve.close();
@@ -48,7 +32,7 @@ describe('Popup page', () => {
 
   describe('--- screenshots', () => {
     // beforeEach(async () => {
-    //   await gotoPopupPage();
+    //   await goToPopupPage();
     // });
 
     // it('original popup', async () => {
@@ -57,7 +41,12 @@ describe('Popup page', () => {
     //   });
     // });
     it('popup screenshot is equal to original', async () => {
-      return takeAndCompareScreenshot(page, 'popup.test');
+      return screenShoter.takeAndCompare(page, 'popup.test');
+    });
+    it('kuroneko', async () => {
+      await goToWeb('https://kuroneko.io/en/');
+      await page.reload();
+      return screenShoter.takeAndCompare(page, 'kuroneko');
     });
   });
 
@@ -134,32 +123,16 @@ describe('Popup page', () => {
   *** *** *** */
 });
 
-async function gotoPopupPage() {
+async function goToPopupPage() {
   const extensionId = 'aliphkafmeldgkmmjlhgpbleaicgbamj'; // For ease, place this in the env variables
   const chromeExtPath = `chrome-extension://${extensionId}/popup/popup.html`;
-  await page.goto(chromeExtPath, { waitUntil: 'domcontentloaded' });
+  await goTo(chromeExtPath, { waitUntil: 'domcontentloaded' });
 }
-async function takeAndCompareScreenshot(page, fileName) {
-  await page.screenshot({ path: `${testDir}/new/${fileName}.png` });
-  return compareScreenshots(fileName);
+async function goToWeb(url){
+  await goTo(url, { waitUntil: 'domcontentloaded' });
 }
-function compareScreenshots(fileName) {
-  return new Promise((resolve, reject) => {
-    const img1 = fs.createReadStream(`${testDir}/new/${fileName}.png`).pipe(new PNG()).on('parsed', doneReading);
-    const img2 = fs.createReadStream(`${testDir}/original/${fileName}.png`).pipe(new PNG()).on('parsed', doneReading);
-
-    let filesRead = 0;
-    function doneReading() {
-      if (++filesRead < 2) return;
-
-      expect(img1.width).toEqual(img2.width);
-      expect(img1.height).toEqual(img2.height);
-
-      const diff = new PNG({ width: img1.width, height: img2.height });
-      const numDiffPixels = pixelmatch(img1.data, img2.data, diff.data, img1.width, img1.height, { threshold: 0.1 });
-      expect(numDiffPixels).toEqual(0);
-
-      resolve();
-    }
-  });
+async function goTo(to, opts){
+  await page.goTo(to, opts);
+  await page.reload();
+  await page.setViewport({ width: VIEWPORT_WIDTH, height: VIEWPORT_HEIGHT });
 }

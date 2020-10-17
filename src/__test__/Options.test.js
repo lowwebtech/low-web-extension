@@ -11,7 +11,7 @@ const store = new Vuex.Store({
   }
 })
 
-describe('Options', () => {
+describe('-- unit - Options', () => {
   
   describe('initial state', () => {
     let wrapper;
