@@ -1,6 +1,6 @@
 {
   "name": "low-web",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Reduce energy consumption and carbon footprint of your internet browsing.",
   "author": "vico@lowweb.tech",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "build": "cross-env NODE_ENV=production webpack --hide-modules",
     "build:dev": "cross-env NODE_ENV=development webpack --hide-modules",
     "build-zip": "node scripts/build-zip.js",
-    "release": "run-s build test release:firefox release:chrome build-zip",
+    "release": "run-s build test build-zip release:chrome release:firefox",
     "release:firefox": "web-ext-submit --source-dir dist",
     "release:chrome": "webstore upload --source=dist --auto-publish",
     "watch:nohmr": "npm run build -- --watch",
