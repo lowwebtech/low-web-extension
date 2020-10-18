@@ -1,3 +1,8 @@
+## 0.0.11
+- CLI tasks to build and publish a new release (Firefox, Chrome)
+- Environnement variables
+- basic testing
+
 ## 0.0.10
 - NEW : optimize font rendering (through `text-rendering: optimizeSpeed` and `-webkit-font-smoothing: none`
 - fix `<audio />` element (previously named `<sound />` :/ )
