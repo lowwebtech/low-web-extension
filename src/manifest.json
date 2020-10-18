@@ -4,6 +4,16 @@
   "version": null,
   "short_name": "low—web",
   "manifest_version": 2,
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{ab9c153a-f2ef-4134-9675-97498ccc160f}"
+    }
+  },
+  "applications": {
+		"gecko": {
+			"id": "{ab9c153a-f2ef-4134-9675-97498ccc160f}"
+		}
+	},
   "icons": {
     "48": "icons/icon_48.png",
     "96": "icons/icon_96.png",
