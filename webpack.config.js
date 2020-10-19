@@ -33,7 +33,6 @@ const config = {
     // 'players/Youporn': './content_script/video/players/Youporn.js',
     // 'players/Vimeo': './content_script/video/players/Vimeo.js',
     // 'players/Twitch': './content_script/video/players/Twitch.js',
-    
   },
   output: {
     path: __dirname + '/dist',

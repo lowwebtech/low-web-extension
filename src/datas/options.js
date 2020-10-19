@@ -127,24 +127,6 @@ export default [
       'When a content from social media (Facebook, Instagram, Twitter, etc.) is shared on a website, many scripts (often tracking) are loaded, just to display a text or an image. These scripts are blocked, the extension automatically applies a layout imitating the original content.<br>Unnecessary features like buttons Facebook Like or Share are blocked.',
   },
   {
-    id: 'css_animation',
-    label: 'Disable CSS animation',
-    type: 'bool',
-    value: 0,
-    presets: [1, 1, 0],
-    description:
-      'The CSS which makes it possible to layout the content, also makes it possible to animate it for example a button which change color gradually. This animation produces many screen refreshes which therefore requires more energy.<br>The transition-duration parameter is fixed at 0 seconds. The &lt;marquee&gt; element is also stopped.',
-  },
-  {
-    id: 'css_font_rendering',
-    label: 'Optimize font rendering (disable antialias)',
-    type: 'bool',
-    value: 0,
-    presets: [1, 0, 0],
-    description:
-      'Rendering of fonts is already optimised by browser but we could optimise it a bit more by disabling antialiasing (-webkit-font-smoothing: none) and advanced fonts features like ligature (text-rendering: optimizeSpeed)',
-  },
-  {
     id: 'marquee_animation',
     label: 'Disable marquee animation',
     type: 'bool',
@@ -191,5 +173,23 @@ export default [
     type: 'bool',
     presets: [1, 0, 0],
     value: 0,
+  },
+  {
+    id: 'css_animation',
+    label: 'Disable CSS animation',
+    type: 'bool',
+    value: 0,
+    presets: [0, 0, 0],
+    description:
+      'The CSS which makes it possible to layout the content, also makes it possible to animate it for example a button which change color gradually. This animation produces many screen refreshes which therefore requires more energy.<br>The transition-duration parameter is fixed at 0 seconds. The &lt;marquee&gt; element is also stopped.',
+  },
+  {
+    id: 'css_font_rendering',
+    label: 'Optimize font rendering (disable antialias)',
+    type: 'bool',
+    value: 0,
+    presets: [0, 0, 0],
+    description:
+      'Rendering of fonts is already optimised by browser but we could optimise it a bit more by disabling antialiasing (-webkit-font-smoothing: none) and advanced fonts features like ligature (text-rendering: optimizeSpeed)',
   },
 ];
