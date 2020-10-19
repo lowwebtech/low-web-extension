@@ -7,7 +7,7 @@ describe('--------- Popup.html', () => {
     it('empty test', async () => {
       expect('').toEqual('');
     });
-  }else{
+  } else {
     beforeAll(async () => {
       browser = await getBrowser();
       page = await getPage(browser);
@@ -42,6 +42,5 @@ describe('--------- Popup.html', () => {
         expect(bgColors).toEqual(['rgb(128, 128, 128)', 'rgb(97, 211, 22)']);
       });
     });
-
   }
 });

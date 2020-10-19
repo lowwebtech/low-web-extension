@@ -42,7 +42,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "npm prettier:write",
+      "pre-push": "npm test:src"
     }
   },
   "browserslist": [

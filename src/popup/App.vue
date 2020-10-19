@@ -1,6 +1,5 @@
 <template>
   <div class="popup">
-
     <div class="input input--checkbox input--page">
       <p class="input__label">Page activated:</p>
       <div class="input__value">
@@ -24,16 +23,16 @@
     </div>
 
     <hr />
-<!-- 
+    <!-- 
     <div class="blocked" v-html="blocked"></div>
     <div class="optimised" v-html="optimised"></div>
  -->
     <div class="input input--level">
       <p class="input__label">Quick presets:</p>
       <label>
-        <button @click="clickPreset" value="0" title="Mostly all files will be blocked">Very low</button> 
-        <button @click="clickPreset" value="1" title="Unnecessary files will be blocked and some other content optimized (recommended)">Low</button> 
-        <button @click="clickPreset" value="2" title="Minimal optimization (just for vegans)">Medium</button> 
+        <button @click="clickPreset" value="0" title="Mostly all files will be blocked">Very low</button>
+        <button @click="clickPreset" value="1" title="Unnecessary files will be blocked and some other content optimized (recommended)">Low</button>
+        <button @click="clickPreset" value="2" title="Minimal optimization (just for vegans)">Medium</button>
       </label>
     </div>
 
@@ -41,7 +40,7 @@
       <p class="input__label"></p>
       or <a href="" @click.prevent="openOptions" class="right">define your options</a>.
     </div>
-    
+
     <div v-show="reloadNote" class="popup__note">
       <b>Some files may still be cached after reload.</b>
     </div>
@@ -50,10 +49,7 @@
 <script>
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
-import store from '../store';
 /* eslint-enable import/first, indent */
-import Logger from '../background_script/controllers/Logger';
-import RequestManager from '../background_script/controllers/Logger';
 
 export default {
   data() {
@@ -68,44 +64,44 @@ export default {
   },
   computed: {
     level: {
-      get () {
+      get() {
         return this.$store.state.level;
       },
-      set (value) {
+      set(value) {
         this.$store.commit('level', value);
-      }
+      },
     },
-    currentPage(){
+    currentPage() {
       return this.$store.getters.isPageActive(this.url);
     },
-    currentWebsite(){
+    currentWebsite() {
       return this.$store.getters.isWebsiteActive(this.hostname);
     },
   },
   mounted() {
-    browser.tabs.query({ active: true, lastFocusedWindow: true })
-      .then(
-        tabs => {
-          let domainOk = false;
-          if (tabs.length > 0) {
-            return tabs[0].url;
-          }else{
-            return -1;
-          }
-        }).then((url)=>{
-          this.url = url;
-          if(url && url !== -1){
-            const u = new URL(url)
-            this.hostname = u.hostname;  
-          }
-        });
+    browser.tabs
+      .query({ active: true, lastFocusedWindow: true })
+      .then((tabs)=>{
+        if (tabs.length > 0) {
+          return tabs[0].url;
+        } else {
+          return -1;
+        }
+      })
+      .then((url) => {
+        this.url = url;
+        if (url && url !== -1) {
+          const u = new URL(url);
+          this.hostname = u.hostname;
+        }
+      });
 
     const onMessageUpdateLogs = (request, sender, sendResponse) => {
-      if (request.message === "updateLogs") {
-        if (request.data && request.data.logs){
+      if (request.message === 'updateLogs') {
+        if (request.data && request.data.logs) {
           this.blocked = 'Files blocked : ' + this.formatLogs(request.data.blocked);
           this.optimised = 'Files optimised : ' + this.formatLogs(request.data.optimised);
-          return Promise.resolve({ message: 'logsUpdated', result: 'ok' })
+          return Promise.resolve({ message: 'logsUpdated', result: 'ok' });
         }
       }
       return true;
@@ -114,78 +110,78 @@ export default {
       browser.runtime.onMessage.addListener(onMessageUpdateLogs);
     }
 
-    const logsHandler = response => {
+    const logsHandler = (response) => {
       this.formatResponse(response);
     };
-    browser.runtime.sendMessage({
-      message: 'getLogs'
-    }).then(logsHandler, e => {
-      console.log('error message logs', e);
-    });
-
+    browser.runtime
+      .sendMessage({
+        message: 'getLogs',
+      })
+      .then(logsHandler, (e) => {
+        console.log('error message logs', e);
+      });
   },
   methods: {
-    formatResponse(response){
-      if(response){
-        if (response.blocked) 
-          this.blocked = 'Blocked: ' + this.formatLogs(response.blocked);
-        if (response.optimised) 
-          this.optimised = 'Optimised: ' + this.formatLogs(response.optimised);
+    formatResponse(response) {
+      if (response) {
+        if (response.blocked) this.blocked = 'Blocked: ' + this.formatLogs(response.blocked);
+        if (response.optimised) this.optimised = 'Optimised: ' + this.formatLogs(response.optimised);
       }
     },
-    formatLogs(logs){
+    formatLogs(logs) {
       let str = '';
       const keys = Object.keys(logs);
-      if(keys.length > 0) {
+      if (keys.length > 0) {
         let k;
         str = '';
         for (const key of keys) {
           k = key;
           if (logs[key].length > 1) k += 's';
-          str += logs[key].length + ' ' + k + ', '
+          str += logs[key].length + ' ' + k + ', ';
         }
         str = str.substring(0, str.length - 2);
       }
-      return str; 
+      return str;
     },
-    clickPreset(e){
+    clickPreset(e) {
       this.$store.commit('level', parseInt(e.currentTarget.value));
       if (browser.tabs) browser.tabs.reload({ bypassCache: true });
       this.displayReloadNote();
     },
-    openOptions(){
+    openOptions() {
       browser.runtime.openOptionsPage(); // .then(onOpened, onError)
     },
-    displayReloadNote(){
+    displayReloadNote() {
       this.reloadNote = true;
       if (this.timeout) clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         this.reloadNote = false;
       }, 4000);
     },
-    updateCurrentPage(e){
+    updateCurrentPage(e) {
       if (e.target.checked) {
         this.$store.commit('resumePage', this.url);
-      }else{
+      } else {
         this.$store.commit('pausePage', this.url);
       }
       this.displayReloadNote();
     },
-    updateCurrentWebsite(e){
+    updateCurrentWebsite(e) {
       if (e.target.checked) {
         this.$store.commit('resumeWebsite', this.hostname);
-      }else{
+      } else {
         this.$store.commit('pauseWebsite', this.hostname);
       }
       this.displayReloadNote();
-    }
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
-@import "../styles/common.scss";
+@import '../styles/common.scss';
 
-html, body {
+html,
+body {
   background: white;
   width: 320px;
   padding: 10px;
@@ -194,28 +190,28 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-.popup{
-  width: 300px; 
+.popup {
+  width: 300px;
   margin: 10px;
 
-  &__more{
+  &__more {
     margin-top: 4px;
   }
-  &__note{
+  &__note {
     text-align: center;
     margin-top: 8px;
   }
-  button{
+  button {
     margin-top: 4px;
   }
-  .right{
+  .right {
     text-align: right;
   }
 
-  .input{
+  .input {
     white-space: nowrap;
     font-size: 13px;
-    &__label{
+    &__label {
       width: 110px;
       display: inline-block;
       margin: 0;

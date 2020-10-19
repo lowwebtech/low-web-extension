@@ -1,15 +1,15 @@
 import { getBrowser, getPage } from '../../../test/Puppet';
 import { goToOptionPage } from '../../../test/utils';
 import Vuex from 'vuex';
-import { shallowMount, mount, createLocalVue } from '@vue/test-utils';
+import { mount, createLocalVue } from '@vue/test-utils';
 import Options from '../App.vue';
 
-const localVue = createLocalVue()
-localVue.use(Vuex)
+const localVue = createLocalVue();
+localVue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    username: "alice"
+    username: 'alice',
   },
 });
 let page, browser;
@@ -43,7 +43,7 @@ describe('--------- Options.html', () => {
       it('empty test', async () => {
         expect('').toEqual('');
       });
-    }else{
+    } else {
       beforeAll(async () => {
         browser = await getBrowser();
         page = await getPage(browser);
@@ -63,5 +63,4 @@ describe('--------- Options.html', () => {
       });
     }
   });
-
 });
