@@ -1,5 +1,5 @@
 <template>
-  <div :class="['options', {'options--active': active}]">
+  <div :class="['options', { 'options--active': active }]">
     <div class="input input--level">
       <p class="input__label">Quick presets</p>
 
@@ -17,14 +17,23 @@
       </div>
 
       <div v-if="input.type === 'bool'" class="input__field inline">
-        <label><input type="radio" :key="`${input.id}-1`" :name="input.id" value="1" :checked="$store.getters[input.id]==1?'checked':false" @input="onFieldChange" /> True</label>
-        <label><input type="radio" :key="`${input.id}-0`" :name="input.id" value="0" :checked="$store.getters[input.id]==0?'checked':false" @input="onFieldChange" /> False</label>
+        <label
+          ><input type="radio" :key="`${input.id}-1`" :name="input.id" value="1" :checked="$store.getters[input.id] == 1 ? 'checked' : false" @input="onFieldChange" /> True</label
+        >
+        <label
+          ><input type="radio" :key="`${input.id}-0`" :name="input.id" value="0" :checked="$store.getters[input.id] == 0 ? 'checked' : false" @input="onFieldChange" /> False</label
+        >
       </div>
 
       <div v-if="input.type === 'select'" class="input__field inline">
         <label>
           <select :name="input.id" @input="onFieldChange">
-            <option v-for="option in input.options" :value="option.value" :key="`option-${option.value}`" :selected="$store.getters[input.id] === option.value?'selected':false">
+            <option
+              v-for="option in input.options"
+              :value="option.value"
+              :key="`option-${option.value}`"
+              :selected="$store.getters[input.id] === option.value ? 'selected' : false"
+            >
               {{ option.label }}
             </option>
           </select>
@@ -32,17 +41,17 @@
       </div>
     </div>
     <!-- <button id="save" @click="saveOptions">Save</button> -->
-    <div class="status"><b>{{ status }}</b></div>
-    
+    <div class="status">
+      <b>{{ status }}</b>
+    </div>
   </div>
 </template>
 
 <script>
 import options from '../datas/options.js';
-import store from '../store';
 
-let fields = Object.keys(store.state);
-let jsonFields = options.map(a => a.id);
+// let fields = Object.keys(store.state);
+// let jsonFields = options.map((a) => a.id);
 let timeout;
 
 export default {
@@ -56,24 +65,24 @@ export default {
   },
   computed: {
     level: {
-      get () {
+      get() {
         return this.$store.state.level;
       },
-      set (value) {
+      set(value) {
         this.$store.commit('level', value);
         this.saved();
-      }
+      },
     },
   },
   methods: {
-    clickPreset(e){
+    clickPreset(e) {
       this.$store.commit('level', parseInt(e.currentTarget.value));
       this.saved();
     },
-    getModelId(id){
+    getModelId(id) {
       return id;
     },
-    onFieldChange(){
+    onFieldChange() {
       this.saveOptions();
     },
     saveOptions() {
@@ -92,7 +101,7 @@ export default {
       }
       this.saved();
     },
-    saved(){
+    saved() {
       this.status = 'Options saved.';
       if (timeout) clearTimeout(timeout);
       timeout = setTimeout(() => {
@@ -125,13 +134,11 @@ export default {
       return select.options[select.selectedIndex].value;
     },
   },
-  mounted() {
-    
-  },
+  mounted() {},
 };
 </script>
 <style lang="scss" scoped>
-@import "../styles/common.scss";
+@import '../styles/common.scss';
 
 .options {
   width: 960px;
@@ -144,7 +151,7 @@ export default {
   .input {
     white-space: nowrap;
     padding: 16px 20px;
-    border-bottom: 1px solid #BBB;
+    border-bottom: 1px solid #bbb;
     font-size: 16px;
     &__field {
       width: 210px;

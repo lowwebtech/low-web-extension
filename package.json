@@ -6,17 +6,32 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
+    "lint:fix": "eslint --ext .js,.vue src --fix",
+
     "prettier": "prettier \"src/**/*.{js,vue}\"",
-    "prettier:write": "npm run prettier -- --write",
-    "build": "cross-env NODE_ENV=production webpack --hide-modules",
+    "prettier:fix": "npm run prettier -- --write",
+    
+    "fix": "run-s lint:fix prettier:fix",
+    "build": "run-s fix build:prod",
+
+    "build:prod": "cross-env NODE_ENV=production webpack --hide-modules",
     "build:dev": "cross-env NODE_ENV=development webpack --hide-modules",
+
     "build-zip": "node scripts/build-zip.js",
+    
+    "watch:nohmr": "npm run build -- --watch",
+    "start": "cross-env HMR=true npm run build:dev -- --watch",
+
     "release": "run-s build test build-zip release:chrome release:firefox",
     "release:firefox": "web-ext-submit --source-dir dist",
     "release:chrome": "webstore upload --source=dist --auto-publish",
-    "watch:nohmr": "npm run build -- --watch",
-    "start": "cross-env HMR=true npm run build:dev -- --watch",
-    "test": "jest"
+    
+    "test": "jest",
+    "test:src": "jest src",
+    "test:screenshot": "jest test/screenshots.test.js",
+
+    "pre:commit": "run-s fix",
+    "pre:push": "run-s test:src"
   },
   "jest": {
     "verbose": true,
@@ -36,7 +51,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "npm run pre:commit",
+      "pre-push": "npm run pre:push"
     }
   },
   "browserslist": [

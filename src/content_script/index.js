@@ -2,7 +2,7 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
-import '../styles/social.scss';
+// import '../styles/social.scss';
 
 import store from '../store';
 

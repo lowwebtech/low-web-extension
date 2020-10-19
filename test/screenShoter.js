@@ -61,4 +61,4 @@ async function checkDirectories() {
     });
 }
 
-export const screenShoter = new ScreenShoter()
+export const screenshot = new ScreenShoter()
