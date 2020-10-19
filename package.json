@@ -8,15 +8,21 @@
     "lint": "eslint --ext .js,.vue src",
     "prettier": "prettier \"src/**/*.{js,vue}\"",
     "prettier:write": "npm run prettier -- --write",
+    
     "build": "cross-env NODE_ENV=production webpack --hide-modules",
     "build:dev": "cross-env NODE_ENV=development webpack --hide-modules",
     "build-zip": "node scripts/build-zip.js",
+    
+    "watch:nohmr": "npm run build -- --watch",
+    "start": "cross-env HMR=true npm run build:dev -- --watch",
+
     "release": "run-s build test build-zip release:chrome release:firefox",
     "release:firefox": "web-ext-submit --source-dir dist",
     "release:chrome": "webstore upload --source=dist --auto-publish",
-    "watch:nohmr": "npm run build -- --watch",
-    "start": "cross-env HMR=true npm run build:dev -- --watch",
-    "test": "jest"
+    
+    "test": "jest",
+    "test:src": "jest src",
+    "test:screenshot": "jest test/screenshots.test.js"
   },
   "jest": {
     "verbose": true,
