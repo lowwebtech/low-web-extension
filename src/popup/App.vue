@@ -80,7 +80,7 @@ export default {
   },
   mounted() {
     browser.tabs
-      .query({ active: true, lastFocusedWindow: true })
+      .query({active: true, lastFocusedWindow: true })
       .then((tabs)=>{
         if (tabs.length > 0) {
           return tabs[0].url;
