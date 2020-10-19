@@ -14,7 +14,6 @@ export function blockFiles() {
     const response = {};
 
     const { type, url } = details;
-    console.log(type);
     switch (type) {
       case 'media':
         cancel = store.getters.block_medias;
