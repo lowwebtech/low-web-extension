@@ -1,3 +1,4 @@
+import isWebpage from '../../utils/is-webpage';
 import store from '../../store';
 import { watch, watchList } from '../../store/watch';
 
@@ -9,9 +10,7 @@ import { watch, watchList } from '../../store/watch';
 export function blockSocial(socialTxt) {
   if (socialTxt) watchList('block_social', socialTxt);
 
-  watch('block_social', (newValue, oldValue) => {
-    update(newValue, oldValue);
-  });
+  watch('block_social', update);
   update(store.getters.block_social);
 }
 
@@ -29,10 +28,15 @@ function update(newValue, oldValue) {
 
 function onTabUpdate(tabId, changeInfo, tab) {
   if (changeInfo.status === 'loading' && tab.url) {
-    console.log('insert social');
-    browser.tabs.insertCSS(tabId, {
-      file: 'styles/social.css',
-      runAt: 'document_start',
-    });
+    if (isWebpage(tab.url)) {
+      browser.tabs
+        .insertCSS(tabId, {
+          file: 'styles/social.css',
+          runAt: 'document_start',
+        })
+        .catch((error) => {
+          console.log('error inserting social css', error);
+        });
+    }
   }
 }

@@ -1,14 +1,13 @@
 import DOMPurify from 'dompurify';
-import store from '../../store';
-// import urlsToBlock from '../../social-to-block';
+import { localOption } from '../../utils/get-local-options';
 
 /**
  * Used to load datas from oEmbed APis and customize social embeds
  */
 export default function () {
-  if (store.getters.block_social === 1) {
-    customInstagram();
-  }
+  localOption('block_social').then((value) => {
+    if (value === 1) customInstagram();
+  });
 }
 
 /**

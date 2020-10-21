@@ -1,14 +1,16 @@
-import store from '../store';
+import { localOption } from '../utils/get-local-options';
 
 /**
  * Stop <marquee> elements
  * @return
  */
 export default function () {
-  if (store.getters.marquee_animation === 1) {
-    const marquees = document.querySelectorAll('marquee');
-    marquees.forEach((marquee) => {
-      marquee.stop();
-    });
-  }
+  localOption('marquee_animation').then((value) => {
+    if (value === 1) {
+      const marquees = document.querySelectorAll('marquee');
+      marquees.forEach((marquee) => {
+        marquee.stop();
+      });
+    }
+  });
 }

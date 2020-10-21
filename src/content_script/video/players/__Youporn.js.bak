@@ -4,8 +4,4 @@
   window.MHP1138.player.onQualityChange = function(e) {
     console.log(window.store.get('player_quality'));
   };
-  // setInterval(() => {
-  // console.log(window.store)
-  // console.log(window.store.get('player_quality'))
-  // },1000)
 })();

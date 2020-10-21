@@ -8,9 +8,7 @@ import cssToInsert from '../datas/css-to-insert';
  */
 export default function () {
   // TODO format cssToInsert for better parsing
-  watch('website_specific', (newValue, oldValue) => {
-    update(newValue, oldValue);
-  });
+  watch('website_specific', update);
   update(store.getters.website_specific);
 }
 

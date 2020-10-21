@@ -1,9 +1,8 @@
-import store from '../store';
 import queryString from 'query-string';
 import videosToBlock from '../datas/video-to-block';
 import { TOKEN } from '../datas/constants';
 
-export default function (url, autoplay = false, token = false) {
+export default function (url, autoplay = false, token = false, videoQuality = 2) {
   const u = new URL(url);
   let params = queryString.parse(u.search);
   const originalParams = Object.assign({}, params);
@@ -53,7 +52,7 @@ export default function (url, autoplay = false, token = false) {
           } else {
             params = setEmbedParam(params, 'autoplay', 'false');
           }
-          switch (store.getters.video_quality) {
+          switch (videoQuality) {
             case 1:
               params.quality = '240p';
               break;

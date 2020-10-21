@@ -11,9 +11,7 @@ let hasListener = false;
  * @return
  */
 export default function () {
-  watch('website_specific', (newValue, oldValue) => {
-    update(newValue, oldValue);
-  });
+  watch('website_specific', update);
   update(store.getters.website_specific);
 }
 

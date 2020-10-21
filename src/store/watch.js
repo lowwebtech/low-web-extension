@@ -8,25 +8,21 @@ import store from './index';
  * @param  {Object} filter     webRequest filter
  * @return
  */
+const filters = {};
 export function watchFilter(optionName, action, filter = {}) {
-  // TODO put back unfilter request
-
-  // store.watch(
-  //   (state, getters) => getters[optionName],
-  //   (newValue, oldValue) => {
-  //     console.log(`Updating filter ${optionName} from ${oldValue} to ${newValue}`);
-  //     if (newValue === 0) {
-  //       Blocker.unfilterRequest(filterItem.blockRequest);
-  //     } else if (newValue === 1) {
-  //       filterItem.blockRequest = Blocker.filterRequest(action, filter);
-  //     }
-  //   }
-  // );
-
-  // if (store.getters[optionName] === 1) {
-  //   filterItem.blockRequest = Blocker.filterRequest(action, filter);
-  // }
-  Blocker.filterRequest(action, filter);
+  watch(optionName, (newValue, oldValue) => {
+    watchFilterUpdate(newValue, optionName, action, filter);
+  });
+  watchFilterUpdate(store.getters[optionName], optionName, action, filter);
+}
+function watchFilterUpdate(newValue, optionName, action, filter) {
+  console.log(optionName, store.getters[optionName]);
+  if (newValue === 0) {
+    Blocker.unfilterRequest(filters[optionName]);
+  } else if (newValue === 1) {
+    const blockFilter = Blocker.filterRequest(action, filter);
+    filters[optionName] = blockFilter;
+  }
 }
 
 /**

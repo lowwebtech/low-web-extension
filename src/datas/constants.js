@@ -5,3 +5,5 @@ export const GIPHY_TOKEN = 'WOfkdCJZ5ZbYzERVBz996efvXADEKASm';
 
 export const ALL_URLS = '<all_urls>';
 export const HTTP_URLS = '*://*/*';
+
+export const EXCLUDE_HOST_GIF = ['giphy.com'];

@@ -23,8 +23,8 @@ export function cssOptimization() {
 }
 
 function insertCSS(tab) {
-  if (RequestManager.isTabActive(tab.id)) {
-    if (isWebpage(tab.url)) {
+  if (isWebpage(tab.url)) {
+    if (RequestManager.isTabActive(tab.id)) {
       let code = '';
 
       code += `img {

@@ -1,5 +1,5 @@
 import store from '../../store';
-import { TOKEN } from '../../datas/constants';
+import { TOKEN, EXCLUDE_HOST_GIF } from '../../datas/constants';
 import { watchList, watchFilter } from '../../store/watch';
 import { dataTextLink, dataImage } from '../../utils/data-uri';
 
@@ -20,8 +20,7 @@ export function blockImages(avatarTxt) {
 
 const blockGiphy = (details) => {
   const response = {};
-  const exclude = ['giphy.com'];
-  if (exclude.indexOf(store.state.hostname) === -1) {
+  if (EXCLUDE_HOST_GIF.indexOf(store.state.hostname) === -1) {
     const { url, parentFrameId, type } = details;
 
     // giphy image url

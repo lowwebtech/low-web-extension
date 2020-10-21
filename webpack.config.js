@@ -5,7 +5,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtensionReloader = require('webpack-extension-reloader');
 const { VueLoaderPlugin } = require('vue-loader');
 const { version } = require('./package.json');
-const path = require('path')
+const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = {
   mode: process.env.NODE_ENV,
@@ -129,13 +130,14 @@ const config = {
             return JSON.stringify(jsonContent, null, 2);
           },
         },
-      ]
+      ],
     }),
   ],
 };
 
 if (config.mode === 'production') {
   config.plugins = (config.plugins || []).concat([
+    new BundleAnalyzerPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"',

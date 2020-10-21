@@ -1,4 +1,4 @@
-import store from '../../store';
+import { localOption } from '../../utils/get-local-options';
 import videoToBlock from '../../datas/video-to-block';
 import IframeToLoad from './iframe-to-load';
 
@@ -9,27 +9,29 @@ const selectorString = getIframeSelector();
  * Block video iframes, display a fallback (if possible) and click to load
  */
 export default function () {
-  if (store.getters.video_clicktoload === 1) {
-    const iframes = document.querySelectorAll(selectorString);
-    if (iframes.length > 0) {
-      loadStyles();
-    }
-
-    // wait for message 'embedVideoBlocked' from background_script
-    const onEmbedVideoBlocked = (request, sender, sendResponse) => {
-      if (request.message === 'embedVideoBlocked') {
-        if (style) {
-          customizeIframes();
-        } else {
-          loadStyles();
-        }
+  localOption('video_clicktoload').then((value) => {
+    if (value === 1) {
+      const iframes = document.querySelectorAll(selectorString);
+      if (iframes.length > 0) {
+        loadStyles();
       }
-      return Promise.resolve({ message: 'embedVideoBlockedDone', result: 'ok' });
-    };
-    if (!browser.runtime.onMessage.hasListener(onEmbedVideoBlocked)) {
-      browser.runtime.onMessage.addListener(onEmbedVideoBlocked);
+
+      // wait for message 'embedVideoBlocked' from background_script
+      const onEmbedVideoBlocked = (request, sender, sendResponse) => {
+        if (request.message === 'embedVideoBlocked') {
+          if (style) {
+            customizeIframes();
+          } else {
+            loadStyles();
+          }
+        }
+        return Promise.resolve({ message: 'embedVideoBlockedDone', result: 'ok' });
+      };
+      if (!browser.runtime.onMessage.hasListener(onEmbedVideoBlocked)) {
+        browser.runtime.onMessage.addListener(onEmbedVideoBlocked);
+      }
     }
-  }
+  });
 }
 
 function loadStyles() {

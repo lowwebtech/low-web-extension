@@ -1,11 +1,13 @@
 import DOMPurify from 'dompurify';
 import videoToBlock from '../../datas/video-to-block';
+import { localOption } from '../../utils/get-local-options';
 import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId } from '../../utils/get-video-id';
 import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
 
 /**
  * Custom video iframe
  */
+let videoQuality = 1;
 export default class IframeToLoad {
   constructor(el, style) {
     this.el = el;
@@ -15,6 +17,10 @@ export default class IframeToLoad {
     if (!src || src === '') {
       src = el.dataset.src;
     }
+
+    localOption('video_quality').then((quality) => {
+      videoQuality = quality;
+    });
 
     if (src) {
       this.type = videoBlocked(src);
@@ -104,7 +110,8 @@ export default class IframeToLoad {
     }
     if (this.videoUrl) {
       if (this.videoUrl.indexOf(this.dataVideoBlock.embed_url) !== -1) {
-        this.videoUrl = sanitizeEmbedUrl(this.videoUrl, true, true);
+        console.log('---sanitize', videoQuality);
+        this.videoUrl = sanitizeEmbedUrl(this.videoUrl, true, true, videoQuality);
         skin = skin.replace('_blank', '_self');
       }
       skin = skin.replace('##VIDEO_URL##', this.videoUrl);

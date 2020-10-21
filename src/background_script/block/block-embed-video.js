@@ -1,7 +1,7 @@
-// import { TOKEN } from '../../datas/constants';
-import { dataTextLink } from '../../utils/data-uri';
+import store from '../../store';
 import { watchFilter } from '../../store/watch';
 import videoToBlock from '../../datas/video-to-block';
+import { dataTextLink } from '../../utils/data-uri';
 import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
 
 /**
@@ -34,8 +34,8 @@ export function blockEmbedVideo() {
       }
 
       // redirect to simple fallback (just a link to original embed url)
-      // iframe will be customized by content_script after message if oembed
-      const sanitizedUrl = sanitizeEmbedUrl(url, false, true);
+      // iframe will be customized by content_script after oembed response message
+      const sanitizedUrl = sanitizeEmbedUrl(url, false, true, store.getters.video_quality);
       response.redirectUrl = dataTextLink(sanitizedUrl);
     }
 

@@ -1,13 +1,16 @@
+import { localOption } from '../../utils/get-local-options';
 import srcsetUtil from 'srcset';
-import store from '../../store';
 
+let imageSrcset;
 export default function () {
-  const IMAGE_SRCSET = store.getters.image_srcset;
-  if (IMAGE_SRCSET > 0) {
-    // TODO clean picture sources
-    filterImages('srcset');
-    filterImages('lazy-srcset');
-  }
+  localOption('image_srcset').then((value) => {
+    imageSrcset = value;
+    if (value > 0) {
+      // TODO clean picture sources
+      filterImages('srcset');
+      filterImages('lazy-srcset');
+    }
+  });
 }
 
 function filterImages(name) {
@@ -96,7 +99,7 @@ function smallest(srcset, width) {
 function cleanSrcset(srcset, width) {
   const parsed = srcsetUtil.parse(srcset);
   let cleanedSrcset;
-  switch (parseInt(store.getters.image_srcset)) {
+  switch (imageSrcset) {
     case 1:
       cleanedSrcset = noRetina(parsed);
       break;
@@ -113,7 +116,3 @@ function cleanSrcset(srcset, width) {
     return false;
   }
 }
-
-/*
-
-*/
