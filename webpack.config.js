@@ -137,11 +137,15 @@ const config = {
 
 if (config.mode === 'production') {
   config.plugins = (config.plugins || []).concat([
-    new BundleAnalyzerPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"',
       },
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'disabled',
+      generateStatsFile: true,
+      statsOptions: { source: false },
     }),
   ]);
 }
