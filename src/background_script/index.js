@@ -4,6 +4,7 @@ global.browser = require('webextension-polyfill');
 import RequestManager from './controllers/RequestManager';
 import Logger from './controllers/Logger';
 import Blocker from './controllers/Blocker';
+import Messager from './controllers/Messager';
 
 import csp from './header/csp';
 
@@ -20,7 +21,6 @@ import { blockImages } from './block/block-images';
 import { saveDataHeader } from './header/save-data';
 import { cssOptimization } from './css-optimization';
 import { blockEmbedVideo } from './block/block-embed-video';
-import { onMessageOEmbed } from './message/oembed';
 /* eslint-enable import/first, indent */
 
 const assets = {};
@@ -82,6 +82,7 @@ function start(data) {
     Logger.init();
     RequestManager.init();
     Blocker.init();
+    Messager.init();
 
     // update CSP if necessary
     csp();
@@ -105,13 +106,6 @@ function start(data) {
     redirectKnownAssets();
     hideUselessContent();
   }, 300);
-
-  // wait for event 'runtime.connect' then add onMessage handler to communicate between (background_script and content_script)
-  const addConnect = (port) => {
-    onMessageOEmbed(port);
-    browser.runtime.onConnect.removeListener(addConnect);
-  };
-  browser.runtime.onConnect.addListener(addConnect);
 }
 
 /**

@@ -5,7 +5,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtensionReloader = require('webpack-extension-reloader');
 const { VueLoaderPlugin } = require('vue-loader');
 const { version } = require('./package.json');
-const path = require('path')
+const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = {
   mode: process.env.NODE_ENV,
@@ -33,7 +34,6 @@ const config = {
     // 'players/Youporn': './content_script/video/players/Youporn.js',
     // 'players/Vimeo': './content_script/video/players/Vimeo.js',
     // 'players/Twitch': './content_script/video/players/Twitch.js',
-    
   },
   output: {
     path: __dirname + '/dist',
@@ -130,7 +130,7 @@ const config = {
             return JSON.stringify(jsonContent, null, 2);
           },
         },
-      ]
+      ],
     }),
   ],
 };
@@ -141,6 +141,11 @@ if (config.mode === 'production') {
       'process.env': {
         NODE_ENV: '"production"',
       },
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'disabled',
+      generateStatsFile: true,
+      statsOptions: { source: false },
     }),
   ]);
 }

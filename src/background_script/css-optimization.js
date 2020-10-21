@@ -16,21 +16,22 @@ export function cssOptimization() {
   // we can't insert css before status complete :/
   // browser.tabs.onCreated.addListener(insertCSS);
   browser.tabs.onUpdated.addListener(function (tabId, info, tab) {
-    insertCSS(tab);
+    if (info.status === 'loading' && tab.url) {
+      insertCSS(tab);
+    }
   });
 }
 
 function insertCSS(tab) {
-  if (RequestManager.isTabActive(tab.id)) {
-    if (isWebpage(tab.url)) {
+  if (isWebpage(tab.url)) {
+    if (RequestManager.isTabActive(tab.id)) {
       let code = '';
 
       code += `img {
           content-visibility: auto !important;
         }`;
-
       code += `html, body {
-          scroll-behaviour: auto!important;
+          scroll-behaviour: auto !important;
         }`;
 
       if (store.getters.css_font_rendering === 1) {
