@@ -57,7 +57,6 @@ class Blocker {
    * @return
    */
   addListToBlock(list) {
-    console.log('typeof list', typeof list);
     if (lists.indexOf(list) === -1) {
       lists.push(list);
       ABPFilterParser.parse(list, abpFilters);
