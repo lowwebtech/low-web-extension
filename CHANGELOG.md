@@ -1,3 +1,7 @@
+## 0.0.12
+- performance : reduce the weight of content_script.js, smaller size means smaller initialization time
+- tasks to test the correct functioning of the extension
+
 ## 0.0.11
 - CLI tasks to build and publish a new release (Firefox, Chrome)
 - Environnement variables
