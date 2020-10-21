@@ -4,6 +4,7 @@ global.browser = require('webextension-polyfill');
 import RequestManager from './controllers/RequestManager';
 import Logger from './controllers/Logger';
 import Blocker from './controllers/Blocker';
+import Messager from './controllers/Messager';
 
 import csp from './header/csp';
 

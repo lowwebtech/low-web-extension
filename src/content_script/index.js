@@ -4,9 +4,6 @@ global.browser = require('webextension-polyfill');
 
 // import '../styles/social.scss';
 
-// import store from '../store';
-// import { localOption } from '../utils/get-local-options';
-
 // TODO load on demand
 import imageSrcset from './image/srcset';
 import lazyload from './lazyload';
@@ -19,23 +16,30 @@ import customPlayers from './video/custom-players';
 /* eslint-enable import/first, indent */
 
 // used to store url on the page and to know if website is active
-browser.runtime
-  .sendMessage({
-    message: 'isActive',
-    options: {
-      location: window.location,
-    },
-  })
-  .then(
-    (isActive) => {
-      if (isActive) doContentScript();
-    },
-    (e) => {
-      console.error('error message isActive', e);
-    }
-  );
+/**
+ * send winwdow.location to background script
+ * and return if website is active (eg: not temporarily disabled)
+ */
+function start() {
+  browser.runtime
+    .sendMessage({
+      message: 'isActive',
+      options: {
+        location: window.location,
+      },
+    })
+    .then(
+      (isActive) => {
+        console.log('response isActive', isActive);
+        if (isActive) doContentScript();
+      },
+      (e) => {
+        console.error('error message isActive', e);
+      }
+    );
+}
 
-function doContentScript(message) {
+function doContentScript() {
   // TODO do more test on srcset and lazyload
   // not working properly, images can already be loaded or loading
   imageSrcset();
@@ -71,3 +75,5 @@ function doContentScript(message) {
     });
   });
 }
+
+start();

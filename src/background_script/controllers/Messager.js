@@ -1,18 +1,31 @@
-import { onMessageOEmbed } from './message/oembed';
-import { onMessageIsActive } from './message/is-active';
+import { onMessageOEmbed } from '../message/oembed';
+import { onMessageIsActive } from '../message/is-active';
 
 /**
  * Messager class is used to communicate between background and content scripts
  */
 class Messager {
+  constructor() {
+    this.handlers = [onMessageOEmbed, onMessageIsActive];
+  }
+
   init() {
-    // wait for event 'runtime.connect' then add onMessage handler to communicate between (background_script and content_script)
-    const addConnect = (port) => {
-      onMessageOEmbed();
-      onMessageIsActive();
-      browser.runtime.onConnect.removeListener(addConnect);
+    const handleIsMessage = (request, sender, sendResponse) => {
+      if (request.message !== undefined) {
+        console.log('MESSAGE', request.message);
+        let response;
+        for (let i = 0, lg = this.handlers.length; i < lg; i++) {
+          response = this.handlers[i](request, sender, sendResponse);
+          if (response) break;
+        }
+
+        if (response) {
+          console.log('RESPONSE', response);
+          sendResponse(response);
+        }
+      }
     };
-    browser.runtime.onConnect.addListener(addConnect);
+    browser.runtime.onMessage.addListener(handleIsMessage);
   }
 }
 
