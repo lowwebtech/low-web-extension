@@ -1,4 +1,4 @@
-# low—web extension (v0.0.6)
+# low—web extension (v0.0.12)
 
 Reduce energy consumption and carbon footprint of your internet browsing.
 
@@ -83,7 +83,7 @@ Some detailed explanations about functionalities of low—web extension.
 
 #### Youtube
 
-The video quality of Youtube can only be changed automatically on the official website not in embed. A script is injected by the extension on youtube.com to adjust the quality according to the Video Quality parameter available in options repectively 240p, 320px, 480p for Very Low, Low, Medium. ([Youtube-small.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-small.js), [Youtube-medium.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-medium.js), [Youtube-large.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-large.js))
+The video quality of Youtube can only be changed automatically on the official website not in embed. A script is injected by the extension on youtube.com to adjust the quality according to the Video Quality parameter available in options repectively 240p, 360p, 480p for Very Low, Low, Medium. ([Youtube-small.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-small.js), [Youtube-medium.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-medium.js), [Youtube-large.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-large.js))
 
 #### Vimeo
 
@@ -225,7 +225,7 @@ Some CSS properties can affect rendering performance of a page (and therefore in
 
 ## Development
 
-- load repository
+- checkout git repository
 - `npm install`
 - `npm run watch` / `npm run build`
 - open `chrome://extensions/`, enable Developer Mode and Load unpacked folder : `dist/`
@@ -235,79 +235,6 @@ https://lowwebtech.github.io/low-web-extension/
 
 ## Contribute
 
-
-## TODO
-- listen dom change
-- onboard, upboard and offboard
-- display advice/tips/notificatio to settings for well-known websites
-- split into modules content_script, append at different time start/end/idle...
-- videos
-    + look at https://stackoverflow.com/questions/31697212/youtube-api-cannot-change-video-quality
-    + stop autoplay youtube (and all)
-    + remove/hide HD/4K button from players
-    + netflix
-- add more oembed services https://oembed.com/
-- look at webrequest type to maybe block them : beacon, csp_report, ping, speculative, web_manifest, websocket, xbl, xml_dtd, xslt
-- message between background blocker and content_script for temporary white-list
-- context menu : 'Unblock content'...
-- write tests
-- lazyload optimized assets (gif/iframe)
-- block chatbot
-- custom print styles (better font, small size, no image or b&w...)
-- images :
-    + replace hi-res by low-res for image services
-    + giphy
-        * regex
-        * more urls
-        * use mp4
-        * smaller sizes
-    + cloudinary
-        * q_auto / q_auto:low
-        * smaller size
-    + gif
-        * detect if gif is animated
-        * pause/resume on enter/leave
-    + emoji
-- webassembly
-- smaller injected script and styles
-- inject script and styles only when needed
-- audit the extension to limit size and processes (init, reflow...)
-- display time alerts
-- try to block popin when mouse leaves the viewport 
-
-- CSP
-- try to debounce/throttle events like resize/scroll...
-- no smooth scroll scroll-behavior: initial / scrollTo(), scrollBy(), scrollIntoView() / jQuery / smooth-scrool libs
-- look at cache-control and expire for header and response requests
-- disable unoptimised hide/show/scroll jQuery, gsap etc...
-- publish external list for blockers : avatar, font services, chatbot
-- ~~remove call to fonts.googleapis.com, fontawesome.com and other services~~
-- social
-    ~~+ facebook regexp for country flag en_US/fr_FR....~~
-    + mimic embed styles
-    + look for side-effect
-- add fallback for blocked ressources
-- take into account connexion network type (wifi/ethernet or 3G/4G)
-- take into account carbon footprint of user's electricity (-> co2signal.com)
-- set css prefers-color-scheme to dark
-    + look at DarkReader
-
-
-### TODO add these websites
-- netflix
-- brightcove
-- hulu
-- ustream
-- livestream
-- gfycat
-- imgur
-- tenor
-- linkedin
-- cloudinary
-- slideshare
-- soundcloud
-- medium
-- and more https://oembed.com/#section7
 
 
 ## Licence
