@@ -1,0 +1,11 @@
+{
+  "extensionName": {
+    "message": "low-web",
+    "description": "Name of the extension."
+  },
+
+  "extensionDescription": {
+    "message": "Reduce energy consumption and carbon footprint of your internet browsing.",
+    "description": "Description of the extension."
+  }
+}
