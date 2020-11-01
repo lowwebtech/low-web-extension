@@ -27,30 +27,40 @@ mutations.pauseWebsite = function (state, website) {
   const index = state.pausedWebsites.indexOf(website);
   if (index === -1) {
     state.pausedWebsites.push(website);
-    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
+    if (browser.tabs) browser.tabs.reload(); // bypassCache: true
   }
 };
 mutations.resumeWebsite = function (state, website) {
   const index = state.pausedWebsites.indexOf(website);
   if (index !== -1) {
     state.pausedWebsites.splice(index, 1);
-    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
+    if (browser.tabs) browser.tabs.reload(); // bypassCache: true
   }
 };
 mutations.pausePage = function (state, page) {
   const index = state.pausedPages.indexOf(page);
   if (index === -1) {
     state.pausedPages.push(page);
-    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
+    if (browser.tabs) browser.tabs.reload(); // bypassCache: true
   }
 };
 mutations.resumePage = function (state, page) {
   const index = state.pausedPages.indexOf(page);
   if (index !== -1) {
     state.pausedPages.splice(index, 1);
-    if (browser.tabs) browser.tabs.reload({ bypassCache: true });
+    if (browser.tabs) browser.tabs.reload(); // bypassCache: true
   }
 };
+mutations.changeWebsiteMode = function (state, website) {
+  console.log(state.pausedPages);
+  console.log(state.websitesModeChanges);
+  const index = state.websitesModeChanges.indexOf(website);
+  if (index === -1) {
+    state.websitesModeChanges.push(website);
+    if (browser.tabs) browser.tabs.reload(); // bypassCache: true
+  }
+};
+
 // mutations.resetActive = function (state) {
 //   state.pausedPages = [];
 //   state.pausedWebsites = [];

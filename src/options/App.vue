@@ -4,9 +4,9 @@
       <p class="input__label">Quick presets</p>
 
       <label>
-        <button @click="clickPreset" value="0">Very low</button>
-        <button @click="clickPreset" value="1">Low</button>
-        <button @click="clickPreset" value="2">Medium</button>
+        <button @click="clickPreset" value="0">Light</button>
+        <button @click="clickPreset" value="1">Normal</button>
+        <!-- <button @click="clickPreset" value="2">Medium</button> -->
       </label>
     </div>
 

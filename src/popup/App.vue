@@ -1,7 +1,7 @@
 <template>
   <div class="popup">
     <div class="input input--checkbox input--page">
-      <p class="input__label">Page activated:</p>
+      <p class="input__label">Optimize this page:</p>
       <div class="input__value">
         <input type="checkbox" :checked="currentPage" @input="updateCurrentPage" name="currentPage" id="currentPage" />
         <label for="currentPage">
@@ -12,7 +12,7 @@
     </div>
 
     <div class="input input--checkbox input--website">
-      <p class="input__label">Website activated:</p>
+      <p class="input__label">Optimize this site:</p>
       <div class="input__value">
         <input type="checkbox" :checked="currentWebsite" @input="updateCurrentWebsite" name="currentWebsite" id="currentWebsite" />
         <label for="currentWebsite">
@@ -28,17 +28,18 @@
     <div class="optimised" v-html="optimised"></div>
  -->
     <div class="input input--level">
-      <p class="input__label">Quick presets:</p>
-      <label>
-        <button @click="clickPreset" value="0" title="Mostly all files will be blocked">Very low</button>
-        <button @click="clickPreset" value="1" title="Unnecessary files will be blocked and some other content optimized (recommended)">Low</button>
-        <button @click="clickPreset" value="2" title="Minimal optimization (just for vegans)">Medium</button>
-      </label>
+      <label class="input__label">Quick presets:</label>
+      <select @input="updateCurrentMode">
+        <option value="0">Default (light)</option>
+        <option value="1">Normal</option>
+      </select>
+        <!-- <button @click="clickPreset" value="0" title="Mostly all files will be blocked">Light</button>
+        <button @click="clickPreset" value="1" title="Unnecessary files will be blocked and some other content optimized">Normal</button> -->
+        <!-- <button @click="clickPreset" value="2" title="Minimal optimization (just for vegans)">Medium</button> -->
     </div>
 
     <div class="popup__more">
-      <p class="input__label"></p>
-      or <a href="" @click.prevent="openOptions" class="right">define your options</a>.
+      <p><b>or <a href="" @click.prevent="openOptions" class="right">define your options</a>.</b></p>
     </div>
 
     <div v-show="reloadNote" class="popup__note">
@@ -145,7 +146,7 @@ export default {
     },
     clickPreset(e) {
       this.$store.commit('level', parseInt(e.currentTarget.value));
-      if (browser.tabs) browser.tabs.reload({ bypassCache: true });
+      if (browser.tabs) browser.tabs.reload();
       this.displayReloadNote();
     },
     openOptions() {
@@ -174,6 +175,17 @@ export default {
       }
       this.displayReloadNote();
     },
+    updateCurrentMode(e) {
+      // if (e.target.checked) {
+      this.$store.commit('changeWebsiteMode', {
+        hostname: this.hostname,
+        value: e.target.value,
+      });
+      // } else {
+      //   this.$store.commit('pauseWebsite', this.hostname);
+      // }
+      this.displayReloadNote();
+    },
   },
 };
 </script>
@@ -183,14 +195,16 @@ export default {
 html,
 body {
   background: white;
-  width: 320px;
+  width: 250px;
   padding: 10px;
-  font-size: 13px;
 }
-
+p{
+  margin: 0;
+}
 .popup {
-  width: 300px;
+  width: 230px;
   margin: 10px;
+  font-size: 13px;
 
   &__more {
     margin-top: 4px;
@@ -210,7 +224,7 @@ body {
     white-space: nowrap;
     font-size: 13px;
     &__label {
-      width: 110px;
+      width: 120px;
       display: inline-block;
       margin: 0;
       margin-bottom: 4px;

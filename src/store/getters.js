@@ -13,6 +13,7 @@ getters.active = (state) => state.active;
 getters.level = (state) => state.level;
 getters.pausedWebsites = (state) => state.pausedWebsites;
 getters.pausedPages = (state) => state.pausedPages;
+getters.websitesModeChanges = (state) => state.websitesModeChanges;
 getters.isPageActive = (state) => (url) => {
   return state.pausedPages.indexOf(url) === -1;
 };
