@@ -7,14 +7,20 @@ const { VueLoaderPlugin } = require('vue-loader');
 const { version } = require('./package.json');
 const path = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const wextManifest = require('wext-manifest');
+const WriteWebpackPlugin = require('write-webpack-plugin');
+const manifestInput = require('./src/manifest');
+
+const targetBrowser = process.env.TARGET_BROWSER;
+const manifest = wextManifest[targetBrowser](manifestInput);
 
 const config = {
   mode: process.env.NODE_ENV,
-  context: __dirname + '/src',
+  context: `${__dirname}/src`,
   entry: {
     'background': './background_script/index.js',
     'content_script': './content_script/index.js',
-    '../docs/docs': './styles/docs.js',
+    '../../docs/docs': './styles/docs.js',
     'styles/social': './styles/social.js',
     'oembed/oembed': './styles/oembed.js',
     // '../docs/embed': './styles/embed.js',
@@ -36,9 +42,11 @@ const config = {
     // 'players/Twitch': './content_script/video/players/Twitch.js',
   },
   output: {
-    path: __dirname + '/dist',
+    path: path.join(__dirname, 'dist', targetBrowser),
     filename: '[name].js',
-    // filename: path.resolve(__dirname, './public/assets/[name]'),
+
+    // path: __dirname + '/dist',
+    // filename: '[name].js',
   },
   resolve: {
     extensions: ['.js', '.vue'],
@@ -59,7 +67,7 @@ const config = {
         exclude: /node_modules/,
         loader: 'eslint-loader',
         options: {
-          configFile: '.eslintrc.js'
+          configFile: '.eslintrc.js',
           // eslint options (if necessary)
         },
       },
@@ -103,12 +111,14 @@ const config = {
     new webpack.DefinePlugin({
       global: 'window',
     }),
+    new WriteWebpackPlugin([{ name: manifest.name, data: Buffer.from(manifest.content) }]),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
     new CopyWebpackPlugin({
       patterns: [
+        { from: '_locales', to: '_locales' },
         { from: 'icons', to: 'icons', globOptions: { ignore: ['icon.xcf', '.DS_Store'] } },
         { from: 'images', to: 'images', globOptions: { ignore: ['.DS_Store'] } },
         { from: 'oembed', to: 'oembed', globOptions: { ignore: ['.DS_Store'] } },
@@ -116,20 +126,20 @@ const config = {
         // { from: 'content_script/players', to: 'players' },
         { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
         { from: 'options/options.html', to: 'options/options.html', transform: transformHtml },
-        {
-          from: 'manifest.json',
-          to: 'manifest.json',
-          transform: (content) => {
-            const jsonContent = JSON.parse(content);
-            jsonContent.version = version;
+        // {
+        //   from: 'manifest.json',
+        //   to: 'manifest.json',
+        //   transform: (content) => {
+        //     const jsonContent = JSON.parse(content);
+        //     jsonContent.version = version;
 
-            if (config.mode === 'development') {
-              jsonContent['content_security_policy'] = "script-src 'self' 'unsafe-eval'; object-src 'self'";
-            }
+        //     if (config.mode === 'development') {
+        //       jsonContent['content_security_policy'] = "script-src 'self' 'unsafe-eval'; object-src 'self'";
+        //     }
 
-            return JSON.stringify(jsonContent, null, 2);
-          },
-        },
+        //     return JSON.stringify(jsonContent, null, 2);
+        //   },
+        // },
       ],
     }),
   ],
@@ -150,13 +160,13 @@ if (config.mode === 'production') {
   ]);
 }
 
-if (process.env.HMR === 'true') {
-  config.plugins = (config.plugins || []).concat([
-    new ExtensionReloader({
-      manifest: __dirname + '/src/manifest.json',
-    }),
-  ]);
-}
+// if (process.env.HMR === 'true') {
+//   config.plugins = (config.plugins || []).concat([
+//     new ExtensionReloader({
+//       manifest: __dirname + '/src/manifest.json',
+//     }),
+//   ]);
+// }
 
 function transformHtml(content) {
   return ejs.render(content.toString(), {
