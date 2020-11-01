@@ -82,12 +82,12 @@ Some detailed explanations about functionalities of low—web extension.
 
 #### Youtube
 
-The video quality of Youtube can only be changed automatically on the official website not in embed iframes. A script is injected by the extension on youtube.com to adjust the quality according to the Video Quality parameter available in options repectively 240p, 360p, 480p for Very Low, Low, Medium. ([Youtube-small.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-small.js), [Youtube-medium.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-medium.js), [Youtube-large.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-large.js))
+The video quality of Youtube can only be changed automatically on the official website not in embed. A script is injected by the extension on youtube.com to adjust the quality according to the Video Quality parameter available in options repectively 144p, 360p for Light and Normal modes. ([Youtube-small.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-small.js), [Youtube-medium.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-medium.js), [Youtube-large.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-large.js))
 
 #### Vimeo
 
 The extension changes the quality of Vimeo videos when they are embedded. A 'quality' parameter can be added to the url of a vimeo iframe (eg: https://player.vimeo.com/video/156045670?quality=360p).
-This parameter is defined at 240p, 360p, 540p depending on the "Video Quality" option, respectively for Very Low, Low, Medium. 
+This parameter is defined at 240p, 360p depending on the "Video Quality" option, respectively for Light and normal. 
 We are looking for a solution to automatically change the quality on vimeo.com.
 
 #### Dailymotion
