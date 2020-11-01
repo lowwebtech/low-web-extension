@@ -1,7 +1,13 @@
 <template>
   <div class="popup">
-    <div class="input input--checkbox input--page">
-      <p class="input__label">Optimize this page:</p>
+    <button class="popup__action" @click="disableCurrentPage" v-if="currentPage">Deactivate the extension on this page</button>
+    <button class="popup__action" @click="enableCurrentPage" v-if="!currentPage">Activate the extension on this page</button>
+
+    <button class="popup__action" @click="disableCurrentWebsite" v-if="currentWebsite">Deactivate the extension on this website</button>
+    <button class="popup__action" @click="enableCurrentWebsite" v-if="!currentWebsite">Activate the extension on this website</button>
+
+    <!-- <div class="input input--checkbox input--page">
+      <p class="input__label">Page activated:</p>
       <div class="input__value">
         <input type="checkbox" :checked="currentPage" @input="updateCurrentPage" name="currentPage" id="currentPage" />
         <label for="currentPage">
@@ -9,10 +15,10 @@
           <span class="no" v-if="!currentPage">No</span>
         </label>
       </div>
-    </div>
+    </div> -->
 
-    <div class="input input--checkbox input--website">
-      <p class="input__label">Optimize this site:</p>
+    <!-- <div class="input input--checkbox input--website">
+      <p class="input__label">Website activated:</p>
       <div class="input__value">
         <input type="checkbox" :checked="currentWebsite" @input="updateCurrentWebsite" name="currentWebsite" id="currentWebsite" />
         <label for="currentWebsite">
@@ -20,7 +26,7 @@
           <span class="no" v-if="!currentWebsite">No</span>
         </label>
       </div>
-    </div>
+    </div> -->
 
     <hr />
     <!-- 
@@ -33,13 +39,15 @@
         <option value="0">Default (light)</option>
         <option value="1">Normal</option>
       </select>
-        <!-- <button @click="clickPreset" value="0" title="Mostly all files will be blocked">Light</button>
+      <!-- <button @click="clickPreset" value="0" title="Mostly all files will be blocked">Light</button>
         <button @click="clickPreset" value="1" title="Unnecessary files will be blocked and some other content optimized">Normal</button> -->
-        <!-- <button @click="clickPreset" value="2" title="Minimal optimization (just for vegans)">Medium</button> -->
+      <!-- <button @click="clickPreset" value="2" title="Minimal optimization (just for vegans)">Medium</button> -->
     </div>
 
     <div class="popup__more">
-      <p><b>or <a href="" @click.prevent="openOptions" class="right">define your options</a>.</b></p>
+      <p>
+        <b>or <a href="" @click.prevent="openOptions" class="right">define your options</a>.</b>
+      </p>
     </div>
 
     <div v-show="reloadNote" class="popup__note">
@@ -159,20 +167,20 @@ export default {
         this.reloadNote = false;
       }, 4000);
     },
-    updateCurrentPage(e) {
-      if (e.target.checked) {
-        this.$store.commit('resumePage', this.url);
-      } else {
-        this.$store.commit('pausePage', this.url);
-      }
+    enableCurrentPage(e) {
+      this.$store.commit('resumePage', this.url);
       this.displayReloadNote();
     },
-    updateCurrentWebsite(e) {
-      if (e.target.checked) {
-        this.$store.commit('resumeWebsite', this.hostname);
-      } else {
-        this.$store.commit('pauseWebsite', this.hostname);
-      }
+    disableCurrentPage(e) {
+      this.$store.commit('pausePage', this.url);
+      this.displayReloadNote();
+    },
+    enableCurrentWebsite(e) {
+      this.$store.commit('resumeWebsite', this.hostname);
+      this.displayReloadNote();
+    },
+    disableCurrentWebsite(e) {
+      this.$store.commit('pauseWebsite', this.hostname);
       this.displayReloadNote();
     },
     updateCurrentMode(e) {
@@ -198,7 +206,7 @@ body {
   width: 250px;
   padding: 10px;
 }
-p{
+p {
   margin: 0;
 }
 .popup {
@@ -212,6 +220,8 @@ p{
   &__note {
     text-align: center;
     margin-top: 8px;
+  }
+  &__action {
   }
   button {
     margin-top: 4px;
@@ -228,7 +238,6 @@ p{
       display: inline-block;
       margin: 0;
       margin-bottom: 4px;
-      font-weight: bold;
     }
     &__value {
       display: inline-block;
