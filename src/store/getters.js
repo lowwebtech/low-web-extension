@@ -1,4 +1,5 @@
 import options from '../datas/options.js';
+import RequestManager from '../controllers/RequestManager';
 
 const getters = {};
 for (let i = 0, lg = options.length; i < lg; i++) {
@@ -14,13 +15,23 @@ getters.level = (state) => state.level;
 getters.pausedWebsites = (state) => state.pausedWebsites;
 getters.pausedPages = (state) => state.pausedPages;
 getters.websitesModeChanges = (state) => state.websitesModeChanges;
+// getters.getLevel = (state) => state.level
+getters.isDefaultMode = (state) => (domain) => {
+  return state.websitesModeChanges[domain] === undefined;
+};
+getters.getLevel = (state, getters) => (domain) => {
+  if (!state.websitesModeChanges[domain]) return getters.level;
+  else return state.websitesModeChanges[domain];
+};
 getters.isPageActive = (state) => (url) => {
   return state.pausedPages.indexOf(url) === -1;
 };
-getters.isWebsiteActive = (state) => (hostname) => {
-  return state.pausedWebsites.indexOf(hostname) === -1;
+getters.isWebsiteActive = (state) => (domain) => {
+  return state.pausedWebsites.indexOf(domain) === -1;
 };
 getters.isActive = (state, getters) => (pageUrl, domain) => {
+  console.log("isActive", domain, pageUrl);
+  console.log(getters.isPageActive(pageUrl), getters.isWebsiteActive(domain));
   if (domain === undefined || (getters.isPageActive(pageUrl) && getters.isWebsiteActive(domain))) {
     return true;
   } else {
@@ -34,5 +45,21 @@ getters.isBlockFile = (state, getters) => {
     return 0;
   }
 };
+getters.getOption = (state, getters) => (name, tabId) => {
+  const tab = RequestManager.getTab(tabId);
+  console.log('----', name, tab, tabId);
+  const domain = tab.domain;
+  const level = getters.getLevel(domain);
+  const option = getOriginalOption(name, level);
+  // console.log('domain', domain);
+  // console.log('default value', getters[name]);
+  console.log('value', option);
+  return parseInt(option);
+};
+
+function getOriginalOption(name, level = 0) {
+  const option = options.find((o) => o.id === name);
+  return option.presets[level];
+}
 
 export default getters;

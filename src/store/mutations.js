@@ -17,6 +17,7 @@ mutations.url = function (state, url) {
 };
 mutations.level = function (state, level) {
   state.level = level;
+  state.websitesModeChanges = {};
   let o;
   for (let i = 0, lg = options.length; i < lg; i++) {
     o = options[i];
@@ -52,19 +53,30 @@ mutations.resumePage = function (state, page) {
   }
 };
 mutations.changeWebsiteMode = function (state, website) {
-  console.log(state.pausedPages);
+  console.log('this.changeWebsiteMode');
   console.log(state.websitesModeChanges);
-  const index = state.websitesModeChanges.indexOf(website);
-  if (index === -1) {
-    state.websitesModeChanges.push(website);
-    if (browser.tabs) browser.tabs.reload(); // bypassCache: true
+  // state.websitesModeChanges = {};
+  if (!state.websitesModeChanges[website.hostname]) {
+    state.websitesModeChanges[website.hostname] = website.value;
+  } else {
+    delete state.websitesModeChanges[website.hostname];
   }
+  console.log(state.websitesModeChanges);
+
+  // const index = state.websitesModeChanges.findIndex((w) => w.hostname === website.hostname);
+  // if (index === -1) {
+  //   state.websitesModeChanges.push(website);
+  // } else {
+  //   state.websitesModeChanges.splice(index, 1);
+  // }
+  if (browser.tabs) browser.tabs.reload(); // bypassCache: true
 };
 
-// mutations.resetActive = function (state) {
-//   state.pausedPages = [];
-//   state.pausedWebsites = [];
-//   state.active = true;
-// };
+mutations.resetActive = function (state) {
+  state.pausedPages = [];
+  state.pausedWebsites = [];
+  state.active = true;
+  state.websitesModeChanges = {};
+};
 
 export default mutations;

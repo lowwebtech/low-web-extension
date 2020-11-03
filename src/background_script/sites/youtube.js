@@ -1,6 +1,6 @@
 import { watch } from '../../store/watch';
 import store from '../../store';
-import RequestManager from '../controllers/RequestManager';
+import RequestManager from '../../controllers/RequestManager';
 
 /**
  * Specific rules for youtube

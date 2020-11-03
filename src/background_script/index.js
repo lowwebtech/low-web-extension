@@ -1,10 +1,10 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
-import RequestManager from './controllers/RequestManager';
-import Logger from './controllers/Logger';
-import Blocker from './controllers/Blocker';
-import Messager from './controllers/Messager';
+import RequestManager from '../controllers/RequestManager';
+import Logger from '../controllers/Logger';
+import Blocker from '../controllers/Blocker';
+import Messager from '../controllers/Messager';
 
 import csp from './header/csp';
 
@@ -65,7 +65,7 @@ function load(details) {
         .catch((error) => console.log('There was a problem!', error))
     )
   )
-    .then(() => installedPage(details))
+    .then((details) => installedPage(details))
     .then((data) => {
       start(data);
     });
@@ -105,7 +105,7 @@ function start(data) {
     blockWebsiteSpecific(assets.website_specificTXT.data);
     redirectKnownAssets();
     hideUselessContent();
-  }, 300);
+  });
 }
 
 /**
@@ -115,7 +115,6 @@ function start(data) {
  * @return
  */
 function installedPage({ reason, temporary }) {
-  console.log('installedPage', reason, temporary);
   if (!temporary && reason === 'install') {
     // TODO create welcome page
     // const url = browser.runtime.getURL('views/installed.html');

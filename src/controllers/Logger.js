@@ -4,7 +4,7 @@
  */
 
 import RequestManager from './RequestManager';
-import store from '../../store';
+import store from '../store';
 
 class Logger {
   constructor() {

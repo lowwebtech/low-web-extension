@@ -1,4 +1,4 @@
-import Blocker from '../background_script/controllers/Blocker';
+import Blocker from '../controllers/Blocker';
 import store from './index';
 
 /**
@@ -16,7 +16,6 @@ export function watchFilter(optionName, action, filter = {}) {
   watchFilterUpdate(store.getters[optionName], optionName, action, filter);
 }
 function watchFilterUpdate(newValue, optionName, action, filter) {
-  console.log(optionName, store.getters[optionName]);
   if (newValue === 0) {
     Blocker.unfilterRequest(filters[optionName]);
   } else if (newValue === 1) {

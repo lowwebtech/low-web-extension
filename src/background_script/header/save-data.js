@@ -1,5 +1,5 @@
 import store from '../../store';
-import RequestManager from '../controllers/RequestManager';
+import RequestManager from '../../controllers/RequestManager';
 import { HTTP_URLS } from '../../datas/constants';
 import { watch } from '../../store/watch';
 
@@ -12,45 +12,54 @@ import { watch } from '../../store/watch';
  * @return
  */
 export function saveDataHeader() {
-  watch('save_data', update);
-  update(store.getters.save_data);
+  // watch('save_data', update);
+  // update(store.getters.save_data);
+  addListener();
 }
 
-function update(newValue) {
-  const sendHeaders = browser.webRequest.onBeforeSendHeaders;
-  if (newValue === 1) {
-    if (!sendHeaders.hasListener(onBeforeSendHeaders)) {
-      sendHeaders.addListener(
-        onBeforeSendHeaders,
-        {
-          urls: [HTTP_URLS],
-        },
-        ['blocking', 'requestHeaders']
-      );
-    }
-  } else {
-    if (sendHeaders.hasListener(onBeforeSendHeaders)) {
-      sendHeaders.removeListener(onBeforeSendHeaders);
-    }
+// function update(newValue) {
+//   if (newValue === 1) {
+//     addListener();
+//   } else {
+//     removeListener();
+//   }
+// }
+function addListener() {
+  if (!browser.webRequest.onBeforeSendHeaders.hasListener(onBeforeSendHeaders)) {
+    browser.webRequest.onBeforeSendHeaders.addListener(
+      onBeforeSendHeaders,
+      {
+        urls: [HTTP_URLS],
+      },
+      ['blocking', 'requestHeaders']
+    );
   }
 }
+// function removeListener(){
+//   if (browser.webRequest.onBeforeSendHeaders.hasListener(onBeforeSendHeaders)) {
+//     browser.webRequest.onBeforeSendHeaders.removeListener(onBeforeSendHeaders);
+//   }
+// }
 
 function onBeforeSendHeaders(details) {
   const { tabId } = details;
   const tab = RequestManager.getTab(tabId);
   if (tab && tab.pageUrl && store.getters.isActive(tab.pageUrl, tab.domain)) {
-    var headers = details.requestHeaders;
-    for (let i = 0, lg = headers.length; i < lg; ++i) {
-      if ('name' in headers[i] && headers[i].name.toLowerCase().indexOf('save-data') >= 0) {
-        return {
-          requestHeaders: details.requestHeaders,
-        };
+    const option = store.getters.getOption('save_data', tabId);
+    if (option === 1) {
+      var headers = details.requestHeaders;
+      for (let i = 0, lg = headers.length; i < lg; ++i) {
+        if ('name' in headers[i] && headers[i].name.toLowerCase().indexOf('save-data') >= 0) {
+          return {
+            requestHeaders: details.requestHeaders,
+          };
+        }
       }
+      headers.push({
+        name: 'Save-Data',
+        value: 'on',
+      });
     }
-    headers.push({
-      name: 'Save-Data',
-      value: 'on',
-    });
   }
   return {
     requestHeaders: details.requestHeaders,

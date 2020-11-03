@@ -1,13 +1,21 @@
 <template>
   <div :class="['options', { 'options--active': active }]">
     <div class="input input--level">
-      <p class="input__label">Quick presets</p>
+      <p class="input__label">Default mode:</p>
 
-      <label>
-        <button @click="clickPreset" value="0">Light</button>
-        <button @click="clickPreset" value="1">Normal</button>
-        <!-- <button @click="clickPreset" value="2">Medium</button> -->
+      <!-- <label>
+        <button @click="clickMode" value="0">Light</button>
+        <button @click="clickMode" value="1">Normal</button>
       </label>
+       -->
+      <div>
+        <input type="radio" id="light" name="mode" value="0" :checked="level === 0" @input="updateDefaultMode" />
+        <label for="light">Light</label>
+      </div>
+      <div>
+        <input type="radio" id="normal" name="mode" value="1" :checked="level === 1" @input="updateDefaultMode" />
+        <label for="normal">Normal</label>
+      </div>
     </div>
 
     <div v-for="input in options" :class="'input input--' + input.id" :key="`input-${input.id}`">
@@ -68,14 +76,15 @@ export default {
       get() {
         return this.$store.state.level;
       },
-      set(value) {
-        this.$store.commit('level', value);
-        this.saved();
-      },
+      // set(value) {
+      //   console.log('commit level value', value);
+      //   this.$store.commit('level', value);
+      //   this.saved();
+      // },
     },
   },
   methods: {
-    clickPreset(e) {
+    updateDefaultMode(e) {
       this.$store.commit('level', parseInt(e.currentTarget.value));
       this.saved();
     },

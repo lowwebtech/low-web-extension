@@ -1,5 +1,5 @@
-import { onMessageOEmbed } from '../message/oembed';
-import { onMessageIsActive } from '../message/is-active';
+import { onMessageOEmbed } from '../background_script/message/oembed';
+import { onMessageIsActive } from '../background_script/message/is-active';
 
 /**
  * Messager class is used to communicate between background and content scripts

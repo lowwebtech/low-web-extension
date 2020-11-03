@@ -139,7 +139,7 @@ export default [
     label: 'Block Fonts',
     description: 'Block web fonts loaded for an @font-face CSS rule. Some icon webfont like fontawesome are whitelisted.',
     type: 'bool',
-    presets: [1, 1],
+    presets: [1, 0],
     value: 0,
   },
   {

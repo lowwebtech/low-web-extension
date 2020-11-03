@@ -9,8 +9,7 @@ import VuexWebExtensions from 'vuex-webextensions';
 const defaultOptions = {
   pausedWebsites: [],
   pausedPages: [],
-  websitesModeChanges: [],
-  array_truc: [],
+  websitesModeChanges: {},
 };
 let state = Object.assign({}, defaultOptions);
 
@@ -19,7 +18,7 @@ const nonPersistentState = {
   url: undefined,
   hostname: undefined,
   level: 0,
-  nonPersistentState: true
+  nonPersistentState: true,
 };
 
 for (let i = 0, lg = options.length; i < lg; i++) {
@@ -31,6 +30,7 @@ const persistentVars = Object.keys(state);
 // add nonPersitent after setting persistenVars
 state = Object.assign(nonPersistentState, state);
 
+// TODO
 function checkDefault() {
   const defaultOptionValues = Object.assign({}, defaultOptions);
   for (let i = 0, lg = options.length; i < lg; i++) {
@@ -64,4 +64,3 @@ checkDefault();
 console.log(state);
 
 export default store;
-

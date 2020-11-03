@@ -1,6 +1,8 @@
 import store from '../../store';
 import { watchFilter } from '../../store/watch';
 import { dataTextLink } from '../../utils/data-uri';
+import RequestManager from '../../controllers/RequestManager';
+import Blocker from '../../controllers/Blocker';
 
 /**
  * Filters and blocks requests by filetype
@@ -13,29 +15,34 @@ export function blockFiles() {
     let redirect = false;
     const response = {};
 
-    const { type, url } = details;
+    const { type, url, tabId } = details;
+
     switch (type) {
       case 'media':
-        cancel = store.getters.block_medias;
+        // cancel = store.getters.block_medias;
+        cancel = store.getters.getOption('block_medias', tabId);
         break;
       case 'object':
       case 'object_subrequest':
-        cancel = store.getters.block_objects;
+        // cancel = store.getters.block_objects;
+        cancel = store.getters.getOption('block_objects', tabId);
         break;
       case 'sub_frame':
-        // cancel = store.getters.block_subframes;
-        if (store.getters.block_subframes === 1) redirect = dataTextLink(url);
+        // if (store.getters.block_subframes === 1) redirect = dataTextLink(url);
+        if (store.getters.getOption('block_subframes', tabId) === 1) redirect = dataTextLink(url);
         break;
       case 'font':
         // exclude main fonts used for icons
         // TODO external whitelist-icon-font
         if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('ico') === -1) {
-          cancel = store.getters.block_fonts;
+          // cancel = store.getters.block_fonts;
+          cancel = store.getters.getOption('block_fonts', tabId);
         }
         break;
       case 'image':
       case 'imageset':
-        cancel = store.getters.block_images;
+        cancel = store.getters.getOption('block_images', tabId);
+        console.log('cancel', cancel);
         // if (store.getters.block_images === 1) redirect = dataImage();
         break;
       // case 'script':
@@ -55,14 +62,15 @@ export function blockFiles() {
 
   // test if filetype filters are available
   // types : imageset, object_subrequest work only on Firefox
-  const filterTypes = ['media', 'object', 'sub_frame', 'font', 'image', 'imageset', 'object_subrequest'];
-  for (let i = filterTypes.length - 1; i >= 0; i--) {
-    if (browser.webRequest.ResourceType[filterTypes[i].toUpperCase()] === undefined) {
-      filterTypes.splice(i, 1);
-    }
-  }
+  // const filterTypes = ['media', 'object', 'sub_frame', 'font', 'image', 'imageset', 'object_subrequest'];
+  // for (let i = filterTypes.length - 1; i >= 0; i--) {
+  //   if (browser.webRequest.ResourceType[filterTypes[i].toUpperCase()] === undefined) {
+  //     filterTypes.splice(i, 1);
+  //   }
+  // }
 
-  watchFilter('isBlockFile', action, { types: filterTypes });
+  Blocker.filterRequest(action);
+  // watchFilter('isBlockFile', action, { types: filterTypes });
 }
 
 // TODO look at those types
