@@ -1,7 +1,7 @@
 import { HTTP_URLS } from '../datas/constants';
 import store from '../store';
 import knownRedirects from '../datas/known-to-redirect';
-import { watch } from '../store/watch';
+// import { watch } from '../store/watch';
 import RequestManager from '../controllers/RequestManager';
 
 /**

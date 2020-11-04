@@ -1,7 +1,7 @@
 import store from '../../store';
 import RequestManager from '../../controllers/RequestManager';
 import { HTTP_URLS } from '../../datas/constants';
-import { watch } from '../../store/watch';
+// import { watch } from '../../store/watch';
 
 /**
  * Add 'Save-Data: on' to webRequest headers

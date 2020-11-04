@@ -1,4 +1,4 @@
-import { watch } from '../../store/watch';
+// import { watch } from '../../store/watch';
 import store from '../../store';
 import RequestManager from '../../controllers/RequestManager';
 

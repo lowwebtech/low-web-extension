@@ -1,6 +1,6 @@
 import isWebpage from '../../utils/is-webpage';
 import store from '../../store';
-import { watch, watchList } from '../../store/watch';
+import { watchList } from '../../store/watch';
 import RequestManager from '../../controllers/RequestManager';
 
 /**

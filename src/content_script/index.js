@@ -21,59 +21,75 @@ import customPlayers from './video/custom-players';
  * and return if website is active (eg: not temporarily disabled)
  */
 function start() {
-  browser.runtime
-    .sendMessage({
-      message: 'isActive',
-      options: {
-        location: window.location,
-      },
-    })
-    .then(
-      (isActive) => {
-        console.log('response isActive', isActive);
-        if (isActive) doContentScript();
-      },
-      (e) => {
-        console.error('error message isActive', e);
-      }
-    );
+  // no need to check here id website is activated
+  doContentScript();
+
+  // send a message to background and verify tab/website is activate
+  // browser.runtime
+  //   .sendMessage({
+  //     message: 'isActive',
+  //     options: {
+  //       location: window.location,
+  //     },
+  //   })
+  //   .then(
+  //     (isActive) => {
+  //       console.log('response isActive ->', isActive);
+  //       if (isActive) doContentScript();
+  //     },
+  //     (e) => {
+  //       console.warn('error message isActive', e);
+  //     }
+  //   );
 }
 
+let domContentLoaded = false;
+let loaded = false;
+let contentScripted = false;
+
 function doContentScript() {
-  // TODO do more test on srcset and lazyload
-  // not working properly, images can already be loaded or loading
+  contentScripted = true;
+
+  if (domContentLoaded) onDomLoaded();
+  if (loaded) onLoaded();
+}
+
+function onDomLoaded() {
+  // clean srcset and remove biggest images
   imageSrcset();
   lazyload();
 
-  // TODO look to observe DOM change/mutations
-  document.addEventListener('DOMContentLoaded', () => {
-    // clean srcset and remove biggest images
-    imageSrcset();
-    lazyload();
+  // custom video attribute
+  mediaAttribute();
+}
+function onLoaded() {
+  requestAnimationFrame(() => {
+    // disable marquee animation
+    marquee();
 
-    // custom video attribute
-    mediaAttribute();
-  });
+    // custom gif/play when over them
+    gifPlayer();
 
-  window.addEventListener('load', () => {
-    requestAnimationFrame(() => {
-      // disable marquee animation
-      marquee();
+    // custom video embeds click to play
+    clickToLoadVideo();
 
-      // custom gif/play when over them
-      gifPlayer();
+    // custom social embeds
+    customSocial();
 
-      // custom video embeds click to play
-      clickToLoadVideo();
-
-      // custom social embeds
-      customSocial();
-
-      // custom video player low quality
-      // TODO import only for video-to-block
-      customPlayers();
-    });
+    // custom video player low quality
+    // TODO import only for video-to-block
+    customPlayers();
   });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  domContentLoaded = true;
+  if (contentScripted) onDomLoaded();
+});
+
+window.addEventListener('load', () => {
+  loaded = true;
+  if (contentScripted) onLoaded();
+});
 
 start();

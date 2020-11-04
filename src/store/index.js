@@ -11,6 +11,7 @@ const defaultOptions = {
   pausedWebsites: [],
   pausedPages: [],
   websitesModeChanges: {},
+  level: 0,
 };
 for (let i = 0, lg = options.length; i < lg; i++) {
   const o = options[i];
@@ -23,7 +24,6 @@ const nonPersistentState = {
   active: true,
   url: undefined,
   hostname: undefined,
-  level: 0,
   nonPersistentState: true,
 };
 // add nonPersitent after setting persistenVars
@@ -34,15 +34,18 @@ state = Object.assign(nonPersistentState, state);
  * commit new option value if needed
  */
 function checkDefaultOption() {
-  for (let i = 0, lg = options.length; i < lg; i++) {
-    const o = options[i];
-    localOption(o.id).then((optionValue) => {
-      if (optionValue === undefined) {
-        setTimeout(() => {
-          store.commit(o.id, o.values);
-        }, 100);
-      }
-    });
+  const keys = Object.keys(defaultOptions);
+  for (const key of keys) {
+    const option = options.find((o) => o.id === key);
+    if (option) {
+      localOption(key, false).then((optionValue) => {
+        if (optionValue === undefined) {
+          setTimeout(() => {
+            store.commit(option.id, option.values);
+          }, 300);
+        }
+      });
+    }
   }
 }
 
