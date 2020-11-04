@@ -16,7 +16,11 @@ class RequestManager {
   }
 
   getTab(tabId) {
-    return this.tabStorage[tabId.toString()];
+    if (tabId && this.tabStorage[tabId]) {
+      return this.tabStorage[tabId];
+    } else {
+      return false;
+    }
   }
 
   getCurrentTab() {

@@ -64,7 +64,6 @@ export function blockFiles() {
   // }
 
   Blocker.filterRequest(blockByFiletype, {});
-  // watchFilter('isBlockFile', action, { types: filterTypes });
 }
 
 // TODO look at those types
