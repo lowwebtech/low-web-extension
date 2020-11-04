@@ -9,18 +9,9 @@ import RequestManager from '../controllers/RequestManager';
  */
 export default function () {
   // TODO format cssToInsert for better parsing
-  // watch('website_specific', update);
-  // update(store.getters.website_specific);
   addListener();
 }
 
-// function update(newValue, oldValue) {
-//   if (newValue > 1) {
-//     addListener();
-//   } else {
-//     removeListener();
-//   }
-// }
 function addListener() {
   if (!browser.tabs.onUpdated.hasListener(onTabUpdate)) {
     browser.tabs.onUpdated.addListener(onTabUpdate);

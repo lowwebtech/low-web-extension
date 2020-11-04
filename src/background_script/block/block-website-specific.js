@@ -1,5 +1,4 @@
-import { watchList } from '../../store/watch';
-
+import Blocker from '../../controllers/Blocker';
 /**
  * Blocks specific files on popular website
  * For now, only used on preview images from Youtube
@@ -7,5 +6,5 @@ import { watchList } from '../../store/watch';
  * @return
  */
 export function blockWebsiteSpecific(websiteSpecificTxt) {
-  if (websiteSpecificTxt) watchList('website_specific', websiteSpecificTxt);
+  if (websiteSpecificTxt) Blocker.addListToBlock(websiteSpecificTxt, 'block_fonts');
 }

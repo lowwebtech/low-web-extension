@@ -5,10 +5,11 @@ import { HTTP_URLS } from '../datas/constants';
 // TODO look at faster filter -> webassembly
 import * as ABPFilterParser from 'abp-filter-parser';
 import { dataImage } from '../utils/data-uri';
+import store from '../store';
 
 const blockRequests = [];
 const lists = [];
-let abpFilters = {};
+// let abpFilters = {};
 
 /**
  * Blocker class blocks webrequests based on filters' lists
@@ -55,11 +56,10 @@ class Blocker {
    * @param {string} list TXT file of ABP Filter
    * @return
    */
-  addListToBlock(list) {
-    console.log('addListToBlock', list);
+  addListToBlock(list, option) {
     if (lists.indexOf(list) === -1) {
-      lists.push(list);
-      ABPFilterParser.parse(list, abpFilters);
+      const blockList = new BlockList(list, option);
+      lists.push(blockList);
     }
   }
 
@@ -68,23 +68,23 @@ class Blocker {
    * @param {string} list TXT file of ABP Filter
    * @return
    */
-  removeListToBlock(list) {
-    if (lists.indexOf(list) !== -1) {
-      lists.splice(lists.indexOf(list), 1);
-      this.recreateListToBlock();
-    }
-  }
+  // removeListToBlock(list) {
+  //   if (lists.indexOf(list) !== -1) {
+  //     lists.splice(lists.indexOf(list), 1);
+  //     this.recreateListToBlock();
+  //   }
+  // }
 
   /**
    * Create abpFilters based on list of TXT files
    * @return
    */
-  recreateListToBlock() {
-    abpFilters = {};
-    for (let i = 0; i < lists.length; i++) {
-      ABPFilterParser.parse(lists[i], abpFilters);
-    }
-  }
+  // recreateListToBlock() {
+  //   abpFilters = {};
+  //   for (let i = 0; i < lists.length; i++) {
+  //     ABPFilterParser.parse(lists[i], abpFilters);
+  //   }
+  // }
 }
 
 /**
@@ -94,15 +94,21 @@ class Blocker {
  */
 const blockUrls = function (details) {
   const response = {};
-  const { url, type } = details;
-  let cancel = false;
+  const { url, type, tabId } = details;
 
-  const keys = Object.keys(abpFilters);
-  if (keys.length > 0) {
-    cancel = ABPFilterParser.matches(abpFilters, url, {
-      // domain: tab.domain,
-      // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
-    });
+  let cancel = false;
+  if (lists.length > 0) {
+    for (let i = 0, lg = lists.length; i < lg; i++) {
+      if (store.getters.getOption(lists[i].option, tabId) === 1) {
+        if (lists[i].abpFilter) {
+          cancel = ABPFilterParser.matches(lists[i].abpFilter, url, {
+            // domain: tab.domain,
+            // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
+          });
+        }
+        if (cancel) break;
+      }
+    }
   }
 
   if (cancel) {
@@ -115,6 +121,16 @@ const blockUrls = function (details) {
 
   return response;
 };
+
+class BlockList {
+  constructor(list, option) {
+    this.list = list;
+    this.option = option;
+    this.abpFilter = {};
+
+    ABPFilterParser.parse(list, this.abpFilter);
+  }
+}
 
 class BlockRequest {
   constructor(callback, filter) {

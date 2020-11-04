@@ -1,8 +1,6 @@
 import store from '../../store';
 import { TOKEN, EXCLUDE_HOST_GIF } from '../../datas/constants';
-import { watchList } from '../../store/watch';
 import { dataTextLink, dataImage } from '../../utils/data-uri';
-import RequestManager from '../../controllers/RequestManager';
 import Blocker from '../../controllers/Blocker';
 
 /**
@@ -14,7 +12,7 @@ import Blocker from '../../controllers/Blocker';
  */
 export function blockImages(avatarTxt) {
   // blocks avatars
-  if (avatarTxt) watchList('block_avatar', avatarTxt);
+  if (avatarTxt) Blocker.addListToBlock(avatarTxt, 'block_avatar');
 
   // blocks giphy embeds (image or iframe)
   Blocker.filterRequest(blockGiphy, { urls: ['*://*.giphy.com/*'], types: ['image', 'sub_frame'] });
@@ -24,7 +22,7 @@ const blockGiphy = (details) => {
   const response = {};
   const { tabId } = details;
 
-  if (RequestManager.isTabActive(tabId) && store.getters.getOption('gif_player') === 1) {
+  if (store.getters.getOption('gif_player', tabId) === 1) {
     if (EXCLUDE_HOST_GIF.indexOf(store.state.hostname) === -1) {
       const { url, parentFrameId, type } = details;
 

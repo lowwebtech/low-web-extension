@@ -12,18 +12,9 @@ import { HTTP_URLS } from '../../datas/constants';
  * @return
  */
 export function saveDataHeader() {
-  // watch('save_data', update);
-  // update(store.getters.save_data);
   addListener();
 }
 
-// function update(newValue) {
-//   if (newValue === 1) {
-//     addListener();
-//   } else {
-//     removeListener();
-//   }
-// }
 function addListener() {
   if (!browser.webRequest.onBeforeSendHeaders.hasListener(onBeforeSendHeaders)) {
     browser.webRequest.onBeforeSendHeaders.addListener(

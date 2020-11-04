@@ -10,18 +10,8 @@ import RequestManager from '../controllers/RequestManager';
  * @return
  */
 export default function () {
-  // watch('website_specific', update);
-  // update(store.getters.website_specific);
   addListeners();
 }
-
-// function update(newValue, oldValue) {
-//   if (newValue > 0) {
-//     addListeners();
-//   } else {
-//     removeListeners();
-//   }
-// }
 
 function addListeners() {
   const handler = (details) => {

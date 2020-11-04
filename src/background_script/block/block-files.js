@@ -1,7 +1,6 @@
 import store from '../../store';
 import { dataTextLink } from '../../utils/data-uri';
 import Blocker from '../../controllers/Blocker';
-import RequestManager from '../../controllers/RequestManager';
 
 /**
  * Filters and blocks requests by filetype
@@ -17,39 +16,37 @@ export function blockFiles() {
 
     const { type, url, tabId } = details;
 
-    if (RequestManager.isTabActive(tabId)) {
-      switch (type) {
-        case 'media':
-          cancel = store.getters.getOption('block_medias', tabId);
-          break;
-        case 'object':
-        case 'object_subrequest':
-          cancel = store.getters.getOption('block_objects', tabId);
-          break;
-        case 'sub_frame':
-          if (store.getters.getOption('block_subframes', tabId) === 1) redirect = dataTextLink(url);
-          break;
-        case 'font':
-          // exclude main fonts used for icons
-          // TODO external whitelist-icon-font
-          if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('ico') === -1) {
-            cancel = store.getters.getOption('block_fonts', tabId);
-          }
-          break;
-        case 'image':
-        case 'imageset':
-          cancel = store.getters.getOption('block_images', tabId);
-          break;
-      }
-
-      if (cancel === 1) {
-        response.cancel = true;
-      }
-      if (redirect !== false) {
-        response.redirectUrl = redirect;
-      }
-      // Logger.logBlocked(details, response);
+    switch (type) {
+      case 'media':
+        cancel = store.getters.getOption('block_medias', tabId);
+        break;
+      case 'object':
+      case 'object_subrequest':
+        cancel = store.getters.getOption('block_objects', tabId);
+        break;
+      case 'sub_frame':
+        if (store.getters.getOption('block_subframes', tabId) === 1) redirect = dataTextLink(url);
+        break;
+      case 'font':
+        // exclude main fonts used for icons
+        // TODO external whitelist-icon-font
+        if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('ico') === -1) {
+          cancel = store.getters.getOption('block_fonts', tabId);
+        }
+        break;
+      case 'image':
+      case 'imageset':
+        cancel = store.getters.getOption('block_images', tabId);
+        break;
     }
+
+    if (cancel === 1) {
+      response.cancel = true;
+    }
+    if (redirect !== false) {
+      response.redirectUrl = redirect;
+    }
+    // Logger.logBlocked(details, response);
 
     return response;
   };

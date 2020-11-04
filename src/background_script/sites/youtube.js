@@ -1,4 +1,3 @@
-// import { watch } from '../../store/watch';
 import store from '../../store';
 import RequestManager from '../../controllers/RequestManager';
 
@@ -10,15 +9,8 @@ import RequestManager from '../../controllers/RequestManager';
  * @return
  */
 export default function () {
-  // watch('website_specific', update);
-  // update(store.getters.website_specific);
   addListeners();
 }
-
-// function update(newValue, oldValue) {
-//   removeListeners();
-//   addListeners(newValue);
-// }
 
 function addListeners(newValue) {
   // smaller GCP images

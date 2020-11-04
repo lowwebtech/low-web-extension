@@ -3,7 +3,6 @@ import videoToBlock from '../../datas/video-to-block';
 import { dataTextLink } from '../../utils/data-uri';
 import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
 import Blocker from '../../controllers/Blocker';
-import RequestManager from '../../controllers/RequestManager';
 
 /**
  * Block request for iframe video embeds
@@ -20,7 +19,7 @@ export function blockEmbedVideo() {
   const action = (details) => {
     const response = {};
     const { url, tabId } = details;
-    if (RequestManager.isTabActive(tabId) && store.getters.getOption('video_clicktoload') === 1) {
+    if (store.getters.getOption('video_clicktoload', tabId) === 1) {
       // find video blocked
       for (const [key, video] of Object.entries(videoToBlock)) {
         if (url.indexOf(video.embed_url) !== -1) {

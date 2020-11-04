@@ -1,7 +1,7 @@
 import isWebpage from '../../utils/is-webpage';
 import store from '../../store';
-import { watchList } from '../../store/watch';
 import RequestManager from '../../controllers/RequestManager';
+import Blocker from '../../controllers/Blocker';
 
 /**
  * blocks social media embeds
@@ -9,19 +9,9 @@ import RequestManager from '../../controllers/RequestManager';
  * @return
  */
 export function blockSocial(socialTxt) {
-  if (socialTxt) watchList('block_social', socialTxt);
+  if (socialTxt) Blocker.addListToBlock(socialTxt, 'block_social');
   addListener();
-  // watch('block_social', update);
-  // update(store.getters.block_social);
 }
-
-// function update(newValue, oldValue) {
-//   if (newValue === 1) {
-//     addListener();
-//   } else {
-//     removeListener();
-//   }
-// }
 
 function addListener() {
   if (!browser.tabs.onUpdated.hasListener(onTabUpdate)) {
