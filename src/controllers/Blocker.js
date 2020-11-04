@@ -95,13 +95,15 @@ class Blocker {
 const blockUrls = function (details) {
   const response = {};
   const { url, type } = details;
-  // console.log(url, type);
-  console.log(abpFilters);
   let cancel = false;
-  cancel = ABPFilterParser.matches(abpFilters, url, {
-    // domain: tab.domain,
-    // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
-  });
+
+  const keys = Object.keys(abpFilters);
+  if (keys.length > 0) {
+    cancel = ABPFilterParser.matches(abpFilters, url, {
+      // domain: tab.domain,
+      // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
+    });
+  }
 
   if (cancel) {
     if (type === 'image') {

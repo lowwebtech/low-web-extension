@@ -34,14 +34,14 @@ function insertCSS(tab) {
           scroll-behaviour: auto !important;
         }`;
 
-      if (store.getters.css_font_rendering === 1) {
+      if (store.getters.getOption('css_font_rendering', tab.id) === 1) {
         code += `html, body {
           text-rendering: optimizeSpeed !important;
           -webkit-font-smoothing: none !important;
         }`;
       }
 
-      if (store.getters.css_animation === 1) {
+      if (store.getters.getOption('css_animation', tab.id) === 1) {
         code += `*, *:before, *:after {
           transition: none !important;
           animation: none !important;

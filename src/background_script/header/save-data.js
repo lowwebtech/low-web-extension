@@ -43,22 +43,21 @@ function addListener() {
 
 function onBeforeSendHeaders(details) {
   const { tabId } = details;
-  if (RequestManager.isTabActive(tabId)) {
-    const option = store.getters.getOption('save_data', tabId);
-    if (option === 1) {
-      var headers = details.requestHeaders;
-      for (let i = 0, lg = headers.length; i < lg; ++i) {
-        if ('name' in headers[i] && headers[i].name.toLowerCase().indexOf('save-data') >= 0) {
-          return {
-            requestHeaders: details.requestHeaders,
-          };
-        }
+  if (RequestManager.isTabActive(tabId) && store.getters.getOption('save_data', tabId) === 1) {
+    var headers = details.requestHeaders;
+
+    for (let i = 0, lg = headers.length; i < lg; ++i) {
+      if ('name' in headers[i] && headers[i].name.toLowerCase().indexOf('save-data') >= 0) {
+        return {
+          requestHeaders: details.requestHeaders,
+        };
       }
-      headers.push({
-        name: 'Save-Data',
-        value: 'on',
-      });
     }
+
+    headers.push({
+      name: 'Save-Data',
+      value: 'on',
+    });
   }
   return {
     requestHeaders: details.requestHeaders,

@@ -46,15 +46,15 @@ export function watchList(optionName, listTxt) {
   }
 }
 
-export function watchBool(optionName, enableCallback, disableCallback) {
-  watch(optionName, (newValue, oldValue) => {
-    if (newValue === 0) {
-      enableCallback();
-    } else if (newValue === 1) {
-      disableCallback();
-    }
-  });
-}
+// export function watchBool(optionName, enableCallback, disableCallback) {
+//   watch(optionName, (newValue, oldValue) => {
+//     if (newValue === 0) {
+//       enableCallback();
+//     } else if (newValue === 1) {
+//       disableCallback();
+//     }
+//   });
+// }
 
 export function watch(optionName, callback) {
   // watch future options change

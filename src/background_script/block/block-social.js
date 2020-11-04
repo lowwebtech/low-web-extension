@@ -36,8 +36,8 @@ function addListener() {
 
 // TODO insert styles only when needed
 function onTabUpdate(tabId, changeInfo, tab) {
-  if (changeInfo.status === 'loading' && tab.url) {
-    if (isWebpage(tab.url) && RequestManager.isTabActive(tabId)) {
+  if (changeInfo.status === 'loading') {
+    if (tab.url && isWebpage(tab.url) && RequestManager.isTabActive(tabId)) {
       if (store.getters.getOption('block_social', tabId) === 1) {
         browser.tabs
           .insertCSS(tabId, {

@@ -1,6 +1,7 @@
 import { watch } from '../store/watch';
 import store from '../store';
 import cssToInsert from '../datas/css-to-insert';
+import RequestManager from '../controllers/RequestManager';
 
 /**
  * Insert css to hide useless contents and dark-patterns
@@ -33,7 +34,7 @@ function addListener() {
 
 function onTabUpdate(tabId, changeInfo, tab) {
   if (changeInfo.status === 'loading' && tab.url) {
-    if (store.getters.getOption('website_specific', tabId) > 1) {
+    if (RequestManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 1) {
       const totalInserted = cssToInsert.length;
       for (let i = 0; i < totalInserted; i++) {
         const toInsert = cssToInsert[i];

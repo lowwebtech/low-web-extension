@@ -6,9 +6,9 @@ for (let i = 0, lg = options.length; i < lg; i++) {
   const o = options[i];
 
   getters[o.id] = (state) => {
-    console.log(state)
-    console.log(state[o.id])
-    console.log(o.id)
+    // console.log(state)
+    // console.log(state[o.id])
+    // console.log(o.id)
     return state[o.id];
   };
 }
@@ -39,13 +39,13 @@ getters.isActive = (state, getters) => (pageUrl, domain) => {
     return false;
   }
 };
-getters.isBlockFile = (state, getters) => {
-  if (getters.block_medias === 1 || getters.block_objects === 1 || getters.block_subframes === 1 || getters.block_fonts === 1 || getters.block_images === 1) {
-    return 1;
-  } else {
-    return 0;
-  }
-};
+// getters.isBlockFile = (state, getters) => {
+//   if (getters.block_medias === 1 || getters.block_objects === 1 || getters.block_subframes === 1 || getters.block_fonts === 1 || getters.block_images === 1) {
+//     return 1;
+//   } else {
+//     return 0;
+//   }
+// };
 getters.getOption = (state, getters) => (name, tabId) => {
   const tab = RequestManager.getTab(tabId);
   const domain = tab.domain;
