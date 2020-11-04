@@ -22,6 +22,22 @@ hr{
 .inline {
   display: inline-block;
 }
+.inline-list{
+  list-style: none;
+  white-space: nowrap;
+  padding: 0;
+  margin: 0;
+  > li{
+    display: inline-block;
+    white-space: normal;
+    &:first-child{
+      margin-left: 0;
+    }
+    &:last-child{
+      margin-right: 0;
+    }
+  }
+}
 .status{
   margin-top: 10px;
   height: 20px;

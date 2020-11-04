@@ -8,44 +8,72 @@
         <button @click="clickMode" value="1">Normal</button>
       </label>
        -->
-      <div>
-        <input type="radio" id="light" name="mode" value="0" :checked="level === 0" @input="updateDefaultMode" />
-        <label for="light">Light</label>
+      <div v-for="mode in modes" :key="'mode' + mode.name">
+        <input type="radio" :id="mode.id" name="mode" :value="mode.index" :checked="level === mode.index" @input="updateDefaultMode" />
+        <label :for="mode.id">{{ mode.name }}</label>
       </div>
-      <div>
+      <!-- <div>
         <input type="radio" id="normal" name="mode" value="1" :checked="level === 1" @input="updateDefaultMode" />
-        <label for="normal">Normal</label>
-      </div>
+        <label for="normal">Comfort</label>
+      </div> -->
     </div>
 
-    <div v-for="input in options" :class="'input input--' + input.id" :key="`input-${input.id}`">
-      <div class="input__text">
-        <p class="input__label" :id="input.id" v-html="input.label"></p>
-        <p class="input__description" v-if="input.description" v-html="input.description"></p>
-      </div>
+    <ul class="inline-list">
+      <li v-for="mode in modes" :key="'button' + mode.name" :class="['tab__button', { 'tab__button--active': currentTab === mode.index }]">
+        <button :id="mode.index" @click="updateTab">{{ mode.name }}</button>
+      </li>
+    </ul>
 
-      <div v-if="input.type === 'bool'" class="input__field inline">
-        <label
-          ><input type="radio" :key="`${input.id}-1`" :name="input.id" value="1" :checked="$store.getters[input.id][level] == 1 ? 'checked' : false" @input="onFieldChange" /> True</label
-        >
-        <label
-          ><input type="radio" :key="`${input.id}-0`" :name="input.id" value="0" :checked="$store.getters[input.id][level] == 0 ? 'checked' : false" @input="onFieldChange" /> False</label
-        >
-      </div>
+    <div v-for="mode in modes" :key="'tab' + mode.name" class="tab">
+      <div v-if="currentTab === mode.index">
+        <div v-for="input in options" :class="'input input--' + input.id" :key="`input-${mode.name}-${input.id}`">
+          <div v-if="input.type && input.id && $store.getters[input.id]">
+            <div class="input__text">
+              <p class="input__label" :id="input.id" v-html="input.label"></p>
+              <p class="input__description" v-if="input.description" v-html="input.description"></p>
+            </div>
 
-      <div v-if="input.type === 'select'" class="input__field inline">
-        <label>
-          <select :name="input.id" @input="onFieldChange">
-            <option
-              v-for="option in input.options"
-              :value="option.value"
-              :key="`option-${option.value}`"
-              :selected="$store.getters[input.id][level] === option.value ? 'selected' : false"
-            >
-              {{ option.label }}
-            </option>
-          </select>
-        </label>
+            <div v-if="input.type === 'bool'" class="input__field inline">
+              <label
+                ><input
+                  type="radio"
+                  :key="`${input.id}-1`"
+                  :name="input.id"
+                  value="1"
+                  :checked="$store.getters[input.id][mode.index] == 1 ? 'checked' : false"
+                  @input="onFieldChange"
+                />
+                True</label
+              >
+              <label
+                ><input
+                  type="radio"
+                  :key="`${input.id}-0`"
+                  :name="input.id"
+                  value="0"
+                  :checked="$store.getters[input.id][mode.index] == 0 ? 'checked' : false"
+                  @input="onFieldChange"
+                />
+                False</label
+              >
+            </div>
+
+            <div v-if="input.type === 'select'" class="input__field inline">
+              <label>
+                <select :name="input.id" @input="onFieldChange">
+                  <option
+                    v-for="option in input.options"
+                    :value="option.value"
+                    :key="`option-${option.value}`"
+                    :selected="$store.getters[input.id][mode.index] === option.value ? 'selected' : false"
+                  >
+                    {{ option.label }}
+                  </option>
+                </select>
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- <button id="save" @click="saveOptions">Save</button> -->
@@ -69,6 +97,19 @@ export default {
       status: '',
       options,
       active: true,
+      currentTab: 0,
+      modes: [
+        {
+          id: 'minimalist',
+          name: 'Minimalist',
+          index: 0,
+        },
+        {
+          id: 'comfort',
+          name: 'Comfort',
+          index: 1,
+        },
+      ],
     };
   },
   computed: {
@@ -117,6 +158,9 @@ export default {
         this.status = '';
       }, 1500);
     },
+    updateTab(e) {
+      this.currentTab = parseInt(e.currentTarget.id);
+    },
     checkRadioButton(name, value) {
       var radiobuttons = this.$el.querySelectorAll('input[name="' + name + '"]');
       for (let i = 0, lg = radiobuttons.length; i < lg; i++) {
@@ -143,7 +187,9 @@ export default {
       return select.options[select.selectedIndex].value;
     },
   },
-  mounted() {},
+  mounted() {
+    console.log(options);
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -186,5 +232,26 @@ export default {
       font-weight: bold;
     }
   }
+}
+
+.tab {
+  &:nth-child(even) {
+    background-color: #F6FFFF;
+  }
+  &__button {
+    cursor: pointer;
+    opacity: 0.5;
+
+    &:hover{
+      opacity: 1;
+    }
+    &--active{
+      opacity: 1;
+      cursor: auto;
+    }
+  }
+}
+.button-tab--active{
+  opacity: 1;
 }
 </style>

@@ -94,15 +94,15 @@ export default {
       return this.$store.getters.isDefaultMode(this.hostname);
     },
     getDefaultName() {
-      if (this.level === 0) return 'Light (default)';
-      else return 'Normal (default)';
+      if (this.level === 0) return 'Minimalist (default)';
+      else return 'Comfort (default)';
     },
     getDefaultValue() {
       return this.level;
     },
     getOtherName() {
-      if (this.level === 0) return 'Normal';
-      else return 'Light';
+      if (this.level === 0) return 'Comfort';
+      else return 'Minimalist';
     },
     getOtherValue() {
       if (this.level === 0) return 1;
