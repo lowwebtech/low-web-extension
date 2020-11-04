@@ -26,10 +26,10 @@
 
       <div v-if="input.type === 'bool'" class="input__field inline">
         <label
-          ><input type="radio" :key="`${input.id}-1`" :name="input.id" value="1" :checked="$store.getters[input.id] == 1 ? 'checked' : false" @input="onFieldChange" /> True</label
+          ><input type="radio" :key="`${input.id}-1`" :name="input.id" value="1" :checked="$store.getters[input.id][level] == 1 ? 'checked' : false" @input="onFieldChange" /> True</label
         >
         <label
-          ><input type="radio" :key="`${input.id}-0`" :name="input.id" value="0" :checked="$store.getters[input.id] == 0 ? 'checked' : false" @input="onFieldChange" /> False</label
+          ><input type="radio" :key="`${input.id}-0`" :name="input.id" value="0" :checked="$store.getters[input.id][level] == 0 ? 'checked' : false" @input="onFieldChange" /> False</label
         >
       </div>
 
@@ -40,7 +40,7 @@
               v-for="option in input.options"
               :value="option.value"
               :key="`option-${option.value}`"
-              :selected="$store.getters[input.id] === option.value ? 'selected' : false"
+              :selected="$store.getters[input.id][level] === option.value ? 'selected' : false"
             >
               {{ option.label }}
             </option>
