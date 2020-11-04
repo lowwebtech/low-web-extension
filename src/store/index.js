@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import options from '../datas/options.js';
+import options from '../datas/defaultOptions.js';
 import getters from './getters';
 import mutations from './mutations';
 // import * as actions from './actions';
@@ -11,11 +11,13 @@ const defaultOptions = {
   pausedWebsites: [],
   pausedPages: [],
   websitesModeChanges: {},
-  level: 0,
+  level: 1,
 };
 for (let i = 0, lg = options.length; i < lg; i++) {
   const o = options[i];
-  defaultOptions[o.id] = o.value;
+  console.log(o);
+  console.log(o.values);
+  defaultOptions[o.id] = o.values;
 }
 let state = Object.assign({}, defaultOptions);
 const persistentVars = Object.keys(state);
@@ -30,7 +32,7 @@ const nonPersistentState = {
 state = Object.assign(nonPersistentState, state);
 
 /**
- * new option value (eg: datas/options.js) may not defined in localStorage
+ * new option value (eg: datas/defaultOptions.js) may not defined in localStorage
  * commit new option value if needed
  */
 function checkDefaultOption() {
@@ -39,7 +41,7 @@ function checkDefaultOption() {
     const option = options.find((o) => o.id === key);
     if (option) {
       localOption(key, false).then((optionValue) => {
-        if (optionValue === undefined) {
+        if (!optionValue) {
           setTimeout(() => {
             store.commit(option.id, option.values);
           }, 300);

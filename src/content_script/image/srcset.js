@@ -1,6 +1,12 @@
 import { localOption } from '../../utils/get-local-options';
 import srcsetUtil from 'srcset';
 
+/**
+ * Only works for lazy-loaded images, if lazyload is not already pass.
+ * Browsers queues images, before we can access them (DOMContentLoaded), we can't stop images loading.
+ * Lazyloaded images aren't loading yet.
+ * Srcset chages may cause a new image loading.
+ */
 let imageSrcset;
 export default function () {
   localOption('image_srcset').then((value) => {

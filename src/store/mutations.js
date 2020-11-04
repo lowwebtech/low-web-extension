@@ -1,4 +1,4 @@
-import options from '../datas/options.js';
+import options from '../datas/defaultOptions.js';
 import getHostname from '../utils/get-hostname';
 import store from './index';
 import Vue from 'vue';

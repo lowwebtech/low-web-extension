@@ -35,7 +35,7 @@ export function blockEmbedVideo() {
 
         // redirect to simple fallback (just a link to original embed url)
         // iframe will be customized by content_script after oembed response message
-        const sanitizedUrl = sanitizeEmbedUrl(url, false, true, store.getters.video_quality);
+        const sanitizedUrl = sanitizeEmbedUrl(url, false, true, store.getters.getOption('video_quality', tabId));
         response.redirectUrl = dataTextLink(sanitizedUrl);
       }
     }

@@ -9,6 +9,7 @@ let localOptions;
 export async function localOption(name, current = true) {
   return await browser.storage.local.get('@@vwe-persistence').then((result) => {
     localOptions = result['@@vwe-persistence'];
+    // console.log(localOptions);
     if (localOptions) {
       if (!name) {
         return localOptions;
@@ -17,8 +18,8 @@ export async function localOption(name, current = true) {
       } else if (isPageActive()) {
         const level = getLevel();
         // console.log(level);
-        // console.log(name);
-        // console.log(localOptions[name]);
+        console.log(name);
+        console.log(localOptions[name]);
         // console.log(localOptions[name][level]);
         return localOptions[name][level];
       }

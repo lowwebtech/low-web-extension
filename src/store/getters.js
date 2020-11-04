@@ -1,14 +1,13 @@
-import options from '../datas/options.js';
 import RequestManager from '../controllers/RequestManager';
+import options from '../datas/defaultOptions.js';
 
 const getters = {};
 for (let i = 0, lg = options.length; i < lg; i++) {
   const o = options[i];
 
   getters[o.id] = (state) => {
-    // console.log(state)
-    // console.log(state[o.id])
     // console.log(o.id)
+    // console.log(state[o.id])
     return state[o.id];
   };
 }
@@ -39,28 +38,15 @@ getters.isActive = (state, getters) => (pageUrl, domain) => {
     return false;
   }
 };
-// getters.isBlockFile = (state, getters) => {
-//   if (getters.block_medias === 1 || getters.block_objects === 1 || getters.block_subframes === 1 || getters.block_fonts === 1 || getters.block_images === 1) {
-//     return 1;
-//   } else {
-//     return 0;
-//   }
-// };
 getters.getOption = (state, getters) => (name, tabId) => {
   const tab = RequestManager.getTab(tabId);
   const domain = tab.domain;
   const level = getters.getLevel(domain);
-  const option = getters[name][level]; // getOriginalOption(name, level);
+  const option = getters[name][level];
   // console.log('name', name);
   // console.log('level', level);
-  // console.log('values', getters[name]);
   // console.log('value', option);
   return parseInt(option);
 };
-
-// function getOriginalOption(name, level = 0) {
-//   const option = options.find((o) => o.id === name);
-//   return option.values[level];
-// }
 
 export default getters;
