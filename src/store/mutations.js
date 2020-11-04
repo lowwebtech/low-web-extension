@@ -1,13 +1,14 @@
 import options from '../datas/options.js';
 import getHostname from '../utils/get-hostname';
 import store from './index';
+import Vue from 'vue';
 
 const mutations = {};
 for (let i = 0, lg = options.length; i < lg; i++) {
   const o = options[i];
-  mutations[o.id] = function (state, value) {
-    // console.log('update', o.id, value);
-    state[o.id] = value;
+  mutations[o.id] = function (state, values) {
+    console.log(o.id, values);
+    Vue.set(state, o.id, values);
   };
 }
 
@@ -21,7 +22,7 @@ mutations.level = function (state, level) {
   let o;
   for (let i = 0, lg = options.length; i < lg; i++) {
     o = options[i];
-    store.commit(o.id, o.presets[parseInt(level)]);
+    store.commit(o.id, o.values[parseInt(level)]);
   }
 };
 mutations.pauseWebsite = function (state, website) {

@@ -1,8 +1,7 @@
 import store from '../../store';
-import { watchFilter } from '../../store/watch';
 import { dataTextLink } from '../../utils/data-uri';
-import RequestManager from '../../controllers/RequestManager';
 import Blocker from '../../controllers/Blocker';
+import RequestManager from '../../controllers/RequestManager';
 
 /**
  * Filters and blocks requests by filetype
@@ -10,53 +9,48 @@ import Blocker from '../../controllers/Blocker';
  */
 // TODO used Request Filetype filters
 export function blockFiles() {
-  const action = function (details) {
+  const blockByFiletype = function (details) {
+    // console.log(details);
     let cancel = 0;
     let redirect = false;
     const response = {};
 
     const { type, url, tabId } = details;
 
-    switch (type) {
-      case 'media':
-        // cancel = store.getters.block_medias;
-        cancel = store.getters.getOption('block_medias', tabId);
-        break;
-      case 'object':
-      case 'object_subrequest':
-        // cancel = store.getters.block_objects;
-        cancel = store.getters.getOption('block_objects', tabId);
-        break;
-      case 'sub_frame':
-        // if (store.getters.block_subframes === 1) redirect = dataTextLink(url);
-        if (store.getters.getOption('block_subframes', tabId) === 1) redirect = dataTextLink(url);
-        break;
-      case 'font':
-        // exclude main fonts used for icons
-        // TODO external whitelist-icon-font
-        if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('ico') === -1) {
-          // cancel = store.getters.block_fonts;
-          cancel = store.getters.getOption('block_fonts', tabId);
-        }
-        break;
-      case 'image':
-      case 'imageset':
-        cancel = store.getters.getOption('block_images', tabId);
-        console.log('cancel', cancel);
-        // if (store.getters.block_images === 1) redirect = dataImage();
-        break;
-      // case 'script':
-      //   cancel = store.getters.block_scripts;
-      //   break;
+    if (RequestManager.isTabActive(tabId)) {
+      switch (type) {
+        case 'media':
+          cancel = store.getters.getOption('block_medias', tabId);
+          break;
+        case 'object':
+        case 'object_subrequest':
+          cancel = store.getters.getOption('block_objects', tabId);
+          break;
+        case 'sub_frame':
+          if (store.getters.getOption('block_subframes', tabId) === 1) redirect = dataTextLink(url);
+          break;
+        case 'font':
+          // exclude main fonts used for icons
+          // TODO external whitelist-icon-font
+          if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('ico') === -1) {
+            cancel = store.getters.getOption('block_fonts', tabId);
+          }
+          break;
+        case 'image':
+        case 'imageset':
+          cancel = store.getters.getOption('block_images', tabId);
+          break;
+      }
+
+      if (cancel === 1) {
+        response.cancel = true;
+      }
+      if (redirect !== false) {
+        response.redirectUrl = redirect;
+      }
+      // Logger.logBlocked(details, response);
     }
 
-    if (cancel === 1) {
-      response.cancel = true;
-    }
-    if (redirect !== false) {
-      response.redirectUrl = redirect;
-    }
-    // Logger.logBlocked(details, response);
     return response;
   };
 
@@ -69,7 +63,7 @@ export function blockFiles() {
   //   }
   // }
 
-  Blocker.filterRequest(action);
+  Blocker.filterRequest(blockByFiletype, {});
   // watchFilter('isBlockFile', action, { types: filterTypes });
 }
 

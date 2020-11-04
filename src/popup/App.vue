@@ -26,6 +26,7 @@
       <button @click.prevent="openOptions">Manage options</button>
       <button @click.prevent="openPopup" v-if="isDev">Manage popup</button>
       <button @click.prevent="resetActive" v-if="isDev">Reset active</button>
+      <button @click.prevent="clearStorage" v-if="isDev">Clear localstorage</button>
       <button @click.prevent="reload" v-if="isDev">Reload</button>
     </div>
 
@@ -54,7 +55,6 @@
         </label>
       </div>
     </div> -->
-
   </div>
 </template>
 <script>
@@ -130,7 +130,7 @@ export default {
         }
       });
 
-    setTimeout(()=>{
+    setTimeout(() => {
       console.log(this.isDefaultMode);
       console.log(this.$store.getters.isDefaultMode(this.hostname));
     }, 500);
@@ -196,6 +196,10 @@ export default {
     },
     resetActive() {
       this.$store.commit('resetActive');
+    },
+    clearStorage() {
+      browser.storage.local.clear();
+      browser.storage.sync.clear();
     },
     reload() {
       if (browser.tabs) browser.tabs.reload();

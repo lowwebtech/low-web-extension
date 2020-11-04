@@ -6,7 +6,10 @@ for (let i = 0, lg = options.length; i < lg; i++) {
   const o = options[i];
 
   getters[o.id] = (state) => {
-    return parseInt(state[o.id]);
+    console.log(state)
+    console.log(state[o.id])
+    console.log(o.id)
+    return state[o.id];
   };
 }
 
@@ -30,8 +33,6 @@ getters.isWebsiteActive = (state) => (domain) => {
   return state.pausedWebsites.indexOf(domain) === -1;
 };
 getters.isActive = (state, getters) => (pageUrl, domain) => {
-  console.log("isActive", domain, pageUrl);
-  console.log(getters.isPageActive(pageUrl), getters.isWebsiteActive(domain));
   if (domain === undefined || (getters.isPageActive(pageUrl) && getters.isWebsiteActive(domain))) {
     return true;
   } else {
@@ -47,19 +48,19 @@ getters.isBlockFile = (state, getters) => {
 };
 getters.getOption = (state, getters) => (name, tabId) => {
   const tab = RequestManager.getTab(tabId);
-  console.log('----', name, tab, tabId);
   const domain = tab.domain;
   const level = getters.getLevel(domain);
-  const option = getOriginalOption(name, level);
-  // console.log('domain', domain);
-  // console.log('default value', getters[name]);
-  console.log('value', option);
+  const option = getters[name][level]; // getOriginalOption(name, level);
+  // console.log('name', name);
+  // console.log('level', level);
+  // console.log('values', getters[name]);
+  // console.log('value', option);
   return parseInt(option);
 };
 
-function getOriginalOption(name, level = 0) {
-  const option = options.find((o) => o.id === name);
-  return option.presets[level];
-}
+// function getOriginalOption(name, level = 0) {
+//   const option = options.find((o) => o.id === name);
+//   return option.values[level];
+// }
 
 export default getters;

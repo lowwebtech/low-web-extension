@@ -14,9 +14,7 @@ let abpFilters = {};
  * Blocker class blocks webrequests based on filters' lists
  */
 class Blocker {
-  init() {
-    this.filterRequest(blockUrls);
-  }
+  init() {}
 
   /**
    * Create BlockRequest filter and listen new webRequests to block
@@ -43,6 +41,7 @@ class Blocker {
    * TODO: currently not used by Blocker
    */
   unfilterRequest(blockRequest) {
+    console.log('unfilterRequest', blockRequest);
     if (blockRequests.indexOf(blockRequest) !== -1) {
       blockRequests.splice(blockRequests.indexOf(blockRequest), 1);
       if (browser.webRequest.onBeforeRequest.hasListener(blockRequest.callback)) {
@@ -57,6 +56,7 @@ class Blocker {
    * @return
    */
   addListToBlock(list) {
+    console.log('addListToBlock', list);
     if (lists.indexOf(list) === -1) {
       lists.push(list);
       ABPFilterParser.parse(list, abpFilters);
@@ -95,7 +95,10 @@ class Blocker {
 const blockUrls = function (details) {
   const response = {};
   const { url, type } = details;
-  const cancel = ABPFilterParser.matches(abpFilters, url, {
+  // console.log(url, type);
+  console.log(abpFilters);
+  let cancel = false;
+  cancel = ABPFilterParser.matches(abpFilters, url, {
     // domain: tab.domain,
     // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
   });
@@ -132,4 +135,5 @@ class BlockRequest {
 }
 
 const blocker = new Blocker();
+blocker.filterRequest(blockUrls);
 export default blocker;

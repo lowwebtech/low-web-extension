@@ -43,8 +43,7 @@ function addListener() {
 
 function onBeforeSendHeaders(details) {
   const { tabId } = details;
-  const tab = RequestManager.getTab(tabId);
-  if (tab && tab.pageUrl && store.getters.isActive(tab.pageUrl, tab.domain)) {
+  if (RequestManager.isTabActive(tabId)) {
     const option = store.getters.getOption('save_data', tabId);
     if (option === 1) {
       var headers = details.requestHeaders;

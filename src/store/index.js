@@ -5,13 +5,19 @@ import getters from './getters';
 import mutations from './mutations';
 // import * as actions from './actions';
 import VuexWebExtensions from 'vuex-webextensions';
+import { localOption } from '../utils/get-local-options.js';
 
 const defaultOptions = {
   pausedWebsites: [],
   pausedPages: [],
   websitesModeChanges: {},
 };
+for (let i = 0, lg = options.length; i < lg; i++) {
+  const o = options[i];
+  defaultOptions[o.id] = o.value;
+}
 let state = Object.assign({}, defaultOptions);
+const persistentVars = Object.keys(state);
 
 const nonPersistentState = {
   active: true,
@@ -20,31 +26,24 @@ const nonPersistentState = {
   level: 0,
   nonPersistentState: true,
 };
-
-for (let i = 0, lg = options.length; i < lg; i++) {
-  const o = options[i];
-  state[o.id] = o.value;
-}
-const persistentVars = Object.keys(state);
-
 // add nonPersitent after setting persistenVars
 state = Object.assign(nonPersistentState, state);
 
-// TODO
-function checkDefault() {
-  const defaultOptionValues = Object.assign({}, defaultOptions);
+/**
+ * new option value (eg: datas/options.js) may not defined in localStorage
+ * commit new option value if needed
+ */
+function checkDefaultOption() {
   for (let i = 0, lg = options.length; i < lg; i++) {
     const o = options[i];
-    state[o.id] = o.value;
+    localOption(o.id).then((optionValue) => {
+      if (optionValue === undefined) {
+        setTimeout(() => {
+          store.commit(o.id, o.values);
+        }, 100);
+      }
+    });
   }
-
-  Object.entries(state).forEach(([key, value]) => {
-    if (value === undefined && defaultOptionValues[key] !== undefined) {
-      console.log(key);
-      console.log(defaultOptionValues[key]);
-      state.commit(key, defaultOptionValues[key]);
-    }
-  });
 }
 
 Vue.use(Vuex);
@@ -60,7 +59,6 @@ const store = new Vuex.Store({
   mutations,
   // actions,
 });
-checkDefault();
-console.log(state);
+checkDefaultOption();
 
 export default store;
