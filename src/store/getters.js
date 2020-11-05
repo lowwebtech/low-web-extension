@@ -17,7 +17,6 @@ getters.level = (state) => state.level;
 getters.pausedWebsites = (state) => state.pausedWebsites;
 getters.pausedPages = (state) => state.pausedPages;
 getters.websitesModeChanges = (state) => state.websitesModeChanges;
-// getters.getLevel = (state) => state.level
 getters.isDefaultMode = (state) => (domain) => {
   return state.websitesModeChanges[domain] === undefined;
 };
@@ -31,6 +30,16 @@ getters.isPageActive = (state) => (url) => {
 getters.isWebsiteActive = (state) => (domain) => {
   return state.pausedWebsites.indexOf(domain) === -1;
 };
+getters.isWhitelistedImage = (state) => (url) => {
+  const splitUrl = url.split('//');
+  if (splitUrl[0] === 'https:') url = url.slice(splitUrl[0].length);
+  if (splitUrl[0] === 'http:') url = url.slice(splitUrl[0].length);
+  const whitelisted = state.whitelistHoverImages.find((image) => {
+    return image.indexOf(url) !== -1;
+  });
+  if (whitelisted) return true;
+  else return false;
+};
 getters.isActive = (state, getters) => (pageUrl, domain) => {
   if (domain === undefined || (getters.isPageActive(pageUrl) && getters.isWebsiteActive(domain))) {
     return true;
@@ -43,9 +52,6 @@ getters.getOption = (state, getters) => (name, tabId) => {
   const domain = tab.domain;
   const level = getters.getLevel(domain);
   const option = getters[name][level];
-  // console.log('name', name);
-  // console.log('level', level);
-  // console.log('value', option);
   return parseInt(option);
 };
 

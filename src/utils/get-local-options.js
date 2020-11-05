@@ -18,8 +18,8 @@ export async function localOption(name, current = true) {
       } else if (isPageActive()) {
         const level = getLevel();
         // console.log(level);
-        console.log(name);
-        console.log(localOptions[name]);
+        // console.log(name);
+        // console.log(localOptions[name]);
         // console.log(localOptions[name][level]);
         return localOptions[name][level];
       }

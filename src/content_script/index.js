@@ -9,6 +9,7 @@ import imageSrcset from './image/srcset';
 import lazyload from './lazyload';
 import marquee from './marquee';
 import gifPlayer from './image/gif-player';
+import hoverImages from './image/hover-images';
 import customSocial from './iframe/social';
 import mediaAttribute from './media/attributes';
 import clickToLoadVideo from './video/click-to-load';
@@ -69,6 +70,9 @@ function onLoaded() {
 
     // custom gif/play when over them
     gifPlayer();
+
+    // hover to display image
+    hoverImages();
 
     // custom video embeds click to play
     clickToLoadVideo();

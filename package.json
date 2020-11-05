@@ -67,7 +67,7 @@
     "node-png": "^0.4.3",
     "path": "^0.12.7",
     "query-string": "^6.13.4",
-    "srcset": "^3.0",
+    "srcset": "^3.0.0",
     "tiny-emitter": "^2.1.0",
     "vue": "^2.6.12",
     "vuex": "^3.5.1",

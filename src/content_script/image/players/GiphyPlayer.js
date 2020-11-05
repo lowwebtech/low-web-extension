@@ -1,5 +1,5 @@
-import { TOKEN } from '../../../datas/constants';
 import { getIdFromGiphyEmbed, getIdFromGiphyUrl } from '../../../utils/giphy';
+import { addLowwebParam } from '../../../utils/urls';
 import GifPlayer from './GifPlayer';
 
 export default class GiphyPlayer extends GifPlayer {
@@ -26,8 +26,8 @@ export default class GiphyPlayer extends GifPlayer {
   }
 
   setData(data) {
-    const previewUrl = data.images.downsized_still.url + '&lowweb=' + TOKEN;
-    this.originalSrc = data.images.downsized.url + '&lowweb=' + TOKEN;
+    const previewUrl = addLowwebParam(data.images.downsized_still.url);
+    this.originalSrc = addLowwebParam(data.images.downsized.url);
 
     this.buildHandler = () => {
       this.build();

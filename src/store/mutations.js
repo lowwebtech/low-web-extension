@@ -25,6 +25,14 @@ mutations.level = function (state, level) {
     store.commit(o.id, o.values);
   }
 };
+mutations.resetWhitelistHoverImage = function (state) {
+  state.whitelistHoverImages = [];
+};
+mutations.whitelistHoverImage = function (state, url) {
+  if (url) {
+    state.whitelistHoverImages.push(...url);
+  }
+};
 mutations.pauseWebsite = function (state, website) {
   const index = state.pausedWebsites.indexOf(website);
   if (index === -1) {

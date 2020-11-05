@@ -15,8 +15,8 @@ const defaultOptions = {
 };
 for (let i = 0, lg = options.length; i < lg; i++) {
   const o = options[i];
-  console.log(o);
-  console.log(o.values);
+  // console.log(o);
+  // console.log(o.values);
   defaultOptions[o.id] = o.values;
 }
 let state = Object.assign({}, defaultOptions);
@@ -27,6 +27,7 @@ const nonPersistentState = {
   url: undefined,
   hostname: undefined,
   nonPersistentState: true,
+  whitelistHoverImages: [],
 };
 // add nonPersitent after setting persistenVars
 state = Object.assign(nonPersistentState, state);

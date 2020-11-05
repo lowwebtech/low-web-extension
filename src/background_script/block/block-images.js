@@ -1,8 +1,8 @@
 import store from '../../store';
-import { TOKEN, EXCLUDE_HOST_GIF } from '../../datas/constants';
+import { EXCLUDE_HOST_GIF, HTTP_URLS } from '../../datas/constants';
 import { dataTextLink, dataImage } from '../../utils/data-uri';
 import Blocker from '../../controllers/Blocker';
-
+import { hasLowwebParam } from '../../utils/urls';
 /**
  * Block image files :
  *   - avatar images from avatarTxt list
@@ -14,9 +14,43 @@ export function blockImages(avatarTxt) {
   // blocks avatars
   if (avatarTxt) Blocker.addListToBlock(avatarTxt, 'block_avatar');
 
+  const types = ['image'];
+  if ('IMAGESET' in browser.webRequest.ResourceType) {
+    types.push('imageset');
+  }
   // blocks giphy embeds (image or iframe)
-  Blocker.filterRequest(blockGiphy, { urls: ['*://*.giphy.com/*'], types: ['image', 'sub_frame'] });
+  Blocker.filterRequest(blockGiphy, { urls: ['*://*.giphy.com/*'], types: ['sub_frame', ...types] });
+
+  // blocks image and show on hover
+  Blocker.filterRequest(blockHover, { urls: [HTTP_URLS], types: types });
+
+  browser.tabs.onUpdated.addListener(handleUpdated);
 }
+
+function handleUpdated(tabId, changeInfo, tabInfo) {
+  if (changeInfo.status === 'loading') {
+    store.commit('resetWhitelistHoverImage');
+  }
+}
+
+const blockHover = (details) => {
+  const response = {};
+  const { tabId, url } = details;
+
+  console.log('BLOCK IMAGE', url);
+  // console.log('store.getters.isWhitelistedImage(url)', store.state.whitelistHoverImages);
+  console.log('store.getters.isWhitelistedImage(url)', store.getters.isWhitelistedImage(url));
+
+  if (store.getters.getOption('block_images', tabId) === 1) {
+    if (!store.getters.isWhitelistedImage(url)) {
+      // response.redirectUrl = dataImage();
+      response.cancel = true;
+    } else {
+      store.commit('whitelistHoverImage');
+    }
+  }
+  return response;
+};
 
 const blockGiphy = (details) => {
   const response = {};
@@ -28,14 +62,14 @@ const blockGiphy = (details) => {
 
       // giphy image url
       if (type === 'image' && parentFrameId === -1 && url.indexOf('.giphy.com/media') !== -1) {
-        if (url.indexOf('lowweb=' + TOKEN) === -1) {
+        if (!hasLowwebParam(url)) {
           response.redirectUrl = dataImage();
         }
       }
 
       // giphy embed iframe
       if (type === 'sub_frame' && url.indexOf('giphy.com/embed/') !== -1) {
-        if (url.indexOf('lowweb=' + TOKEN) === -1) {
+        if (!hasLowwebParam(url)) {
           response.redirectUrl = dataTextLink(url);
         }
       }

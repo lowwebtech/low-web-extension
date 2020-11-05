@@ -15,7 +15,6 @@ export function blockFiles() {
     const response = {};
 
     const { type, url, tabId } = details;
-
     switch (type) {
       case 'media':
         cancel = store.getters.getOption('block_medias', tabId);
@@ -36,7 +35,8 @@ export function blockFiles() {
         break;
       case 'image':
       case 'imageset':
-        cancel = store.getters.getOption('block_images', tabId);
+        // images are blocked inside block-images.js
+        // cancel = store.getters.getOption('block_images', tabId);
         break;
     }
 

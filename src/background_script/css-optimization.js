@@ -1,5 +1,5 @@
 import store from '../store';
-import isWebpage from '../utils/is-webpage';
+import { isWebpageUrl } from '../utils/urls';
 import RequestManager from '../controllers/RequestManager';
 
 // TODO find solution for events transitionend / animationend
@@ -23,7 +23,7 @@ export function cssOptimization() {
 }
 
 function insertCSS(tab) {
-  if (isWebpage(tab.url)) {
+  if (isWebpageUrl(tab.url)) {
     if (RequestManager.isTabActive(tab.id)) {
       let code = '';
 
