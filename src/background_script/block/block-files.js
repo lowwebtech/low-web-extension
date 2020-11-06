@@ -62,29 +62,3 @@ export function blockFiles() {
 
   Blocker.filterRequest(blockByFiletype, {});
 }
-
-// TODO look at those types
-/*
-https://developer.mozilla.org/fr/docs/Mozilla/Add-ons/WebExtensions/API/webRequest/ResourceType
-beacon
-csp_report
-font
-image
-imageset
-main_frame
-media
-object
-object_subrequest
-ping
-script
-speculative
-stylesheet
-sub_frame
-web_manifest
-websocket
-xbl
-xml_dtd
-xmlhttprequest
-xslt
-other
-*/

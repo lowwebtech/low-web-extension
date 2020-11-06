@@ -26,7 +26,6 @@ function addListeners() {
             const redirectUrl = redirect.from[j];
             if (url.indexOf(redirectUrl) !== -1) {
               response.redirectUrl = url.replace(redirectUrl, redirect.to);
-              console.log('redirect', redirectUrl, redirect.to);
               return response;
             }
           }

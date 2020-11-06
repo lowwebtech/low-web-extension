@@ -37,10 +37,6 @@ const blockHover = (details) => {
   const response = {};
   const { tabId, url } = details;
 
-  console.log('BLOCK IMAGE', url);
-  // console.log('store.getters.isWhitelistedImage(url)', store.state.whitelistHoverImages);
-  console.log('store.getters.isWhitelistedImage(url)', store.getters.isWhitelistedImage(url));
-
   if (store.getters.getOption('block_images', tabId) === 1) {
     if (!store.getters.isWhitelistedImage(url)) {
       // response.redirectUrl = dataImage();

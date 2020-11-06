@@ -3,7 +3,6 @@ import { isWebpageUrl } from '../utils/urls';
 import RequestManager from '../controllers/RequestManager';
 
 // TODO find solution for events transitionend / animationend
-// TODO add/remove listener based on css_animation
 // ISSUE transitionEnd and animationEnd not dispatched
 
 /**
@@ -13,8 +12,6 @@ import RequestManager from '../controllers/RequestManager';
  * @return {[type]} [description]
  */
 export function cssOptimization() {
-  // we can't insert css before status complete :/
-  // browser.tabs.onCreated.addListener(insertCSS);
   browser.tabs.onUpdated.addListener(function (tabId, info, tab) {
     if (info.status === 'loading' && tab.url) {
       insertCSS(tab);

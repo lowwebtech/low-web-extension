@@ -27,7 +27,7 @@ export async function localOption(name, current = true) {
     return false;
   });
 }
-function getLevel() {
+export function getLevel() {
   const { hostname } = window.location;
   if (localOptions.websitesModeChanges[hostname]) {
     // websiite mode if changed
