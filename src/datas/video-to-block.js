@@ -51,7 +51,7 @@ export default {
     oembed: 'https://www.dailymotion.com/services/oembed',
     customized: true,
     skin:
-      '<a href="##VIDEO_URL##" target="_blank">##IMAGE##<svg enable-background="new 0 0 80 80" height="80" width="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><g fill="#fff"><path d="m40.1 80c-21.8 0-40.3-18.5-40.1-40.3.3-21.4 17.7-39.2 38.8-39.7 22.2-.4 40.6 17 41.1 39.1.5 21.9-17.9 40.8-39.8 40.9" opacity=".5"/><path d="m30.8 40.3c0-4.4 0-8.8 0-13.2 0-1 .4-1.6 1.3-1.6.3 0 .6.1 1 .3 7.4 4.1 14.8 8.3 22.2 12.6.3.2.7.4 1.1.6.5.3.9.7.9 1.3s-.4 1-.9 1.3c-3.7 2.1-7.3 4.1-11 6.3-4.1 2.3-8.1 4.6-12.2 6.9 0 0-.2.1-.2.1-1.2.6-2.2 0-2.2-1.3 0-2.2 0-4.4 0-6.6z"/></g></svg><div class="lowweb__container"><div class="lowweb__author">##AUTHOR##</div><div class="lowweb__title">##TITLE##</div></div></a>',
+      '<div>##IMAGE##<svg enable-background="new 0 0 80 80" height="80" width="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><g fill="#fff"><path d="m40.1 80c-21.8 0-40.3-18.5-40.1-40.3.3-21.4 17.7-39.2 38.8-39.7 22.2-.4 40.6 17 41.1 39.1.5 21.9-17.9 40.8-39.8 40.9" opacity=".5"/><path d="m30.8 40.3c0-4.4 0-8.8 0-13.2 0-1 .4-1.6 1.3-1.6.3 0 .6.1 1 .3 7.4 4.1 14.8 8.3 22.2 12.6.3.2.7.4 1.1.6.5.3.9.7.9 1.3s-.4 1-.9 1.3c-3.7 2.1-7.3 4.1-11 6.3-4.1 2.3-8.1 4.6-12.2 6.9 0 0-.2.1-.2.1-1.2.6-2.2 0-2.2-1.3 0-2.2 0-4.4 0-6.6z"/></g></svg><div class="lowweb__container"><div class="lowweb__author">##AUTHOR##</div><div class="lowweb__title">##TITLE##</div></div></div>',
     // video_url: 'https://www.dailymotion.com/video/##ID##',
     // player: '', // 'players/Dailymotion.js',
     // api_player: 'players/Dailymotion.js',

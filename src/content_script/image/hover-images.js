@@ -1,4 +1,6 @@
 import { localOption, getLevel } from '../../utils/get-local-options';
+import { dataImage } from '../../utils/data-uri.js';
+import { cookies } from 'webextension-polyfill';
 
 export default function () {
   localOption().then((options) => {
@@ -9,6 +11,7 @@ export default function () {
       // listenPointerOver();
       listenPointerMove();
       styleBrokenImages();
+      listenNewImages();
     }
   });
 }
@@ -32,9 +35,11 @@ function onMove(e) {
 function doMove(x, y) {
   // find img from elements under mouse point
   const els = document.elementsFromPoint(x, y);
+  const picture = els.find((el) => el.tagName === 'PICTURE');
   const img = els.find((el) => el.tagName === 'IMG');
-  console.log(img);
-  if (img) {
+  if (picture) {
+    whitelistHoverImage(picture.querySelector('img'));
+  } else if (img) {
     whitelistHoverImage(img);
   }
 }
@@ -49,53 +54,114 @@ function doMove(x, y) {
 // }
 
 function whitelistHoverImage(image) {
-  // TODO clean srcset
-  const src = image.currentSrc;
+  if (image.dataset.whitelisted !== 'true') {
+    // TODO clean srcset
+    let src;
+    if (image.currentSrc !== '') src = image.currentSrc;
+    else if (image.dataset.src !== '') src = image.dataset.src;
+    else src = image.src;
 
-  browser.runtime
-    .sendMessage({
-      message: 'whitelistHoverImage',
-      options: {
-        src,
-      },
-    })
-    .then(
-      (whitelisted) => {
-        if (whitelisted) loadImage(image);
-      },
-      (e) => {
-        console.warn('error message whitelistHoverImage', e);
-      }
-    );
+    console.log('currentSrc', image.currentSrc);
+    console.log('dataset.src', image.dataset.src);
+    console.log('src', image.src);
+
+    browser.runtime
+      .sendMessage({
+        message: 'whitelistHoverImage',
+        options: {
+          src,
+        },
+      })
+      .then(
+        (whitelisted) => {
+          if (whitelisted) loadImage(image);
+        },
+        (e) => {
+          console.warn('error message whitelistHoverImage', e);
+        }
+      );
+  }
 }
 
 function loadImage(image) {
+  image.dataset.whitelisted = 'true';
+
   const currentSrc = image.currentSrc;
   image.src = '';
+  if (image.dataset.alt) image.alt = image.dataset.alt;
 
-  setTimeout(() => {
-    image.style.paddingBottom = '';
-    image.style.backgroundColor = '';
-    image.style.boxSizing = '';
-    image.classList.add('lowHover');
+  image.style.paddingBottom = '';
+  if (image.parentNode && image.parentNode.tagName === 'PICTURE') {
+    image.parentNode.classList.remove('lowNotLoaded');
+  } else {
+    image.classList.remove('lowNotLoaded');
+  }
+
+  requestAnimationFrame(() => {
     image.src = currentSrc;
-  }, 50);
+  });
 }
 
 // broken images have no height
 // add a padding-bottom for images with width/height attributes
 function styleBrokenImages() {
-  console.log('styleBrokenImages');
   const imgs = document.querySelectorAll('img');
   imgs.forEach((img) => {
+    styleImage(img);
+  });
+}
+
+function listenNewImages() {
+  const targetNode = document.querySelector('body');
+  const config = { attributes: true, childList: true, subtree: true };
+
+  // Callback function to execute when mutations are observed
+  const callback = function (mutationsList, observer) {
+    for (const mutation of mutationsList) {
+      if (mutation.addedNodes.length > 0 && mutation.addedNodes[0].tagName === 'IMG') {
+        console.log('New Image added in DOM!', mutation.addedNodes[0]);
+        styleImage(mutation.addedNodes[0]);
+      }
+    }
+  };
+
+  const observer = new MutationObserver(callback);
+  observer.observe(targetNode, config);
+}
+
+function styleImage(img) {
+  if (img.dataset.styled !== 'true') {
+    img.dataset.styled = 'true';
+
     const w = img.getAttribute('width');
     const h = img.getAttribute('height');
-    img.style.backgroundColor = '#999';
+
+    // empty alt to hide broken image icon
+    img.dataset.alt = img.alt;
+    img.alt = '';
+
+    let ratio;
     if (w && h) {
-      const ratio = parseInt(h) / parseInt(w);
-      const padd = (ratio * 100).toFixed(2) + '%';
-      img.style.paddingBottom = padd;
-      img.style.boxSizing = 'border-box';
+      ratio = parseInt(h) / parseInt(w);
+    } else {
+      ratio = 0.5;
     }
-  });
+
+    const padd = (ratio * 100).toFixed(2) + '%';
+
+    // if naturalWidth === image already loaded
+    const noNaturalSize = img.naturalWidth === 0 && img.naturalHeight === 0;
+    const isPicture = img.parentNode && img.parentNode.tagName === 'PICTURE';
+    console.log(noNaturalSize, img.height, isPicture);
+    if (noNaturalSize) {
+      if (img.style.paddingBottom === '') {
+        img.style.paddingBottom = padd;
+      }
+      if (!isPicture) {
+        img.classList.add('lowNotLoaded');
+      } else {
+        img.parentNode.classList.add('lowNotLoaded');
+      }
+    }
+  }
 }

@@ -29,6 +29,19 @@ export function blockImages(avatarTxt) {
 
 function handleUpdated(tabId, changeInfo, tabInfo) {
   if (changeInfo.status === 'loading') {
+    browser.tabs.insertCSS(null, {
+      code: `
+        .lowNotLoaded {
+          background-color: #999 !important;
+          border-box: box-sizing;
+        }
+        .lowNotLoaded img {
+          background-color: #999 !important;
+          border-box: box-sizing;
+        }
+      `,
+      allFrames: true,
+    });
     store.commit('resetWhitelistHoverImage');
   }
 }
