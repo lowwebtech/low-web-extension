@@ -20,7 +20,7 @@ import hideUselessContent from './hide-useless-content';
 import { blockImages } from './block/block-images';
 import { saveDataHeader } from './header/save-data';
 import { cssOptimization } from './css-optimization';
-import { blockEmbedVideo } from './block/block-embed-video';
+// import { clickToLoad } from './block/click-to-load';
 /* eslint-enable import/first, indent */
 
 const assets = {};
@@ -98,7 +98,7 @@ function start(data) {
     blockImages(assets.avatarTXT.data);
     blockSocial(assets.socialTXT.data);
     blockFonts(assets.fontsTXT.data);
-    blockEmbedVideo();
+    // clickToLoad();
 
     // filters, blocks or redirects from specific websites (Youtube for now)
     youtube();

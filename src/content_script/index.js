@@ -12,7 +12,7 @@ import gifPlayer from './image/gif-player';
 import hoverImages from './image/hover-images';
 import customSocial from './iframe/social';
 import mediaAttribute from './media/attributes';
-import clickToLoadVideo from './video/click-to-load';
+// import clickToLoadVideo from './video/click-to-load';
 import customPlayers from './video/custom-players';
 /* eslint-enable import/first, indent */
 
@@ -75,7 +75,7 @@ function onLoaded() {
     hoverImages();
 
     // custom video embeds click to play
-    clickToLoadVideo();
+    // clickToLoadVideo();
 
     // custom social embeds
     customSocial();
