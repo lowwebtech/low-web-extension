@@ -32,11 +32,11 @@ function handleUpdated(tabId, changeInfo, tabInfo) {
     browser.tabs.insertCSS(null, {
       code: `
         .lowNotLoaded {
-          background-color: #999 !important;
+          background-color: currentColor !important;
           border-box: box-sizing;
         }
         .lowNotLoaded img {
-          background-color: #999 !important;
+          background-color: currentColor !important;
           border-box: box-sizing;
         }
       `,
@@ -55,7 +55,7 @@ const blockHover = (details) => {
       // response.redirectUrl = dataImage();
       response.cancel = true;
     } else {
-      store.commit('whitelistHoverImage');
+      store.commit('resetWhitelistHoverImage');
     }
   }
   return response;

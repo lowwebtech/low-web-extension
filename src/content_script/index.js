@@ -16,6 +16,11 @@ import mediaAttribute from './media/attributes';
 import customPlayers from './video/custom-players';
 /* eslint-enable import/first, indent */
 
+let domContentLoaded = false;
+let loaded = false;
+let contentScripted = false;
+let tabFocused = false;
+
 // used to store url on the page and to know if website is active
 /**
  * send winwdow.location to background script
@@ -23,30 +28,30 @@ import customPlayers from './video/custom-players';
  */
 function start() {
   // no need to check here id website is activated
-  doContentScript();
+  // doContentScript();
 
   // send a message to background and verify tab/website is activate
-  // browser.runtime
-  //   .sendMessage({
-  //     message: 'isActive',
-  //     options: {
-  //       location: window.location,
-  //     },
-  //   })
-  //   .then(
-  //     (isActive) => {
-  //       console.log('response isActive ->', isActive);
-  //       if (isActive) doContentScript();
-  //     },
-  //     (e) => {
-  //       console.warn('error message isActive', e);
-  //     }
-  //   );
+  browser.runtime
+    .sendMessage({
+      message: 'isTabActive',
+      options: {
+        location: window.location,
+      },
+    })
+    .then(
+      ({ active, currentTabUrl }) => {
+        if (active) {
+          if (currentTabUrl === document.location.href) {
+            tabFocused = true;
+            doContentScript();
+          }
+        }
+      },
+      (e) => {
+        console.warn('error message isTabActive', e);
+      }
+    );
 }
-
-let domContentLoaded = false;
-let loaded = false;
-let contentScripted = false;
 
 function doContentScript() {
   contentScripted = true;
@@ -72,7 +77,7 @@ function onLoaded() {
     gifPlayer();
 
     // hover to display image
-    hoverImages();
+    hoverImages(tabFocused);
 
     // custom video embeds click to play
     // clickToLoadVideo();

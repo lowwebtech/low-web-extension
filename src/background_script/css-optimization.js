@@ -1,6 +1,6 @@
 import store from '../store';
 import { isWebpageUrl } from '../utils/urls';
-import RequestManager from '../controllers/RequestManager';
+import TabManager from '../controllers/TabManager';
 
 // TODO find solution for events transitionend / animationend
 // ISSUE transitionEnd and animationEnd not dispatched
@@ -21,7 +21,7 @@ export function cssOptimization() {
 
 function insertCSS(tab) {
   if (isWebpageUrl(tab.url)) {
-    if (RequestManager.isTabActive(tab.id)) {
+    if (TabManager.isTabActive(tab.id)) {
       let code = '';
 
       code += `img {

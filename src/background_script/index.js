@@ -1,7 +1,7 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
-import RequestManager from '../controllers/RequestManager';
+import TabManager from '../controllers/TabManager';
 import Logger from '../controllers/Logger';
 import Blocker from '../controllers/Blocker';
 import Messager from '../controllers/Messager';
@@ -80,7 +80,7 @@ function start(data) {
   // TODO: check why setTimeout is used
   setTimeout(() => {
     Logger.init();
-    RequestManager.init();
+    TabManager.init();
     Blocker.init();
     Messager.init();
 

@@ -2,7 +2,7 @@ import { HTTP_URLS } from '../datas/constants';
 import store from '../store';
 import knownRedirects from '../datas/known-to-redirect';
 // import { watch } from '../store/watch';
-import RequestManager from '../controllers/RequestManager';
+import TabManager from '../controllers/TabManager';
 
 /**
  * Redirect ressources to lower equivalent
@@ -17,7 +17,7 @@ function addListeners() {
   const handler = (details) => {
     const { url, tabId } = details;
     const response = {};
-    if (RequestManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 0) {
+    if (TabManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 0) {
       for (const knownRedirect of knownRedirects) {
         // TODO format for better parsing
         for (let i = 0, lg = knownRedirect.files.length; i < lg; i++) {

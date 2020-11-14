@@ -1,5 +1,5 @@
 import Logger from './Logger';
-import RequestManager from './RequestManager';
+import TabManager from './TabManager';
 import { HTTP_URLS } from '../datas/constants';
 
 // TODO look at faster filter -> webassembly
@@ -138,7 +138,7 @@ class BlockRequest {
       const { tabId } = details;
       if (tabId !== -1) {
         // check if current page and website is active before filtering
-        if (RequestManager.isTabActive(tabId)) {
+        if (TabManager.isTabActive(tabId)) {
           const response = callback(details);
           if (response.cancel || response.redirectUrl) {
             Logger.logBlocked(details);

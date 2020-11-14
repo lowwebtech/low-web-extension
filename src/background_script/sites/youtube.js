@@ -1,5 +1,5 @@
 import store from '../../store';
-import RequestManager from '../../controllers/RequestManager';
+import TabManager from '../../controllers/TabManager';
 
 /**
  * Specific rules for youtube
@@ -60,8 +60,8 @@ function blockVideoChannelPage(requestDetails) {
   let cancel = false;
   const response = {};
   const { tabId } = requestDetails;
-  if (RequestManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 0) {
-    const tab = RequestManager.getTab(tabId);
+  if (TabManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 0) {
+    const tab = TabManager.getTab(tabId);
     if (tab) {
       const pageUrl = tab.pageUrl;
 
@@ -81,7 +81,7 @@ function blockVideoChannelPage(requestDetails) {
 
 function onBeforeRequestCrop(requestDetails) {
   const { url, tabId } = requestDetails;
-  if (RequestManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 0) {
+  if (TabManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 0) {
     /*
     TODO regex
     https://lh3.googleusercontent.com/93uhV8K2yHkRuD63KJxlTi7SxjHS8my2emuHmGLZxEmX99_XAjTN3c_2zmKVb3XQ5d8FEkwtgbGjyYpaDQg=s256-c
@@ -111,8 +111,8 @@ function blockAllImages(requestDetails) {
   let cancel = false;
   const response = {};
   const { tabId } = requestDetails;
-  if (RequestManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 1) {
-    const tab = RequestManager.getTab(tabId);
+  if (TabManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 1) {
+    const tab = TabManager.getTab(tabId);
     if (tab) {
       const pageUrl = tab.pageUrl;
       if (pageUrl === 'https://www.youtube.com/' || pageUrl === 'https://youtube.com/') {

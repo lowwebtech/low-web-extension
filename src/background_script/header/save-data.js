@@ -1,5 +1,5 @@
 import store from '../../store';
-import RequestManager from '../../controllers/RequestManager';
+import TabManager from '../../controllers/TabManager';
 import { HTTP_URLS } from '../../datas/constants';
 // import { watch } from '../../store/watch';
 
@@ -34,7 +34,7 @@ function addListener() {
 
 function onBeforeSendHeaders(details) {
   const { tabId } = details;
-  if (RequestManager.isTabActive(tabId) && store.getters.getOption('save_data', tabId) === 1) {
+  if (TabManager.isTabActive(tabId) && store.getters.getOption('save_data', tabId) === 1) {
     var headers = details.requestHeaders;
 
     for (let i = 0, lg = headers.length; i < lg; ++i) {

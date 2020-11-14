@@ -6,7 +6,7 @@ import store from '../../store';
 export function onWhitelistHoverImage(request, sender, sendResponse) {
   if (request.message === 'whitelistHoverImage') {
     const src = request.options.src;
-    store.commit('whitelistHoverImage', [src]);
+    store.commit('whitelistHoverImage', src);
     return src;
   }
 }

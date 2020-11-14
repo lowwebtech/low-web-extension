@@ -1,4 +1,4 @@
-import RequestManager from '../controllers/RequestManager';
+import TabManager from '../controllers/TabManager';
 import options from '../datas/defaultOptions.js';
 
 const getters = {};
@@ -35,10 +35,17 @@ getters.isWhitelistedImage = (state) => (url) => {
   if (splitUrl[0] === 'https:') url = url.slice(splitUrl[0].length);
   if (splitUrl[0] === 'http:') url = url.slice(splitUrl[0].length);
   const whitelisted = state.whitelistHoverImages.find((image) => {
-    return image.indexOf(url) !== -1;
+    if (image) {
+      return image.indexOf(url) !== -1;
+    }
+    return false;
   });
   if (whitelisted) return true;
-  else return false;
+  else if (url && (url.indexOf('icon') !== -1 || url.indexOf('sprite') !== -1)) {
+    return true;
+  } else {
+    return false;
+  }
 };
 getters.isActive = (state, getters) => (pageUrl, domain) => {
   if (domain === undefined || (getters.isPageActive(pageUrl) && getters.isWebsiteActive(domain))) {
@@ -48,7 +55,7 @@ getters.isActive = (state, getters) => (pageUrl, domain) => {
   }
 };
 getters.getOption = (state, getters) => (name, tabId) => {
-  const tab = RequestManager.getTab(tabId);
+  const tab = TabManager.getTab(tabId);
   const domain = tab.domain;
   const level = getters.getLevel(domain);
   const option = getters[name][level];

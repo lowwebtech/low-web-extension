@@ -1,6 +1,6 @@
 import { isWebpageUrl } from '../../utils/urls';
 import store from '../../store';
-import RequestManager from '../../controllers/RequestManager';
+import TabManager from '../../controllers/TabManager';
 import Blocker from '../../controllers/Blocker';
 
 /**
@@ -27,7 +27,7 @@ function addListener() {
 // TODO insert styles only when needed
 function onTabUpdate(tabId, changeInfo, tab) {
   if (changeInfo.status === 'loading') {
-    if (tab.url && isWebpageUrl(tab.url) && RequestManager.isTabActive(tabId)) {
+    if (tab.url && isWebpageUrl(tab.url) && TabManager.isTabActive(tabId)) {
       if (store.getters.getOption('block_social', tabId) === 1) {
         browser.tabs
           .insertCSS(tabId, {
