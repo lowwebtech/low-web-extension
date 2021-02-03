@@ -223,18 +223,17 @@ Some CSS properties can affect rendering performance of a page (and therefore in
     - optimize image rendering (through content-visibility:auto)
 
 
-## Development
+## Development / Build
 
-- checkout git repository
-- `npm install`
-- `npm run watch` / `npm run build`
-- open `chrome://extensions/`, enable Developer Mode and Load unpacked folder : `dist/`
+- tested on node 12.20 / npm 6.14
+- installatioh : `npm install`
+- development : `npm run watch`
+- build : `npm run build` (extension will be built to dist/ folder)
 
 Pages for tests : 
 https://lowwebtech.github.io/low-web-extension/
 
 ## Contribute
-
 
 
 ## Licence
