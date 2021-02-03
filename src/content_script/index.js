@@ -21,11 +21,12 @@ import customPlayers from './video/custom-players';
  * and return if website is active (eg: not temporarily disabled)
  */
 function start() {
-  browser.runtime
+  const msgActive = browser.runtime
     .sendMessage({
       message: 'isActive',
       options: {
-        location: window.location,
+        href: window.location.href,
+        hostname: window.location.hostname,
       },
     })
     .then(
