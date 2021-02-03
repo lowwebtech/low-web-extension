@@ -35,7 +35,8 @@ function start() {
     .sendMessage({
       message: 'isTabActive',
       options: {
-        location: window.location,
+        href: window.location.href,
+        hostname: window.location.hostname,
       },
     })
     .then(

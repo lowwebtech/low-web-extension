@@ -1,6 +1,6 @@
 {
   "name": "low-web",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Reduce energy consumption and carbon footprint of your internet browsing.",
   "author": "vico@lowweb.tech",
   "license": "MIT",
@@ -73,7 +73,7 @@
     "vuex": "^3.5.1",
     "vuex-webextensions": "^1.3.0",
     "web-ext-submit": "^5.1.0",
-    "webextension-polyfill": "^0.6",
+    "webextension-polyfill": "^0.7",
     "wext-manifest": "^2.2.0"
   },
   "devDependencies": {

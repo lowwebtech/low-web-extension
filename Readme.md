@@ -1,4 +1,4 @@
-# low—web extension (v0.0.12)
+# low—web extension (v0.0.13)
 
 Reduce energy consumption and carbon footprint of your internet browsing.
 
@@ -222,18 +222,17 @@ Some CSS properties can affect rendering performance of a page (and therefore in
     - optimize image rendering (through content-visibility:auto)
 
 
-## Development
+## Development / Build
 
-- checkout git repository
-- `npm install`
-- `npm run watch` / `npm run build`
-- open `chrome://extensions/`, enable Developer Mode and Load unpacked folder : `dist/`
+- tested on node 12.20 / npm 6.14
+- installation : `npm install`
+- development : `npm start` (firefox) or `npm run dev:chrome` or `npm run dev:opera`
+- build : `npm run build` (firefox, chrome, opera) built to dist/ folder or `npm run build:firefox` or `npm run build:chrome`
 
 Pages for tests : 
 https://lowwebtech.github.io/low-web-extension/
 
 ## Contribute
-
 
 
 ## Licence

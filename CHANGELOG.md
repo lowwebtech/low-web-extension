@@ -1,3 +1,7 @@
+## 0.0.13
+- fix : firefox issue with sendMessage
+- enhance some build processes
+
 ## 0.0.12
 - performance : reduce the weight of content_script.js, smaller size means smaller initialization time
 - tasks to test the correct functioning of the extension

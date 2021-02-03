@@ -41,6 +41,9 @@ const config = {
     // 'players/Vimeo': './content_script/video/players/Vimeo.js',
     // 'players/Twitch': './content_script/video/players/Twitch.js',
   },
+  optimization: {
+    minimize: false
+  },
   output: {
     path: path.join(__dirname, 'dist', targetBrowser),
     filename: '[name].js',
