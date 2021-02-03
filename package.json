@@ -1,6 +1,6 @@
 {
   "name": "low-web",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Reduce energy consumption and carbon footprint of your internet browsing.",
   "author": "vico@lowweb.tech",
   "license": "MIT",
@@ -11,7 +11,6 @@
     "prettier:fix": "npm run prettier -- --write",
     "fix": "run-s lint:fix prettier:fix",
     "build": "run-s build:chrome build:firefox build:opera",
-    "build:dev": "cross-env NODE_ENV=development webpack --hide-modules",
     "dev:chrome": "cross-env NODE_ENV=development TARGET_BROWSER=chrome webpack --watch --mode=development",
     "dev:firefox": "cross-env NODE_ENV=development TARGET_BROWSER=firefox webpack --watch --mode=development",
     "dev:opera": "cross-env NODE_ENV=development TARGET_BROWSER=opera webpack --watch --mode=development",
@@ -21,7 +20,7 @@
     "build:zip": "node src/utils/build-zip.js",
     "build:report": "webpack-bundle-analyzer --port 4200 dist/stats.json",
     "watch:nohmr": "npm run build -- --watch",
-    "start": "cross-env HMR=true npm run build:dev -- --watch",
+    "start": "cross-env HMR=true npm run dev:firefox -- --watch",
     "release": "run-s build test build:zip release:chrome release:firefox",
     "release:firefox": "web-ext-submit --source-dir dist/firefox",
     "release:chrome": "webstore upload --source=dist/chrome --auto-publish",
@@ -75,7 +74,7 @@
     "vuex": "^3.5.1",
     "vuex-webextensions": "^1.3.0",
     "web-ext-submit": "^5.1.0",
-    "webextension-polyfill": "^0.6",
+    "webextension-polyfill": "^0.7",
     "wext-manifest": "^2.2.0"
   },
   "devDependencies": {

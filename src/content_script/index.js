@@ -25,7 +25,8 @@ function start() {
     .sendMessage({
       message: 'isActive',
       options: {
-        location: window.location,
+        href: window.location.href,
+        hostname: window.location.hostname,
       },
     })
     .then(

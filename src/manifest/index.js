@@ -1,7 +1,7 @@
 const pkg = require('../../package.json');
 
-let csp = "script-src 'self'; object-src 'self'";
-if (process.env.NODE_ENV === 'development') csp = 'script-src "self" "unsafe-eval"; object-src "self"';
+let csp = "script-src 'self'; object-src 'self'; default-src 'self'";
+if (process.env.NODE_ENV === 'development') csp = "script-src 'self' 'unsafe-eval'; object-src 'self'; default-src 'self'";
 
 const manifestInput = {
   manifest_version: 2,
