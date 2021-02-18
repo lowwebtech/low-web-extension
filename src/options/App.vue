@@ -1,43 +1,86 @@
 <template>
-  <div :class="['options', { 'options--active': active }]">
+  <div :class="['option', { 'option--active': active }]">
     <div class="input input--level">
-      <p class="input__label">Quick presets</p>
+      <p class="option__title">Define default mode:</p>
 
-      <label>
-        <button @click="clickPreset" value="0">Very low</button>
-        <button @click="clickPreset" value="1">Low</button>
-        <button @click="clickPreset" value="2">Medium</button>
+      <!-- <label>
+        <button @click="clickMode" value="0">Light</button>
+        <button @click="clickMode" value="1">Normal</button>
       </label>
+       -->
+      <div v-for="mode in modes" :key="'mode' + mode.name">
+        <input type="radio" :id="mode.id" name="mode" :value="mode.index" :checked="level === mode.index" @input="updateDefaultMode" />
+        <label :for="mode.id">{{ mode.name }}</label>
+      </div>
+      <!-- <div>
+        <input type="radio" id="normal" name="mode" value="1" :checked="level === 1" @input="updateDefaultMode" />
+        <label for="normal">Comfort</label>
+      </div> -->
     </div>
 
-    <div v-for="input in options" :class="'input input--' + input.id" :key="`input-${input.id}`">
-      <div class="input__text">
-        <p class="input__label" :id="input.id" v-html="input.label"></p>
-        <p class="input__description" v-if="input.description" v-html="input.description"></p>
+    <div class="tab">
+      <div class="tab__buttons">
+        <p class="option__title">Define options by mode:</p>
+        <ul class="inline-list">
+          <li v-for="mode in modes" :key="'button' + mode.name" :class="['tab__button', { 'tab__button--active': currentTab === mode.index }]">
+            <button :id="mode.index" @click="updateTab">{{ mode.name }}</button>
+          </li>
+        </ul>
       </div>
 
-      <div v-if="input.type === 'bool'" class="input__field inline">
-        <label
-          ><input type="radio" :key="`${input.id}-1`" :name="input.id" value="1" :checked="$store.getters[input.id] == 1 ? 'checked' : false" @input="onFieldChange" /> True</label
-        >
-        <label
-          ><input type="radio" :key="`${input.id}-0`" :name="input.id" value="0" :checked="$store.getters[input.id] == 0 ? 'checked' : false" @input="onFieldChange" /> False</label
-        >
-      </div>
+      <div class="tab__items">
+        <div v-for="mode in modes" :key="'tab' + mode.name" class="tab__item">
+          <div v-if="currentTab === mode.index">
+            <div v-for="input in options" :class="'input input--' + input.id" :key="`input-${mode.name}-${input.id}`">
+              <div v-if="input.type && input.id && $store.getters[input.id]">
+                <div class="input__text">
+                  <p class="input__label" :id="input.id" v-html="input.label"></p>
+                  <p class="input__description" v-if="input.description" v-html="input.description"></p>
+                </div>
 
-      <div v-if="input.type === 'select'" class="input__field inline">
-        <label>
-          <select :name="input.id" @input="onFieldChange">
-            <option
-              v-for="option in input.options"
-              :value="option.value"
-              :key="`option-${option.value}`"
-              :selected="$store.getters[input.id] === option.value ? 'selected' : false"
-            >
-              {{ option.label }}
-            </option>
-          </select>
-        </label>
+                <div v-if="input.type === 'bool'" class="input__field inline">
+                  <label
+                    ><input
+                      type="radio"
+                      :key="`${input.id}-1`"
+                      :name="input.id"
+                      value="1"
+                      :checked="$store.getters[input.id][mode.index] == 1 ? 'checked' : false"
+                      @input="onFieldChange"
+                    />
+                    True</label
+                  >
+                  <label
+                    ><input
+                      type="radio"
+                      :key="`${input.id}-0`"
+                      :name="input.id"
+                      value="0"
+                      :checked="$store.getters[input.id][mode.index] == 0 ? 'checked' : false"
+                      @input="onFieldChange"
+                    />
+                    False</label
+                  >
+                </div>
+
+                <div v-if="input.type === 'select'" class="input__field inline">
+                  <label>
+                    <select :name="input.id" @input="onFieldChange">
+                      <option
+                        v-for="option in input.options"
+                        :value="option.value"
+                        :key="`option-${option.value}`"
+                        :selected="$store.getters[input.id][mode.index] === option.value ? 'selected' : false"
+                      >
+                        {{ option.label }}
+                      </option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <!-- <button id="save" @click="saveOptions">Save</button> -->
@@ -48,7 +91,8 @@
 </template>
 
 <script>
-import options from '../datas/options.js';
+import options from '../datas/defaultOptions.js';
+import { getOptionById } from '../datas/options.js';
 
 // let fields = Object.keys(store.state);
 // let jsonFields = options.map((a) => a.id);
@@ -61,6 +105,19 @@ export default {
       status: '',
       options,
       active: true,
+      currentTab: 0,
+      modes: [
+        {
+          id: 'minimalist',
+          name: 'Minimalist',
+          index: 0,
+        },
+        {
+          id: 'comfort',
+          name: 'Comfort',
+          index: 1,
+        },
+      ],
     };
   },
   computed: {
@@ -68,45 +125,53 @@ export default {
       get() {
         return this.$store.state.level;
       },
-      set(value) {
-        this.$store.commit('level', value);
-        this.saved();
-      },
+      // set(value) {
+      //   console.log('commit level value', value);
+      //   this.$store.commit('level', value);
+      //   this.saved();
+      // },
     },
   },
   methods: {
-    clickPreset(e) {
+    updateDefaultMode(e) {
       this.$store.commit('level', parseInt(e.currentTarget.value));
       this.saved();
     },
     getModelId(id) {
       return id;
     },
-    onFieldChange() {
-      this.saveOptions();
+    onFieldChange(e) {
+      const target = e.currentTarget;
+      this.saveOption(target);
     },
-    saveOptions() {
-      for (let i = 0, lg = options.length; i < lg; i++) {
-        const o = options[i];
-        let val;
-        switch (o.type) {
-          case 'bool':
-            val = this.getInputValue(o.id);
-            break;
-          case 'select':
-            val = this.getSelectValue(o.id);
-            break;
-        }
-        this.$store.commit(o.id, val);
-      }
+    saveOption(target) {
+      const id = target.name;
+      const option = getOptionById(id);
+      const val = parseInt(this.getInputValue(option));
+      const values = this.$store.getters[id];
+      values[this.currentTab] = val;
+      this.$store.commit(id, values);
       this.saved();
     },
+    // saveOptions(target) {
+    //   for (let i = 0, lg = options.length; i < lg; i++) {
+    //     const o = options[i];
+    //     const val = this.getInputValue(o);
+    //     const values = this.$store.getters[o.id];
+    //     values[this.currentTab] = val;
+    //     this.$store.commit(o.id, values);
+    //   }
+    //   this.saved();
+    // },
     saved() {
       this.status = 'Options saved.';
       if (timeout) clearTimeout(timeout);
       timeout = setTimeout(() => {
         this.status = '';
       }, 1500);
+    },
+    updateTab(e) {
+      this.currentTab = parseInt(e.currentTarget.id);
     },
     checkRadioButton(name, value) {
       var radiobuttons = this.$el.querySelectorAll('input[name="' + name + '"]');
@@ -126,7 +191,15 @@ export default {
         }
       }
     },
-    getInputValue(name) {
+    getInputValue(option) {
+      switch (option.type) {
+        case 'bool':
+          return this.getRadioValue(option.id);
+        case 'select':
+          return this.getSelectValue(option.id);
+      }
+    },
+    getRadioValue(name) {
       return this.$el.querySelector('input[name="' + name + '"]:checked').value;
     },
     getSelectValue(name) {
@@ -140,7 +213,7 @@ export default {
 <style lang="scss" scoped>
 @import '../styles/common.scss';
 
-.options {
+.option {
   width: 960px;
   visibility: hidden;
 
@@ -148,14 +221,25 @@ export default {
     visibility: visible;
   }
 
+  &__title {
+    margin: 0;
+    margin-bottom: 4px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
   .input {
     white-space: nowrap;
     padding: 16px 20px;
     border-bottom: 1px solid #bbb;
-    font-size: 16px;
     &__field {
       width: 210px;
       vertical-align: top;
+    }
+    &__label {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0;
     }
     &__text {
       margin: 0;
@@ -171,11 +255,34 @@ export default {
       position: relative;
       font-size: 14px;
     }
-    &__label {
-      margin: 0;
-      margin-bottom: 4px;
-      font-weight: bold;
+  }
+}
+
+.tab {
+  &__buttons {
+    border: 0 !important;
+    padding: 16px 20px 0;
+  }
+  &__items {
+    padding: 0 20px 16px;
+  }
+  &__item {
+    background-color: #eee;
+  }
+  &__button {
+    cursor: pointer;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+    &--active {
+      opacity: 1;
+      cursor: auto;
     }
   }
+}
+.button-tab--active {
+  opacity: 1;
 }
 </style>

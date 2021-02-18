@@ -1,26 +1,19 @@
 /**
- * RequestManager tracks requests of tabs
+ * TabManager
  */
 
-import getHostname from '../../utils/get-hostname';
-import store from '../../store';
-import { HTTP_URLS } from '../../datas/constants';
+import getHostname from '../utils/get-hostname';
+import { HTTP_URLS } from '../datas/constants';
+import EventEmitter from 'tiny-emitter';
+import store from '../store';
 
-class RequestManager {
-  constructor() {
-    this.tabStorage = {};
-    this.networkFilters = {
-      urls: [HTTP_URLS],
-      types: ['main_frame'],
-    };
-  }
-
+class TabManager extends EventEmitter {
   getTab(tabId) {
-    return this.tabStorage[tabId.toString()];
-  }
-
-  getCurrentTab() {
-    return this.tabStorage[browser.tabs.getCurrent()];
+    if (tabId && this.tabStorage[tabId]) {
+      return this.tabStorage[tabId];
+    } else {
+      return false;
+    }
   }
 
   isTabActive(tabId) {
@@ -28,57 +21,42 @@ class RequestManager {
     return tab && tab.pageUrl && store.getters.isActive(tab.pageUrl, tab.domain);
   }
 
+  async isCurrentTab(tabId) {
+    return await this.getCurrentTab().then((tab) => {
+      console.log(tab);
+      return tab.id === tabId;
+    }, console.error);
+  }
+
+  async getCurrentTab() {
+    console.log('getCurrenTab');
+    const logTabs = function (tabs) {
+      const tab = tabs[0]; // Safe to assume there will only be one result
+      console.log(tab.url);
+      return tab;
+    };
+    return await browser.tabs.query({ currentWindow: true, active: true }).then(logTabs, console.error);
+  }
+
   init() {
+    this.tabStorage = {};
+    this.networkFilters = {
+      urls: [HTTP_URLS],
+      types: ['main_frame'],
+    };
+
     const cbRequestOnBefore = (details) => {
       const { tabId } = details; // requestId
       // eslint-disable-next-line no-prototype-builtins
       if (!this.tabStorage.hasOwnProperty(tabId)) {
         this.addTab(tabId);
       }
-      // if (this.tabStorage[tabId.toString()]) {
-      //   this.tabStorage[tabId.toString()].requests[requestId] = {
-      //     requestId: requestId,
-      //     url: details.url,
-      //     startTime: details.timeStamp,
-      //     status: 'pending',
-      //   };
-      // }
       return {};
     };
-
-    // const cbRequestCompleted = details => {
-    //   const { tabId, requestId } = details;
-    //   if (!this.tabStorage.hasOwnProperty(tabId.toString()) || !this.tabStorage[tabId.toString()].requests.hasOwnProperty(requestId)) {
-    //     return;
-    //   }
-    //   const request = this.tabStorage[tabId.toString()].requests[requestId];
-    //   Object.assign(request, {
-    //     endTime: details.timeStamp,
-    //     requestDuration: details.timeStamp - request.startTime,
-    //     status: 'complete',
-    //   });
-    // };
-
-    // const cbRequestErrorOccured = details => {
-    //   const { tabId, requestId } = details;
-    //   if (!this.tabStorage.hasOwnProperty(tabId.toString()) || !this.tabStorage[tabId.toString()].requests.hasOwnProperty(requestId)) {
-    //     return;
-    //   }
-    //   const request = this.tabStorage[tabId.toString()].requests[requestId];
-    //   Object.assign(request, {
-    //     endTime: details.timeStamp,
-    //     status: 'error',
-    //   });
-    // };
 
     const cbTabUpdated = (tabId) => {
       this.addTab(tabId);
     };
-
-    // const cbNavigationCommitted = info => {
-    //   console.log('onCommitted')
-    //   this.updateTabUrl(info);
-    // };
 
     const cbNavigationHistoryUpdated = (info) => {
       // console.log('onHistoryStateUpdated', info);
@@ -105,10 +83,6 @@ class RequestManager {
     };
 
     browser.webRequest.onBeforeRequest.addListener(cbRequestOnBefore, this.networkFilters);
-    // browser.webRequest.onCompleted.addListener(cbRequestCompleted, this.networkFilters);
-    // browser.webRequest.onErrorOccurred.addListener(cbRequestErrorOccured, this.networkFilters);
-
-    // browser.webNavigation.onCommitted.addListener(cbNavigationCommitted);
     browser.webNavigation.onHistoryStateUpdated.addListener(cbNavigationHistoryUpdated);
     browser.webNavigation.onBeforeNavigate.addListener(cbNavigationBeforeNavigate);
 
@@ -144,5 +118,5 @@ class RequestManager {
   }
 }
 
-const requestManager = new RequestManager();
-export default requestManager;
+const tabManager = new TabManager();
+export default tabManager;

@@ -1,6 +1,6 @@
 import queryString from 'query-string';
+import { LOWWEB } from '../datas/constants';
 import videosToBlock from '../datas/video-to-block';
-import { TOKEN } from '../datas/constants';
 
 export default function (url, autoplay = false, token = false, videoQuality = 2) {
   const u = new URL(url);
@@ -70,7 +70,7 @@ export default function (url, autoplay = false, token = false, videoQuality = 2)
   }
 
   if (token) {
-    params.lowweb = TOKEN;
+    params.lowweb = LOWWEB;
   }
 
   if (JSON.stringify(params) !== JSON.stringify(originalParams)) {

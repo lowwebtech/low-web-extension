@@ -1,22 +1,21 @@
 import Logger from './Logger';
-import RequestManager from './RequestManager';
-import { HTTP_URLS } from '../../datas/constants';
+import TabManager from './TabManager';
+import { HTTP_URLS } from '../datas/constants';
 
 // TODO look at faster filter -> webassembly
 import * as ABPFilterParser from 'abp-filter-parser';
-import { dataImage } from '../../utils/data-uri';
+import { dataImage } from '../utils/data-uri';
+import store from '../store';
 
 const blockRequests = [];
 const lists = [];
-let abpFilters = {};
+// let abpFilters = {};
 
 /**
  * Blocker class blocks webrequests based on filters' lists
  */
 class Blocker {
-  init() {
-    this.filterRequest(blockUrls);
-  }
+  init() {}
 
   /**
    * Create BlockRequest filter and listen new webRequests to block
@@ -43,6 +42,7 @@ class Blocker {
    * TODO: currently not used by Blocker
    */
   unfilterRequest(blockRequest) {
+    console.log('unfilterRequest', blockRequest);
     if (blockRequests.indexOf(blockRequest) !== -1) {
       blockRequests.splice(blockRequests.indexOf(blockRequest), 1);
       if (browser.webRequest.onBeforeRequest.hasListener(blockRequest.callback)) {
@@ -56,10 +56,10 @@ class Blocker {
    * @param {string} list TXT file of ABP Filter
    * @return
    */
-  addListToBlock(list) {
+  addListToBlock(list, option) {
     if (lists.indexOf(list) === -1) {
-      lists.push(list);
-      ABPFilterParser.parse(list, abpFilters);
+      const blockList = new BlockList(list, option);
+      lists.push(blockList);
     }
   }
 
@@ -68,23 +68,23 @@ class Blocker {
    * @param {string} list TXT file of ABP Filter
    * @return
    */
-  removeListToBlock(list) {
-    if (lists.indexOf(list) !== -1) {
-      lists.splice(lists.indexOf(list), 1);
-      this.recreateListToBlock();
-    }
-  }
+  // removeListToBlock(list) {
+  //   if (lists.indexOf(list) !== -1) {
+  //     lists.splice(lists.indexOf(list), 1);
+  //     this.recreateListToBlock();
+  //   }
+  // }
 
   /**
    * Create abpFilters based on list of TXT files
    * @return
    */
-  recreateListToBlock() {
-    abpFilters = {};
-    for (let i = 0; i < lists.length; i++) {
-      ABPFilterParser.parse(lists[i], abpFilters);
-    }
-  }
+  // recreateListToBlock() {
+  //   abpFilters = {};
+  //   for (let i = 0; i < lists.length; i++) {
+  //     ABPFilterParser.parse(lists[i], abpFilters);
+  //   }
+  // }
 }
 
 /**
@@ -94,11 +94,22 @@ class Blocker {
  */
 const blockUrls = function (details) {
   const response = {};
-  const { url, type } = details;
-  const cancel = ABPFilterParser.matches(abpFilters, url, {
-    // domain: tab.domain,
-    // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
-  });
+  const { url, type, tabId } = details;
+
+  let cancel = false;
+  if (lists.length > 0) {
+    for (let i = 0, lg = lists.length; i < lg; i++) {
+      if (store.getters.getOption(lists[i].option, tabId) === 1) {
+        if (lists[i].abpFilter) {
+          cancel = ABPFilterParser.matches(lists[i].abpFilter, url, {
+            // domain: tab.domain,
+            // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
+          });
+        }
+        if (cancel) break;
+      }
+    }
+  }
 
   if (cancel) {
     if (type === 'image') {
@@ -111,13 +122,23 @@ const blockUrls = function (details) {
   return response;
 };
 
+class BlockList {
+  constructor(list, option) {
+    this.list = list;
+    this.option = option;
+    this.abpFilter = {};
+
+    ABPFilterParser.parse(list, this.abpFilter);
+  }
+}
+
 class BlockRequest {
   constructor(callback, filter) {
     this.callback = (details) => {
       const { tabId } = details;
       if (tabId !== -1) {
         // check if current page and website is active before filtering
-        if (RequestManager.isTabActive(tabId)) {
+        if (TabManager.isTabActive(tabId)) {
           const response = callback(details);
           if (response.cancel || response.redirectUrl) {
             Logger.logBlocked(details);
@@ -132,4 +153,5 @@ class BlockRequest {
 }
 
 const blocker = new Blocker();
+blocker.filterRequest(blockUrls);
 export default blocker;

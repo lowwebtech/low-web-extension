@@ -1,49 +1,60 @@
 <template>
   <div class="popup">
-    <div class="input input--checkbox input--page">
-      <p class="input__label">Page activated:</p>
-      <div class="input__value">
-        <input type="checkbox" :checked="currentPage" @input="updateCurrentPage" name="currentPage" id="currentPage" />
-        <label for="currentPage">
-          <span class="yes" v-if="currentPage">Yes</span>
-          <span class="no" v-if="!currentPage">No</span>
-        </label>
+    <div class="input input--page">
+      <button class="popup__action" @click="disableCurrentPage" v-if="isPageActive">Deactivate on this page</button>
+      <button class="popup__action" @click="enableCurrentPage" v-if="!isPageActive">Activate on this page</button>
+    </div>
+
+    <div class="input input--site">
+      <button class="popup__action" @click="disableCurrentWebsite" v-if="isWebsiteActive">Deactivate on this website</button>
+      <button class="popup__action" @click="enableCurrentWebsite" v-if="!isWebsiteActive">Activate on this website</button>
+    </div>
+
+    <div class="input input--mode">
+      <label class="input__label">Mode on this website:</label>
+      <div>
+        <input type="radio" id="default" name="mode" :value="getDefaultValue" :checked="isDefaultMode" @input="updateCurrentMode" />
+        <label for="default">{{ getDefaultName }}</label>
+      </div>
+      <div>
+        <input type="radio" id="normal" name="mode" :value="getOtherValue" :checked="!isDefaultMode" @input="updateCurrentMode" />
+        <label for="normal">{{ getOtherName }}</label>
       </div>
     </div>
 
-    <div class="input input--checkbox input--website">
-      <p class="input__label">Website activated:</p>
-      <div class="input__value">
-        <input type="checkbox" :checked="currentWebsite" @input="updateCurrentWebsite" name="currentWebsite" id="currentWebsite" />
-        <label for="currentWebsite">
-          <span class="yes" v-if="currentWebsite">Yes</span>
-          <span class="no" v-if="!currentWebsite">No</span>
-        </label>
-      </div>
-    </div>
-
-    <hr />
-    <!-- 
-    <div class="blocked" v-html="blocked"></div>
-    <div class="optimised" v-html="optimised"></div>
- -->
-    <div class="input input--level">
-      <p class="input__label">Quick presets:</p>
-      <label>
-        <button @click="clickPreset" value="0" title="Mostly all files will be blocked">Very low</button>
-        <button @click="clickPreset" value="1" title="Unnecessary files will be blocked and some other content optimized (recommended)">Low</button>
-        <button @click="clickPreset" value="2" title="Minimal optimization (just for vegans)">Medium</button>
-      </label>
-    </div>
-
-    <div class="popup__more">
-      <p class="input__label"></p>
-      or <a href="" @click.prevent="openOptions" class="right">define your options</a>.
+    <div>
+      <button @click.prevent="openOptions">Manage options</button>
+      <button @click.prevent="openPopup" v-if="isDev">Manage popup</button>
+      <button @click.prevent="resetActive" v-if="isDev">Reset active</button>
+      <button @click.prevent="clearStorage" v-if="isDev">Clear localstorage</button>
+      <button @click.prevent="reload" v-if="isDev">Reload</button>
     </div>
 
     <div v-show="reloadNote" class="popup__note">
       <b>Some files may still be cached after reload.</b>
     </div>
+
+    <!-- <div class="input input--checkbox input--page">
+      <p class="input__label">Page activated:</p>
+      <div class="input__value">
+        <input type="checkbox" :checked="isPageActive" @input="updateCurrentPage" name="isPageActive" id="isPageActive" />
+        <label for="isPageActive">
+          <span class="yes" v-if="isPageActive">Yes</span>
+          <span class="no" v-if="!isPageActive">No</span>
+        </label>
+      </div>
+    </div> -->
+
+    <!-- <div class="input input--checkbox input--website">
+      <p class="input__label">Website activated:</p>
+      <div class="input__value">
+        <input type="checkbox" :checked="isWebsiteActive" @input="updateCurrentWebsite" name="isWebsiteActive" id="isWebsiteActive" />
+        <label for="isWebsiteActive">
+          <span class="yes" v-if="isWebsiteActive">Yes</span>
+          <span class="no" v-if="!isWebsiteActive">No</span>
+        </label>
+      </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -67,15 +78,38 @@ export default {
       get() {
         return this.$store.state.level;
       },
-      set(value) {
-        this.$store.commit('level', value);
-      },
+      // set(value) {
+      //   console.log('commit level value', value);
+      //   this.$store.commit('level', value);
+      // },
     },
-    currentPage() {
+    isPageActive() {
       return this.$store.getters.isPageActive(this.url);
     },
-    currentWebsite() {
+    isWebsiteActive() {
       return this.$store.getters.isWebsiteActive(this.hostname);
+    },
+    isDefaultMode() {
+      console.log('isDefaultMode', this.$store.getters.isDefaultMode(this.hostname));
+      return this.$store.getters.isDefaultMode(this.hostname);
+    },
+    getDefaultName() {
+      if (this.level === 0) return 'Minimalist (default)';
+      else return 'Comfort (default)';
+    },
+    getDefaultValue() {
+      return this.level;
+    },
+    getOtherName() {
+      if (this.level === 0) return 'Comfort';
+      else return 'Minimalist';
+    },
+    getOtherValue() {
+      if (this.level === 0) return 1;
+      else return 0;
+    },
+    isDev() {
+      return process.env.NODE_ENV === 'development';
     },
   },
   mounted() {
@@ -95,6 +129,11 @@ export default {
           this.hostname = u.hostname;
         }
       });
+
+    setTimeout(() => {
+      console.log(this.isDefaultMode);
+      console.log(this.$store.getters.isDefaultMode(this.hostname));
+    }, 500);
 
     const onMessageUpdateLogs = (request, sender, sendResponse) => {
       if (request.message === 'updateLogs') {
@@ -145,11 +184,25 @@ export default {
     },
     clickPreset(e) {
       this.$store.commit('level', parseInt(e.currentTarget.value));
-      if (browser.tabs) browser.tabs.reload({ bypassCache: true });
+      if (browser.tabs) browser.tabs.reload();
       this.displayReloadNote();
     },
     openOptions() {
-      browser.runtime.openOptionsPage(); // .then(onOpened, onError)
+      browser.runtime.openOptionsPage();
+    },
+    openPopup() {
+      var url = '/popup/popup.html';
+      window.open(url);
+    },
+    resetActive() {
+      this.$store.commit('resetActive');
+    },
+    clearStorage() {
+      browser.storage.local.clear();
+      browser.storage.sync.clear();
+    },
+    reload() {
+      if (browser.tabs) browser.tabs.reload();
     },
     displayReloadNote() {
       this.reloadNote = true;
@@ -158,20 +211,27 @@ export default {
         this.reloadNote = false;
       }, 4000);
     },
-    updateCurrentPage(e) {
-      if (e.target.checked) {
-        this.$store.commit('resumePage', this.url);
-      } else {
-        this.$store.commit('pausePage', this.url);
-      }
+    enableCurrentPage(e) {
+      this.$store.commit('resumePage', this.url);
       this.displayReloadNote();
     },
-    updateCurrentWebsite(e) {
-      if (e.target.checked) {
-        this.$store.commit('resumeWebsite', this.hostname);
-      } else {
-        this.$store.commit('pauseWebsite', this.hostname);
-      }
+    disableCurrentPage(e) {
+      this.$store.commit('pausePage', this.url);
+      this.displayReloadNote();
+    },
+    enableCurrentWebsite(e) {
+      this.$store.commit('resumeWebsite', this.hostname);
+      this.displayReloadNote();
+    },
+    disableCurrentWebsite(e) {
+      this.$store.commit('pauseWebsite', this.hostname);
+      this.displayReloadNote();
+    },
+    updateCurrentMode(e) {
+      this.$store.commit('changeWebsiteMode', {
+        hostname: this.hostname,
+        value: e.target.value,
+      });
       this.displayReloadNote();
     },
   },
@@ -183,14 +243,16 @@ export default {
 html,
 body {
   background: white;
-  width: 320px;
+  width: 250px;
   padding: 10px;
-  font-size: 13px;
 }
-
+p {
+  margin: 0;
+}
 .popup {
-  width: 300px;
+  width: 230px;
   margin: 10px;
+  font-size: 13px;
 
   &__more {
     margin-top: 4px;
@@ -198,6 +260,8 @@ body {
   &__note {
     text-align: center;
     margin-top: 8px;
+  }
+  &__action {
   }
   button {
     margin-top: 4px;
@@ -210,11 +274,10 @@ body {
     white-space: nowrap;
     font-size: 13px;
     &__label {
-      width: 110px;
+      width: 120px;
       display: inline-block;
       margin: 0;
       margin-bottom: 4px;
-      font-weight: bold;
     }
     &__value {
       display: inline-block;

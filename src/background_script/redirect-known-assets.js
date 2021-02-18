@@ -1,9 +1,8 @@
+import { HTTP_URLS } from '../datas/constants';
 import store from '../store';
 import knownRedirects from '../datas/known-to-redirect';
-import { watch } from '../store/watch';
-
-let listeners = [];
-let hasListener = false;
+// import { watch } from '../store/watch';
+import TabManager from '../controllers/TabManager';
 
 /**
  * Redirect ressources to lower equivalent
@@ -11,26 +10,15 @@ let hasListener = false;
  * @return
  */
 export default function () {
-  watch('website_specific', update);
-  update(store.getters.website_specific);
-}
-
-function update(newValue, oldValue) {
-  if (newValue > 0) {
-    addListeners();
-  } else {
-    removeListeners();
-  }
+  addListeners();
 }
 
 function addListeners() {
-  if (!hasListener) {
-    // console.log('listen kwon redirect');
-    hasListener = true;
-    for (const knownRedirect of knownRedirects) {
-      const listener = (details) => {
-        const { url } = details;
-        const response = {};
+  const handler = (details) => {
+    const { url, tabId } = details;
+    const response = {};
+    if (TabManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 0) {
+      for (const knownRedirect of knownRedirects) {
         // TODO format for better parsing
         for (let i = 0, lg = knownRedirect.files.length; i < lg; i++) {
           const redirect = knownRedirect.files[i];
@@ -38,27 +26,25 @@ function addListeners() {
             const redirectUrl = redirect.from[j];
             if (url.indexOf(redirectUrl) !== -1) {
               response.redirectUrl = url.replace(redirectUrl, redirect.to);
-              j = lgj;
-              i = lg;
+              return response;
             }
           }
         }
-        return response;
-      };
-      browser.webRequest.onBeforeRequest.addListener(listener, knownRedirect.filters, ['blocking']);
-      listeners.push(listener);
+      }
     }
-  }
+    return response;
+  };
+  browser.webRequest.onBeforeRequest.addListener(handler, { urls: [HTTP_URLS] }, ['blocking']);
 }
 
-function removeListeners() {
-  if (hasListener) {
-    // console.log('unlisten kwon redirect', listeners);
-    hasListener = false;
-    listeners.forEach((listener) => {
-      console.log(listener);
-      browser.webRequest.onBeforeRequest.removeListener(listener);
-    });
-    listeners = [];
-  }
-}
+// function removeListeners() {
+//   if (hasListener) {
+//     // console.log('unlisten kwon redirect', listeners);
+//     hasListener = false;
+//     listeners.forEach((listener) => {
+//       console.log(listener);
+//       browser.webRequest.onBeforeRequest.removeListener(listener);
+//     });
+//     listeners = [];
+//   }
+// }

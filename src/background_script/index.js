@@ -1,10 +1,10 @@
 /* eslint-disable import/first, indent */
 global.browser = require('webextension-polyfill');
 
-import RequestManager from './controllers/RequestManager';
-import Logger from './controllers/Logger';
-import Blocker from './controllers/Blocker';
-import Messager from './controllers/Messager';
+import TabManager from '../controllers/TabManager';
+import Logger from '../controllers/Logger';
+import Blocker from '../controllers/Blocker';
+import Messager from '../controllers/Messager';
 
 import csp from './header/csp';
 
@@ -20,7 +20,7 @@ import hideUselessContent from './hide-useless-content';
 import { blockImages } from './block/block-images';
 import { saveDataHeader } from './header/save-data';
 import { cssOptimization } from './css-optimization';
-import { blockEmbedVideo } from './block/block-embed-video';
+// import { clickToLoad } from './block/click-to-load';
 /* eslint-enable import/first, indent */
 
 const assets = {};
@@ -65,7 +65,7 @@ function load(details) {
         .catch((error) => console.log('There was a problem!', error))
     )
   )
-    .then(() => installedPage(details))
+    .then((details) => installedPage(details))
     .then((data) => {
       start(data);
     });
@@ -80,7 +80,7 @@ function start(data) {
   // TODO: check why setTimeout is used
   setTimeout(() => {
     Logger.init();
-    RequestManager.init();
+    TabManager.init();
     Blocker.init();
     Messager.init();
 
@@ -98,14 +98,14 @@ function start(data) {
     blockImages(assets.avatarTXT.data);
     blockSocial(assets.socialTXT.data);
     blockFonts(assets.fontsTXT.data);
-    blockEmbedVideo();
+    // clickToLoad();
 
     // filters, blocks or redirects from specific websites (Youtube for now)
     youtube();
     blockWebsiteSpecific(assets.website_specificTXT.data);
     redirectKnownAssets();
     hideUselessContent();
-  }, 300);
+  });
 }
 
 /**
@@ -115,7 +115,6 @@ function start(data) {
  * @return
  */
 function installedPage({ reason, temporary }) {
-  console.log('installedPage', reason, temporary);
   if (!temporary && reason === 'install') {
     // TODO create welcome page
     // const url = browser.runtime.getURL('views/installed.html');

@@ -31,27 +31,26 @@ Reducing advertising and tracking is surely what will save you the most data. We
 More than **80% of the data transferred over the Internet are videos**. This extension tries to limit their use and the quality of the videos: 
 
 - when possible, the extension chooses a low video quality. For example on Youtube.com, the video will be played in 240p, 360p or 480p (Youtube, Vimeo, Dailymotion)
-- embed video iframes are blocked and a light preview is displayed. The click on a preview opens the video on the original site or in the iframe. We use oEmbed to get informations about the videos (Youtube, Vimeo, Dailymotion, Facebook).
-- optionnaly, some optimisations are done to limit dark patterns on Youtube to reduce its attraction and avoid to lose hours on Youtube. Links and image preview on homepage and video page can be hided.
 - remove autoplay and loop parameters for embed videos and native html &lt;video&gt;
+- embeded videos (like Youtube iframes) are blocked and a light preview is displayed, this preview can be clicked to load the video. We use oEmbed to get informations about the videos (Youtube, Vimeo, Dailymotion, Facebook).
+- optionnaly, some optimisations are done to limit dark patterns on Youtube to reduce its attraction and avoid to lose hours on Youtube. Links and image preview on homepage and video page can be hided.
 - optionnaly block all requests of type: video *(default:false)*
 
 
 ### Image
 
 Several optimizations are made on the images, some are blocked and some displayed in smaller sizes.
-
+- add lazyloading to all images (native loading="lazy") *(doesn't seem to work very well, loading of images can already be start)*
 - stop animated GIF and play them when hovering. An animated GIF force browser to re-render part of the screen, it consumes CPU/GPU processes.
 - custom embeds for Giphy images. Original animated images are blocked and replaced by static images. Animated image is loaded and played when hovering.
 - block avatar images of many services including Gravatar, Discus, Twitter, Linkedin, Github, Pinterest, Reddit and [more...](https://github.com/lowwebtech/low-web-extension/blob/master/src/lists/avatar.txt)
 - ~~remove biggest or hidpi images from srcset. This prevents the browser from loading images that are too big. *(only works with lazy-loaded images eg. data-srcset, data-lazysrcset. None lazyloaded images are loading already when the extension starts and it is not possible to stop loading them)*~~
-- ~~add lazyloading to all images (native loading="lazy" or [fallback](https://github.com/verlok/lazyload))~~ *(not working due to browser restrictions, images are loading when extension start and it's not possible to stop them)*
 - optionnaly block all requests of type: image *(default:false)*
 
 
 ### And more
 
-- block different social embeds like Facebook like or share buttons. It mostly blocks scripts from embeds, so when possible embeds are still displayed and customized with injected css and when necessary datas are loaded from oEmbed.
+- block different social embeds like Facebook like or share buttons. Social embeds (Instagram, Reddit...) are also optimized and scripts are blocked (not content)
 - add the header `Save-data: on` to all requests (currently based on [Save-data: on](https://chrome.google.com/webstore/detail/save-data-on/nholpkfnmjbinlhcfihkhiehdaohlibg)). This header can be interpreted by websites to reduce weight of pages.
 - optionnaly block all requests of type: font (+ urls from font services like Google Fonts) *(default:false)*
 - disable css transition and animation *(default:false)* (:warning: break transitionend / animationend events :warning:)
@@ -83,12 +82,12 @@ Some detailed explanations about functionalities of low—web extension.
 
 #### Youtube
 
-The video quality of Youtube can only be changed automatically on the official website not in embed. A script is injected by the extension on youtube.com to adjust the quality according to the Video Quality parameter available in options repectively 240p, 360p, 480p for Very Low, Low, Medium. ([Youtube-small.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-small.js), [Youtube-medium.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-medium.js), [Youtube-large.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-large.js))
+The video quality of Youtube can only be changed automatically on the official website not in embed. A script is injected by the extension on youtube.com to adjust the quality according to the Video Quality parameter available in options repectively 144p, 360p for Light and Normal modes. ([Youtube-small.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-small.js), [Youtube-medium.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-medium.js), [Youtube-large.js](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/players/Youtube-large.js))
 
 #### Vimeo
 
 The extension changes the quality of Vimeo videos when they are embedded. A 'quality' parameter can be added to the url of a vimeo iframe (eg: https://player.vimeo.com/video/156045670?quality=360p).
-This parameter is defined at 240p, 360p, 540p depending on the "Video Quality" option, respectively for Very Low, Low, Medium. 
+This parameter is defined at 240p, 360p depending on the "Video Quality" option, respectively for Light and normal. 
 We are looking for a solution to automatically change the quality on vimeo.com.
 
 #### Dailymotion
@@ -97,7 +96,7 @@ Disabled for the moment.
 
 #### Facebook
 
-We didn't find a way to reduce automatically quality for Facebook videos. But you can set quality to standard and disable autplay in Facebook settings page : https://www.facebook.com/settings?tab=videos
+We didn't find yet a way to reduce automatically quality for Facebook videos. But you can set quality to standard and disable autoplay in Facebook settings page : https://www.facebook.com/settings?tab=videos
 
 
 ### Click to load a video

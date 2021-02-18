@@ -74,8 +74,13 @@ export default class IframeToLoad {
           }
 
           const skin = this.getSkin();
+          newIframe.dataset.src = this.el.src;
           newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin);
-
+          newIframe.addEventListener('click', (e) => {
+            newIframe.src = newIframe.dataset.src;
+            e.preventDefault();
+            return false;
+          });
           this.el.parentNode.replaceChild(newIframe, this.el);
 
           browser.runtime.sendMessage({

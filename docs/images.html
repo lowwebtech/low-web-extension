@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Image test page</title>
+  <link rel="stylesheet" type="text/css" href="./docs.css">
+</head>
+<body>
+  <h1>Images</h1>
+
+  <p></p>
+  <figure>
+    <figcaption>
+      <b>figure</b><br>
+    </figcaption>
+    <img class="half" src="" srcset="./images/image1.png 400w, ./images/image2.png 800w, ./images/image3.png 1600w" sizes="300vw" width="400" height="200" />
+  </figure>
+
+  <p>picture 1</p>
+  <picture>
+    <source srcset="./images/image1.png" media="(max-width: 500px)" />
+    <source srcset="./images/image2.png" media="(max-width: 1024px)" />
+    <source srcset="./images/image3.png" />
+    <img src="./images/image2.png" width="400" height="200" />
+  </picture>
+
+  
+  <p>picture 2</p>
+  <picture>
+    <source srcset="./images/img3.jpg" media="(max-width: 500px)" />
+    <source srcset="./images/img6.jpg" media="(max-width: 1024px)" />
+    <source srcset="./images/img12.jpg" />
+    <img src="./images/img6.jpg" />
+  </picture>
+  <br>
+
+  <p>img</p>
+  <img class="half" src="./images/image1.png" srcset="./images/image1.png 400w, ./images/image2.png 800w, ./images/image3.png 1600w" sizes="300vw" width="400" height="200" />
+</body>
+</html>

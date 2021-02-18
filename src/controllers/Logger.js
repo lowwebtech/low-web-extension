@@ -3,8 +3,8 @@
  * It is mainly used to display a "badge" icon with the number of resources blocked
  */
 
-import RequestManager from './RequestManager';
-import store from '../../store';
+import TabManager from './TabManager';
+import store from '../store';
 
 class Logger {
   constructor() {
@@ -34,19 +34,16 @@ class Logger {
       }
     };
     const onCommittedNavigationHandler = (info) => {
-      // console.log('onCommitted', info.transitionType, info);
       if (info.transitionType === 'reload' || info.transitionType === 'link') {
         this.resetLogs(info.tabId);
       }
     };
     const onBeforeNavigationHandler = (info) => {
-      // console.log('onBeforeNavigate', info);
       if (info.frameId === 0) {
         this.resetLogs(info.tabId);
       }
     };
 
-    // TODO look if all these events are necessary
     browser.tabs.onCreated.addListener(onCreatedHandler);
     browser.tabs.onUpdated.addListener(onTabUpdatedHandler);
     browser.tabs.onActivated.addListener(onTabActivatedHandler);
@@ -57,11 +54,11 @@ class Logger {
     // add handler for logging from content_script
     const onMessageLogHandler = (request, sender, sendResponse) => {
       if (request.message === 'getLogs') {
-        if (this.logsBlocked[RequestManager.currentTabId]) {
+        if (this.logsBlocked[TabManager.currentTabId]) {
           return Promise.resolve({
             message: 'getLogsResponse',
-            blocked: this.logsBlocked[RequestManager.currentTabId],
-            optimised: this.logsOptimised[RequestManager.currentTabId],
+            blocked: this.logsBlocked[TabManager.currentTabId],
+            optimised: this.logsOptimised[TabManager.currentTabId],
             result: 'ok',
           });
         }
@@ -108,7 +105,7 @@ class Logger {
   logOptimised(type, url, tabId = -1) {
     // const { type, url, tabId } = details;
     if (tabId === -1) {
-      tabId = RequestManager.currentTabId;
+      tabId = TabManager.currentTabId;
     }
 
     if (tabId) {
@@ -139,48 +136,53 @@ class Logger {
 
   updateBadgeNumber(tabId) {
     if (tabId) {
-      const tab = RequestManager.getTab(tabId);
-      const lg = this.getNumberBlocked(tabId);
+      TabManager.isCurrentTab(tabId).then((isCurrent) => {
+        if (isCurrent) {
+          const tab = TabManager.getTab(tabId);
+          const lg = this.getNumberBlocked(tabId);
 
-      let str = '';
-      let color;
-      if (!tab || store.getters.isActive(tab.pageUrl, tab.domain)) {
-        if (lg > 0) {
-          str = lg.toString();
-        }
-        color = '#00d000';
-      } else {
-        str = ' ';
-        color = '#fa593a';
-      }
-      browser.browserAction.setBadgeText({ text: str });
-      browser.browserAction.setBadgeBackgroundColor({ color: color });
+          let str = '';
+          let color;
+          if (!tab || store.getters.isActive(tab.pageUrl, tab.domain)) {
+            if (lg > 0) {
+              str = lg.toString();
+            }
+            color = '#00d000';
+          } else {
+            str = ' ';
+            color = '#fa593a';
+          }
 
-      if (RequestManager.currentTabId && this.logsBlocked[RequestManager.currentTabId]) {
-        // test if there's logs and popup is opened
-        const logsLg = Object.keys(this.logsBlocked[RequestManager.currentTabId]).length > 0;
-        const popupLg = browser.extension.getViews({ type: 'popup' }).length > 0;
-        if (logsLg > 0 && popupLg) {
-          browser.runtime
-            .sendMessage({
-              message: 'updateLogs',
-              data: {
-                blocked: this.logsBlocked[RequestManager.currentTabId],
-                optimised: this.logsOptimised[RequestManager.currentTabId],
-                tabId: RequestManager.currentTabId,
-              },
-            })
-            .then(
-              (message) => {
-                // console.log('message updateLogs', message);
-              },
-              (error) => {
-                // TODO look at error
-                console.log('error updateLogs', error);
-              }
-            );
+          browser.browserAction.setBadgeText({ text: str });
+          browser.browserAction.setBadgeBackgroundColor({ color: color });
         }
-      }
+      }, console.error);
+
+      // if (TabManager.currentTabId && this.logsBlocked[TabManager.currentTabId]) {
+      //   // test if there's logs and popup is opened
+      //   const logsLg = Object.keys(this.logsBlocked[TabManager.currentTabId]).length > 0;
+      //   const popupLg = browser.extension.getViews({ type: 'popup' }).length > 0;
+      //   if (logsLg > 0 && popupLg) {
+      //     browser.runtime
+      //       .sendMessage({
+      //         message: 'updateLogs',
+      //         data: {
+      //           blocked: this.logsBlocked[TabManager.currentTabId],
+      //           optimised: this.logsOptimised[TabManager.currentTabId],
+      //           tabId: TabManager.currentTabId,
+      //         },
+      //       })
+      //       .then(
+      //         (message) => {
+      //           // console.log('message updateLogs', message);
+      //         },
+      //         (error) => {
+      //           // TODO look at error
+      //           console.log('error updateLogs', error);
+      //         }
+      //       );
+      //   }
+      // }
     }
   }
 
