@@ -127,14 +127,6 @@ export default [
       'When a content from social media (Facebook, Instagram, Twitter, etc.) is shared on a website, many scripts (often tracking) are loaded, just to display a text or an image. These scripts are blocked, the extension automatically applies a layout imitating the original content.<br>Unnecessary features like buttons Facebook Like or Share are blocked.',
   },
   {
-    id: 'marquee_animation',
-    label: 'Disable marquee animation',
-    type: 'bool',
-    groups: ['misc', 'animation'],
-    values: [1, 1],
-    description: 'Disable old marquee animations. Animations may cause render and reflow',
-  },
-  {
     id: 'block_fonts',
     label: 'Block Fonts',
     groups: ['filetype'],
@@ -176,13 +168,21 @@ export default [
   },
   {
     id: 'css_animation',
-    label: 'Disable CSS animation',
+    label: 'Disable animation',
     type: 'bool',
     groups: ['misc', 'animation'],
     values: [1, 0],
     description:
-      'The CSS which makes it possible to layout the content, also makes it possible to animate it for example a button which change color gradually. This animation produces many screen refreshes which therefore requires more energy.<br>The transition-duration parameter is fixed at 0 seconds. The &lt;marquee&gt; element is also stopped.',
+      'CSS animation and transition are disabled. The &lt;marquee&gt; element is also stopped.',
   },
+  // {
+  //   id: 'marquee_animation',
+  //   label: 'Disable marquee animation',
+  //   type: 'bool',
+  //   groups: ['misc', 'animation'],
+  //   values: [1, 1],
+  //   description: 'Disable old marquee animations. Animations may cause render and reflow',
+  // },
   {
     id: 'css_font_rendering',
     label: 'Optimize font rendering (disable antialias)',

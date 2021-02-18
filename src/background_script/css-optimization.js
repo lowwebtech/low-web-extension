@@ -24,19 +24,20 @@ function insertCSS(tab) {
     if (TabManager.isTabActive(tab.id)) {
       let code = '';
 
-      code += `img {
-          content-visibility: auto !important;
-        }`;
-      code += `html, body {
-          scroll-behaviour: auto !important;
-        }`;
+      // code += `img {
+      //     content-visibility: auto !important;
+      //   }`;
+      // code += `html, body {
+      //     scroll-behaviour: auto !important;
+      //   }`;
 
-      if (store.getters.getOption('css_font_rendering', tab.id) === 1) {
-        code += `html, body {
-          text-rendering: optimizeSpeed !important;
-          -webkit-font-smoothing: none !important;
-        }`;
-      }
+      
+      // if (store.getters.getOption('css_font_rendering', tab.id) === 1) {
+      //   code += `html, body {
+      //     text-rendering: optimizeSpeed !important;
+      //     -webkit-font-smoothing: none !important;
+      //   }`;
+      // }
 
       if (store.getters.getOption('css_animation', tab.id) === 1) {
         code += `*, *:before, *:after {
@@ -48,12 +49,14 @@ function insertCSS(tab) {
       // TODO optimize
       // WARNING inserting css cause rendering
       // some properties may cause rendering
-      const optimizedCSS = browser.tabs.insertCSS(tab.id, {
-        code: code,
-        cssOrigin: 'user',
-        runAt: 'document_start',
-      });
-      optimizedCSS.then(null, onError);
+      if(code!==''){
+        const optimizedCSS = browser.tabs.insertCSS(tab.id, {
+          code: code,
+          cssOrigin: 'user',
+          runAt: 'document_start',
+        });
+        optimizedCSS.then(null, onError);
+      }
 
       /*
       // TODO look at contentScripts.register
