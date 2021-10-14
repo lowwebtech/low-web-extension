@@ -1,21 +1,21 @@
-import Logger from './Logger';
-import TabManager from './TabManager';
-import { HTTP_URLS } from '../datas/constants';
+import Logger from './Logger'
+import TabManager from './TabManager'
+import { HTTP_URLS } from '../datas/constants'
 
 // TODO look at faster filter -> webassembly
-import * as ABPFilterParser from 'abp-filter-parser';
-import { dataImage } from '../utils/data-uri';
-import store from '../store';
+import * as ABPFilterParser from 'abp-filter-parser'
+import { dataImage } from '../utils/data-uri'
+import store from '../store'
 
-const blockRequests = [];
-const lists = [];
+const blockRequests = []
+const lists = []
 // let abpFilters = {};
 
 /**
  * Blocker class blocks webrequests based on filters' lists
  */
 class Blocker {
-  init() {}
+  init () {}
 
   /**
    * Create BlockRequest filter and listen new webRequests to block
@@ -24,15 +24,15 @@ class Blocker {
    * @param  {Array}    extraInfoSpec webRequestBlocking extra
    * @return {BlockRequest}
    */
-  filterRequest(callback, filter = {}, extraInfoSpec = ['blocking']) {
-    filter = Object.assign({ urls: [HTTP_URLS] }, filter);
+  filterRequest (callback, filter = {}, extraInfoSpec = ['blocking']) {
+    filter = Object.assign({ urls: [HTTP_URLS] }, filter)
 
-    const blockRequest = new BlockRequest(callback, filter);
-    blockRequests.push(blockRequest);
+    const blockRequest = new BlockRequest(callback, filter)
+    blockRequests.push(blockRequest)
 
-    browser.webRequest.onBeforeRequest.addListener(blockRequest.callback, filter, extraInfoSpec);
+    browser.webRequest.onBeforeRequest.addListener(blockRequest.callback, filter, extraInfoSpec)
 
-    return blockRequest;
+    return blockRequest
   }
 
   /**
@@ -41,12 +41,12 @@ class Blocker {
    * @return {[type]}              [description]
    * TODO: currently not used by Blocker
    */
-  unfilterRequest(blockRequest) {
-    console.log('unfilterRequest', blockRequest);
+  unfilterRequest (blockRequest) {
+    console.log('unfilterRequest', blockRequest)
     if (blockRequests.indexOf(blockRequest) !== -1) {
-      blockRequests.splice(blockRequests.indexOf(blockRequest), 1);
+      blockRequests.splice(blockRequests.indexOf(blockRequest), 1)
       if (browser.webRequest.onBeforeRequest.hasListener(blockRequest.callback)) {
-        browser.webRequest.onBeforeRequest.removeListener(blockRequest.callback);
+        browser.webRequest.onBeforeRequest.removeListener(blockRequest.callback)
       }
     }
   }
@@ -56,10 +56,10 @@ class Blocker {
    * @param {string} list TXT file of ABP Filter
    * @return
    */
-  addListToBlock(list, option) {
+  addListToBlock (list, option) {
     if (lists.indexOf(list) === -1) {
-      const blockList = new BlockList(list, option);
-      lists.push(blockList);
+      const blockList = new BlockList(list, option)
+      lists.push(blockList)
     }
   }
 
@@ -93,10 +93,10 @@ class Blocker {
  * @return {object}         webRequest response
  */
 const blockUrls = function (details) {
-  const response = {};
-  const { url, type, tabId } = details;
+  const response = {}
+  const { url, type, tabId } = details
 
-  let cancel = false;
+  let cancel = false
   if (lists.length > 0) {
     for (let i = 0, lg = lists.length; i < lg; i++) {
       if (store.getters.getOption(lists[i].option, tabId) === 1) {
@@ -104,54 +104,54 @@ const blockUrls = function (details) {
           cancel = ABPFilterParser.matches(lists[i].abpFilter, url, {
             // domain: tab.domain,
             // elementTypeMaskMap: ABPFilterParser.elementTypes.IMAGE,
-          });
+          })
         }
-        if (cancel) break;
+        if (cancel) break
       }
     }
   }
 
   if (cancel) {
     if (type === 'image') {
-      response.redirectUrl = dataImage();
+      response.redirectUrl = dataImage()
     } else {
-      response.cancel = true;
+      response.cancel = true
     }
   }
 
-  return response;
-};
+  return response
+}
 
 class BlockList {
-  constructor(list, option) {
-    this.list = list;
-    this.option = option;
-    this.abpFilter = {};
+  constructor (list, option) {
+    this.list = list
+    this.option = option
+    this.abpFilter = {}
 
-    ABPFilterParser.parse(list, this.abpFilter);
+    ABPFilterParser.parse(list, this.abpFilter)
   }
 }
 
 class BlockRequest {
-  constructor(callback, filter) {
+  constructor (callback, filter) {
     this.callback = (details) => {
-      const { tabId } = details;
+      const { tabId } = details
       if (tabId !== -1) {
         // check if current page and website is active before filtering
         if (TabManager.isTabActive(tabId)) {
-          const response = callback(details);
+          const response = callback(details)
           if (response.cancel || response.redirectUrl) {
-            Logger.logBlocked(details);
+            Logger.logBlocked(details)
           }
-          return response;
+          return response
         }
       }
-      return {};
-    };
-    this.filter = filter;
+      return {}
+    }
+    this.filter = filter
   }
 }
 
-const blocker = new Blocker();
-blocker.filterRequest(blockUrls);
-export default blocker;
+const blocker = new Blocker()
+blocker.filterRequest(blockUrls)
+export default blocker

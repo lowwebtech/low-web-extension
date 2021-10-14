@@ -1,76 +1,76 @@
-import options from '../datas/defaultOptions.js';
-import getHostname from '../utils/get-hostname';
-import store from './index';
-import Vue from 'vue';
+import options from '../datas/defaultOptions.js'
+import getHostname from '../utils/get-hostname'
+import store from './index'
+import Vue from 'vue'
 
-const mutations = {};
+const mutations = {}
 for (let i = 0, lg = options.length; i < lg; i++) {
-  const o = options[i];
+  const o = options[i]
   mutations[o.id] = function (state, values) {
     // console.log(o.id, values);
-    Vue.set(state, o.id, values);
-  };
+    Vue.set(state, o.id, values)
+  }
 }
 
 mutations.url = function (state, url) {
-  state.url = url;
-  state.hostname = getHostname(url);
-};
+  state.url = url
+  state.hostname = getHostname(url)
+}
 mutations.level = function (state, level) {
-  state.level = level;
-  state.websitesModeChanges = {};
-  let o;
+  state.level = level
+  state.websitesModeChanges = {}
+  let o
   for (let i = 0, lg = options.length; i < lg; i++) {
-    o = options[i];
-    store.commit(o.id, o.values);
+    o = options[i]
+    store.commit(o.id, o.values)
   }
-};
+}
 mutations.resetWhitelistHoverImage = function (state) {
-  state.whitelistHoverImages = [];
-};
+  state.whitelistHoverImages = []
+}
 mutations.whitelistHoverImage = function (state, url) {
   if (url) {
-    state.whitelistHoverImages.push(...url);
+    state.whitelistHoverImages.push(...url)
   }
-};
+}
 mutations.pauseWebsite = function (state, website) {
-  const index = state.pausedWebsites.indexOf(website);
+  const index = state.pausedWebsites.indexOf(website)
   if (index === -1) {
-    state.pausedWebsites.push(website);
-    if (browser.tabs) browser.tabs.reload(); // bypassCache: true
+    state.pausedWebsites.push(website)
+    if (browser.tabs) browser.tabs.reload() // bypassCache: true
   }
-};
+}
 mutations.resumeWebsite = function (state, website) {
-  const index = state.pausedWebsites.indexOf(website);
+  const index = state.pausedWebsites.indexOf(website)
   if (index !== -1) {
-    state.pausedWebsites.splice(index, 1);
-    if (browser.tabs) browser.tabs.reload(); // bypassCache: true
+    state.pausedWebsites.splice(index, 1)
+    if (browser.tabs) browser.tabs.reload() // bypassCache: true
   }
-};
+}
 mutations.pausePage = function (state, page) {
-  const index = state.pausedPages.indexOf(page);
+  const index = state.pausedPages.indexOf(page)
   if (index === -1) {
-    state.pausedPages.push(page);
-    if (browser.tabs) browser.tabs.reload(); // bypassCache: true
+    state.pausedPages.push(page)
+    if (browser.tabs) browser.tabs.reload() // bypassCache: true
   }
-};
+}
 mutations.resumePage = function (state, page) {
-  const index = state.pausedPages.indexOf(page);
+  const index = state.pausedPages.indexOf(page)
   if (index !== -1) {
-    state.pausedPages.splice(index, 1);
-    if (browser.tabs) browser.tabs.reload(); // bypassCache: true
+    state.pausedPages.splice(index, 1)
+    if (browser.tabs) browser.tabs.reload() // bypassCache: true
   }
-};
+}
 mutations.changeWebsiteMode = function (state, website) {
-  console.log('this.changeWebsiteMode');
-  console.log(state.websitesModeChanges);
+  console.log('this.changeWebsiteMode')
+  console.log(state.websitesModeChanges)
   // state.websitesModeChanges = {};
   if (!state.websitesModeChanges[website.hostname]) {
-    state.websitesModeChanges[website.hostname] = website.value;
+    state.websitesModeChanges[website.hostname] = website.value
   } else {
-    delete state.websitesModeChanges[website.hostname];
+    delete state.websitesModeChanges[website.hostname]
   }
-  console.log(state.websitesModeChanges);
+  console.log(state.websitesModeChanges)
 
   // const index = state.websitesModeChanges.findIndex((w) => w.hostname === website.hostname);
   // if (index === -1) {
@@ -78,14 +78,14 @@ mutations.changeWebsiteMode = function (state, website) {
   // } else {
   //   state.websitesModeChanges.splice(index, 1);
   // }
-  if (browser.tabs) browser.tabs.reload(); // bypassCache: true
-};
+  if (browser.tabs) browser.tabs.reload() // bypassCache: true
+}
 
 mutations.resetActive = function (state) {
-  state.pausedPages = [];
-  state.pausedWebsites = [];
-  state.active = true;
-  state.websitesModeChanges = {};
-};
+  state.pausedPages = []
+  state.pausedWebsites = []
+  state.active = true
+  state.websitesModeChanges = {}
+}
 
-export default mutations;
+export default mutations

@@ -1,6 +1,6 @@
-let lazyloadSupported = false;
+let lazyloadSupported = false
 if ('loading' in HTMLImageElement.prototype) {
-  lazyloadSupported = true;
+  lazyloadSupported = true
 }
 
 /**
@@ -11,14 +11,14 @@ if ('loading' in HTMLImageElement.prototype) {
 // TODO: add option image_lazyload / iframe_lazyload
 export default function () {
   if (lazyloadSupported) {
-    const imgs = document.querySelectorAll('img');
+    const imgs = document.querySelectorAll('img')
     imgs.forEach((img) => {
-      img.loading = 'lazy';
-    });
+      img.loading = 'lazy'
+    })
 
-    const iframes = document.querySelectorAll('iframe');
+    const iframes = document.querySelectorAll('iframe')
     iframes.forEach((iframe) => {
-      iframe.loading = 'lazy';
-    });
+      iframe.loading = 'lazy'
+    })
   }
 }

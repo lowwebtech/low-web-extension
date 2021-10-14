@@ -1,7 +1,7 @@
-const pkg = require('../../package.json');
+const pkg = require('../../package.json')
 
-let csp = "script-src 'self'; object-src 'self'";
-if (process.env.NODE_ENV === 'development') csp = "script-src 'self' 'unsafe-eval'; object-src 'self'";
+let csp = "script-src 'self'; object-src 'self'"
+if (process.env.NODE_ENV === 'development') csp = "script-src 'self' 'unsafe-eval'; object-src 'self'"
 
 const manifestInput = {
   manifest_version: 2,
@@ -13,7 +13,7 @@ const manifestInput = {
     32: 'icons/favicon-48.png',
     48: 'icons/favicon-48.png',
     96: 'icons/favicon-96.png',
-    128: 'icons/favicon-128.png',
+    128: 'icons/favicon-128.png'
   },
 
   description: '__MSG_extensionDescription__',
@@ -25,11 +25,11 @@ const manifestInput = {
 
   '__chrome|firefox__author': 'lowwebtech',
   __opera__developer: {
-    name: 'lowwebtech',
+    name: 'lowwebtech'
   },
 
   __firefox__applications: {
-    gecko: { id: '{ab9c153a-f2ef-4134-9675-97498ccc160f}' },
+    gecko: { id: '{ab9c153a-f2ef-4134-9675-97498ccc160f}' }
   },
 
   __chrome__minimum_chrome_version: '49',
@@ -43,10 +43,10 @@ const manifestInput = {
       32: 'icons/favicon-32.png',
       48: 'icons/favicon-48.png',
       96: 'icons/favicon-96.png',
-      128: 'icons/favicon-128.png',
+      128: 'icons/favicon-128.png'
     },
     '__chrome|opera__chrome_style': false,
-    __firefox__browser_style: false,
+    __firefox__browser_style: false
   },
 
   '__chrome|opera__options_page': 'options/options.html',
@@ -54,12 +54,12 @@ const manifestInput = {
   options_ui: {
     page: 'options/options.html',
     open_in_tab: true,
-    __chrome__chrome_style: true,
+    __chrome__chrome_style: true
   },
 
   background: {
     scripts: ['background.js'],
-    '__chrome|opera__persistent': true,
+    '__chrome|opera__persistent': true
   },
 
   content_scripts: [
@@ -68,9 +68,9 @@ const manifestInput = {
       js: ['content_script.js'],
       css: ['content_script.css'],
       run_at: 'document_start',
-      all_frames: false,
-    },
-  ],
-};
+      all_frames: false
+    }
+  ]
+}
 
-module.exports = manifestInput;
+module.exports = manifestInput

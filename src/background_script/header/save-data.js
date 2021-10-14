@@ -1,6 +1,6 @@
-import store from '../../store';
-import TabManager from '../../controllers/TabManager';
-import { HTTP_URLS } from '../../datas/constants';
+import store from '../../store'
+import TabManager from '../../controllers/TabManager'
+import { HTTP_URLS } from '../../datas/constants'
 // import { watch } from '../../store/watch';
 
 /**
@@ -11,19 +11,19 @@ import { HTTP_URLS } from '../../datas/constants';
  *
  * @return
  */
-export function saveDataHeader() {
-  addListener();
+export function saveDataHeader () {
+  addListener()
 }
 
-function addListener() {
+function addListener () {
   if (!browser.webRequest.onBeforeSendHeaders.hasListener(onBeforeSendHeaders)) {
     browser.webRequest.onBeforeSendHeaders.addListener(
       onBeforeSendHeaders,
       {
-        urls: [HTTP_URLS],
+        urls: [HTTP_URLS]
       },
       ['blocking', 'requestHeaders']
-    );
+    )
   }
 }
 // function removeListener(){
@@ -32,25 +32,25 @@ function addListener() {
 //   }
 // }
 
-function onBeforeSendHeaders(details) {
-  const { tabId } = details;
+function onBeforeSendHeaders (details) {
+  const { tabId } = details
   if (TabManager.isTabActive(tabId) && store.getters.getOption('save_data', tabId) === 1) {
-    var headers = details.requestHeaders;
+    var headers = details.requestHeaders
 
     for (let i = 0, lg = headers.length; i < lg; ++i) {
       if ('name' in headers[i] && headers[i].name.toLowerCase().indexOf('save-data') >= 0) {
         return {
-          requestHeaders: details.requestHeaders,
-        };
+          requestHeaders: details.requestHeaders
+        }
       }
     }
 
     headers.push({
       name: 'Save-Data',
-      value: 'on',
-    });
+      value: 'on'
+    })
   }
   return {
-    requestHeaders: details.requestHeaders,
-  };
+    requestHeaders: details.requestHeaders
+  }
 }

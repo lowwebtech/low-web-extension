@@ -91,16 +91,16 @@
 </template>
 
 <script>
-import options from '../datas/defaultOptions.js';
-import { getOptionById } from '../datas/options.js';
+import options from '../datas/defaultOptions.js'
+import { getOptionById } from '../datas/options.js'
 
 // let fields = Object.keys(store.state);
 // let jsonFields = options.map((a) => a.id);
-let timeout;
+let timeout
 
 export default {
   name: 'App',
-  data() {
+  data () {
     return {
       status: '',
       options,
@@ -110,48 +110,48 @@ export default {
         {
           id: 'minimalist',
           name: 'Minimalist',
-          index: 0,
+          index: 0
         },
         {
           id: 'comfort',
           name: 'Comfort',
-          index: 1,
-        },
-      ],
-    };
+          index: 1
+        }
+      ]
+    }
   },
   computed: {
     level: {
-      get() {
-        return this.$store.state.level;
-      },
+      get () {
+        return this.$store.state.level
+      }
       // set(value) {
       //   console.log('commit level value', value);
       //   this.$store.commit('level', value);
       //   this.saved();
       // },
-    },
+    }
   },
   methods: {
-    updateDefaultMode(e) {
-      this.$store.commit('level', parseInt(e.currentTarget.value));
-      this.saved();
+    updateDefaultMode (e) {
+      this.$store.commit('level', parseInt(e.currentTarget.value))
+      this.saved()
     },
-    getModelId(id) {
-      return id;
+    getModelId (id) {
+      return id
     },
-    onFieldChange(e) {
-      const target = e.currentTarget;
-      this.saveOption(target);
+    onFieldChange (e) {
+      const target = e.currentTarget
+      this.saveOption(target)
     },
-    saveOption(target) {
-      const id = target.name;
-      const option = getOptionById(id);
-      const val = parseInt(this.getInputValue(option));
-      const values = this.$store.getters[id];
-      values[this.currentTab] = val;
-      this.$store.commit(id, values);
-      this.saved();
+    saveOption (target) {
+      const id = target.name
+      const option = getOptionById(id)
+      const val = parseInt(this.getInputValue(option))
+      const values = this.$store.getters[id]
+      values[this.currentTab] = val
+      this.$store.commit(id, values)
+      this.saved()
     },
     // saveOptions(target) {
     //   for (let i = 0, lg = options.length; i < lg; i++) {
@@ -163,52 +163,52 @@ export default {
     //   }
     //   this.saved();
     // },
-    saved() {
-      this.status = 'Options saved.';
-      if (timeout) clearTimeout(timeout);
+    saved () {
+      this.status = 'Options saved.'
+      if (timeout) clearTimeout(timeout)
       timeout = setTimeout(() => {
-        this.status = '';
-      }, 1500);
+        this.status = ''
+      }, 1500)
     },
-    updateTab(e) {
-      this.currentTab = parseInt(e.currentTarget.id);
+    updateTab (e) {
+      this.currentTab = parseInt(e.currentTarget.id)
     },
-    checkRadioButton(name, value) {
-      var radiobuttons = this.$el.querySelectorAll('input[name="' + name + '"]');
+    checkRadioButton (name, value) {
+      var radiobuttons = this.$el.querySelectorAll('input[name="' + name + '"]')
       for (let i = 0, lg = radiobuttons.length; i < lg; i++) {
         if (radiobuttons[i].value === value) {
-          radiobuttons[i].checked = true;
-          i = lg;
+          radiobuttons[i].checked = true
+          i = lg
         }
       }
     },
-    checkSelect(name, value) {
-      var select = this.$el.querySelector('select[name="' + name + '"]');
-      var options = select.querySelectorAll('option');
+    checkSelect (name, value) {
+      var select = this.$el.querySelector('select[name="' + name + '"]')
+      var options = select.querySelectorAll('option')
       for (let i = 0, lg = options.length; i < lg; i++) {
         if (options[i].value === value) {
-          select.selectedIndex = i;
+          select.selectedIndex = i
         }
       }
     },
-    getInputValue(option) {
+    getInputValue (option) {
       switch (option.type) {
         case 'bool':
-          return this.getRadioValue(option.id);
+          return this.getRadioValue(option.id)
         case 'select':
-          return this.getSelectValue(option.id);
+          return this.getSelectValue(option.id)
       }
     },
-    getRadioValue(name) {
-      return this.$el.querySelector('input[name="' + name + '"]:checked').value;
+    getRadioValue (name) {
+      return this.$el.querySelector('input[name="' + name + '"]:checked').value
     },
-    getSelectValue(name) {
-      var select = this.$el.querySelector('select[name="' + name + '"]');
-      return select.options[select.selectedIndex].value;
-    },
+    getSelectValue (name) {
+      var select = this.$el.querySelector('select[name="' + name + '"]')
+      return select.options[select.selectedIndex].value
+    }
   },
-  mounted() {},
-};
+  mounted () {}
+}
 </script>
 <style lang="scss" scoped>
 @import '../styles/common.scss';

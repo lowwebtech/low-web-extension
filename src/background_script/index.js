@@ -1,61 +1,61 @@
 /* eslint-disable import/first, indent */
-global.browser = require('webextension-polyfill');
+global.browser = require('webextension-polyfill')
 
-import TabManager from '../controllers/TabManager';
-import Logger from '../controllers/Logger';
-import Blocker from '../controllers/Blocker';
-import Messager from '../controllers/Messager';
+import TabManager from '../controllers/TabManager'
+import Logger from '../controllers/Logger'
+import Blocker from '../controllers/Blocker'
+import Messager from '../controllers/Messager'
 
-import csp from './header/csp';
+import csp from './header/csp'
 
-import { blockFiles } from './block/block-files';
-import { blockSocial } from './block/block-social';
-import { blockFonts } from './block/block-fonts';
-import { blockWebsiteSpecific } from './block/block-website-specific';
+import { blockFiles } from './block/block-files'
+import { blockSocial } from './block/block-social'
+import { blockFonts } from './block/block-fonts'
+import { blockWebsiteSpecific } from './block/block-website-specific'
 
-import youtube from './sites/youtube';
-import redirectKnownAssets from './redirect-known-assets';
-import hideUselessContent from './hide-useless-content';
+import youtube from './sites/youtube'
+import redirectKnownAssets from './redirect-known-assets'
+import hideUselessContent from './hide-useless-content'
 // import { blockAds } from './block/block-ads';
-import { blockImages } from './block/block-images';
-import { saveDataHeader } from './header/save-data';
-import { cssOptimization } from './css-optimization';
+import { blockImages } from './block/block-images'
+import { saveDataHeader } from './header/save-data'
+import { cssOptimization } from './css-optimization'
 // import { clickToLoad } from './block/click-to-load';
 /* eslint-enable import/first, indent */
 
-const assets = {};
+const assets = {}
 const assetsManifest = [
   {
     name: 'avatarTXT',
-    url: 'lists/avatar.txt',
+    url: 'lists/avatar.txt'
   },
   {
     name: 'socialTXT',
-    url: 'lists/social.txt',
+    url: 'lists/social.txt'
   },
   {
     name: 'fontsTXT',
-    url: 'lists/fonts.txt',
+    url: 'lists/fonts.txt'
   },
   {
     name: 'website_specificTXT',
-    url: 'lists/website-specific.txt',
-  },
-];
+    url: 'lists/website-specific.txt'
+  }
+]
 
 browser.runtime.onStartup.addListener((details) => {
-  load(details);
-});
+  load(details)
+})
 browser.runtime.onInstalled.addListener(async (details) => {
-  load(details);
-});
+  load(details)
+})
 
 /**
  * Load assets (txt files for ABPFiltering), then start extension
  * @param  {[type]} details [description]
  * @return {[type]}         [description]
  */
-function load(details) {
+function load (details) {
   Promise.all(
     assetsManifest.map((asset) =>
       fetch(asset.url)
@@ -67,8 +67,8 @@ function load(details) {
   )
     .then((details) => installedPage(details))
     .then((data) => {
-      start(data);
-    });
+      start(data)
+    })
 }
 
 /**
@@ -76,36 +76,36 @@ function load(details) {
  * @param  {[type]} data [description]
  * @return {[type]}      [description]
  */
-function start(data) {
+function start (data) {
   // TODO: check why setTimeout is used
   setTimeout(() => {
-    Logger.init();
-    TabManager.init();
-    Blocker.init();
-    Messager.init();
+    Logger.init()
+    TabManager.init()
+    Blocker.init()
+    Messager.init()
 
     // update CSP if necessary
-    csp();
+    csp()
 
     // add Save-Data: on header
-    saveDataHeader();
+    saveDataHeader()
 
     // insert css (with various optimisations) into all pages
-    cssOptimization();
+    cssOptimization()
 
     // filter and block webRequest
-    blockFiles();
-    blockImages(assets.avatarTXT.data);
-    blockSocial(assets.socialTXT.data);
-    blockFonts(assets.fontsTXT.data);
+    blockFiles()
+    blockImages(assets.avatarTXT.data)
+    blockSocial(assets.socialTXT.data)
+    blockFonts(assets.fontsTXT.data)
     // clickToLoad();
 
     // filters, blocks or redirects from specific websites (Youtube for now)
-    youtube();
-    blockWebsiteSpecific(assets.website_specificTXT.data);
-    redirectKnownAssets();
-    hideUselessContent();
-  });
+    youtube()
+    blockWebsiteSpecific(assets.website_specificTXT.data)
+    redirectKnownAssets()
+    hideUselessContent()
+  })
 }
 
 /**
@@ -114,26 +114,26 @@ function start(data) {
  * @param  {boolean}  options.temporary Runtime temporary mode (local)
  * @return
  */
-function installedPage({ reason, temporary }) {
+function installedPage ({ reason, temporary }) {
   if (!temporary && reason === 'install') {
     // TODO create welcome page
     // const url = browser.runtime.getURL('views/installed.html');
     // await browser.tabs.create({ url });
   }
 }
-function checkStatus(response) {
+function checkStatus (response) {
   if (response.ok) {
-    return Promise.resolve(response);
+    return Promise.resolve(response)
   } else {
-    return Promise.reject(new Error(response.statusText));
+    return Promise.reject(new Error(response.statusText))
   }
 }
-function setAsset(data, asset) {
-  asset.data = data;
-  assets[asset.name] = asset;
+function setAsset (data, asset) {
+  asset.data = data
+  assets[asset.name] = asset
 
-  return data;
+  return data
 }
-function parseTXT(response) {
-  return response.text();
+function parseTXT (response) {
+  return response.text()
 }

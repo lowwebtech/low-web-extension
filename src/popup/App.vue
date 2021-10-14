@@ -59,183 +59,183 @@
 </template>
 <script>
 /* eslint-disable import/first, indent */
-global.browser = require('webextension-polyfill');
+global.browser = require('webextension-polyfill')
 /* eslint-enable import/first, indent */
 
 export default {
-  data() {
+  data () {
     return {
       active: this.$store.state.active,
       url: false,
       hostname: false,
       reloadNote: false,
       blocked: '',
-      optimised: '',
-    };
+      optimised: ''
+    }
   },
   computed: {
     level: {
-      get() {
-        return this.$store.state.level;
-      },
+      get () {
+        return this.$store.state.level
+      }
       // set(value) {
       //   console.log('commit level value', value);
       //   this.$store.commit('level', value);
       // },
     },
-    isPageActive() {
-      return this.$store.getters.isPageActive(this.url);
+    isPageActive () {
+      return this.$store.getters.isPageActive(this.url)
     },
-    isWebsiteActive() {
-      return this.$store.getters.isWebsiteActive(this.hostname);
+    isWebsiteActive () {
+      return this.$store.getters.isWebsiteActive(this.hostname)
     },
-    isDefaultMode() {
-      console.log('isDefaultMode', this.$store.getters.isDefaultMode(this.hostname));
-      return this.$store.getters.isDefaultMode(this.hostname);
+    isDefaultMode () {
+      console.log('isDefaultMode', this.$store.getters.isDefaultMode(this.hostname))
+      return this.$store.getters.isDefaultMode(this.hostname)
     },
-    getDefaultName() {
-      if (this.level === 0) return 'Minimalist (default)';
-      else return 'Comfort (default)';
+    getDefaultName () {
+      if (this.level === 0) return 'Minimalist (default)'
+      else return 'Comfort (default)'
     },
-    getDefaultValue() {
-      return this.level;
+    getDefaultValue () {
+      return this.level
     },
-    getOtherName() {
-      if (this.level === 0) return 'Comfort';
-      else return 'Minimalist';
+    getOtherName () {
+      if (this.level === 0) return 'Comfort'
+      else return 'Minimalist'
     },
-    getOtherValue() {
-      if (this.level === 0) return 1;
-      else return 0;
+    getOtherValue () {
+      if (this.level === 0) return 1
+      else return 0
     },
-    isDev() {
-      return process.env.NODE_ENV === 'development';
-    },
+    isDev () {
+      return process.env.NODE_ENV === 'development'
+    }
   },
-  mounted() {
+  mounted () {
     browser.tabs
       .query({ active: true, lastFocusedWindow: true })
       .then((tabs) => {
         if (tabs.length > 0) {
-          return tabs[0].url;
+          return tabs[0].url
         } else {
-          return -1;
+          return -1
         }
       })
       .then((url) => {
-        this.url = url;
+        this.url = url
         if (url && url !== -1) {
-          const u = new URL(url);
-          this.hostname = u.hostname;
+          const u = new URL(url)
+          this.hostname = u.hostname
         }
-      });
+      })
 
     setTimeout(() => {
-      console.log(this.isDefaultMode);
-      console.log(this.$store.getters.isDefaultMode(this.hostname));
-    }, 500);
+      console.log(this.isDefaultMode)
+      console.log(this.$store.getters.isDefaultMode(this.hostname))
+    }, 500)
 
     const onMessageUpdateLogs = (request, sender, sendResponse) => {
       if (request.message === 'updateLogs') {
         if (request.data && request.data.logs) {
-          this.blocked = 'Files blocked : ' + this.formatLogs(request.data.blocked);
-          this.optimised = 'Files optimised : ' + this.formatLogs(request.data.optimised);
-          return Promise.resolve({ message: 'logsUpdated', result: 'ok' });
+          this.blocked = 'Files blocked : ' + this.formatLogs(request.data.blocked)
+          this.optimised = 'Files optimised : ' + this.formatLogs(request.data.optimised)
+          return Promise.resolve({ message: 'logsUpdated', result: 'ok' })
         }
       }
-      return true;
-    };
+      return true
+    }
     if (!browser.runtime.onMessage.hasListener(onMessageUpdateLogs)) {
-      browser.runtime.onMessage.addListener(onMessageUpdateLogs);
+      browser.runtime.onMessage.addListener(onMessageUpdateLogs)
     }
 
     const logsHandler = (response) => {
-      this.formatResponse(response);
-    };
+      this.formatResponse(response)
+    }
     browser.runtime
       .sendMessage({
-        message: 'getLogs',
+        message: 'getLogs'
       })
       .then(logsHandler, (e) => {
-        console.log('error message logs', e);
-      });
+        console.log('error message logs', e)
+      })
   },
   methods: {
-    formatResponse(response) {
+    formatResponse (response) {
       if (response) {
-        if (response.blocked) this.blocked = 'Blocked: ' + this.formatLogs(response.blocked);
-        if (response.optimised) this.optimised = 'Optimised: ' + this.formatLogs(response.optimised);
+        if (response.blocked) this.blocked = 'Blocked: ' + this.formatLogs(response.blocked)
+        if (response.optimised) this.optimised = 'Optimised: ' + this.formatLogs(response.optimised)
       }
     },
-    formatLogs(logs) {
-      let str = '';
-      const keys = Object.keys(logs);
+    formatLogs (logs) {
+      let str = ''
+      const keys = Object.keys(logs)
       if (keys.length > 0) {
-        let k;
-        str = '';
+        let k
+        str = ''
         for (const key of keys) {
-          k = key;
-          if (logs[key].length > 1) k += 's';
-          str += logs[key].length + ' ' + k + ', ';
+          k = key
+          if (logs[key].length > 1) k += 's'
+          str += logs[key].length + ' ' + k + ', '
         }
-        str = str.substring(0, str.length - 2);
+        str = str.substring(0, str.length - 2)
       }
-      return str;
+      return str
     },
-    clickPreset(e) {
-      this.$store.commit('level', parseInt(e.currentTarget.value));
-      if (browser.tabs) browser.tabs.reload();
-      this.displayReloadNote();
+    clickPreset (e) {
+      this.$store.commit('level', parseInt(e.currentTarget.value))
+      if (browser.tabs) browser.tabs.reload()
+      this.displayReloadNote()
     },
-    openOptions() {
-      browser.runtime.openOptionsPage();
+    openOptions () {
+      browser.runtime.openOptionsPage()
     },
-    openPopup() {
-      var url = '/popup/popup.html';
-      window.open(url);
+    openPopup () {
+      var url = '/popup/popup.html'
+      window.open(url)
     },
-    resetActive() {
-      this.$store.commit('resetActive');
+    resetActive () {
+      this.$store.commit('resetActive')
     },
-    clearStorage() {
-      browser.storage.local.clear();
-      browser.storage.sync.clear();
+    clearStorage () {
+      browser.storage.local.clear()
+      browser.storage.sync.clear()
     },
-    reload() {
-      if (browser.tabs) browser.tabs.reload();
+    reload () {
+      if (browser.tabs) browser.tabs.reload()
     },
-    displayReloadNote() {
-      this.reloadNote = true;
-      if (this.timeout) clearTimeout(this.timeout);
+    displayReloadNote () {
+      this.reloadNote = true
+      if (this.timeout) clearTimeout(this.timeout)
       this.timeout = setTimeout(() => {
-        this.reloadNote = false;
-      }, 4000);
+        this.reloadNote = false
+      }, 4000)
     },
-    enableCurrentPage(e) {
-      this.$store.commit('resumePage', this.url);
-      this.displayReloadNote();
+    enableCurrentPage (e) {
+      this.$store.commit('resumePage', this.url)
+      this.displayReloadNote()
     },
-    disableCurrentPage(e) {
-      this.$store.commit('pausePage', this.url);
-      this.displayReloadNote();
+    disableCurrentPage (e) {
+      this.$store.commit('pausePage', this.url)
+      this.displayReloadNote()
     },
-    enableCurrentWebsite(e) {
-      this.$store.commit('resumeWebsite', this.hostname);
-      this.displayReloadNote();
+    enableCurrentWebsite (e) {
+      this.$store.commit('resumeWebsite', this.hostname)
+      this.displayReloadNote()
     },
-    disableCurrentWebsite(e) {
-      this.$store.commit('pauseWebsite', this.hostname);
-      this.displayReloadNote();
+    disableCurrentWebsite (e) {
+      this.$store.commit('pauseWebsite', this.hostname)
+      this.displayReloadNote()
     },
-    updateCurrentMode(e) {
+    updateCurrentMode (e) {
       this.$store.commit('changeWebsiteMode', {
         hostname: this.hostname,
-        value: e.target.value,
-      });
-      this.displayReloadNote();
-    },
-  },
-};
+        value: e.target.value
+      })
+      this.displayReloadNote()
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 @import '../styles/common.scss';

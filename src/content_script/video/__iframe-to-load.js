@@ -1,125 +1,125 @@
-import DOMPurify from 'dompurify';
-import videoToBlock from '../../datas/video-to-block';
-import { localOption } from '../../utils/get-local-options';
-import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId } from '../../utils/get-video-id';
-import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url';
+import DOMPurify from 'dompurify'
+import videoToBlock from '../../datas/video-to-block'
+import { localOption } from '../../utils/get-local-options'
+import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId } from '../../utils/get-video-id'
+import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url'
 
 /**
  * Custom video iframe
  */
-let videoQuality = 1;
+let videoQuality = 1
 export default class IframeToLoad {
-  constructor(el, style) {
-    this.el = el;
-    this.style = style;
+  constructor (el, style) {
+    this.el = el
+    this.style = style
 
-    let src = el.src;
+    let src = el.src
     if (!src || src === '') {
-      src = el.dataset.src;
+      src = el.dataset.src
     }
 
     localOption('video_quality').then((quality) => {
-      videoQuality = quality;
-    });
+      videoQuality = quality
+    })
 
     if (src) {
-      this.type = videoBlocked(src);
+      this.type = videoBlocked(src)
       if (this.type !== false) {
-        this.dataVideoBlock = videoToBlock[this.type];
-        const id = getId(src, this.type);
+        this.dataVideoBlock = videoToBlock[this.type]
+        const id = getId(src, this.type)
 
         if (this.dataVideoBlock.video_url !== '' && this.dataVideoBlock.oembed !== '' && id) {
-          this.videoUrl = this.dataVideoBlock.video_url.replace('##ID##', id);
+          this.videoUrl = this.dataVideoBlock.video_url.replace('##ID##', id)
 
           if (this.videoUrl) {
-            const oembedUrl = this.dataVideoBlock.oembed + '?format=json&url=' + encodeURIComponent(this.videoUrl);
+            const oembedUrl = this.dataVideoBlock.oembed + '?format=json&url=' + encodeURIComponent(this.videoUrl)
 
             const options = {
               message: 'oembed',
               options: {
                 type: this.type,
                 videoUrl: this.videoUrl,
-                oembedUrl: oembedUrl,
-              },
-            };
+                oembedUrl: oembedUrl
+              }
+            }
 
             browser.runtime.sendMessage(options).then(
               (e) => this.onOEmbed(e),
               (e) => {
-                console.error('error message click-to-load', e);
+                console.error('error message click-to-load', e)
               }
-            );
+            )
           }
         }
       }
     }
   }
 
-  onOEmbed(response) {
+  onOEmbed (response) {
     if (response && response.data) {
       if (this.dataVideoBlock.skin) {
         // test parentNode, iframe may be removed from the dom
         if (this.el && this.el.parentNode) {
-          this.data = response.data;
-          this.id = getId(this.el.src, this.type);
+          this.data = response.data
+          this.id = getId(this.el.src, this.type)
 
-          const newIframe = document.createElement('iframe');
+          const newIframe = document.createElement('iframe')
           // copy html attributes from original iframe
           // TODO limit to known attributes
           for (let i = 0; i < this.el.attributes.length; i++) {
-            const a = this.el.attributes[i];
+            const a = this.el.attributes[i]
             if (a.name !== 'src') {
-              newIframe.setAttribute(a.name, a.value);
+              newIframe.setAttribute(a.name, a.value)
             }
           }
 
-          const skin = this.getSkin();
-          newIframe.dataset.src = this.el.src;
-          newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin);
+          const skin = this.getSkin()
+          newIframe.dataset.src = this.el.src
+          newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin)
           newIframe.addEventListener('click', (e) => {
-            newIframe.src = newIframe.dataset.src;
-            e.preventDefault();
-            return false;
-          });
-          this.el.parentNode.replaceChild(newIframe, this.el);
+            newIframe.src = newIframe.dataset.src
+            e.preventDefault()
+            return false
+          })
+          this.el.parentNode.replaceChild(newIframe, this.el)
 
           browser.runtime.sendMessage({
             message: 'logOptimised',
             data: {
               type: 'click-to-load',
               tabId: response.tabId,
-              url: this.videoUrl,
-            },
-          });
+              url: this.videoUrl
+            }
+          })
         }
       }
     }
   }
 
-  getSkin() {
-    let skin = this.dataVideoBlock.skin;
+  getSkin () {
+    let skin = this.dataVideoBlock.skin
 
-    const title = this.getTitle();
-    const thumb = this.getThumb();
+    const title = this.getTitle()
+    const thumb = this.getThumb()
     if (title) {
-      skin = skin.replace('##TITLE##', title);
+      skin = skin.replace('##TITLE##', title)
     }
     if (this.data.description) {
-      skin = skin.replace('##DESCRIPTION##', this.data.description);
+      skin = skin.replace('##DESCRIPTION##', this.data.description)
     }
     if (this.data.author_name) {
-      skin = skin.replace('##AUTHOR##', this.data.author_name);
+      skin = skin.replace('##AUTHOR##', this.data.author_name)
     }
     if (thumb) {
-      skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" />');
+      skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" />')
     }
     if (this.videoUrl) {
       if (this.videoUrl.indexOf(this.dataVideoBlock.embed_url) !== -1) {
-        console.log('---sanitize', videoQuality);
-        this.videoUrl = sanitizeEmbedUrl(this.videoUrl, true, true, videoQuality);
-        skin = skin.replace('_blank', '_self');
+        console.log('---sanitize', videoQuality)
+        this.videoUrl = sanitizeEmbedUrl(this.videoUrl, true, true, videoQuality)
+        skin = skin.replace('_blank', '_self')
       }
-      skin = skin.replace('##VIDEO_URL##', this.videoUrl);
+      skin = skin.replace('##VIDEO_URL##', this.videoUrl)
     }
 
     skin =
@@ -129,26 +129,26 @@ export default class IframeToLoad {
       DOMPurify.sanitize(this.type) +
       '"><div>' +
       DOMPurify.sanitize(skin) +
-      '</div></div>';
+      '</div></div>'
 
-    return skin;
+    return skin
   }
 
-  getThumb() {
-    let thumb = this.data.thumbnail_url;
+  getThumb () {
+    let thumb = this.data.thumbnail_url
     if (this.type === 'youtube') {
-      thumb = thumb.replace('hqdefault', 'mqdefault');
+      thumb = thumb.replace('hqdefault', 'mqdefault')
     }
     // some oembed doesn't provide thumbnail_url
     if (!thumb && this.dataVideoBlock.image !== '') {
-      thumb = this.dataVideoBlock.image.replace('##ID##', this.id);
+      thumb = this.dataVideoBlock.image.replace('##ID##', this.id)
     }
-    return thumb;
+    return thumb
   }
 
-  getTitle() {
+  getTitle () {
     if (this.data.title) {
-      return this.data.title;
+      return this.data.title
     }
     // else if (this.type === 'facebook') {
     //   const parser = new DOMParser();
@@ -161,37 +161,37 @@ export default class IframeToLoad {
   }
 }
 
-function videoBlocked(url) {
-  const keys = Object.keys(videoToBlock);
+function videoBlocked (url) {
+  const keys = Object.keys(videoToBlock)
   for (const key of keys) {
     if (url.indexOf(videoToBlock[key].embed_url) !== -1) {
-      return key;
+      return key
     }
   }
-  return false;
+  return false
 }
 
-function getId(url, type) {
-  const u = new URL(url);
-  const path = u.origin + u.pathname;
+function getId (url, type) {
+  const u = new URL(url)
+  const path = u.origin + u.pathname
 
-  let id;
+  let id
   switch (type) {
     case 'youtube':
-      id = getYoutubeId(path);
-      break;
+      id = getYoutubeId(path)
+      break
     case 'vimeo':
-      id = getVimeoId(path);
-      break;
+      id = getVimeoId(path)
+      break
     case 'dailymotion':
-      id = getDailymotionId(path);
-      break;
+      id = getDailymotionId(path)
+      break
     case 'twitch':
-      id = getTwitchId(path);
-      break;
+      id = getTwitchId(path)
+      break
     case 'facebook':
-      id = getFacebookId(url);
-      break;
+      id = getFacebookId(url)
+      break
   }
-  return id;
+  return id
 }

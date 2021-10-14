@@ -1,13 +1,13 @@
-import DOMPurify from 'dompurify';
-import { localOption } from '../../utils/get-local-options';
+import DOMPurify from 'dompurify'
+import { localOption } from '../../utils/get-local-options'
 
 /**
  * Used to load datas from oEmbed APis and customize social embeds
  */
 export default function () {
   localOption('block_social').then((value) => {
-    if (value === 1) customInstagram();
-  });
+    if (value === 1) customInstagram()
+  })
 }
 
 /**
@@ -16,36 +16,36 @@ export default function () {
  *
  * The original Instagram embed loads a script to retrieve this image url and also loads a whole bunch of tracker...
  */
-function customInstagram() {
-  const instagramEmbeds = document.querySelectorAll('blockquote.instagram-media');
+function customInstagram () {
+  const instagramEmbeds = document.querySelectorAll('blockquote.instagram-media')
 
   instagramEmbeds.forEach((embed) => {
-    const url = new URL(embed.querySelector('a').href);
-    const embedUrl = url.origin + url.pathname;
-    const oembedUrl = 'https://api.instagram.com/oembed?format=json&url=' + encodeURIComponent(embedUrl);
+    const url = new URL(embed.querySelector('a').href)
+    const embedUrl = url.origin + url.pathname
+    const oembedUrl = 'https://api.instagram.com/oembed?format=json&url=' + encodeURIComponent(embedUrl)
 
     const options = {
       message: 'oembed',
       options: {
         type: 'instagram',
-        oembedUrl: oembedUrl,
-      },
-    };
+        oembedUrl: oembedUrl
+      }
+    }
 
     const callback = function (res) {
       if (res && res.data.thumbnail_url) {
-        const img = document.createElement('img');
-        img.style.width = '100%';
-        img.style.height = 'auto';
-        img.src = res.data.thumbnail_url;
-        const container = embed.querySelector('a');
+        const img = document.createElement('img')
+        img.style.width = '100%'
+        img.style.height = 'auto'
+        img.src = res.data.thumbnail_url
+        const container = embed.querySelector('a')
         // container.textContent = '';
         // container.appendChild(img);
-        container.innerHTML = DOMPurify.sanitize(img);
+        container.innerHTML = DOMPurify.sanitize(img)
       }
-    };
+    }
     browser.runtime.sendMessage(options).then(callback, (e) => {
-      console.error('error message social', e);
-    });
-  });
+      console.error('error message social', e)
+    })
+  })
 }

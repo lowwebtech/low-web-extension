@@ -1,32 +1,32 @@
 // TODO
 /* eslint-disable import/first, indent */
-global.browser = require('webextension-polyfill');
+global.browser = require('webextension-polyfill')
 
 // import '../styles/social.scss';
 
 // TODO load on demand
-import imageSrcset from './image/srcset';
-import lazyload from './lazyload';
-import marquee from './marquee';
-import gifPlayer from './image/gif-player';
-import hoverImages from './image/hover-images';
-import customSocial from './iframe/social';
-import mediaAttribute from './media/attributes';
+import imageSrcset from './image/srcset'
+import lazyload from './lazyload'
+import marquee from './marquee'
+import gifPlayer from './image/gif-player'
+import hoverImages from './image/hover-images'
+import customSocial from './iframe/social'
+import mediaAttribute from './media/attributes'
 // import clickToLoadVideo from './video/click-to-load';
-import customPlayers from './video/custom-players';
+import customPlayers from './video/custom-players'
 /* eslint-enable import/first, indent */
 
-let domContentLoaded = false;
-let loaded = false;
-let contentScripted = false;
-let tabFocused = false;
+let domContentLoaded = false
+let loaded = false
+let contentScripted = false
+let tabFocused = false
 
 // used to store url on the page and to know if website is active
 /**
  * send winwdow.location to background script
  * and return if website is active (eg: not temporarily disabled)
  */
-function start() {
+function start () {
   // no need to check here id website is activated
   // doContentScript();
 
@@ -36,70 +36,70 @@ function start() {
       message: 'isTabActive',
       options: {
         href: window.location.href,
-        hostname: window.location.hostname,
-      },
+        hostname: window.location.hostname
+      }
     })
     .then(
       ({ active, currentTabUrl }) => {
         if (active) {
           if (currentTabUrl === document.location.href) {
-            tabFocused = true;
-            doContentScript();
+            tabFocused = true
+            doContentScript()
           }
         }
       },
       (e) => {
-        console.warn('error message isTabActive', e);
+        console.warn('error message isTabActive', e)
       }
-    );
+    )
 }
 
-function doContentScript() {
-  contentScripted = true;
+function doContentScript () {
+  contentScripted = true
 
-  if (domContentLoaded) onDomLoaded();
-  if (loaded) onLoaded();
+  if (domContentLoaded) onDomLoaded()
+  if (loaded) onLoaded()
 }
 
-function onDomLoaded() {
+function onDomLoaded () {
   // clean srcset and remove biggest images
-  imageSrcset();
-  lazyload();
+  imageSrcset()
+  lazyload()
 
   // custom video attribute
-  mediaAttribute();
+  mediaAttribute()
 }
-function onLoaded() {
+function onLoaded () {
   requestAnimationFrame(() => {
     // disable marquee animation
-    marquee();
+    marquee()
 
     // custom gif/play when over them
-    gifPlayer();
+    gifPlayer()
 
     // hover to display image
-    hoverImages(tabFocused);
+    hoverImages(tabFocused)
 
     // custom video embeds click to play
     // clickToLoadVideo();
 
     // custom social embeds
-    customSocial();
+    customSocial()
 
     // custom video player low quality
     // TODO import only for video-to-block
-    customPlayers();
-  });
+    customPlayers()
+  })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  domContentLoaded = true;
-  if (contentScripted) onDomLoaded();
-});
+  domContentLoaded = true
+  if (contentScripted) onDomLoaded()
+})
 
 window.addEventListener('load', () => {
-  loaded = true;
-  if (contentScripted) onLoaded();
-});
+  loaded = true
+  if (contentScripted) onLoaded()
+})
 
-start();
+start()

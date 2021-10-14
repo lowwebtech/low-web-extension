@@ -1,8 +1,8 @@
-import { HTTP_URLS } from '../datas/constants';
-import store from '../store';
-import knownRedirects from '../datas/known-to-redirect';
+import { HTTP_URLS } from '../datas/constants'
+import store from '../store'
+import knownRedirects from '../datas/known-to-redirect'
 // import { watch } from '../store/watch';
-import TabManager from '../controllers/TabManager';
+import TabManager from '../controllers/TabManager'
 
 /**
  * Redirect ressources to lower equivalent
@@ -10,31 +10,31 @@ import TabManager from '../controllers/TabManager';
  * @return
  */
 export default function () {
-  addListeners();
+  addListeners()
 }
 
-function addListeners() {
+function addListeners () {
   const handler = (details) => {
-    const { url, tabId } = details;
-    const response = {};
+    const { url, tabId } = details
+    const response = {}
     if (TabManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 0) {
       for (const knownRedirect of knownRedirects) {
         // TODO format for better parsing
         for (let i = 0, lg = knownRedirect.files.length; i < lg; i++) {
-          const redirect = knownRedirect.files[i];
+          const redirect = knownRedirect.files[i]
           for (let j = 0, lgj = redirect.from.length; j < lgj; j++) {
-            const redirectUrl = redirect.from[j];
+            const redirectUrl = redirect.from[j]
             if (url.indexOf(redirectUrl) !== -1) {
-              response.redirectUrl = url.replace(redirectUrl, redirect.to);
-              return response;
+              response.redirectUrl = url.replace(redirectUrl, redirect.to)
+              return response
             }
           }
         }
       }
     }
-    return response;
-  };
-  browser.webRequest.onBeforeRequest.addListener(handler, { urls: [HTTP_URLS] }, ['blocking']);
+    return response
+  }
+  browser.webRequest.onBeforeRequest.addListener(handler, { urls: [HTTP_URLS] }, ['blocking'])
 }
 
 // function removeListeners() {

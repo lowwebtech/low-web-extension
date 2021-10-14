@@ -7,7 +7,7 @@ export default [
           ytd-thumbnail #mouseover-overlay{
             display:none!important;
           }
-          `,
+          `
     // runAt: 'document_start',
-  },
-];
+  }
+]

@@ -1,55 +1,55 @@
-import store from '../../store';
-import { dataTextLink } from '../../utils/data-uri';
-import Blocker from '../../controllers/Blocker';
+import store from '../../store'
+import { dataTextLink } from '../../utils/data-uri'
+import Blocker from '../../controllers/Blocker'
 
 /**
  * Filters and blocks requests by filetype
  * @return {object} webRequest response
  */
 // TODO used Request Filetype filters
-export function blockFiles() {
+export function blockFiles () {
   const blockByFiletype = function (details) {
     // console.log(details);
-    let cancel = 0;
-    let redirect = false;
-    const response = {};
+    let cancel = 0
+    let redirect = false
+    const response = {}
 
-    const { type, url, tabId } = details;
+    const { type, url, tabId } = details
     switch (type) {
       case 'media':
-        cancel = store.getters.getOption('block_medias', tabId);
-        break;
+        cancel = store.getters.getOption('block_medias', tabId)
+        break
       case 'object':
       case 'object_subrequest':
-        cancel = store.getters.getOption('block_objects', tabId);
-        break;
+        cancel = store.getters.getOption('block_objects', tabId)
+        break
       case 'sub_frame':
-        if (store.getters.getOption('block_subframes', tabId) === 1) redirect = dataTextLink(url);
-        break;
+        if (store.getters.getOption('block_subframes', tabId) === 1) redirect = dataTextLink(url)
+        break
       case 'font':
         // exclude main fonts used for icons
         // TODO external whitelist-icon-font
         if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('ico') === -1) {
-          cancel = store.getters.getOption('block_fonts', tabId);
+          cancel = store.getters.getOption('block_fonts', tabId)
         }
-        break;
+        break
       case 'image':
       case 'imageset':
         // images are blocked inside block-images.js
         // cancel = store.getters.getOption('block_images', tabId);
-        break;
+        break
     }
 
     if (cancel === 1) {
-      response.cancel = true;
+      response.cancel = true
     }
     if (redirect !== false) {
-      response.redirectUrl = redirect;
+      response.redirectUrl = redirect
     }
     // Logger.logBlocked(details, response);
 
-    return response;
-  };
+    return response
+  }
 
   // test if filetype filters are available
   // types : imageset, object_subrequest work only on Firefox
@@ -60,5 +60,5 @@ export function blockFiles() {
   //   }
   // }
 
-  Blocker.filterRequest(blockByFiletype, {});
+  Blocker.filterRequest(blockByFiletype, {})
 }

@@ -1,1 +1,1 @@
-import './oembed.scss';
+import './oembed.scss'

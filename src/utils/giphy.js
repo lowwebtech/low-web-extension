@@ -1,20 +1,20 @@
-export function getIdFromGiphyEmbed(url) {
-  url = url.split('giphy.com/embed/');
+export function getIdFromGiphyEmbed (url) {
+  url = url.split('giphy.com/embed/')
   if (url.length > 1) {
-    return url[1];
+    return url[1]
   } else {
-    return false;
+    return false
   }
 }
-export function getIdFromGiphyUrl(url) {
-  url = url.split('.giphy.com/media/');
+export function getIdFromGiphyUrl (url) {
+  url = url.split('.giphy.com/media/')
   if (url.length > 1) {
     if (url[1].indexOf('/giphy.gif') !== -1) {
-      return url[1].replace('/giphy.gif', '');
+      return url[1].replace('/giphy.gif', '')
     } else if (url[1].indexOf('/giphy.webp') !== -1) {
-      return url[1].replace('/giphy.webp', '');
+      return url[1].replace('/giphy.webp', '')
     }
   } else {
-    return false;
+    return false
   }
 }
