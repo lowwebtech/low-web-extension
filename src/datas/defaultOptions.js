@@ -27,15 +27,6 @@ export default [
     ],
   },
   {
-    id: 'video_clicktoload',
-    label: 'Click to load a video',
-    type: 'bool',
-    groups: ['video'],
-    values: [1, 1],
-    description:
-      'When a Youtube, Facebook, Dailymotion, Vimeo video is displayed on a website in the form of an iframe, it contains many loaded scripts even if the video is not viewed. These iframes are replaced by a simple image, a title and a button. On click, the scripts will load and the video will play.',
-  },
-  {
     id: 'media_attributes',
     label: 'Custom attributes for html element &lt;video&gt; and &lt;audio&gt;',
     type: 'bool',
@@ -109,15 +100,6 @@ export default [
       'There are billions of websites and a few sites that have billions of visits. For these sites, it is sometimes possible to reduce the data or to hide unnecessary content to limit their use.<br>Supported sites: Youtube',
   },
   {
-    id: 'save_data',
-    label: '"Save-data" browser settings',
-    type: 'bool',
-    values: [1, 1],
-    groups: ['misc', 'important'],
-    description:
-      'A "save-data: on" parameter can be sent (header http) when browsing the internet. It tells the site you are visiting that you want to save data. Free to this site to reduce the loaded data.',
-  },
-  {
     id: 'block_social',
     label: 'Block social media embeds',
     type: 'bool',
@@ -175,6 +157,24 @@ export default [
     description:
       'CSS animation and transition are disabled. The &lt;marquee&gt; element is also stopped.',
   },
+  {
+    id: 'save_data',
+    label: '"Save-data" browser settings',
+    type: 'bool',
+    values: [1, 1],
+    groups: ['misc', 'important'],
+    description:
+      'A "save-data: on" parameter can be sent (header http) when browsing the internet. It tells the site you are visiting that you want to save data. Free to this site to reduce the loaded data.',
+  },
+  // {
+  //   id: 'video_clicktoload',
+  //   label: 'Click to load a video',
+  //   type: 'bool',
+  //   groups: ['video'],
+  //   values: [1, 1],
+  //   description:
+  //     'When a Youtube, Facebook, Dailymotion, Vimeo video is displayed on a website in the form of an iframe, it contains many loaded scripts even if the video is not viewed. These iframes are replaced by a simple image, a title and a button. On click, the scripts will load and the video will play.',
+  // },
   // {
   //   id: 'marquee_animation',
   //   label: 'Disable marquee animation',
@@ -183,13 +183,13 @@ export default [
   //   values: [1, 1],
   //   description: 'Disable old marquee animations. Animations may cause render and reflow',
   // },
-  {
-    id: 'css_font_rendering',
-    label: 'Optimize font rendering (disable antialias)',
-    type: 'bool',
-    groups: ['misc'],
-    values: [0, 0],
-    description:
-      'Rendering of fonts is already optimised by browser but we could optimise it a bit more by disabling antialiasing (-webkit-font-smoothing: none) and advanced fonts features like ligature (text-rendering: optimizeSpeed)',
-  },
+  // {
+  //   id: 'css_font_rendering',
+  //   label: 'Optimize font rendering (disable antialias)',
+  //   type: 'bool',
+  //   groups: ['misc'],
+  //   values: [0, 0],
+  //   description:
+  //     'Rendering of fonts is already optimised by browser but we could optimise it a bit more by disabling antialiasing (-webkit-font-smoothing: none) and advanced fonts features like ligature (text-rendering: optimizeSpeed)',
+  // },
 ];
