@@ -1,6 +1,6 @@
 export default function extractHostname (url) {
   if (url) {
-    var hostname
+    let hostname
     if (url.indexOf('//') > -1) {
       hostname = url.split('/')[2]
     } else {

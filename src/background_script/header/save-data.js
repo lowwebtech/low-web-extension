@@ -35,7 +35,7 @@ function addListener () {
 function onBeforeSendHeaders (details) {
   const { tabId } = details
   if (TabManager.isTabActive(tabId) && store.getters.getOption('save_data', tabId) === 1) {
-    var headers = details.requestHeaders
+    const headers = details.requestHeaders
 
     for (let i = 0, lg = headers.length; i < lg; ++i) {
       if ('name' in headers[i] && headers[i].name.toLowerCase().indexOf('save-data') >= 0) {

@@ -87,3 +87,7 @@ function setEmbedParam (params, name, value) {
   // }
   return params
 }
+
+export function isUrlSanitized(url){
+  return url.indexOf(LOWWEB) !== -1
+}

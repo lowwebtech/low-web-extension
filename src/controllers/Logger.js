@@ -29,9 +29,9 @@ class Logger {
       if (changeInfo.url) {
         this.resetLogs(tabId)
       }
-      if (changeInfo.status === 'loading') {
-      } else if (changeInfo.status === 'complete') {
-      }
+      // if (changeInfo.status === 'loading') {
+      // } else if (changeInfo.status === 'complete') {
+      // }
     }
     const onCommittedNavigationHandler = (info) => {
       if (info.transitionType === 'reload' || info.transitionType === 'link') {

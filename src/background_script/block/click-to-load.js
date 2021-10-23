@@ -1,7 +1,7 @@
 import store from '../../store'
 import videoToBlock from '../../datas/video-to-block'
 import { dataTextLink } from '../../utils/data-uri'
-import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url'
+import sanitizeEmbedUrl, { isUrlSanitized } from '../../utils/sanitize-embed-video-url'
 import Blocker from '../../controllers/Blocker'
 
 /**
@@ -19,7 +19,7 @@ export function clickToLoad () {
   const action = (details) => {
     const response = {}
     const { url, tabId } = details
-    if (store.getters.getOption('video_clicktoload', tabId) === 1) {
+    if (store.getters.getOption('video_clicktoload', tabId) === 1 && !isUrlSanitized(url)) {
       // find video blocked
       for (const [key, video] of Object.entries(videoToBlock)) {
         if (url.indexOf(video.embed_url) !== -1) {

@@ -17,6 +17,7 @@ export default class IframeToLoad {
     if (!src || src === '') {
       src = el.dataset.src
     }
+    this.src = src
 
     localOption('video_quality').then((quality) => {
       videoQuality = quality
@@ -62,7 +63,7 @@ export default class IframeToLoad {
         if (this.el && this.el.parentNode) {
           this.data = response.data
           this.id = getId(this.el.src, this.type)
-
+          
           const newIframe = document.createElement('iframe')
           // copy html attributes from original iframe
           // TODO limit to known attributes
@@ -76,11 +77,12 @@ export default class IframeToLoad {
           const skin = this.getSkin()
           newIframe.dataset.src = this.el.src
           newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin)
-          newIframe.addEventListener('click', (e) => {
-            newIframe.src = newIframe.dataset.src
-            e.preventDefault()
-            return false
-          })
+          // newIframe.addEventListener('click', (e) => {
+          //   console.log('prevent click iframe')
+          //   newIframe.src = newIframe.dataset.src
+          //   e.preventDefault()
+          //   return false
+          // })
           this.el.parentNode.replaceChild(newIframe, this.el)
 
           browser.runtime.sendMessage({
@@ -115,11 +117,13 @@ export default class IframeToLoad {
     }
     if (this.videoUrl) {
       if (this.videoUrl.indexOf(this.dataVideoBlock.embed_url) !== -1) {
-        console.log('---sanitize', videoQuality)
         this.videoUrl = sanitizeEmbedUrl(this.videoUrl, true, true, videoQuality)
         skin = skin.replace('_blank', '_self')
       }
       skin = skin.replace('##VIDEO_URL##', this.videoUrl)
+    }
+    if (this.src) {
+      skin = skin.replace('##IFRAME_URL##', sanitizeEmbedUrl(this.src, true, true, videoQuality))
     }
 
     skin =

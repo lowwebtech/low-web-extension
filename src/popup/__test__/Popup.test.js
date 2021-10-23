@@ -35,7 +35,7 @@ describe('--------- Popup.html', () => {
           radios.map((radio, index) => {
             const label = radio.parentNode.querySelector('label')
             if (index === 0) label.click()
-            var style = window.getComputedStyle(label)
+            const style = window.getComputedStyle(label)
             return style.backgroundColor
           })
         )

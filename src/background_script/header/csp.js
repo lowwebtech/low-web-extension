@@ -71,18 +71,14 @@ function parse (policy) {
   }, {})
 }
 function stringify (policy) {
-  let str = ''
-  Object.keys(policy).map(function (key, index) {
-    str += key + ' ' + policy[key].join(' ') + '; '
+  // let str = ''
+  // Object.keys(policy).map(function (key, index) {
+  //   str += key + ' ' + policy[key].join(' ') + '; '
+  // })
+  // return str.slice(0, -1)
+
+  const str = Object.keys(policy).map(function (key, index) {
+    return key + ' ' + policy[key].join(' ')
   })
-  return str.slice(0, -1)
-  // return policy.reduce((result, directive) => {
-  //   console.log(result, directive);
-  //   // const [directiveKey, ...directiveValue] = directive.trim().split(/\s+/g);
-  //   // if (!directiveKey || Object.prototype.hasOwnProperty.call(result, directiveKey)) {
-  //   //   return result;
-  //   // } else {
-  //   //   return Object.assign(Object.assign({}, result), { [directiveKey]: directiveValue });
-  //   // }
-  // }, {});
+  return str.join('; ')
 }

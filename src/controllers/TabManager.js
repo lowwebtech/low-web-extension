@@ -9,7 +9,7 @@ import store from '../store'
 
 class TabManager extends EventEmitter {
   getTab (tabId) {
-    if (tabId && this.tabStorage[tabId]) {
+    if (tabId && this.tabStorage && this.tabStorage[tabId]) {
       return this.tabStorage[tabId]
     } else {
       return false
