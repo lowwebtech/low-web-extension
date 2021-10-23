@@ -32,7 +32,7 @@ export default class IframeToLoad {
         if (this.dataVideoBlock.video_url !== '' && this.dataVideoBlock.oembed !== '' && id) {
           this.videoUrl = this.dataVideoBlock.video_url.replace('##ID##', id)
 
-          if (this.videoUrl) {
+          if (this.videoUrl && this.dataVideoBlock.oembed) {
             const oembedUrl = this.dataVideoBlock.oembed + '?format=json&url=' + encodeURIComponent(this.videoUrl)
 
             const options = {
@@ -103,18 +103,20 @@ export default class IframeToLoad {
 
     const title = this.getTitle()
     const thumb = this.getThumb()
+    const sanitizedUrl = sanitizeEmbedUrl(this.src, true, true, videoQuality)
+    
     if (title) {
       skin = skin.replace('##TITLE##', title)
     }
+
     if (this.data.description) {
       skin = skin.replace('##DESCRIPTION##', this.data.description)
     }
+
     if (this.data.author_name) {
       skin = skin.replace('##AUTHOR##', this.data.author_name)
     }
-    if (thumb) {
-      skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" />')
-    }
+
     if (this.videoUrl) {
       if (this.videoUrl.indexOf(this.dataVideoBlock.embed_url) !== -1) {
         this.videoUrl = sanitizeEmbedUrl(this.videoUrl, true, true, videoQuality)
@@ -122,9 +124,19 @@ export default class IframeToLoad {
       }
       skin = skin.replace('##VIDEO_URL##', this.videoUrl)
     }
-    if (this.src) {
-      skin = skin.replace('##IFRAME_URL##', sanitizeEmbedUrl(this.src, true, true, videoQuality))
+
+    if (thumb) {
+      let alt = ''
+      if(this.videoUrl) alt = this.videoUrl
+      skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" alt="' + alt + '" />')
     }
+
+    // console.log(sanitizedUrl)
+    // console.log(sanitizeEmbedUrl(this.videoUrl, true, true, videoQuality))
+
+    // if (this.src) {
+    //   skin = skin.replace('##IFRAME_URL##', sanitizedUrl)
+    // }
 
     skin =
       '<style type="text/css">' +

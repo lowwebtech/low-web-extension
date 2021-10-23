@@ -108,13 +108,13 @@ export default {
       currentTab: 0,
       modes: [
         {
-          id: 'minimalist',
-          name: 'Minimalist',
+          id: 'radical',
+          name: 'Radical',
           index: 0
         },
         {
-          id: 'comfort',
-          name: 'Comfort',
+          id: 'low',
+          name: 'Low',
           index: 1
         }
       ]

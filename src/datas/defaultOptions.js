@@ -176,15 +176,6 @@ export default [
       'A "save-data: on" parameter can be sent (header http) when browsing the internet. It tells the site you are visiting that you want to save data. Free to this site to reduce the loaded data.'
   }
   // {
-  //   id: 'video_clicktoload',
-  //   label: 'Click to load a video',
-  //   type: 'bool',
-  //   groups: ['video'],
-  //   values: [1, 1],
-  //   description:
-  //     'When a Youtube, Facebook, Dailymotion, Vimeo video is displayed on a website in the form of an iframe, it contains many loaded scripts even if the video is not viewed. These iframes are replaced by a simple image, a title and a button. On click, the scripts will load and the video will play.',
-  // },
-  // {
   //   id: 'marquee_animation',
   //   label: 'Disable marquee animation',
   //   type: 'bool',

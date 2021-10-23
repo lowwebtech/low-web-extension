@@ -71,12 +71,6 @@ function parse (policy) {
   }, {})
 }
 function stringify (policy) {
-  // let str = ''
-  // Object.keys(policy).map(function (key, index) {
-  //   str += key + ' ' + policy[key].join(' ') + '; '
-  // })
-  // return str.slice(0, -1)
-
   const str = Object.keys(policy).map(function (key, index) {
     return key + ' ' + policy[key].join(' ')
   })

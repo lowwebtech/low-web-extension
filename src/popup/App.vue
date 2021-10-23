@@ -94,15 +94,15 @@ export default {
       return this.$store.getters.isDefaultMode(this.hostname)
     },
     getDefaultName () {
-      if (this.level === 0) return 'Minimalist (default)'
-      else return 'Comfort (default)'
+      if (this.level === 0) return 'Radical (default)'
+      else return 'Low (default)'
     },
     getDefaultValue () {
       return this.level
     },
     getOtherName () {
-      if (this.level === 0) return 'Comfort'
-      else return 'Minimalist'
+      if (this.level === 0) return 'Low'
+      else return 'Radical'
     },
     getOtherValue () {
       if (this.level === 0) return 1

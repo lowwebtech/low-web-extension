@@ -11,15 +11,14 @@
 
   <section>
     <h2>Youtube</h2>
-    <p>If <b>video_clicktoload</b> is enabled, Youtube iframe should be blocked and replaced by an optimized iframe containing only an image, a title, a button and a link, no script (styled like original Youtube). A click should launch the video on youtube.com in a low quality.</p>
+    <p>If <b>video_clicktoload</b> is enabled, Youtube iframe should be blocked and replaced by an optimized iframe containing only an image, a title, a button and a link, no script (styled like original Youtube). A click launch the video, low quality is not automatically selected.</p>
     <iframe title="youtube" width="560" height="315" src="https://www.youtube.com/embed/XO4q9oVrWWw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="test"></iframe>
-    <p>note 1 : quality setting is only available on Youtube.com (via an hack)</p>
-    <p>note 2 : presets Light = 144p, Normal = 360p</p>
+    <p>note : quality setting is only available on Youtube.com (via an hack)</p>
   </section>
   
   <section>
     <h2>Vimeo</h2>
-    <p>If <b>video_clicktoload</b> is enabled, Vimeo iframe should be blocked and replaced by an optimized iframe containing only an image, a title, a button and a link, no script (styled like original Vimeo). A click should launch the video in a new tab (iframe url + quality parameter) in a low quality.</p>
+    <p>If <b>video_clicktoload</b> is enabled, Vimeo iframe should be blocked and replaced by an optimized iframe containing only an image, a title, a button and a link, no script (styled like original Vimeo). One (sometime two) click should launch the video.</p>
     <iframe src="https://player.vimeo.com/video/156045670" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
     <p>note 1 : quality setting is only available for embed url with quality parameter</p>
     <p>note 2 : presets Light = 240p, Normal = 360p</p>
@@ -38,9 +37,7 @@
   <section>
     
     <h2>Facebook</h2>
-    <p>If <b>video_clicktoload</b> is enabled, Facebook iframe should be blocked and replaced by an optimized iframe containing only an image, a title, a button and a link, no script (styled like original Facebook). A click should launch the video in a new tab without quality optimisation :(</p>
     <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FThalassaOff%2Fvideos%2F1320142364777513%2F&width=500&show_text=true&appId=855770274521224&height=500" width="500" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media" allowFullScreen="true"></iframe>
-    <p>note : quality parameters is not available for facebook video</p>
     
   </section>
   
@@ -51,6 +48,37 @@
     <iframe src="https://player.twitch.tv/?channel=otplol_" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
 
   </section>
+
+
+  <section>
+    
+    <h2>Soundcloud</h2>
+    <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/913496809&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+
+  </section>
+
+
+  <section>
+    
+    <h2>Deezer</h2>
+    <iframe title="deezer-widget" src="https://widget.deezer.com/widget/dark/playlist/1479458365" width="100%" height="300" frameborder="0" allowtransparency="true" allow="encrypted-media; clipboard-write"></iframe>
+
+  </section>
+
+
+  <section>
+    
+    <h2>Apple Music</h2>
+    <iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" height="150" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/fr/album/shivers/1581087024?i=1581087034"></iframe>
+
+  </section>
+
+  <section>
+
+    <h2>Google maps</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22625.925353224746!2d-0.5864289966712222!3d44.85739508368494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd55287befaf579d%3A0x4089daed22d8c405!2squartier%20des%20Chartrons%2C%20Bordeaux!5e0!3m2!1sfr!2sfr!4v1635032855768!5m2!1sfr!2sfr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+  </section>
+  
 
 </body>
 </html>
