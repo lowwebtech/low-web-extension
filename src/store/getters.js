@@ -1,5 +1,5 @@
 import TabManager from '../controllers/TabManager'
-import options from '../datas/defaultOptions.js'
+import options from '../datas/default-options.js'
 
 const getters = {}
 for (let i = 0, lg = options.length; i < lg; i++) {

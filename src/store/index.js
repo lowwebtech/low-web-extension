@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import options from '../datas/defaultOptions.js'
+import options from '../datas/default-options.js'
 import getters from './getters'
 import mutations from './mutations'
 // import * as actions from './actions';
