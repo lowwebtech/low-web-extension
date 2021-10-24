@@ -89,14 +89,14 @@ function start (data) {
     // insert css (with various optimisations) into all pages
     cssOptimization()
 
-    // filter and block webRequest
+    // // filter and block webRequest
     blockFiles()
     blockImages(assets.avatarTXT.data)
     blockSocial(assets.socialTXT.data)
     blockFonts(assets.fontsTXT.data)
     clickToLoad()
 
-    // filters, blocks or redirects from specific websites (Youtube for now)
+    // // filters, blocks or redirects from specific websites (Youtube for now)
     youtube()
     blockWebsiteSpecific(assets.website_specificTXT.data)
     redirectKnownAssets()

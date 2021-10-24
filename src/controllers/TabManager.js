@@ -23,7 +23,7 @@ class TabManager extends EventEmitter {
 
   async isCurrentTab (tabId) {
     return await this.getCurrentTab().then((tab) => {
-      console.log(tab)
+      console.log('tab', tab)
       return tab.id === tabId
     }, console.error)
   }
@@ -32,7 +32,7 @@ class TabManager extends EventEmitter {
     console.log('getCurrenTab')
     const logTabs = function (tabs) {
       const tab = tabs[0] // Safe to assume there will only be one result
-      console.log(tab.url)
+      console.log('taburl', tab.url)
       return tab
     }
     return await browser.tabs.query({ currentWindow: true, active: true }).then(logTabs, console.error)

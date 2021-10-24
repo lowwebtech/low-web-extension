@@ -1,5 +1,6 @@
 // import { watch } from '../store/watch';
 import store from '../store'
+import { isWebpageUrl } from '../utils/urls'
 import cssToInsert from '../datas/css-to-insert'
 import TabManager from '../controllers/TabManager'
 
@@ -24,7 +25,7 @@ function addListener () {
 // }
 
 function onTabUpdate (tabId, changeInfo, tab) {
-  if (changeInfo.status === 'loading' && tab.url) {
+  if (changeInfo.status === 'loading' && tab.url && isWebpageUrl(tab.url)) {
     if (TabManager.isTabActive(tabId) && store.getters.getOption('website_specific', tabId) > 1) {
       const totalInserted = cssToInsert.length
       for (let i = 0; i < totalInserted; i++) {

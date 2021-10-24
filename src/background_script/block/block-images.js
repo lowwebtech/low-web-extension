@@ -1,8 +1,9 @@
 import store from '../../store'
+import Blocker from '../../controllers/Blocker'
 import { EXCLUDE_HOST_GIF, HTTP_URLS } from '../../datas/constants'
 import { dataTextLink, dataImage } from '../../utils/data-uri'
-import Blocker from '../../controllers/Blocker'
-import { hasLowwebParam } from '../../utils/urls'
+import { hasLowwebParam, isWebpageUrl } from '../../utils/urls'
+
 /**
  * Block image files :
  *   - avatar images from avatarTxt list
@@ -28,7 +29,7 @@ export function blockImages (avatarTxt) {
 }
 
 function handleUpdated (tabId, changeInfo, tabInfo) {
-  if (changeInfo.status === 'loading') {
+  if (changeInfo.status === 'loading' && isWebpageUrl(tabInfo.url)) {
     browser.tabs.insertCSS(null, {
       code: `
         .lowNotLoaded {
