@@ -59,9 +59,8 @@ function customizeIframes () {
 }
 
 function getIframeSelector () {
-  const selectors = []
-  Object.keys(videoToBlock).map((key) => {
-    selectors.push('iframe[src*="' + videoToBlock[key].embed_url + '"]')
+  const selectors = Object.keys(videoToBlock).map((key) => {
+    return 'iframe[src*="' + videoToBlock[key].embed_url + '"]'
   })
   return selectors.join(',')
 }

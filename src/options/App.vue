@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import options from '../datas/defaultOptions.js'
+import options from '../datas/default-options.js'
 import { getOptionById } from '../datas/options.js'
 
 // let fields = Object.keys(store.state);

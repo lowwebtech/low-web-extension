@@ -119,15 +119,15 @@ export default class IframeToLoad {
 
     if (this.videoUrl) {
       if (this.videoUrl.indexOf(this.dataVideoBlock.embed_url) !== -1) {
-        this.videoUrl = sanitizeEmbedUrl(this.videoUrl, true, true, videoQuality)
+        this.videoUrl = sanitizedUrl// sanitizeEmbedUrl(this.videoUrl, true, true, videoQuality)
         skin = skin.replace('_blank', '_self')
       }
-      skin = skin.replace('##VIDEO_URL##', this.videoUrl)
+      skin = skin.replace('##VIDEO_URL##', sanitizedUrl)
     }
 
     if (thumb) {
       let alt = ''
-      if(this.videoUrl) alt = this.videoUrl
+      if (this.videoUrl) alt = this.videoUrl
       skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" alt="' + alt + '" />')
     }
 

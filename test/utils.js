@@ -2,11 +2,11 @@
 const extensionId = 'aliphkafmeldgkmmjlhgpbleaicgbamj';
 const chromeExtPath = `chrome-extension://${extensionId}/`;
 export async function goToOptionPage(page) {
-  const path = chromeExtPath + 'options/options.html';
+  const path = chromeExtPath + 'options.html';
   await goTo(path, page);
 }
 export async function goToPopupPage(page) {
-  const path = chromeExtPath + 'popup/popup.html';
+  const path = chromeExtPath + 'popup.html';
   await goTo(path, page);
 }
 export async function goToWeb(url, page) {

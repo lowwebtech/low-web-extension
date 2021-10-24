@@ -58,7 +58,7 @@ const config = {
     rules: [
       {
         test: /\.vue$/,
-        loaders: 'vue-loader',
+        loader: 'vue-loader',
       },
       // {
       //   test: /\.js$/,
@@ -121,14 +121,15 @@ const config = {
     }),
     new CopyWebpackPlugin({
       patterns: [
+        { from: '../node_modules/webextension-polyfill/dist/browser-polyfill.js' }, 
         { from: '_locales', to: '_locales' },
         { from: 'icons', to: 'icons', globOptions: { ignore: ['icon.xcf', '.DS_Store'] } },
         { from: 'images', to: 'images', globOptions: { ignore: ['.DS_Store'] } },
         { from: 'oembed', to: 'oembed', globOptions: { ignore: ['.DS_Store'] } },
         { from: 'lists', to: 'lists', globOptions: { ignore: ['.DS_Store'] } },
         // { from: 'content_script/players', to: 'players' },
-        { from: 'popup/popup.html', to: 'popup/popup.html', transform: transformHtml },
-        { from: 'options/options.html', to: 'options/options.html', transform: transformHtml },
+        { from: 'popup.html', to: 'popup.html', transform: transformHtml },
+        { from: 'options.html', to: 'options.html', transform: transformHtml },
         // {
         //   from: 'manifest.json',
         //   to: 'manifest.json',
@@ -178,3 +179,4 @@ function transformHtml(content) {
 }
 
 module.exports = config;
+// export default config

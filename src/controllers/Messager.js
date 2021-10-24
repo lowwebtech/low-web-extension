@@ -21,6 +21,10 @@ class Messager {
         }
 
         if (response) {
+          // TODO return promise not sendResponse
+          /**
+           * Returning a Promise is the preferred way to send a reply from an onMessage/onMessageExternal listener, as the sendResponse will be removed from the specs (See https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/runtime/onMessage) Error
+           */
           console.log('RESPONSE', response)
           sendResponse(response)
         }

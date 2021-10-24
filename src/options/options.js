@@ -1,12 +1,9 @@
-/* eslint-disable import/first, indent */
-global.browser = require('webextension-polyfill')
-
 import Vue from 'vue'
-import App from './App'
-import store from '../store'
-/* eslint-enable import/first, indent */
+import App from './App.vue'
+import store from '../store/index.js'
 
 Vue.prototype.$browser = global.browser
+// Vue.prototype.$browser = browser
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,20 +1,15 @@
-// TODO
-/* eslint-disable import/first, indent */
-global.browser = require('webextension-polyfill')
+// TODO load on demand
+import imageSrcset from './image/srcset.js'
+import lazyload from './lazyload.js'
+import marquee from './marquee.js'
+import gifPlayer from './image/gif-player.js'
+import hoverImages from './image/hover-images.js'
+import customSocial from './iframe/social.js'
+import mediaAttribute from './media/attributes.js'
+import clickToLoadVideo from './video/click-to-load.js'
+import customPlayers from './video/custom-players.js'
 
 // import '../styles/social.scss';
-
-// TODO load on demand
-import imageSrcset from './image/srcset'
-import lazyload from './lazyload'
-import marquee from './marquee'
-import gifPlayer from './image/gif-player'
-import hoverImages from './image/hover-images'
-import customSocial from './iframe/social'
-import mediaAttribute from './media/attributes'
-import clickToLoadVideo from './video/click-to-load';
-import customPlayers from './video/custom-players'
-/* eslint-enable import/first, indent */
 
 let domContentLoaded = false
 let loaded = false
@@ -81,7 +76,7 @@ function onLoaded () {
     hoverImages(tabFocused)
 
     // custom video embeds click to play
-    clickToLoadVideo();
+    clickToLoadVideo()
 
     // custom social embeds
     customSocial()

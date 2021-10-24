@@ -1,27 +1,23 @@
-/* eslint-disable import/first, indent */
-global.browser = require('webextension-polyfill')
+import TabManager from '../controllers/TabManager.js'
+import Logger from '../controllers/Logger.js'
+import Blocker from '../controllers/Blocker.js'
+import Messager from '../controllers/Messager.js'
 
-import TabManager from '../controllers/TabManager'
-import Logger from '../controllers/Logger'
-import Blocker from '../controllers/Blocker'
-import Messager from '../controllers/Messager'
+import csp from './header/csp.js'
 
-import csp from './header/csp'
+import { blockFiles } from './block/block-files.js'
+import { blockSocial } from './block/block-social.js'
+import { blockFonts } from './block/block-fonts.js'
+import { blockWebsiteSpecific } from './block/block-website-specific.js'
 
-import { blockFiles } from './block/block-files'
-import { blockSocial } from './block/block-social'
-import { blockFonts } from './block/block-fonts'
-import { blockWebsiteSpecific } from './block/block-website-specific'
-
-import youtube from './sites/youtube'
-import redirectKnownAssets from './redirect-known-assets'
-import hideUselessContent from './hide-useless-content'
+import youtube from './sites/youtube.js'
+import redirectKnownAssets from './redirect-known-assets.js'
+import hideUselessContent from './hide-useless-content.js'
 // import { blockAds } from './block/block-ads';
-import { blockImages } from './block/block-images'
-import { saveDataHeader } from './header/save-data'
-import { cssOptimization } from './css-optimization'
-import { clickToLoad } from './block/click-to-load';
-/* eslint-enable import/first, indent */
+import { blockImages } from './block/block-images.js'
+import { saveDataHeader } from './header/save-data.js'
+import { cssOptimization } from './css-optimization.js'
+import { clickToLoad } from './block/click-to-load.js'
 
 const assets = {}
 const assetsManifest = [
@@ -98,7 +94,7 @@ function start (data) {
     blockImages(assets.avatarTXT.data)
     blockSocial(assets.socialTXT.data)
     blockFonts(assets.fontsTXT.data)
-    clickToLoad();
+    clickToLoad()
 
     // filters, blocks or redirects from specific websites (Youtube for now)
     youtube()

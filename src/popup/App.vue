@@ -58,10 +58,6 @@
   </div>
 </template>
 <script>
-/* eslint-disable import/first, indent */
-global.browser = require('webextension-polyfill')
-/* eslint-enable import/first, indent */
-
 export default {
   data () {
     return {
@@ -191,7 +187,7 @@ export default {
       browser.runtime.openOptionsPage()
     },
     openPopup () {
-      var url = '/popup/popup.html'
+      var url = '/popup.html'
       window.open(url)
     },
     resetActive () {

@@ -1,5 +1,3 @@
-global.browser = require('webextension-polyfill')
-
 // let localOptions, getBrowserLocalStorage;
 /**
  * Used to get persistent options (without VueX and Vue -> smaller content_script)

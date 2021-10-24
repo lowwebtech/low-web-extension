@@ -1,4 +1,4 @@
-import options from './defaultOptions'
+import options from './default-options.js'
 
 let optionsByGroup
 sortOptionsByGroup()

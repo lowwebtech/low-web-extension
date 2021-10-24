@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="popup/popup.css">
   <% if (NODE_ENV === 'development') { %>
   <!-- Load some resources only in development environment -->
   <% } %>
@@ -11,6 +11,7 @@
 <body>
   <div id="app">
   </div>
-  <script type="module" src="popup.js"></script>
+  <script type="module" src="browser-polyfill.js"></script>
+  <script type="module" src="popup/popup.js"></script>
 </body>
 </html>

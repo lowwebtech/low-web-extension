@@ -38,7 +38,7 @@ const manifestInput = {
   browser_action: {
     browser_style: true,
     default_title: 'low—web',
-    default_popup: 'popup/popup.html',
+    default_popup: 'popup.html',
     default_icon: {
       32: 'icons/favicon-32.png',
       48: 'icons/favicon-48.png',
@@ -49,23 +49,23 @@ const manifestInput = {
     __firefox__browser_style: false
   },
 
-  '__chrome|opera__options_page': 'options/options.html',
+  '__chrome|opera__options_page': 'options.html',
 
   options_ui: {
-    page: 'options/options.html',
+    page: 'options.html',
     open_in_tab: true,
     __chrome__chrome_style: true
   },
 
   background: {
-    scripts: ['background.js'],
+    scripts: ['browser-polyfill.js', 'background.js'],
     '__chrome|opera__persistent': true
   },
 
   content_scripts: [
     {
       matches: ['http://*/*', 'https://*/*'],
-      js: ['content_script.js'],
+      js: ['browser-polyfill.js', 'content_script.js'],
       css: ['content_script.css'],
       run_at: 'document_start',
       all_frames: false
