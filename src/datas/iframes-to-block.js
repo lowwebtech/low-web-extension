@@ -9,4 +9,12 @@ export default [
     '*://widget.deezer.com/widget/*',
     '*://embed.music.apple.com/*',
     '*://*.google.com/maps/embed*',
+
+    '*://docs.google.com/document/*',
+    '*://docs.google.com/presentation/*',
+    '*://docs.google.com/spreadsheets/*',
+    '*://docs.google.com/forms/*',
+    '*://*.scribd.com/embeds/*',
+    '*://*.slideshare.net/slideshow/embed_code/*',
+    '*://embed.ted.com/talks/*',
 ]
