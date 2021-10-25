@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 import { LOWWEB } from '../datas/constants'
-import videosToBlock from '../datas/video-to-block'
+import videosToBlock from '../datas/videos-to-block'
 
 export default function (url, autoplay = false, token = false, videoQuality = 2) {
   const u = new URL(url)

@@ -6,7 +6,7 @@ import gifPlayer from './image/gif-player.js'
 import hoverImages from './image/hover-images.js'
 import customSocial from './iframe/social.js'
 import mediaAttribute from './media/attributes.js'
-import clickToLoadVideo from './video/click-to-load.js'
+import oEmbedToLoad from './iframe/oembed-to-load.js'
 import customPlayers from './video/custom-players.js'
 
 // import '../styles/social.scss';
@@ -75,14 +75,14 @@ function onLoaded () {
     // hover to display image
     hoverImages(tabFocused)
 
-    // custom video embeds click to play
-    clickToLoadVideo()
+    // custom video embed iframes
+    oEmbedToLoad()
 
     // custom social embeds
     customSocial()
 
     // custom video player low quality
-    // TODO import only for video-to-block
+    // TODO import only for videos-to-block
     customPlayers()
   })
 }

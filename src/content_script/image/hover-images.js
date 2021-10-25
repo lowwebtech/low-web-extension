@@ -1,5 +1,5 @@
 import { localOption } from '../../utils/get-local-options'
-import HoverElement from './hover-element'
+import HoverElement from './HoverElement'
 
 let canvas
 const elements = []

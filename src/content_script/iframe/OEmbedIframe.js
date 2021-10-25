@@ -1,14 +1,14 @@
 import DOMPurify from 'dompurify'
-import videoToBlock from '../../datas/video-to-block'
+import videoToBlock from '../../datas/videos-to-block'
 import { localOption } from '../../utils/get-local-options'
-import { getYoutubeId, getDailymotionId, getFacebookId, getVimeoId, getTwitchId } from '../../utils/get-video-id'
+import { getYoutubeId, getDailymotionId, getVimeoId } from '../../utils/get-video-id'
 import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url'
 
 /**
  * Custom video iframe
  */
 let videoQuality = 1
-export default class IframeToLoad {
+export default class oEmbedIframe {
   constructor (el, style) {
     this.el = el
     this.style = style
@@ -47,7 +47,7 @@ export default class IframeToLoad {
             browser.runtime.sendMessage(options).then(
               (e) => this.onOEmbed(e),
               (e) => {
-                console.error('error message click-to-load', e)
+                console.error('error message iframe-to-load oembed', e)
               }
             )
           }
@@ -77,18 +77,12 @@ export default class IframeToLoad {
           const skin = this.getSkin()
           newIframe.dataset.src = this.el.src
           newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin)
-          // newIframe.addEventListener('click', (e) => {
-          //   console.log('prevent click iframe')
-          //   newIframe.src = newIframe.dataset.src
-          //   e.preventDefault()
-          //   return false
-          // })
           this.el.parentNode.replaceChild(newIframe, this.el)
 
           browser.runtime.sendMessage({
             message: 'logOptimised',
             data: {
-              type: 'click-to-load',
+              type: 'iframe-to-load',
               tabId: response.tabId,
               url: this.videoUrl
             }
@@ -131,12 +125,6 @@ export default class IframeToLoad {
       skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" alt="' + alt + '" />')
     }
 
-    // console.log(sanitizedUrl)
-    // console.log(sanitizeEmbedUrl(this.videoUrl, true, true, videoQuality))
-
-    // if (this.src) {
-    //   skin = skin.replace('##IFRAME_URL##', sanitizedUrl)
-    // }
 
     skin =
       '<style type="text/css">' +
@@ -166,14 +154,6 @@ export default class IframeToLoad {
     if (this.data.title) {
       return this.data.title
     }
-    // else if (this.type === 'facebook') {
-    //   const parser = new DOMParser();
-    //   const html = parser.parseFromString(this.data.html, 'text/html');
-    //   const t = html.querySelector('blockquote > a');
-    //   if (t) {
-    //     title = t.textContent;
-    //   }
-    // }
   }
 }
 
@@ -202,12 +182,12 @@ function getId (url, type) {
     case 'dailymotion':
       id = getDailymotionId(path)
       break
-    case 'twitch':
-      id = getTwitchId(path)
-      break
-    case 'facebook':
-      id = getFacebookId(url)
-      break
+    // case 'twitch':
+    //   id = getTwitchId(path)
+    //   break
+    // case 'facebook':
+    //   id = getFacebookId(url)
+    //   break
   }
   return id
 }

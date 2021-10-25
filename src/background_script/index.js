@@ -8,16 +8,16 @@ import csp from './header/csp.js'
 import { blockFiles } from './block/block-files.js'
 import { blockSocial } from './block/block-social.js'
 import { blockFonts } from './block/block-fonts.js'
-import { blockWebsiteSpecific } from './block/block-website-specific.js'
+import { blockImages } from './block/block-images.js'
+import { blockIframes } from './block/block-iframes.js'
 
 import youtube from './sites/youtube.js'
 import redirectKnownAssets from './redirect-known-assets.js'
 import hideUselessContent from './hide-useless-content.js'
-// import { blockAds } from './block/block-ads';
-import { blockImages } from './block/block-images.js'
+import { blockWebsiteSpecific } from './block/block-website-specific.js'
+
 import { saveDataHeader } from './header/save-data.js'
 import { cssOptimization } from './css-optimization.js'
-import { clickToLoad } from './block/click-to-load.js'
 
 const assets = {}
 const assetsManifest = [
@@ -94,7 +94,7 @@ function start (data) {
     blockImages(assets.avatarTXT.data)
     blockSocial(assets.socialTXT.data)
     blockFonts(assets.fontsTXT.data)
-    clickToLoad()
+    blockIframes()
 
     // // filters, blocks or redirects from specific websites (Youtube for now)
     youtube()

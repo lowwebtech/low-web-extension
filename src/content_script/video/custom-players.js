@@ -1,5 +1,5 @@
 import { localOption } from '../../utils/get-local-options.js'
-import videoToBlock from '../../datas/video-to-block.js'
+import videoToBlock from '../../datas/videos-to-block.js'
 
 export default function () {
   localOption('video_quality').then((value) => {

@@ -1,9 +1,10 @@
 import { localOption } from '../../utils/get-local-options'
-import videoToBlock from '../../datas/video-to-block'
-import IframeToLoad from './iframe-to-load'
+import videoToBlock from '../../datas/videos-to-block'
+import oEmbedIframe from './OEmbedIframe'
+import { LOWWEB } from '../../datas/constants'
 
 let style
-const selectorString = getIframeSelector()
+const selectorString = getIframeOembedSelector()
 
 /**
  * Block video iframes, display a fallback (if possible) and click to load
@@ -14,21 +15,21 @@ export default function () {
       const iframes = document.querySelectorAll(selectorString)
       if (iframes.length > 0) {
         loadStyles()
-      }
 
-      // wait for message 'embedVideoBlocked' from background_script
-      const onEmbedVideoBlocked = (request, sender, sendResponse) => {
-        if (request.message === 'embedVideoBlocked') {
-          if (style) {
-            customizeIframes()
-          } else {
-            loadStyles()
+        // wait for message 'embedVideoBlocked' from background_script
+        const onEmbedVideoBlocked = (request, sender, sendResponse) => {
+          if (request.message === 'embedVideoBlocked') {
+            if (style) {
+              customizeIframes()
+            } else {
+              loadStyles()
+            }
           }
+          return Promise.resolve({ message: 'embedVideoBlockedDone', result: 'ok' })
         }
-        return Promise.resolve({ message: 'embedVideoBlockedDone', result: 'ok' })
-      }
-      if (!browser.runtime.onMessage.hasListener(onEmbedVideoBlocked)) {
-        browser.runtime.onMessage.addListener(onEmbedVideoBlocked)
+        if (!browser.runtime.onMessage.hasListener(onEmbedVideoBlocked)) {
+          browser.runtime.onMessage.addListener(onEmbedVideoBlocked)
+        }
       }
     }
   })
@@ -53,12 +54,15 @@ function customizeIframes () {
   const iframes = document.querySelectorAll(selectorString)
   const customIframes = []
   iframes.forEach((iframe) => {
-    const customIframe = new IframeToLoad(iframe, style)
-    customIframes.push(customIframe)
+    if(!iframe.dataset.lowweb){
+      iframe.dataset.lowweb = LOWWEB
+      const customIframe = new oEmbedIframe(iframe, style)
+      customIframes.push(customIframe)
+    }
   })
 }
 
-function getIframeSelector () {
+function getIframeOembedSelector () {
   const selectors = Object.keys(videoToBlock).map((key) => {
     return 'iframe[src*="' + videoToBlock[key].embed_url + '"]'
   })

@@ -112,7 +112,7 @@ Youtube iframe optimized:
 - no cache ~ 20KB / 5 requests / load ~ 220ms
 - cache ~ 7KB / 5 requests / load ~ 200ms
 
-Technically, original iframe is [blocked](https://github.com/lowwebtech/low-web-extension/blob/master/src/background_script/block/block-embed-video.js) by extension, then an [script](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/video/click-to-load.js) is injected for customising blocked iframe. It loads [oEmbed datas](https://github.com/lowwebtech/low-web-extension/blob/master/src/background_script/message/oembed.js) to get image and title of the video, then a new simple html (with image, title, button) is created and injected (data:text/html) into the new iframe.
+Technically, original iframe is [blocked](https://github.com/lowwebtech/low-web-extension/blob/master/src/background_script/block/block-embed-video.js) by extension, then an [script](https://github.com/lowwebtech/low-web-extension/blob/master/src/content_script/iframe/iframe-to-load.js) is injected for customising blocked iframe. It loads [oEmbed datas](https://github.com/lowwebtech/low-web-extension/blob/master/src/background_script/message/oembed.js) to get image and title of the video, then a new simple html (with image, title, button) is created and injected (data:text/html) into the new iframe.
 
 You can test this functionality on this page: [embed-video.html](https://lowwebtech.github.io/low-web-extension/embed-video.html) with option "Click to load a video" activated.
 
