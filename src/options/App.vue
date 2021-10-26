@@ -93,11 +93,10 @@
 <script>
 import options from '../datas/default-options.js'
 import { getOptionById } from '../datas/options.js'
+import pleaseAdBlock from 'please-adblock'
+pleaseAdBlock()
 
-// let fields = Object.keys(store.state);
-// let jsonFields = options.map((a) => a.id);
 let timeout
-
 export default {
   name: 'App',
   data () {

@@ -53,6 +53,7 @@
     "fs": "0.0.1-security",
     "node-png": "^0.4.3",
     "path": "^0.12.7",
+    "please-adblock": "^0.0.3",
     "query-string": "^7.0",
     "srcset": "^4.0",
     "tiny-emitter": "^2.1.0",

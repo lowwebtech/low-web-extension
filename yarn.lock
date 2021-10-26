@@ -1786,6 +1786,11 @@ acorn@^8.0.4, acorn@^8.2.4, acorn@^8.4.1, acorn@^8.5.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.5.0.tgz#4512ccb99b3698c752591e9bb4472e38ad43cee2"
   integrity sha512-yXbYeFy+jUuYd3/CDcg2NkIYE991XYX/bje7LmjJigUciaeO1JR4XxXgCIV1/Zc/dRuFEyw1L0pbA+qynJkW5Q==
 
+adblock-detect-javascript-only@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/adblock-detect-javascript-only/-/adblock-detect-javascript-only-1.0.5.tgz#e484ad5cf9268e92189b11325b0ed204b94e2a05"
+  integrity sha512-SkWY1aIH9/j9Ljc4mgDSFBM3qSZc9mMnT0xnvRKrgYNYeHqfeT98TT2PjPeVb4ayepN50bNNyrsp3UGkKp4jfw==
+
 addons-linter@3.20.0:
   version "3.20.0"
   resolved "https://registry.yarnpkg.com/addons-linter/-/addons-linter-3.20.0.tgz#6674bf5794fd7521ba1aca78cf6b2b7b17470433"
@@ -7296,6 +7301,13 @@ pkg-dir@^2.0.0:
   integrity sha1-9tXREJ4Z1j7fQo4L1X4Sd3YVM0s=
   dependencies:
     find-up "^2.1.0"
+
+please-adblock@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/please-adblock/-/please-adblock-0.0.3.tgz#e9f0877747c8cfead1caeee02d8a16c7e3afb587"
+  integrity sha512-s6+q8JLuRN2vcd/bB1+pyxxmMNIGug+1iYzGq7NVpsOw3mpep8QEJ7o0YzJaoBpDr32MDDM3vm76WqLyJ4rAMg==
+  dependencies:
+    adblock-detect-javascript-only "^1.0.5"
 
 pngjs@^4.0.1:
   version "4.0.1"
