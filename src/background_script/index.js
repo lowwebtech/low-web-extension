@@ -39,19 +39,12 @@ const assetsManifest = [
   }
 ]
 
-browser.runtime.onStartup.addListener((details) => {
-  load(details)
-})
-browser.runtime.onInstalled.addListener(async (details) => {
-  load(details)
-})
-
 /**
  * Load assets (txt files for ABPFiltering), then start extension
- * @param  {[type]} details [description]
+ * @param  {[type]} 
  * @return {[type]}         [description]
  */
-function load (details) {
+function load () {
   Promise.all(
     assetsManifest.map((asset) =>
       fetch(asset.url)
@@ -61,8 +54,8 @@ function load (details) {
         .catch((error) => console.log('There was a problem!', error))
     )
   )
-    .then((details) => installedPage(details))
     .then((data) => {
+      // browser.runtime.onInstalled.addListener(
       start(data)
     })
 }
@@ -110,11 +103,12 @@ function start (data) {
  * @param  {boolean}  options.temporary Runtime temporary mode (local)
  * @return
  */
-function installedPage ({ reason, temporary }) {
-  if (!temporary && reason === 'install') {
+async function installedPage ({ reason, temporary }) {
+  console.log('installedpage', reason, temporary)
+  if (!temporary) {
     // TODO create welcome page
-    // const url = browser.runtime.getURL('views/installed.html');
-    // await browser.tabs.create({ url });
+    const url = browser.runtime.getURL('installed.html');
+    await browser.tabs.create({ url });
   }
 }
 function checkStatus (response) {
@@ -133,3 +127,9 @@ function setAsset (data, asset) {
 function parseTXT (response) {
   return response.text()
 }
+
+browser.runtime.onInstalled.addListener(async (details) => {
+  installedPage(details)
+})
+
+load()
