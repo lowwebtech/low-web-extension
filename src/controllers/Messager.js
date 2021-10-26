@@ -11,7 +11,7 @@ class Messager {
   }
 
   init () {
-    const handleIsMessage = (request, sender, sendResponse) => {
+    const handleIsMessage = (request, sender) => {
       if (request.message !== undefined) {
         console.log('MESSAGE', request.message)
         let response
@@ -20,14 +20,7 @@ class Messager {
           if (response) break
         }
 
-        if (response) {
-          // TODO return promise not sendResponse
-          /**
-           * Returning a Promise is the preferred way to send a reply from an onMessage/onMessageExternal listener, as the sendResponse will be removed from the specs (See https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/API/runtime/onMessage) Error
-           */
-          console.log('RESPONSE', response)
-          sendResponse(response)
-        }
+        return Promise.resolve(response)
       }
     }
     browser.runtime.onMessage.addListener(handleIsMessage)
