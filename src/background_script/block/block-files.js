@@ -29,8 +29,9 @@ export function blockFiles () {
       case 'font':
         // exclude main fonts used for icons
         // TODO external whitelist-icon-font
-        if (url.indexOf('fontawesome') === -1 && url.indexOf('fontello') === -1 && url.indexOf('ico') === -1) {
-          cancel = store.getters.getOption('block_fonts', tabId)
+        const blockFonts = store.getters.getOption('block_fonts', tabId)
+        if (blockFonts && ! /fa-|fontawesome|fontello|ico/.test(url)) {
+          cancel = blockFonts
         }
         break
       case 'image':

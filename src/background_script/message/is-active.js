@@ -8,7 +8,7 @@ export function onMessageIsActive (request, sender, sendResponse) {
   // TODO different message for tabActive
   if (request.message === 'isTabActive') {
     return TabManager.getCurrentTab().then((tab) => {
-      const { href, hostname } = request.options
+      const { href, hostname } = request.data
       const isActive = store.getters.isActive(href, hostname)
 
       store.commit('url', href)

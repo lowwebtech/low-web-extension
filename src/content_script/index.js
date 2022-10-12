@@ -29,7 +29,7 @@ function start () {
   browser.runtime
     .sendMessage({
       message: 'isTabActive',
-      options: {
+      data: {
         href: window.location.href,
         hostname: window.location.hostname
       }

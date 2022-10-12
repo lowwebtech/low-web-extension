@@ -1,7 +1,11 @@
 import DOMPurify from 'dompurify'
 import videoToBlock from '../../datas/videos-to-block'
 import { localOption } from '../../utils/get-local-options'
-import { getYoutubeId, getDailymotionId, getVimeoId } from '../../utils/get-video-id'
+import {
+  getYoutubeId,
+  getDailymotionId,
+  getVimeoId,
+} from '../../utils/get-video-id'
 import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url'
 
 /**
@@ -9,7 +13,7 @@ import sanitizeEmbedUrl from '../../utils/sanitize-embed-video-url'
  */
 let videoQuality = 1
 export default class oEmbedIframe {
-  constructor (el, style) {
+  constructor(el, style) {
     this.el = el
     this.style = style
 
@@ -29,22 +33,29 @@ export default class oEmbedIframe {
         this.dataVideoBlock = videoToBlock[this.type]
         const id = getId(src, this.type)
 
-        if (this.dataVideoBlock.video_url !== '' && this.dataVideoBlock.oembed !== '' && id) {
+        if (
+          this.dataVideoBlock.video_url !== '' &&
+          this.dataVideoBlock.oembed !== '' &&
+          id
+        ) {
           this.videoUrl = this.dataVideoBlock.video_url.replace('##ID##', id)
 
           if (this.videoUrl && this.dataVideoBlock.oembed) {
-            const oembedUrl = this.dataVideoBlock.oembed + '?format=json&url=' + encodeURIComponent(this.videoUrl)
+            const oembedUrl =
+              this.dataVideoBlock.oembed +
+              '?format=json&url=' +
+              encodeURIComponent(this.videoUrl)
 
-            const options = {
+            const message = {
               message: 'oembed',
-              options: {
+              data: {
                 type: this.type,
                 videoUrl: this.videoUrl,
-                oembedUrl: oembedUrl
-              }
+                oembedUrl: oembedUrl,
+              },
             }
 
-            browser.runtime.sendMessage(options).then(
+            browser.runtime.sendMessage(message).then(
               (e) => this.onOEmbed(e),
               (e) => {
                 console.error('error message iframe-to-load oembed', e)
@@ -56,14 +67,14 @@ export default class oEmbedIframe {
     }
   }
 
-  onOEmbed (response) {
+  onOEmbed(response) {
     if (response && response.data) {
       if (this.dataVideoBlock.skin) {
         // test parentNode, iframe may be removed from the dom
         if (this.el && this.el.parentNode) {
           this.data = response.data
           this.id = getId(this.el.src, this.type)
-          
+
           const newIframe = document.createElement('iframe')
           // copy html attributes from original iframe
           // TODO limit to known attributes
@@ -76,29 +87,35 @@ export default class oEmbedIframe {
 
           const skin = this.getSkin()
           newIframe.dataset.src = this.el.src
-          newIframe.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(skin)
+          newIframe.src =
+            'data:text/html;charset=utf-8,' + encodeURIComponent(skin)
           this.el.parentNode.replaceChild(newIframe, this.el)
 
-          browser.runtime.sendMessage({
+          const message = {
             message: 'logOptimised',
             data: {
               type: 'iframe-to-load',
               tabId: response.tabId,
-              url: this.videoUrl
-            }
-          })
+              url: this.videoUrl,
+            },
+          }
+          console.log('log iframe-to-load')
+          browser.runtime.sendMessage(message).then(
+            () => console.log('logged'),
+            (e) => console.error('>>>>', e),
+          )
         }
       }
     }
   }
 
-  getSkin () {
+  getSkin() {
     let skin = this.dataVideoBlock.skin
 
     const title = this.getTitle()
     const thumb = this.getThumb()
     const sanitizedUrl = sanitizeEmbedUrl(this.src, true, true, videoQuality)
-    
+
     if (title) {
       skin = skin.replace('##TITLE##', title)
     }
@@ -113,7 +130,7 @@ export default class oEmbedIframe {
 
     if (this.videoUrl) {
       if (this.videoUrl.indexOf(this.dataVideoBlock.embed_url) !== -1) {
-        this.videoUrl = sanitizedUrl// sanitizeEmbedUrl(this.videoUrl, true, true, videoQuality)
+        this.videoUrl = sanitizedUrl // sanitizeEmbedUrl(this.videoUrl, true, true, videoQuality)
         skin = skin.replace('_blank', '_self')
       }
       skin = skin.replace('##VIDEO_URL##', sanitizedUrl)
@@ -122,9 +139,11 @@ export default class oEmbedIframe {
     if (thumb) {
       let alt = ''
       if (this.videoUrl) alt = this.videoUrl
-      skin = skin.replace('##IMAGE##', '<img src="' + thumb + '" alt="' + alt + '" />')
+      skin = skin.replace(
+        '##IMAGE##',
+        '<img src="' + thumb + '" alt="' + alt + '" />',
+      )
     }
-
 
     skin =
       '<style type="text/css">' +
@@ -138,7 +157,7 @@ export default class oEmbedIframe {
     return skin
   }
 
-  getThumb () {
+  getThumb() {
     let thumb = this.data.thumbnail_url
     if (this.type === 'youtube') {
       thumb = thumb.replace('hqdefault', 'mqdefault')
@@ -150,14 +169,14 @@ export default class oEmbedIframe {
     return thumb
   }
 
-  getTitle () {
+  getTitle() {
     if (this.data.title) {
       return this.data.title
     }
   }
 }
 
-function videoBlocked (url) {
+function videoBlocked(url) {
   const keys = Object.keys(videoToBlock)
   for (const key of keys) {
     if (url.indexOf(videoToBlock[key].embed_url) !== -1) {
@@ -167,7 +186,7 @@ function videoBlocked (url) {
   return false
 }
 
-function getId (url, type) {
+function getId(url, type) {
   const u = new URL(url)
   const path = u.origin + u.pathname
 

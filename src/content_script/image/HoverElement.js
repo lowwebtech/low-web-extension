@@ -103,7 +103,7 @@ export default class HoverElement {
     browser.runtime
       .sendMessage({
         message: 'whitelistHoverImage',
-        options: {
+        data: {
           src
         }
       })

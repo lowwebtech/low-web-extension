@@ -9,6 +9,7 @@ export default [
     '*://widget.deezer.com/widget/*',
     '*://embed.music.apple.com/*',
     '*://*.google.com/maps/embed*',
+    '*://open.spotify.com/embed/*',
 
     '*://docs.google.com/document/*',
     '*://docs.google.com/presentation/*',
@@ -17,4 +18,6 @@ export default [
     '*://*.scribd.com/embeds/*',
     '*://*.slideshare.net/slideshow/embed_code/*',
     '*://embed.ted.com/talks/*',
+
+    '*://*.giphy.com/embed/*',
 ]

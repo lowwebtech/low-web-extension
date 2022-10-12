@@ -24,9 +24,9 @@ function customInstagram () {
     const embedUrl = url.origin + url.pathname
     const oembedUrl = 'https://api.instagram.com/oembed?format=json&url=' + encodeURIComponent(embedUrl)
 
-    const options = {
+    const message = {
       message: 'oembed',
-      options: {
+      data: {
         type: 'instagram',
         oembedUrl: oembedUrl
       }
@@ -44,7 +44,7 @@ function customInstagram () {
         container.innerHTML = DOMPurify.sanitize(img)
       }
     }
-    browser.runtime.sendMessage(options).then(callback, (e) => {
+    browser.runtime.sendMessage(message).then(callback, (e) => {
       console.error('error message social', e)
     })
   })

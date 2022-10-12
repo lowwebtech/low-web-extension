@@ -35,6 +35,7 @@ const config = {
 
     'popup/popup': './popup/popup.js',
     'options/options': './options/options.js',
+    'installed/installed': './installed/installed.js',
 
     // 'players/Dailymotion': './content_script/video/players/Dailymotion.js',
     // 'players/Youporn': './content_script/video/players/Youporn.js',
@@ -130,6 +131,7 @@ const config = {
         // { from: 'content_script/players', to: 'players' },
         { from: 'popup.html', to: 'popup.html', transform: transformHtml },
         { from: 'options.html', to: 'options.html', transform: transformHtml },
+        { from: 'installed.html', to: 'installed.html', transform: transformHtml },
         // {
         //   from: 'manifest.json',
         //   to: 'manifest.json',
